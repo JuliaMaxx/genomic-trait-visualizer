@@ -1,16 +1,21 @@
+import os
+
 from fastapi import FastAPI, File, UploadFile
 
 app = FastAPI()
 
+UPLOADED_FOLDER = "uploads"
 
-@app.get("/")
-def root():
-    return {"message": "Genomic API is running"}
+os.makedirs(UPLOADED_FOLDER, exist_ok=True)
 
 
 @app.post("/upload-dna/")
 async def upload_dna(file: UploadFile = File(...)):
 
-    contents = await file.read()
+    file_path = os.path.join(UPLOADED_FOLDER, file.filename)
 
-    return {"filename": file.filename, "size": len(contents)}
+    with open(file_path, "wb") as f:
+        content = await file.read()
+        f.write(content)
+
+    return {"filename": file.filename, "saved_to": file_path}
