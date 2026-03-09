@@ -2,6 +2,8 @@ import os
 
 from fastapi import FastAPI, File, UploadFile
 
+from genomics.dna_parser import parse_dna_file
+
 app = FastAPI()
 
 UPLOADED_FOLDER = "uploads"
@@ -18,4 +20,6 @@ async def upload_dna(file: UploadFile = File(...)):
         content = await file.read()
         f.write(content)
 
-    return {"filename": file.filename, "saved_to": file_path}
+    variants = parse_dna_file(file_path)
+
+    return {"filename": file.filename, "variants": variants[:10]}
