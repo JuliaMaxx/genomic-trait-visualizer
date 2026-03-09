@@ -1,6 +1,7 @@
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, File, UploadFile
 
 app = FastAPI()
+
 
 @app.get("/")
 def root():
@@ -12,7 +13,4 @@ async def upload_dna(file: UploadFile = File(...)):
 
     contents = await file.read()
 
-    return {
-        "filename": file.filename,
-        "size": len(contents)
-    }
+    return {"filename": file.filename, "size": len(contents)}
