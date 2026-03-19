@@ -12,6 +12,8 @@ h11==0.16.0
 identify==2.6.17
 idna==3.11
 isort==8.0.1
+librt==0.8.1
+mypy==1.19.1
 mypy_extensions==1.1.0
 nodeenv==1.10.0
 numpy==2.4.3
