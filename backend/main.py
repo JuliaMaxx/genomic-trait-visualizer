@@ -1,8 +1,7 @@
 from fastapi import FastAPI
 
-from backend.routes import traits, upload
+from backend.routes import analyze_dna
 
 app = FastAPI(title="Genomic Trait Visualizer")
 
-app.include_router(upload.router)
-app.include_router(traits.router)
+app.include_router(analyze_dna.router)

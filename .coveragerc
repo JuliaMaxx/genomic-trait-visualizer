@@ -1,0 +1,11 @@
+[run]
+branch = True
+source = backend
+
+[report]
+omit =
+    */__init__.py
+    */tests/*
+    */models/*
+    */routes/*
+    */main.py
