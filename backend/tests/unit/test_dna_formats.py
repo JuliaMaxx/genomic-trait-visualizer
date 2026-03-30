@@ -10,7 +10,7 @@ def load_lines(path: str) -> list[str]:
 
 
 @pytest.mark.parametrize(
-    "filename,expected",
+    "filename,format",
     [
         ("23andme_1.tsv", "23andme"),
         ("23andme_2.txt", "23andme"),
@@ -24,12 +24,12 @@ def load_lines(path: str) -> list[str]:
         ("vcf.vcf", "vcf"),
     ],
 )
-def test_detect_format(filename: str, expected: str) -> None:
+def test_detect_format(filename: str, format: str) -> None:
     """Test DNA format detection for multiple sample files."""
-    file_path: str = f"backend/tests/dna_samples/{filename}"
+    file_path: str = f"backend/tests/dna_samples/{format}/{filename}"
     lines: list[str] = load_lines(file_path)
     fmt: str = detect_format(lines)
-    assert fmt == expected
+    assert fmt == format
 
 
 def test_empty_file() -> None:

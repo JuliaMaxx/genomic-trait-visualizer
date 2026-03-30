@@ -1,3 +1,4 @@
+# AncestryDNA raw data download
 rsid,chromosome,position,allele1,allele2
 rs3094315,1,742429,A,A
 rs12562034,1,758311,G,G

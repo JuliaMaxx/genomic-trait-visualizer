@@ -1,5 +1,5 @@
-# livingdna
-rsid,chromosome,position,genotype
+# LivingDNA data export
+rsid,chromosome,position,call
 rs3094315,1,742429,AA
 rs12562034,1,758311,GG
 rs3934834,1,995669,AG

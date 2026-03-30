@@ -1,18 +1,36 @@
 import os
 
-import pandas as pd
 from fastapi import UploadFile
 
 from backend.models.schemas import Variant
+from backend.services.parsers.parser_23andme import parse_23andme
+
+from .dna_format_detector import detect_format
 
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 
 async def process_dna_file(file: UploadFile) -> list[Variant]:
+    # TODO: avoid putting an entire file into memory
+    content = await file.read()
+    lines = content.decode("utf-8", errors="ignore").splitlines()
 
-    df = pd.read_csv(file.file, sep="\t", comment="#")
+    fmt = detect_format(lines)
 
-    variants: list[Variant] = df[["rsid", "genotype"]].to_dict(orient="records")
+    PARSERS = {
+        "23andme": parse_23andme,
+        # "ancestry": parse_ancestry,
+        # "myheritage": parse_myheritage,
+        # "ftdna": parse_ftdna,
+        # "livingdna": parse_livingdna,
+        # "gedmatch": parse_gedmatch,
+        # "vcf": parse_vcf,
+    }
 
-    return variants
+    parser = PARSERS.get(fmt)
+
+    if not parser:
+        raise ValueError("Unknown DNA file format")
+
+    return parser(lines).variants

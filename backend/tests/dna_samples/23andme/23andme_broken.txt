@@ -1,0 +1,5 @@
+rs123
+garbage line
+123 456
+rs999	X	notanumber	AA
+rs888	1	X	ZZ

@@ -1,0 +1,7 @@
+# comment
+rs123 1 1000 AA
+rs456	2	2000	GG
+rs789	X	3000	--
+rs000 bad data
+rs111	MT	4000	CC
+rs222	25	5000	AA
