@@ -1,0 +1,8 @@
+# Broken ancestry file: invalid rsid/chromosome/position and bad columns
+rsid,chromosome,position,allele1,allele2
+badrsid,1,742429,A,A
+rs_bad,26,100,A,A
+rs1,1,abc,A,A
+rs2,1,100,A
+rs3,1,abc,AA,A
+rs4,26,100,ZZ,ZZ

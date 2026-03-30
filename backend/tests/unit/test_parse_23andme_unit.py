@@ -1,10 +1,7 @@
 import pytest
 
-from backend.services.parsers.parser_23andme import (
-    normalize_chromosome,
-    normalize_genotype,
-    parse_23andme,
-)
+from backend.services.parsers.chromosomes import normalize_chromosome
+from backend.services.parsers.parser_23andme import normalize_genotype, parse_23andme
 
 
 @pytest.mark.parametrize(
@@ -19,6 +16,7 @@ from backend.services.parsers.parser_23andme import (
     ],
 )
 def test_basic_parsing(lines: list[str], expected_count: int) -> None:
+    """Test core 23andMe row parsing across common separators."""
     result = parse_23andme(lines)
     assert len(result.variants) == expected_count
 
@@ -35,6 +33,7 @@ def test_basic_parsing(lines: list[str], expected_count: int) -> None:
     ],
 )
 def test_genotype_handling(genotype: str, expected: str | None) -> None:
+    """Test genotype normalization including missing/invalid calls."""
     result = normalize_genotype(genotype)
 
     assert result == expected
@@ -51,12 +50,14 @@ def test_genotype_handling(genotype: str, expected: str | None) -> None:
     ],
 )
 def test_chromosome_normalization(chrom: str, expected: str) -> None:
+    """Test chromosome normalization including MT mapping."""
     result = normalize_chromosome(chrom)
 
     assert result == expected
 
 
 def test_invalid_chromosome() -> None:
+    """Test invalid chromosome codes are rejected."""
     lines = ["rs123\t25\t1000\tAA"]
     result = parse_23andme(lines)
 
@@ -64,6 +65,7 @@ def test_invalid_chromosome() -> None:
 
 
 def test_invalid_position() -> None:
+    """Test non-integer positions are rejected."""
     lines = ["rs123\t1\tabc\tAA"]
     result = parse_23andme(lines)
 
@@ -71,6 +73,7 @@ def test_invalid_position() -> None:
 
 
 def test_internal_ids() -> None:
+    """Test internal IDs prefixed with 'i' are accepted as rsid."""
     lines = ["i4000001\t1\t1000\tAA"]
     result = parse_23andme(lines)
 
@@ -78,6 +81,7 @@ def test_internal_ids() -> None:
 
 
 def test_mixed_quality_input() -> None:
+    """Test parser tolerates mixed valid/invalid rows."""
     lines = [
         "rs123\t1\t1000\tAA",
         "bad_line",
@@ -92,6 +96,7 @@ def test_mixed_quality_input() -> None:
 
 
 def test_large_input() -> None:
+    """Test parser can handle large inputs."""
     lines = [f"rs{i}\t1\t{i}\tAA" for i in range(5000)]
     result = parse_23andme(lines)
 
@@ -99,6 +104,7 @@ def test_large_input() -> None:
 
 
 def test_messy_spacing_and_case() -> None:
+    """Test resilience to messy spacing and genotype case."""
     lines = ["  rs123   x   1000   ag  "]
     result = parse_23andme(lines)
 
@@ -107,6 +113,7 @@ def test_messy_spacing_and_case() -> None:
 
 
 def test_duplicates_allowed() -> None:
+    """Test duplicates are preserved (no de-duplication)."""
     lines = [
         "rs123\t1\t1000\tAA",
         "rs123\t1\t1000\tAA",
@@ -118,6 +125,7 @@ def test_duplicates_allowed() -> None:
 
 
 def test_error_reporting() -> None:
+    """Test errors are populated when invalid lines appear."""
     lines = [
         "rs123\t1\t1000\tAA",
         "bad_line",
@@ -131,6 +139,7 @@ def test_error_reporting() -> None:
 
 
 def test_error_messages_content() -> None:
+    """Test error messages contain an 'invalid format' hint."""
     lines = ["bad_line"]
 
     result = parse_23andme(lines)
@@ -140,6 +149,7 @@ def test_error_messages_content() -> None:
 
 
 def test_only_comments() -> None:
+    """Test comment-only input yields no variants and no errors."""
     lines = ["# comment", "# another"]
 
     result = parse_23andme(lines)
@@ -149,6 +159,7 @@ def test_only_comments() -> None:
 
 
 def test_negative_position() -> None:
+    """Test negative positions are accepted."""
     lines = ["rs123\t1\t-100\tAA"]
     result = parse_23andme(lines)
 

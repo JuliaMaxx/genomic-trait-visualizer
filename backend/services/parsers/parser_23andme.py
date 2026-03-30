@@ -3,15 +3,7 @@ import re
 from fastapi.logger import logger
 
 from backend.models.schemas import ParseResult, Variant
-
-VALID_CHROMOSOMES = {str(i) for i in range(1, 23)} | {"X", "Y", "MT", "M"}
-
-
-def normalize_chromosome(chrom: str) -> str:
-    chrom = chrom.strip().upper()
-    if chrom == "M":
-        return "MT"
-    return chrom
+from backend.services.parsers.chromosomes import VALID_CHROMOSOMES, normalize_chromosome
 
 
 def normalize_genotype(genotype: str) -> str | None:

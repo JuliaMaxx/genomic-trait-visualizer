@@ -1,0 +1,7 @@
+# Messy export mixing delimiters and extra columns
+rsid chromosome position allele1 allele2
+rs1 23 100 A A
+rs2	24	200	C	C
+rs3,25,300,G,--
+rs4,7,141673757,a,g,EXTRA,IGNORE_ME
+   rs5,1,900000,T,t

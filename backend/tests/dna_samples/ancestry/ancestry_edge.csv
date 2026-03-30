@@ -1,0 +1,8 @@
+# Edge cases: '.', internal i-ids, indels, and haploid calls
+rsid,chromosome,position,allele1,allele2
+.,1,1000,T,T
+i4000001,1,1000,G,G
+rs3000002,23,742429,A,A
+rs3000003,24,200000,C,C
+rs3000004,25,300000,I,D
+rs3000005,1,400000,--,--

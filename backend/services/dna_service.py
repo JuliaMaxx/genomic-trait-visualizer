@@ -4,6 +4,7 @@ from fastapi import UploadFile
 
 from backend.models.schemas import Variant
 from backend.services.parsers.parser_23andme import parse_23andme
+from backend.services.parsers.parser_ancestry_dna import parse_ancestry_dna
 
 from .dna_format_detector import detect_format
 
@@ -20,7 +21,7 @@ async def process_dna_file(file: UploadFile) -> list[Variant]:
 
     PARSERS = {
         "23andme": parse_23andme,
-        # "ancestry": parse_ancestry,
+        "ancestry": parse_ancestry_dna,
         # "myheritage": parse_myheritage,
         # "ftdna": parse_ftdna,
         # "livingdna": parse_livingdna,
