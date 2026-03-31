@@ -1,0 +1,8 @@
+# Messy MyHeritage export
+rsid chromosome position genotype
+rs101 1 1000 aa
+rs202	23	2000	CC
+rs303,24,3000,GG
+rs404,25,4000,TT
+bad data line
+rs505,1,5000,NA

@@ -1,0 +1,6 @@
+# MyHeritage DNA raw data
+rsid,chromosome,position,genotype
+rs111111,1,1000,AA
+rs222222,2,2000,GG
+rs333333,3,3000,CT
+rs444444,7,7000,TT

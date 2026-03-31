@@ -1,0 +1,7 @@
+# Broken rows: invalid rsid/chromosome/position/format
+rsid,chromosome,position,genotype
+badrsid,1,1000,AA
+rs_bad,26,1000,GG
+rs123,1,notanumber,CT
+rs123,1,1000
+garbage line

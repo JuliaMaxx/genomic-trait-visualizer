@@ -24,7 +24,7 @@ def calculate_traits(user_variants: list[Variant]) -> dict[str, float]:
 
             variant = next((v for v in user_variants if v.rsid == rsid), None)
 
-            if variant and effect in variant.genotype:
+            if variant and variant.genotype is not None and effect in variant.genotype:
                 score += weight
 
             total += weight

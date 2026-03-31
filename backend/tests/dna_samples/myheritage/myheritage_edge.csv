@@ -1,0 +1,8 @@
+# Edge cases with allele columns and placeholders
+rsid,chromosome,position,allele1,allele2
+.,1,1000,T,T
+i4000001,1,1001,G,G
+rs500001,23,2000,A,A
+rs500002,24,3000,C,--
+rs500003,25,4000,I,D
+rs500004,1,5000,--,--
