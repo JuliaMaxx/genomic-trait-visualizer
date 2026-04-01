@@ -220,3 +220,99 @@ def test_chromosome_normalization(chrom: str, expected: str) -> None:
 def test_genotype_from_alleles(a1: str, a2: str, expected: str | None) -> None:
     """Test genotype assembly from ALLELE1/ALLELE2 helper."""
     assert normalize_genotype_from_ancestry_alleles(a1, a2) == expected
+
+
+def test_duplicate_rsid_handling() -> None:
+    """Test duplicate rsid handling."""
+    lines = [
+        "rs1,1,100,A,A",
+        "rs1,1,100,G,G",
+    ]
+    result = parse_ancestry_dna(lines)
+
+    assert len(result.variants) == 2
+
+
+def test_garbage_line_is_skipped() -> None:
+    """Test garbage line is skipped."""
+    lines = ["this is not even remotely valid"]
+    result = parse_ancestry_dna(lines)
+
+    assert result.variants == []
+    assert len(result.errors) == 1
+
+
+def test_mixed_valid_and_invalid_rows() -> None:
+    """Test mixed valid and invalid rows."""
+    lines = [
+        "rs1,1,1,A,A",
+        "bad,data",
+        "rs2,1,2,G,G",
+    ]
+    result = parse_ancestry_dna(lines)
+
+    assert len(result.variants) == 2
+    assert len(result.errors) == 1
+
+
+@pytest.mark.parametrize(
+    "chrom,expected",
+    [
+        (" x ", "X"),
+        ("y", "Y"),
+        ("mt", "MT"),
+    ],
+)
+def test_chromosome_normalization_edge_cases(chrom: str, expected: str) -> None:
+    """Test chromosome normalization edge cases."""
+    assert normalize_ancestry_chromosome(chrom) == expected
+
+
+@pytest.mark.parametrize(
+    "a1,a2",
+    [
+        ("1", "A"),
+        ("*", "G"),
+        ("A", "???"),
+    ],
+)
+def test_invalid_alleles(a1: str, a2: str) -> None:
+    """Test invalid alleles."""
+    result = parse_ancestry_dna([f"rs1,1,1,{a1},{a2}"])
+    assert result.variants[0].genotype is None
+    assert len(result.errors) == 1
+
+
+@pytest.mark.parametrize(
+    "pos",
+    ["0", "999999999999"],
+)
+def test_position_edge_cases(pos: str) -> None:
+    """Test position edge cases."""
+    result = parse_ancestry_dna([f"rs1,1,{pos},A,A"])
+    assert len(result.variants) == 1
+
+
+def test_only_whitespace_lines() -> None:
+    """Test only whitespace lines."""
+    lines = ["   ", "\t", "\n"]
+    result = parse_ancestry_dna(lines)
+    assert result.variants == []
+
+
+def test_large_input_does_not_crash() -> None:
+    """Test large input does not crash."""
+    lines = ["rs1,1,1,A,A"] * 10000
+    result = parse_ancestry_dna(lines)
+    assert len(result.variants) == 10000
+
+
+def test_partial_vs_full_failure_behavior() -> None:
+    """Test partial vs full failure behavior."""
+    # genotype failure → keep
+    r1 = parse_ancestry_dna(["rs1,1,1,Z,Z"])
+    assert len(r1.variants) == 1
+
+    # structural failure → drop
+    r2 = parse_ancestry_dna(["bad,1,1,A,A"])
+    assert len(r2.variants) == 0
