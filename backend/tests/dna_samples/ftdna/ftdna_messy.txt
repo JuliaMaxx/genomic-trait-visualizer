@@ -1,0 +1,8 @@
+# mixed garbage file
+
+rs1 1 1000 A A
+rs2	1	1001	C	C
+rs3,1,1002,GG
+rs4,1,1003,A,--
+rs5,1,1004,A,G,EXTRA
+rs6,1,1005,t,t

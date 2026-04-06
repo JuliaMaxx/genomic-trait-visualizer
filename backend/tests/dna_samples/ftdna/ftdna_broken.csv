@@ -1,0 +1,5 @@
+rsid,chromosome,position,allele1,allele2
+rs1
+rs2,1
+rs3,ZZZ,abc,A,A
+bad_line

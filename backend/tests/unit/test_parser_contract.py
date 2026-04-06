@@ -5,6 +5,7 @@ import pytest
 from backend.models.schemas import ParseResult
 from backend.services.parsers.parser_23andme import parse_23andme
 from backend.services.parsers.parser_ancestry import parse_ancestry
+from backend.services.parsers.parser_ftdna import parse_ftdna
 from backend.services.parsers.parser_myheritage import parse_myheritage
 
 ParserFn = Callable[[list[str]], ParseResult]
@@ -71,6 +72,21 @@ PARSERS: list[ParserCase] = [
         "invalid_position_line": "rs123 1 pos AA",
         "mixed_delimiter_line": "rs123\t1,1000 AA",
         "header_line": "rsid chromosome position genotype",
+    },
+    {
+        "name": "ftdna",
+        "parser": parse_ftdna,
+        "valid_line": "rs123,1,1000,A,A",
+        "invalid_format_line": "rs123,1",
+        "invalid_genotype_line": "rs123,1,1000,Z,Z",
+        "missing_genotype_line": "rs123,1,1000,--,--",
+        "haploid_line": "rs123,1,1000,A,--",
+        "rsid_dot_line": ".,1,1000,A,A",
+        "invalid_rsid_line": "rsABC,1,1000,A,A",
+        "invalid_chrom_line": "rs123,Z,1000,A,A",
+        "invalid_position_line": "rs123,1,pos,A,A",
+        "mixed_delimiter_line": "rs123\t1,1000,A,A",
+        "header_line": "rsid,chromosome,position,allele1,allele2",
     },
 ]
 

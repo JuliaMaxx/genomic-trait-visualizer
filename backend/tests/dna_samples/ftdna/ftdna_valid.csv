@@ -1,0 +1,6 @@
+rsid,chromosome,position,allele1,allele2
+rs1,1,1000,A,A
+rs2,1,1001,C,C
+rs3,1,1002,A,G
+rs4,1,1003,G,G
+rs5,1,1004,T,T

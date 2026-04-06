@@ -1,0 +1,8 @@
+# FTDNA Raw Data
+rsid,chromosome,position,allele1,allele2
+.,1,1000,A,A
+i4000001,1,1001,G,G
+rs123,23,1002,A,G
+rs124,24,1003,C,C
+rs125,25,1004,I,D
+rs126,1,1005,--,--
