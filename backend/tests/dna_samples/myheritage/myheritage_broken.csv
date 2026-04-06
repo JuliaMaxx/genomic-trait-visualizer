@@ -1,7 +1,7 @@
-# Broken rows: invalid rsid/chromosome/position/format
+# MyHeritage broken file example
 rsid,chromosome,position,genotype
-badrsid,1,1000,AA
-rs_bad,26,1000,GG
-rs123,1,notanumber,CT
-rs123,1,1000
-garbage line
+, , ,                 # All missing → dropped
+rs12345,0,1000,AA     # Invalid chromosome (0) → dropped
+rs67890,1,,CC          # Missing position → dropped
+rsABCDE,MT,Y,GG        # Position not an integer → dropped
+rs000                  # Too few columns → dropped

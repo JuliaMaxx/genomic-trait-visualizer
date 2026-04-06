@@ -1,8 +1,6 @@
-# Broken ancestry file: invalid rsid/chromosome/position and bad columns
-rsid,chromosome,position,allele1,allele2
-badrsid,1,742429,A,A
-rs_bad,26,100,A,A
-rs1,1,abc,A,A
-rs2,1,100,A
-rs3,1,abc,AA,A
-rs4,26,100,ZZ,ZZ
+# Ancestry broken file example
+rsid,chromosome,position,genotype
+rs1234,,1000,AA         # Missing chromosome → dropped
+rs5678,1,,CC            # Missing position → dropped
+rs121314,X,Y,TG         # Position not an integer → dropped
+rs151617               # Too few columns → dropped

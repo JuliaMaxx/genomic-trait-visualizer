@@ -1,4 +1,4 @@
-from backend.services.parsers.parser_ancestry_dna import parse_ancestry_dna
+from backend.services.parsers.parser_ancestry import parse_ancestry
 
 
 def load_lines(path: str) -> list[str]:
@@ -8,7 +8,7 @@ def load_lines(path: str) -> list[str]:
 
 def test_parse_ancestry_edge_file() -> None:
     lines = load_lines("backend/tests/dna_samples/ancestry/ancestry_edge.csv")
-    result = parse_ancestry_dna(lines)
+    result = parse_ancestry(lines)
 
     # All rows structurally valid → all kept
     assert len(result.variants) == 6
@@ -32,7 +32,7 @@ def test_parse_ancestry_edge_file() -> None:
 
 def test_parse_ancestry_messy_file() -> None:
     lines = load_lines("backend/tests/dna_samples/ancestry/ancestry_messy.txt")
-    result = parse_ancestry_dna(lines)
+    result = parse_ancestry(lines)
 
     # All rows structurally valid → all kept
     assert len(result.variants) == 5
@@ -57,7 +57,7 @@ def test_parse_ancestry_messy_file() -> None:
 
 def test_parse_ancestry_valid_file() -> None:
     lines = load_lines("backend/tests/dna_samples/ancestry/ancestry_valid.csv")
-    result = parse_ancestry_dna(lines)
+    result = parse_ancestry(lines)
 
     assert len(result.variants) == 5
     assert result.errors == []
@@ -71,16 +71,16 @@ def test_parse_ancestry_valid_file() -> None:
     assert all(v.chromosome == "1" for v in result.variants)
 
 
-def test_parse_ancestry_dna_broken_file() -> None:
+def test_parse_ancestry_broken_file() -> None:
     file_path = "backend/tests/dna_samples/ancestry/ancestry_broken.csv"
     lines = load_lines(file_path)
 
-    result = parse_ancestry_dna(lines)
+    result = parse_ancestry(lines)
 
     assert len(result.variants) == 0
 
 
-def test_parse_ancestry_dna_empty_file() -> None:
-    result = parse_ancestry_dna([])
+def test_parse_ancestry_empty_file() -> None:
+    result = parse_ancestry([])
 
     assert result.variants == []

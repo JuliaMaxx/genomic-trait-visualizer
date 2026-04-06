@@ -16,14 +16,7 @@ def _is_header_row(parts: list[str]) -> bool:
     return parts[0].lstrip("\ufeff").strip().lower() == "rsid"
 
 
-def parse_23andme(lines: list[str]) -> ParseResult:
-    """
-    Parse a 23andMe raw DNA export into the common Variant schema.
-
-    Supports:
-    - rsid, chromosome, position, genotype
-    - standard 23andMe format
-    """
+def parse_ancestry(lines: list[str]) -> ParseResult:
     variants: list[Variant] = []
     errors: list[str] = []
 
@@ -41,13 +34,13 @@ def parse_23andme(lines: list[str]) -> ParseResult:
             header_skipped = True
             continue
 
-        if len(parts) < 4:
+        if len(parts) < 5:
             msg = f"Line {line_number}: invalid format"
             logger.warning(msg)
             errors.append(msg)
             continue
 
-        rsid, chrom, pos, genotype_raw = parts[:4]
+        rsid, chrom, pos, allele1, allele2 = parts[:5]
         rsid = rsid.lstrip("\ufeff")
 
         if not is_standard_rsid(rsid):
@@ -71,7 +64,11 @@ def parse_23andme(lines: list[str]) -> ParseResult:
             errors.append(msg)
             continue
 
-        genotype = normalize_genotype(genotype=genotype_raw)
+        if len(parts) >= 5:
+            genotype = normalize_genotype(allele1=allele1, allele2=allele2)
+        else:
+            genotype = normalize_genotype(genotype=parts[3])
+
         if genotype is None:
             msg = f"Line {line_number}: invalid genotype"
             logger.warning(msg)
