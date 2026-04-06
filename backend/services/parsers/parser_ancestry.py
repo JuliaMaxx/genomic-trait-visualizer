@@ -17,6 +17,13 @@ def _is_header_row(parts: list[str]) -> bool:
 
 
 def parse_ancestry(lines: list[str]) -> ParseResult:
+    """
+    Parse an AncestryDNA raw data export into the common Variant schema.
+
+    Supports multiple common layouts:
+    - rsid,chromosome,position,allele1,allele2
+    - tab/CSV/whitespace-delimited variants
+    """
     variants: list[Variant] = []
     errors: list[str] = []
 
