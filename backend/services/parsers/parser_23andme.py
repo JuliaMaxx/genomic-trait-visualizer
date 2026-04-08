@@ -41,19 +41,14 @@ def parse_23andme(lines: list[str]) -> ParseResult:
             header_skipped = True
             continue
 
-        if len(parts) < 4:
+        if len(parts) < 3:
             msg = f"Line {line_number}: invalid format"
             logger.warning(msg)
             errors.append(msg)
             continue
 
-        rsid, chrom, pos, genotype_raw = parts[:4]
+        rsid, chrom, pos = parts[0], parts[1], parts[2]
         rsid = rsid.lstrip("\ufeff")
-
-        if not is_standard_rsid(rsid):
-            msg = f"Line {line_number}: invalid rsid"
-            logger.warning(msg)
-            errors.append(msg)
 
         chrom = normalize_chromosome(chrom)
 
@@ -71,7 +66,12 @@ def parse_23andme(lines: list[str]) -> ParseResult:
             errors.append(msg)
             continue
 
-        genotype = normalize_genotype(genotype=genotype_raw)
+        if not is_standard_rsid(rsid):
+            msg = f"Line {line_number}: invalid rsid"
+            logger.warning(msg)
+            errors.append(msg)
+
+        genotype = normalize_genotype(genotype=parts[3]) if len(parts) > 3 else None
         if genotype is None:
             msg = f"Line {line_number}: invalid genotype"
             logger.warning(msg)

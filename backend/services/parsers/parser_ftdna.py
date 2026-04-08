@@ -52,7 +52,7 @@ def parse_ftdna(lines: list[str]) -> ParseResult:
             header_skipped = True
             continue
 
-        if len(parts) < 4:
+        if len(parts) < 3:
             msg = f"Line {line_number}: invalid format"
             logger.warning(msg)
             errors.append(msg)
@@ -60,11 +60,6 @@ def parse_ftdna(lines: list[str]) -> ParseResult:
 
         rsid, chrom, pos = parts[0], parts[1], parts[2]
         rsid = rsid.lstrip("\ufeff")
-
-        if not is_standard_rsid(rsid):
-            msg = f"Line {line_number}: invalid rsid"
-            logger.warning(msg)
-            errors.append(msg)
 
         chrom = normalize_chromosome(chrom)
         if chrom not in VALID_CHROMOSOMES:
@@ -81,11 +76,18 @@ def parse_ftdna(lines: list[str]) -> ParseResult:
             errors.append(msg)
             continue
 
+        if not is_standard_rsid(rsid):
+            msg = f"Line {line_number}: invalid rsid"
+            logger.warning(msg)
+            errors.append(msg)
+
         if len(parts) >= 5:
             allele1, allele2 = parts[3], parts[4]
             genotype = normalize_genotype(allele1=allele1, allele2=allele2)
-        else:
+        elif len(parts) >= 4:
             genotype = normalize_genotype(genotype=parts[3])
+        else:
+            genotype = None
 
         if genotype is None:
             msg = f"Line {line_number}: invalid genotype"
