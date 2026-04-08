@@ -6,6 +6,7 @@ from backend.models.schemas import ParseResult
 from backend.services.parsers.parser_23andme import parse_23andme
 from backend.services.parsers.parser_ancestry import parse_ancestry
 from backend.services.parsers.parser_ftdna import parse_ftdna
+from backend.services.parsers.parser_livingdna import parse_livingdna
 from backend.services.parsers.parser_myheritage import parse_myheritage
 
 ParserFn = Callable[[list[str]], ParseResult]
@@ -87,6 +88,21 @@ PARSERS: list[ParserCase] = [
         "invalid_position_line": "rs123,1,pos,A,A",
         "mixed_delimiter_line": "rs123\t1,1000,A,A",
         "header_line": "rsid,chromosome,position,allele1,allele2",
+    },
+    {
+        "name": "livingdna",
+        "parser": parse_livingdna,
+        "valid_line": "rs123\t1\t1000\tA\tA",
+        "invalid_format_line": "rs123\t1",
+        "invalid_genotype_line": "rs123\t1\t1000\tZ\tZ",
+        "missing_genotype_line": "rs123\t1\t1000\t--\t--",
+        "haploid_line": "rs123\t1\t1000\tA\t--",
+        "rsid_dot_line": ".\t1\t1000\tA\tA",
+        "invalid_rsid_line": "rsABC\t1\t1000\tA\tA",
+        "invalid_chrom_line": "rs123\tZ\t1000\tA\tA",
+        "invalid_position_line": "rs123\t1\tpos\tA\tA",
+        "mixed_delimiter_line": "rs123 1,1000\tA\tA",
+        "header_line": "rsid\tchromosome\tposition\tallele1\tallele2",
     },
 ]
 

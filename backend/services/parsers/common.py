@@ -36,7 +36,7 @@ def split_line(line: str) -> list[str]:
 
 
 _VALID_ALLELE_RE = re.compile(r"^[ACGTID]$")
-_VALID_GENOTYPE_RE = re.compile(r"^[ACGTID]+$")
+_VALID_GENOTYPE_RE = re.compile(r"^[ACGTID]{1,2}$")
 
 
 def normalize_genotype(
@@ -73,8 +73,9 @@ def normalize_genotype(
             if _is_missing_allele(a):
                 continue
 
-            if _VALID_ALLELE_RE.fullmatch(a):
-                alleles.append(a)
+            if not _VALID_ALLELE_RE.fullmatch(a):
+                return None
+            alleles.append(a)
 
         # if both missing → None
         if not alleles:

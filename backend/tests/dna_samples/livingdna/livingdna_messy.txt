@@ -1,0 +1,8 @@
+# LivingDNA export
+rs123,1,1000,AA
+rs234	2	2000	CC
+rs345 3 3000 GG
+bad line here
+rs456	4	4000	TT
+rs567	5	5000	--
+rs678	6	6000	A A

@@ -1,0 +1,5 @@
+rsid	chromosome	position	genotype
+rs123
+bad	data
+rs456	X
+just totally wrong
