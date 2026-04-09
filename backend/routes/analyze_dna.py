@@ -1,8 +1,7 @@
 from fastapi import APIRouter, UploadFile
 
-from backend.models.schemas import TraitResult
-from backend.services.dna_service import process_dna_file
-from backend.services.trait_service import analyze_traits
+from backend.models import TraitResult
+from backend.services import analyze_traits, process_dna_file
 
 router = APIRouter(prefix="/analyze", tags=["analyze"])
 

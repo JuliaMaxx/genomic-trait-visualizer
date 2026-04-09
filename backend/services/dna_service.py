@@ -2,13 +2,15 @@ import os
 
 from fastapi import UploadFile
 
-from backend.models.schemas import Variant
-from backend.services.parsers.parser_23andme import parse_23andme
-from backend.services.parsers.parser_ancestry import parse_ancestry
-from backend.services.parsers.parser_ftdna import parse_ftdna
-from backend.services.parsers.parser_gedmatch import parse_gedmatch
-from backend.services.parsers.parser_livingdna import parse_livingdna
-from backend.services.parsers.parser_myheritage import parse_myheritage
+from backend.models import Variant
+from backend.services.parsers import (
+    parse_23andme,
+    parse_ancestry,
+    parse_ftdna,
+    parse_gedmatch,
+    parse_livingdna,
+    parse_myheritage,
+)
 
 from .dna_format_detector import detect_format
 

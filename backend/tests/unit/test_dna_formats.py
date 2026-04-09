@@ -1,6 +1,6 @@
 import pytest
 
-from backend.services.dna_format_detector import detect_format
+from backend.services import detect_format
 
 
 def load_lines(path: str) -> list[str]:

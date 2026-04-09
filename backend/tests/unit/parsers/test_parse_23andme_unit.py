@@ -1,6 +1,6 @@
 import pytest
 
-from backend.services.parsers.parser_23andme import parse_23andme
+from backend.services.parsers import parse_23andme
 
 
 # --- Header / BOM / Comment handling ---

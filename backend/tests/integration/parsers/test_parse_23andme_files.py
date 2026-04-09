@@ -1,4 +1,4 @@
-from backend.services.parsers.parser_23andme import parse_23andme
+from backend.services.parsers import parse_23andme
 
 
 def load_lines(path: str) -> list[str]:

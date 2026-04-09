@@ -1,4 +1,4 @@
-from backend.services.parsers.parser_ancestry import parse_ancestry
+from backend.services.parsers import parse_ancestry
 
 
 def load_lines(path: str) -> list[str]:

@@ -1,6 +1,6 @@
 from fastapi.logger import logger
 
-from backend.models.schemas import ParseResult, Variant
+from backend.models import ParseResult, Variant
 from backend.services.parsers.common import (
     VALID_CHROMOSOMES,
     is_standard_rsid,
@@ -49,7 +49,8 @@ def parse_livingdna(lines: list[str]) -> ParseResult:
     errors: list[str] = []
     header_fields: dict[str, int] | None = None
 
-    for line_number, line in enumerate(lines, start=1):
+    for line_number, raw_line in enumerate(lines, start=1):
+        line = raw_line.strip()
         if not line or line.startswith("#"):
             continue
 

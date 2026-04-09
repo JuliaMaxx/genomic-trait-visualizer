@@ -1,4 +1,4 @@
-from backend.models.schemas import TraitResult, Variant
+from backend.models import TraitResult, Variant
 from genomics.trait_engine import calculate_traits
 
 

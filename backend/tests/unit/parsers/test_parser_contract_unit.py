@@ -2,13 +2,15 @@ from typing import Callable, TypedDict
 
 import pytest
 
-from backend.models.schemas import ParseResult
-from backend.services.parsers.parser_23andme import parse_23andme
-from backend.services.parsers.parser_ancestry import parse_ancestry
-from backend.services.parsers.parser_ftdna import parse_ftdna
-from backend.services.parsers.parser_gedmatch import parse_gedmatch
-from backend.services.parsers.parser_livingdna import parse_livingdna
-from backend.services.parsers.parser_myheritage import parse_myheritage
+from backend.models import ParseResult
+from backend.services.parsers import (
+    parse_23andme,
+    parse_ancestry,
+    parse_ftdna,
+    parse_gedmatch,
+    parse_livingdna,
+    parse_myheritage,
+)
 
 ParserFn = Callable[[list[str]], ParseResult]
 

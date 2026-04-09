@@ -1,6 +1,6 @@
 import pytest
 
-from backend.services.parsers.parser_myheritage import parse_myheritage
+from backend.services.parsers import parse_myheritage
 
 
 # --- Header / BOM / Comment handling ---

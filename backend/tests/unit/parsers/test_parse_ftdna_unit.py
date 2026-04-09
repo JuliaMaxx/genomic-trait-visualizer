@@ -1,6 +1,6 @@
 import pytest
 
-from backend.services.parsers.parser_ancestry import parse_ancestry
+from backend.services.parsers import parse_ftdna
 
 
 # --- Header / BOM / Comment handling ---
@@ -8,30 +8,30 @@ from backend.services.parsers.parser_ancestry import parse_ancestry
     "lines",
     [
         [
-            "# AncestryDNA raw data",
-            "# rsid,chromosome,position,allele1,allele2",
+            "# FTDNA Raw Data",
             "rsid,chromosome,position,allele1,allele2",
             "rs123,1,1000,A,A",
+        ],
+        [
+            "RSID,CHROMOSOME,POSITION,RESULT",
+            "rs123,1,1000,AA",
         ],
         [
             "\ufeffrsid,chromosome,position,allele1,allele2",
             "rs123,1,1000,A,A",
         ],
         [
-            "\ufeffrs123,1,1000,A,A",
+            "\ufeffrs123,1,1000,AA",
         ],
     ],
 )
 def test_skips_headers_and_strips_bom(lines: list[str]) -> None:
-    result = parse_ancestry(lines)
+    result = parse_ftdna(lines)
     v = result.variants[0]
 
     assert len(result.variants) == 1
     assert v.rsid == "rs123"
     assert v.genotype == "AA"
-    assert (
-        result.errors == [] or result.errors is not None
-    )  # BOM or comment lines produce no errors
 
 
 # --- Delimiters ---
@@ -42,10 +42,11 @@ def test_skips_headers_and_strips_bom(lines: list[str]) -> None:
         "rs123\t1\t1000\tA\tA",
         "rs123 1 1000 A A",
         "rs123\t 1 1000\tA\tA",
+        "rs123,1,1000,AA",  # combined format
     ],
 )
 def test_accepts_delimiter_variations(line: str) -> None:
-    result = parse_ancestry([line])
+    result = parse_ftdna([line])
     v = result.variants[0]
 
     assert len(result.variants) == 1
@@ -63,14 +64,15 @@ def test_accepts_delimiter_variations(line: str) -> None:
         ("24", "Y"),
         ("25", "MT"),
         ("Y", "Y"),
+        ("MT", "MT"),
     ],
 )
 def test_chromosome_normalization(chrom_input: str, expected: str) -> None:
-    result = parse_ancestry([f"rs123,{chrom_input},1000,A,A"])
+    result = parse_ftdna([f"rs123,{chrom_input},1000,A,A"])
     assert result.variants[0].chromosome == expected
 
 
-# --- Genotype assembly ---
+# --- Genotype assembly (allele split format) ---
 @pytest.mark.parametrize(
     "allele1,allele2,expected_genotype",
     [
@@ -81,10 +83,10 @@ def test_chromosome_normalization(chrom_input: str, expected: str) -> None:
         ("--", "--", None),  # missing
     ],
 )
-def test_genotype_assembly(
+def test_genotype_assembly_from_alleles(
     allele1: str, allele2: str, expected_genotype: str | None
 ) -> None:
-    result = parse_ancestry([f"rs1,1,1000,{allele1},{allele2}"])
+    result = parse_ftdna([f"rs1,1,1000,{allele1},{allele2}"])
     v = result.variants[0]
 
     assert v.genotype == expected_genotype
@@ -94,13 +96,48 @@ def test_genotype_assembly(
         assert not result.errors
 
 
+# --- Genotype parsing (combined result format) ---
+@pytest.mark.parametrize(
+    "result_value,expected_genotype",
+    [
+        ("AA", "AA"),
+        ("AG", "AG"),
+        ("A", "A"),  # haploid
+        ("--", None),  # missing
+        ("ZZ", None),  # invalid
+    ],
+)
+def test_genotype_from_result_column(
+    result_value: str, expected_genotype: str | None
+) -> None:
+    result = parse_ftdna([f"rs1,1,1000,{result_value}"])
+    v = result.variants[0]
+
+    assert v.genotype == expected_genotype
+    if expected_genotype is None:
+        assert len(result.errors) == 1
+
+
+# --- Mixed format support ---
+def test_mixed_result_and_allele_formats() -> None:
+    lines = [
+        "rs1,1,1000,A,A",
+        "rs2,1,1001,GG",
+    ]
+    result = parse_ftdna(lines)
+
+    assert len(result.variants) == 2
+    assert result.variants[0].genotype == "AA"
+    assert result.variants[1].genotype == "GG"
+
+
 # --- Internal IDs and duplicates ---
 def test_internal_ids_and_duplicates() -> None:
     lines = [
         "i4000001,1,1000,G,G",
         "i4000001,1,1000,G,G",
     ]
-    result = parse_ancestry(lines)
+    result = parse_ftdna(lines)
 
     assert len(result.variants) == 2
     assert result.variants[0].rsid == "i4000001"
@@ -110,7 +147,7 @@ def test_internal_ids_and_duplicates() -> None:
 
 # --- Extra columns ignored ---
 def test_extra_columns_ignored() -> None:
-    result = parse_ancestry(["rs1,1,100,A,A,EXTRA,VALUE"])
+    result = parse_ftdna(["rs1,1,100,A,A,EXTRA,VALUE"])
     v = result.variants[0]
 
     assert v.rsid == "rs1"

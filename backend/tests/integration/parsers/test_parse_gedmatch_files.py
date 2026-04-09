@@ -1,4 +1,4 @@
-from backend.services.parsers.parser_livingdna import parse_livingdna
+from backend.services.parsers import parse_gedmatch
 
 
 def load_lines(path: str) -> list[str]:
@@ -6,15 +6,15 @@ def load_lines(path: str) -> list[str]:
         return f.readlines()
 
 
-def test_parse_livingdna_edge_file() -> None:
-    lines = load_lines("backend/tests/dna_samples/livingdna/livingdna_edge.txt")
-    result = parse_livingdna(lines)
+def test_parse_gedmatch_edge_file() -> None:
+    lines = load_lines("backend/tests/dna_samples/gedmatch/gedmatch_edge.txt")
+    result = parse_gedmatch(lines)
 
     # All structurally valid → all kept
-    assert len(result.variants) == 6
+    assert len(result.variants) == 7
 
-    # Two invalid genotypes  → 2 errors
-    assert len(result.errors) == 2
+    # Three invalid genotypes → 3 errors
+    assert len(result.errors) == 3
 
     # Spot checks
     assert result.variants[0].rsid == "."  # missing rsid allowed
@@ -23,12 +23,14 @@ def test_parse_livingdna_edge_file() -> None:
     assert result.variants[4].genotype is None  # missing genotype
 
 
-def test_parse_livingdna_messy_file() -> None:
-    lines = load_lines("backend/tests/dna_samples/livingdna/livingdna_messy.txt")
-    result = parse_livingdna(lines)
+def test_parse_gedmatch_messy_file() -> None:
+    lines = load_lines("backend/tests/dna_samples/gedmatch/gedmatch_messy.txt")
+    result = parse_gedmatch(lines)
 
+    print(result.variants)
+    print(result.errors)
     assert len(result.variants) == 6
-    assert len(result.errors) == 2
+    assert len(result.errors) == 3
 
     # normalization
     assert result.variants[0].genotype == "AA"
@@ -40,9 +42,9 @@ def test_parse_livingdna_messy_file() -> None:
     assert all(v.rsid != "bad" for v in result.variants)
 
 
-def test_parse_livingdna_valid_file() -> None:
-    lines = load_lines("backend/tests/dna_samples/livingdna/livingdna_valid.txt")
-    result = parse_livingdna(lines)
+def test_parse_gedmatch_valid_file() -> None:
+    lines = load_lines("backend/tests/dna_samples/gedmatch/gedmatch_valid.txt")
+    result = parse_gedmatch(lines)
 
     assert len(result.variants) == 4
     assert result.errors == []
@@ -52,14 +54,14 @@ def test_parse_livingdna_valid_file() -> None:
     assert result.variants[-1].chromosome == "7"
 
 
-def test_parse_livingdna_broken_file() -> None:
-    lines = load_lines("backend/tests/dna_samples/livingdna/livingdna_broken.txt")
-    result = parse_livingdna(lines)
+def test_parse_gedmatch_broken_file() -> None:
+    lines = load_lines("backend/tests/dna_samples/gedmatch/gedmatch_broken.txt")
+    result = parse_gedmatch(lines)
 
     assert len(result.variants) == 0
 
 
-def test_parse_livingdna_empty_file() -> None:
-    result = parse_livingdna([])
+def test_parse_gedmatch_empty_file() -> None:
+    result = parse_gedmatch([])
 
     assert result.variants == []

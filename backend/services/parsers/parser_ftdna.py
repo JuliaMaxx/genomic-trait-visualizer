@@ -1,6 +1,6 @@
 from fastapi.logger import logger
 
-from backend.models.schemas import ParseResult, Variant
+from backend.models import ParseResult, Variant
 from backend.services.parsers.common import (
     VALID_CHROMOSOMES,
     is_standard_rsid,

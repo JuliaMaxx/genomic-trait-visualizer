@@ -1,4 +1,4 @@
-from backend.services.parsers.parser_ftdna import parse_ftdna
+from backend.services.parsers import parse_ftdna
 
 
 def load_lines(path: str) -> list[str]:

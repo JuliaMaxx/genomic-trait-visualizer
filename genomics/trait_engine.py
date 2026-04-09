@@ -1,6 +1,6 @@
 import pandas as pd
 
-from backend.models.schemas import Variant
+from backend.models import Variant
 
 
 def calculate_traits(user_variants: list[Variant]) -> dict[str, float]:
