@@ -6,6 +6,7 @@ from backend.models.schemas import Variant
 from backend.services.parsers.parser_23andme import parse_23andme
 from backend.services.parsers.parser_ancestry import parse_ancestry
 from backend.services.parsers.parser_ftdna import parse_ftdna
+from backend.services.parsers.parser_gedmatch import parse_gedmatch
 from backend.services.parsers.parser_livingdna import parse_livingdna
 from backend.services.parsers.parser_myheritage import parse_myheritage
 
@@ -28,7 +29,7 @@ async def process_dna_file(file: UploadFile) -> list[Variant]:
         "ftdna": parse_ftdna,
         "livingdna": parse_livingdna,
         "myheritage": parse_myheritage,
-        # "gedmatch": parse_gedmatch,
+        "gedmatch": parse_gedmatch,
         # "vcf": parse_vcf,
     }
 

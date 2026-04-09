@@ -1,0 +1,4 @@
+rs123,1
+rs124,Z,1000,A,A
+rs125,1,pos,A,A
+bad,line

@@ -1,0 +1,9 @@
+# messy GEDmatch file
+
+rs123,1,1000,A,A
+rs124 1 1001 A G
+rs125\t1,1002,A,G
+rs126,1,1003,A,G,0.123,build37
+bad,line
+rs127,1,1004,Z,Z
+rs128,1,1005,--,--

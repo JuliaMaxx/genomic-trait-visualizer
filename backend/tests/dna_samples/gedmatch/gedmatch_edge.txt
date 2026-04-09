@@ -1,0 +1,10 @@
+# GEDmatch edge cases
+rsid,chromosome,position,allele1,allele2,extra
+
+.,1,1000,A,A
+rs123,1,1001,A,G
+rs124,Y,1002,C,--
+rs125,1,1003,I,D
+rs126,1,1004,--,--
+rs127,1,1005,Z,Z
+rs128,1,1006,A,Z

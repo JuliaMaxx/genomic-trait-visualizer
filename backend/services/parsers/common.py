@@ -32,7 +32,7 @@ def is_standard_rsid(rsid: str) -> bool:
 
 def split_line(line: str) -> list[str]:
     # Split on ANY delimiter: tabs, commas, or whitespace
-    return [p for p in re.split(r"[,\t\s]+", line.strip()) if p]
+    return [p for p in re.split(r"[,\t\s]+", line.strip().replace("\\t", "\t")) if p]
 
 
 _VALID_ALLELE_RE = re.compile(r"^[ACGTID]$")
