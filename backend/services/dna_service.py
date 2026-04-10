@@ -10,6 +10,7 @@ from backend.services.parsers import (
     parse_gedmatch,
     parse_livingdna,
     parse_myheritage,
+    parse_vcf,
 )
 
 from .dna_format_detector import detect_format
@@ -32,7 +33,7 @@ async def process_dna_file(file: UploadFile) -> list[Variant]:
         "livingdna": parse_livingdna,
         "myheritage": parse_myheritage,
         "gedmatch": parse_gedmatch,
-        # "vcf": parse_vcf,
+        "vcf": parse_vcf,
     }
 
     parser = PARSERS.get(fmt)

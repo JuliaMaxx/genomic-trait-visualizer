@@ -1,0 +1,13 @@
+##fileformat=VCFv4.2
+##INFO=<ID=DP,Number=1,Type=Integer,Description="Read Depth">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	sample1
+# This is a comment within data
+1	1000	.	A	G	.	.	.	GT	0/0
+1	2000	rs123	C	T	.	.	.	GT	1/1
+22	3000	rs456	G	A	.	.	.	GT	0/1
+X	4000	rs789	T	C	.	.	.	GT	./.
+Y	5000	.	A	G	.	.	.	GT	0|1
+MT	6000	rs111	C	T	.	.	.	GT	1|1
+1	7000	rs222	A	G,T	.	.	.	GT	0/2
+
+1	8000	.	A	.	.	.	.	GT	0/0

@@ -10,6 +10,7 @@ from backend.services.parsers import (
     parse_gedmatch,
     parse_livingdna,
     parse_myheritage,
+    parse_vcf,
 )
 
 ParserFn = Callable[[list[str]], ParseResult]
@@ -121,6 +122,21 @@ PARSERS: list[ParserCase] = [
         "invalid_position_line": "rs123,1,pos,A,A",
         "mixed_delimiter_line": "rs123\t1,1000,A,A",
         "header_line": "rsid,chromosome,position,allele1,allele2",
+    },
+    {
+        "name": "vcf",
+        "parser": parse_vcf,
+        "valid_line": "1\t1000\trs123\tA\tG\t.\t.\t.\tGT\t0/0",
+        "invalid_format_line": "1\t1000",
+        "invalid_genotype_line": "1\t1000\trs123\tA\tG\t.\t.\t.\tGT\tZZ",
+        "missing_genotype_line": "1\t1000\trs123\tA\tG\t.\t.\t.\tGT\t./.",
+        "haploid_line": "1\t1000\trs123\tA\tG\t.\t.\t.\tGT\t0",
+        "rsid_dot_line": "1\t1000\t.\tA\tG\t.\t.\t.\tGT\t0/0",
+        "invalid_rsid_line": "1\t1000\trsABC\tA\tG\t.\t.\t.\tGT\t0/0",
+        "invalid_chrom_line": "Z\t1000\trs123\tA\tG\t.\t.\t.\tGT\t0/0",
+        "invalid_position_line": "1\tpos\trs123\tA\tG\t.\t.\t.\tGT\t0/0",
+        "mixed_delimiter_line": "1\t1000\trs123\tA\tG\t.\t.\t.\tGT\t0/0",
+        "header_line": "#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT\tsample1",
     },
 ]
 
