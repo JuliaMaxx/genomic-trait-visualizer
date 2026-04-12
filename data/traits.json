@@ -1,0 +1,103 @@
+[
+    {
+        "id": "lactose_intolerance",
+        "name": "Lactose Intolerance",
+        "description": "Ability to digest lactose in adulthood",
+        "rules": [
+            {
+                "rsid": "rs4988235",
+                "genotype": "CC",
+                "odds_ratio": 1.8,
+                "description": "Strongly associated with lactose intolerance in Europeans"
+            },
+            {
+                "rsid": "rs182549",
+                "genotype": "GG",
+                "odds_ratio": 1.6,
+                "description": "Associated with reduced lactase persistence"
+            }
+        ]
+    },
+    {
+        "id": "caffeine_metabolism",
+        "name": "Caffeine Metabolism",
+        "description": "Speed at which caffeine is metabolized",
+        "rules": [
+            {
+                "rsid": "rs762551",
+                "genotype": "AA",
+                "odds_ratio": null,
+                "description": "Fast caffeine metabolizer"
+            },
+            {
+                "rsid": "rs762551",
+                "genotype": [
+                    "AC",
+                    "CC"
+                ],
+                "odds_ratio": null,
+                "description": "Slow caffeine metabolizer"
+            }
+        ]
+    },
+    {
+        "id": "alcohol_flush",
+        "name": "Alcohol Flush Reaction",
+        "description": "Flushing response to alcohol consumption",
+        "rules": [
+            {
+                "rsid": "rs671",
+                "genotype": [
+                    "AA",
+                    "AG"
+                ],
+                "odds_ratio": 3.0,
+                "description": "Reduced ALDH2 activity leading to flushing"
+            }
+        ]
+    },
+    {
+        "id": "eye_color",
+        "name": "Eye Color (Simplified)",
+        "description": "Genetic tendency for blue or brown eyes",
+        "rules": [
+            {
+                "rsid": "rs12913832",
+                "genotype": "AA",
+                "odds_ratio": null,
+                "description": "Strongly associated with blue eyes"
+            },
+            {
+                "rsid": "rs12913832",
+                "genotype": [
+                    "AG",
+                    "GG"
+                ],
+                "odds_ratio": null,
+                "description": "Associated with brown eyes"
+            }
+        ]
+    },
+    {
+        "id": "bitter_taste",
+        "name": "Bitter Taste Sensitivity",
+        "description": "Sensitivity to bitter compounds (e.g., broccoli, coffee)",
+        "rules": [
+            {
+                "rsid": "rs713598",
+                "genotype": [
+                    "CC",
+                    "CG"
+                ],
+                "odds_ratio": null,
+                "description": "Higher sensitivity to bitter taste"
+            },
+            {
+                "rsid": "rs713598",
+                "genotype": "GG",
+                "odds_ratio": null,
+                "description": "Lower sensitivity to bitter taste"
+            }
+        ]
+    }
+]

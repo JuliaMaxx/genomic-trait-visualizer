@@ -82,4 +82,4 @@ def test_stream_integrity_no_loss_or_duplication(
 
     result = _process_dna_file_sync(file)
 
-    assert result == ["a", "b", "c"]
+    assert result.variants == ["a", "b", "c"]

@@ -8,11 +8,26 @@ class Variant(BaseModel):
     genotype: str | None
 
 
-class TraitResult(BaseModel):
-    trait: str
-    probability: float
-
-
 class ParseResult(BaseModel):
     variants: list[Variant]
     errors: list[str]
+
+
+class TraitRule(BaseModel):
+    rsid: str
+    genotype: str | list[str]
+    odds_ratio: float | None = None
+    beta: float | None = None
+    description: str
+
+
+class TraitResult(BaseModel):
+    trait_id: str
+    name: str
+
+    matched_rules: list[TraitRule]
+    missing_rsids: list[str]
+
+    confidence: float  # based on available SNPs
+
+    notes: list[str]  # optional scientific notes

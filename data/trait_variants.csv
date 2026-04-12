@@ -1,7 +1,0 @@
-trait,rsid,effect_allele,weight
-lactose_tolerance,rs4988235,T,0.6
-lactose_tolerance,rs182549,T,0.4
-caffeine_metabolism,rs762551,A,1.0
-chronotype,rs1801260,C,1.0
-bitter_taste,rs713598,C,0.5
-bitter_taste,rs1726866,T,0.5

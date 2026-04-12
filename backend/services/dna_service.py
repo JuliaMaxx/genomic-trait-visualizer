@@ -5,7 +5,7 @@ from typing import Callable, Iterator
 from fastapi import UploadFile
 from fastapi.concurrency import run_in_threadpool
 
-from backend.models import ParseResult, Variant
+from backend.models import ParseResult
 from backend.services.parsers import (
     parse_23andme,
     parse_ancestry,
@@ -55,7 +55,7 @@ PARSERS: dict[str, Callable[[list[str]], ParseResult]] = {
 # ------------------------
 # Core sync processor
 # ------------------------
-def _process_dna_file_sync(file: UploadFile) -> list[Variant]:
+def _process_dna_file_sync(file: UploadFile) -> ParseResult:
     lines = _stream_text_lines(file)
 
     # Read only first N lines into a small buffer
@@ -79,11 +79,11 @@ def _process_dna_file_sync(file: UploadFile) -> list[Variant]:
 
     result = parser(list(full_stream()))
 
-    return result.variants
+    return result
 
 
 # ------------------------
 # Async entrypoint
 # ------------------------
-async def process_dna_file(file: UploadFile) -> list[Variant]:
+async def process_dna_file(file: UploadFile) -> ParseResult:
     return await run_in_threadpool(_process_dna_file_sync, file)
