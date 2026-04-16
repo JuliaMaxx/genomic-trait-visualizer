@@ -1,0 +1,49 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-app: #ffffff;
+  --color-content: #111111;
+  --color-brand: #2563eb;
+  /*
+  TODO: add semantic color variables:
+  --color-error
+  --color-success
+  --color-warning
+   */
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
+  --font-display:
+    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
+
+  --spacing-page-x: 1rem;
+  --spacing-page-y: 2rem;
+  --spacing-page-x-sm: 1.5rem;
+  --spacing-page-x-lg: 2rem;
+  --spacing-section-gap: 2rem;
+  --spacing-stack-gap: 1.5rem;
+  --spacing-card-padding: 1.5rem;
+  --spacing-panel-padding: 1rem;
+  --spacing-control-x: 1rem;
+  --spacing-control-y: 0.625rem;
+  --spacing-dropzone-x: 1.5rem;
+  --spacing-dropzone-y: 2rem;
+  --spacing-empty-x: 1.5rem;
+  --spacing-empty-y: 3rem;
+
+  /* Shape */
+  --radius-button: 0.75rem;
+  --radius-panel: 1rem;
+  --radius-card: 1.5rem;
+  --radius-pill: 9999px;
+
+  /* Layout widths */
+  --width-app: 72rem;
+  --width-content: 64rem;
+  --width-form: 48rem;
+  --width-text: 42rem;
+
+  --radius-base: 0.5rem;
+  --border-base: 1px solid var(--color-content);
+}

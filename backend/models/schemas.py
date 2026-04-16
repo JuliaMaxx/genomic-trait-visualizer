@@ -15,6 +15,7 @@ class ParseResult(BaseModel):
 
 class TraitRule(BaseModel):
     rsid: str
+    # TODO: should return only a list of strings even for a single case
     genotype: str | list[str]
     odds_ratio: float | None = None
     beta: float | None = None

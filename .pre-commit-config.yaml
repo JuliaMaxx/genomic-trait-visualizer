@@ -30,3 +30,23 @@ repos:
         additional_dependencies:
           - pydantic
           - fastapi
+
+  # =========================
+  # FRONTEND HOOKS
+  # =========================
+
+  - repo: local
+    hooks:
+      - id: frontend-lint
+        name: frontend eslint
+        entry: cmd /c "cd frontend && npm run lint"
+        language: system
+        pass_filenames: false
+        files: ^frontend/
+
+      - id: frontend-typecheck
+        name: frontend typecheck
+        entry: cmd /c "cd frontend && npm run typecheck"
+        language: system
+        pass_filenames: false
+        files: ^frontend/
