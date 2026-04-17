@@ -9,7 +9,7 @@ Build an **interactive, explainable genomic exploration system** that allows use
 - Explore variant → genotype → trait relationships
 - Learn through interaction and experimentation
 
-# 🧱 Phase 1 – Solidify Core Pipeline (You are here)
+# 🧱 Phase 1 – Solidify Core Pipeline
 
 ## Goal
 
@@ -150,7 +150,7 @@ Add **meaningful visual explanation (not decorative charts)**.
 
 ## Goal
 
-Enable **exploration without user data** (VERY important for thesis).
+Enable **exploration without user data**.
 
 ## Tasks
 
@@ -225,7 +225,7 @@ Make the platform **educational**.
 
 ---
 
-# 🏗️ Phase 9 – Architecture & Code Quality (Thesis Critical)
+# 🏗️ Phase 9 – Architecture & Code Quality
 
 ## Goal
 
