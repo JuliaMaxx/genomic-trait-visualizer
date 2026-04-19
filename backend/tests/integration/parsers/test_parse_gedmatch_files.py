@@ -1,6 +1,12 @@
 from backend.services.parsers import parse_gedmatch
 
 
+def to_alleles(genotype: str | None) -> list[str] | None:
+    if genotype is None:
+        return None
+    return [allele for allele in genotype]
+
+
 def load_lines(path: str) -> list[str]:
     with open(path, "r", encoding="utf-8", errors="ignore") as f:
         return f.readlines()
@@ -18,8 +24,8 @@ def test_parse_gedmatch_edge_file() -> None:
 
     # Spot checks
     assert result.variants[0].rsid == "."  # missing rsid allowed
-    assert result.variants[2].genotype == "C"  # haploid
-    assert result.variants[3].genotype == "ID"  # indel normalization
+    assert result.variants[2].genotype == ["C"]  # haploid
+    assert result.variants[3].genotype == ["I", "D"]  # indel normalization
     assert result.variants[4].genotype is None  # missing genotype
 
 
@@ -33,7 +39,7 @@ def test_parse_gedmatch_messy_file() -> None:
     assert len(result.errors) == 3
 
     # normalization
-    assert result.variants[0].genotype == "AA"
+    assert result.variants[0].genotype == ["A", "A"]
 
     # invalid genotype handled
     assert any(v.genotype is None for v in result.variants)
@@ -50,7 +56,7 @@ def test_parse_gedmatch_valid_file() -> None:
     assert result.errors == []
 
     # correctness
-    assert result.variants[0].genotype == "AA"
+    assert result.variants[0].genotype == ["A", "A"]
     assert result.variants[-1].chromosome == "7"
 
 

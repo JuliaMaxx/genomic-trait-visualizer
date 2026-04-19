@@ -1,3 +1,41 @@
-from .schemas import ParseResult, TraitResult, Variant
+from .schemas import (
+    CuratedTraitRule,
+    EvaluatedRule,
+    EvidenceLevel,
+    GenotypeInterpretation,
+    ParseResult,
+    RawCatalog,
+    RawCatalogDict,
+    RawTrait,
+    TraitCatalog,
+    TraitCategory,
+    TraitDefinition,
+    TraitDetail,
+    TraitEvaluation,
+    TraitResult,
+    TraitResultLabel,
+    TraitRsidDetail,
+    TraitSource,
+    Variant,
+)
 
-__all__ = ["ParseResult", "TraitResult", "Variant"]
+__all__ = [
+    "CuratedTraitRule",
+    "EvidenceLevel",
+    "GenotypeInterpretation",
+    "ParseResult",
+    "TraitCatalog",
+    "TraitCategory",
+    "TraitResultLabel",
+    "TraitDefinition",
+    "TraitDetail",
+    "TraitResult",
+    "TraitRsidDetail",
+    "TraitSource",
+    "Variant",
+    "EvaluatedRule",
+    "TraitEvaluation",
+    "RawCatalog",
+    "RawTrait",
+    "RawCatalogDict",
+]

@@ -4,6 +4,12 @@ from backend.models import Variant
 from backend.services.parsers import parse_vcf
 
 
+def to_alleles(genotype: str | None) -> list[str] | None:
+    if genotype is None:
+        return None
+    return [allele for allele in genotype]
+
+
 # --- Helper ---
 def load_sample(sample_name: str) -> list[str]:
     """Load a test sample file from dna_samples/vcf."""
@@ -24,7 +30,7 @@ def assert_variant_fields(variant: Variant) -> None:
     } or variant.chromosome.lower().startswith("chr")
     assert isinstance(variant.position, int) and variant.position > 0
     assert isinstance(variant.rsid, str)
-    assert variant.genotype is None or isinstance(variant.genotype, str)
+    assert variant.genotype is None or isinstance(variant.genotype, list)
 
 
 # --- Valid File ---
@@ -39,7 +45,7 @@ def test_parse_vcf_valid_file() -> None:
     assert v0.chromosome == "1"
     assert v0.position == 742429
     assert v0.rsid == "rs3094315"
-    assert v0.genotype == "AA"
+    assert v0.genotype == ["A", "A"]
 
     for v in result.variants:
         assert_variant_fields(v)

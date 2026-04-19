@@ -1,103 +1,314 @@
 [
-    {
-        "id": "lactose_intolerance",
-        "name": "Lactose Intolerance",
-        "description": "Ability to digest lactose in adulthood",
-        "rules": [
-            {
-                "rsid": "rs4988235",
-                "genotype": "CC",
-                "odds_ratio": 1.8,
-                "description": "Strongly associated with lactose intolerance in Europeans"
-            },
-            {
-                "rsid": "rs182549",
-                "genotype": "GG",
-                "odds_ratio": 1.6,
-                "description": "Associated with reduced lactase persistence"
-            }
-        ]
-    },
-    {
-        "id": "caffeine_metabolism",
-        "name": "Caffeine Metabolism",
-        "description": "Speed at which caffeine is metabolized",
-        "rules": [
-            {
-                "rsid": "rs762551",
-                "genotype": "AA",
-                "odds_ratio": null,
-                "description": "Fast caffeine metabolizer"
-            },
-            {
-                "rsid": "rs762551",
-                "genotype": [
-                    "AC",
-                    "CC"
-                ],
-                "odds_ratio": null,
-                "description": "Slow caffeine metabolizer"
-            }
-        ]
-    },
-    {
-        "id": "alcohol_flush",
-        "name": "Alcohol Flush Reaction",
-        "description": "Flushing response to alcohol consumption",
-        "rules": [
-            {
-                "rsid": "rs671",
-                "genotype": [
-                    "AA",
-                    "AG"
-                ],
-                "odds_ratio": 3.0,
-                "description": "Reduced ALDH2 activity leading to flushing"
-            }
-        ]
-    },
-    {
-        "id": "eye_color",
-        "name": "Eye Color (Simplified)",
-        "description": "Genetic tendency for blue or brown eyes",
-        "rules": [
-            {
-                "rsid": "rs12913832",
-                "genotype": "AA",
-                "odds_ratio": null,
-                "description": "Strongly associated with blue eyes"
-            },
-            {
-                "rsid": "rs12913832",
-                "genotype": [
-                    "AG",
-                    "GG"
-                ],
-                "odds_ratio": null,
-                "description": "Associated with brown eyes"
-            }
-        ]
-    },
-    {
-        "id": "bitter_taste",
-        "name": "Bitter Taste Sensitivity",
-        "description": "Sensitivity to bitter compounds (e.g., broccoli, coffee)",
-        "rules": [
-            {
-                "rsid": "rs713598",
-                "genotype": [
-                    "CC",
-                    "CG"
-                ],
-                "odds_ratio": null,
-                "description": "Higher sensitivity to bitter taste"
-            },
-            {
-                "rsid": "rs713598",
-                "genotype": "GG",
-                "odds_ratio": null,
-                "description": "Lower sensitivity to bitter taste"
-            }
-        ]
-    }
+  {
+    "id": "lactose_intolerance",
+    "name": "Lactose Digestion Ability",
+    "category": "nutrition",
+    "description": "This trait estimates whether your body can digest lactose (milk sugar) as an adult.",
+    "simple_summary": "You are more likely to either digest lactose comfortably or feel digestive discomfort from milk sugar.",
+    "technical_summary": "This educational trait uses rs4988235 and rs182549 as proxy markers linked to lactase persistence patterns. It is intended for learning and exploration, not diagnosis.",
+    "evidence_level": "strong",
+    "keywords": [
+      "lactose intolerance",
+      "lactose tolerance",
+      "lactose",
+      "lactase",
+      "dairy digestion",
+      "milk sugar",
+      "rs4988235"
+    ],
+    "sources": [
+      {
+        "name": "NCBI dbSNP",
+        "url": "https://www.ncbi.nlm.nih.gov/snp/rs4988235",
+        "reference": "rs4988235",
+        "notes": "Variant reference page for the main lactase-persistence marker."
+      },
+      {
+        "name": "NCBI dbSNP",
+        "url": "https://www.ncbi.nlm.nih.gov/snp/rs182549",
+        "reference": "rs182549",
+        "notes": "Second marker used in the curated educational rule set."
+      },
+      {
+        "name": "NHGRI-EBI GWAS Catalog",
+        "url": "https://www.ebi.ac.uk/gwas/search?query=rs4988235",
+        "reference": "GWAS search",
+        "notes": "Curated summary source for lactase-persistence association literature."
+      }
+    ],
+    "rules": [
+      {
+        "rsid": "rs4988235",
+        "odds_ratio": 1.8,
+        "description": "Regulatory variant near the LCT gene associated with continued lactase enzyme production in adulthood.",
+        "gene": "LCT",
+        "weight": 1.0,
+        "priority": 1,
+        "genotype_meanings": [
+          {
+            "genotype": ["CC"],
+            "meaning": "This marker suggests reduced lactase persistence in adulthood.",
+            "effect": "Lower likelihood of adult lactase persistence",
+            "score": -0.7
+          },
+          {
+            "genotype": ["CT", "TT"],
+            "meaning": "This marker suggests lactase persistence is more likely in adulthood.",
+            "effect": "Higher likelihood of adult lactase persistence",
+            "score": 0.45
+          }
+        ],
+        "evidence_level": "strong",
+        "source_refs": ["NCBI dbSNP", "NHGRI-EBI GWAS Catalog"]
+      },
+      {
+        "rsid": "rs182549",
+        "odds_ratio": 1.6,
+        "description": "Variant in the MCM6 region that influences expression of the nearby LCT gene involved in lactose digestion.",
+        "gene": "MCM6/LCT regulatory region",
+        "weight": 1.0,
+        "priority": 2,
+        "genotype_meanings": [
+          {
+            "genotype": ["GG"],
+            "meaning": "This marker suggests reduced lactase persistence in adulthood.",
+            "effect": "Lower likelihood of adult lactase persistence",
+            "score": -0.6
+          },
+          {
+            "genotype": ["AG", "AA"],
+            "meaning": "This marker suggests lactase persistence is more likely in adulthood.",
+            "effect": "Higher likelihood of adult lactase persistence",
+            "score": 0.35
+          }
+        ],
+        "evidence_level": "strong",
+        "source_refs": ["NCBI dbSNP", "NHGRI-EBI GWAS Catalog"]
+      }
+    ]
+  },
+  {
+    "id": "caffeine_metabolism",
+    "name": "Caffeine Processing Speed",
+    "category": "nutrition",
+    "description": "This trait estimates how quickly your body is likely to process caffeine.",
+    "simple_summary": "You are more likely to clear caffeine faster or feel it for longer.",
+    "technical_summary": "This educational trait uses rs762551 in CYP1A2 as a proxy marker for caffeine metabolism speed. It reflects probability, not a guaranteed outcome.",
+    "evidence_level": "moderate",
+    "keywords": [
+      "caffeine sensitivity",
+      "caffeine clearance",
+      "caffeine",
+      "coffee",
+      "cyp1a2",
+      "rs762551"
+    ],
+    "sources": [
+      {
+        "name": "NCBI dbSNP",
+        "url": "https://www.ncbi.nlm.nih.gov/snp/rs762551",
+        "reference": "rs762551",
+        "notes": "Variant reference page for the CYP1A2 marker used here."
+      },
+      {
+        "name": "NHGRI-EBI GWAS Catalog",
+        "url": "https://www.ebi.ac.uk/gwas/search?query=rs762551",
+        "reference": "GWAS search",
+        "notes": "Association summary for caffeine metabolism literature."
+      }
+    ],
+    "rules": [
+      {
+        "rsid": "rs762551",
+        "description": "Variant in the CYP1A2 gene affecting the rate at which caffeine is metabolized in the liver.",
+        "gene": "CYP1A2",
+        "weight": 1.0,
+        "priority": 1,
+        "genotype_meanings": [
+          {
+            "genotype": ["AA"],
+            "meaning": "This marker suggests faster caffeine metabolism.",
+            "effect": "Faster caffeine clearance",
+            "score": 0.55
+          },
+          {
+            "genotype": ["AC", "CC"],
+            "meaning": "This marker suggests slower caffeine metabolism.",
+            "effect": "Slower caffeine clearance",
+            "score": -0.4
+          }
+        ],
+        "evidence_level": "moderate",
+        "source_refs": ["NCBI dbSNP", "NHGRI-EBI GWAS Catalog"]
+      }
+    ]
+  },
+  {
+    "id": "alcohol_flush",
+    "name": "Alcohol Flush Reaction",
+    "category": "health",
+    "description": "This trait estimates your likelihood of facial flushing after drinking alcohol.",
+    "simple_summary": "You are more likely to experience stronger or weaker flushing after alcohol.",
+    "technical_summary": "This educational trait uses rs671 in ALDH2 as a proxy marker for alcohol flush response. It is for interpretation and learning, not medical advice.",
+    "evidence_level": "strong",
+    "keywords": [
+      "alcohol flush",
+      "flushing reaction",
+      "aldehyde dehydrogenase deficiency",
+      "alcohol",
+      "flush",
+      "aldh2",
+      "rs671"
+    ],
+    "sources": [
+      {
+        "name": "NCBI dbSNP",
+        "url": "https://www.ncbi.nlm.nih.gov/snp/rs671",
+        "reference": "rs671",
+        "notes": "Variant reference page for the ALDH2 marker."
+      },
+      {
+        "name": "NHGRI-EBI GWAS Catalog",
+        "url": "https://www.ebi.ac.uk/gwas/search?query=rs671",
+        "reference": "GWAS search",
+        "notes": "Association summary for flushing-related literature."
+      }
+    ],
+    "rules": [
+      {
+        "rsid": "rs671",
+        "odds_ratio": 3.0,
+        "description": "Variant in the ALDH2 gene affecting the breakdown of acetaldehyde, a byproduct of alcohol metabolism.",
+        "gene": "ALDH2",
+        "weight": 1.0,
+        "priority": 1,
+        "genotype_meanings": [
+          {
+            "genotype": ["AA", "AG"],
+            "meaning": "This marker suggests higher likelihood of alcohol flushing.",
+            "effect": "Higher flushing likelihood",
+            "score": 0.6
+          },
+          {
+            "genotype": ["GG"],
+            "meaning": "This marker suggests lower likelihood of alcohol flushing.",
+            "effect": "Lower flushing likelihood",
+            "score": -0.6
+          }
+        ],
+        "evidence_level": "strong",
+        "source_refs": ["NCBI dbSNP", "NHGRI-EBI GWAS Catalog"]
+      }
+    ]
+  },
+  {
+    "id": "eye_color",
+    "name": "Likely Eye Color Pattern",
+    "category": "appearance",
+    "description": "This trait estimates whether your genetics lean toward lighter or darker eye color.",
+    "simple_summary": "You are more likely to have lighter eyes or darker eyes in this simplified model.",
+    "technical_summary": "This educational trait uses rs12913832 in the HERC2/OCA2 region as a compact proxy signal. Eye color is polygenic, so this remains a simplified approximation.",
+    "evidence_level": "strong",
+    "keywords": [
+      "blue eyes",
+      "brown eyes",
+      "pigmentation",
+      "eye color",
+      "rs12913832"
+    ],
+    "sources": [
+      {
+        "name": "NCBI dbSNP",
+        "url": "https://www.ncbi.nlm.nih.gov/snp/rs12913832",
+        "reference": "rs12913832",
+        "notes": "Variant reference page for the HERC2/OCA2 marker."
+      },
+      {
+        "name": "NHGRI-EBI GWAS Catalog",
+        "url": "https://www.ebi.ac.uk/gwas/search?query=rs12913832",
+        "reference": "GWAS search",
+        "notes": "Association summary for eye-color literature."
+      }
+    ],
+    "rules": [
+      {
+        "rsid": "rs12913832",
+        "description": "Regulatory variant in the HERC2/OCA2 region influencing melanin production and eye pigmentation.",
+        "gene": "HERC2/OCA2",
+        "weight": 1.0,
+        "priority": 1,
+        "genotype_meanings": [
+          {
+            "genotype": ["AA"],
+            "meaning": "This marker suggests a higher likelihood of lighter eye color.",
+            "effect": "Higher likelihood of lighter eyes",
+            "score": 0.5
+          },
+          {
+            "genotype": ["AG", "GG"],
+            "meaning": "This marker suggests a higher likelihood of darker eye color.",
+            "effect": "Higher likelihood of darker eyes",
+            "score": -0.4
+          }
+        ],
+        "evidence_level": "strong",
+        "source_refs": ["NCBI dbSNP", "NHGRI-EBI GWAS Catalog"]
+      }
+    ]
+  },
+  {
+    "id": "bitter_taste",
+    "name": "Bitter Taste Response",
+    "category": "nutrition",
+    "description": "This trait estimates how strongly you may perceive bitter tastes.",
+    "simple_summary": "You are more likely to notice bitter flavors strongly or find them milder.",
+    "technical_summary": "This educational trait uses rs713598 in TAS2R38 as a proxy marker for bitter taste perception. It is a simplified signal for learning and exploration.",
+    "evidence_level": "moderate",
+    "keywords": [
+      "taste sensitivity",
+      "broccoli taste",
+      "coffee bitterness",
+      "bitter taste",
+      "tas2r38",
+      "rs713598"
+    ],
+    "sources": [
+      {
+        "name": "NCBI dbSNP",
+        "url": "https://www.ncbi.nlm.nih.gov/snp/rs713598",
+        "reference": "rs713598",
+        "notes": "Variant reference page for the TAS2R38 marker."
+      },
+      {
+        "name": "NHGRI-EBI GWAS Catalog",
+        "url": "https://www.ebi.ac.uk/gwas/search?query=rs713598",
+        "reference": "GWAS search",
+        "notes": "Association summary for bitter taste literature."
+      }
+    ],
+    "rules": [
+      {
+        "rsid": "rs713598",
+        "description": "Variant in the TAS2R38 gene affecting sensitivity to certain bitter-tasting compounds.",
+        "gene": "TAS2R38",
+        "weight": 1.0,
+        "priority": 1,
+        "genotype_meanings": [
+          {
+            "genotype": ["CC", "CG"],
+            "meaning": "This marker suggests higher bitter taste sensitivity.",
+            "effect": "Stronger bitter perception",
+            "score": 0.45
+          },
+          {
+            "genotype": ["GG"],
+            "meaning": "This marker suggests lower bitter taste sensitivity.",
+            "effect": "Weaker bitter perception",
+            "score": -0.35
+          }
+        ],
+        "source_refs": ["NCBI dbSNP", "NHGRI-EBI GWAS Catalog"]
+      }
+    ]
+  }
 ]

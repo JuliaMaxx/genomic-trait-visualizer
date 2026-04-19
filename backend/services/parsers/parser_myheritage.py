@@ -69,7 +69,7 @@ def parse_myheritage(lines: list[str]) -> ParseResult:
             logger.warning(msg)
             errors.append(msg)
 
-        genotype: str | None
+        genotype: list[str] | None
         # If the export has separate allele columns, combine them.
         if len(parts) >= 5:
             allele1, allele2 = parts[3], parts[4]

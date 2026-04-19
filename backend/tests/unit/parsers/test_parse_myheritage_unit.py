@@ -3,6 +3,12 @@ import pytest
 from backend.services.parsers import parse_myheritage
 
 
+def to_alleles(genotype: str | None) -> list[str] | None:
+    if genotype is None:
+        return None
+    return [allele for allele in genotype]
+
+
 # --- Header / BOM / Comment handling ---
 @pytest.mark.parametrize(
     "lines",
@@ -27,7 +33,7 @@ def test_skips_headers_and_strips_bom(lines: list[str]) -> None:
 
     assert len(result.variants) == 1
     assert v.rsid == "rs123"
-    assert v.genotype == "AA"
+    assert v.genotype == ["A", "A"]
     assert result.errors == [] or result.errors is not None
 
 
@@ -48,7 +54,7 @@ def test_accepts_layouts_and_delimiters(line: str) -> None:
     assert len(result.variants) == 1
     assert v.chromosome == "1"
     assert v.position == 1000
-    assert v.genotype == "AA" if "AA" in line else "AG"
+    assert v.genotype == (["A", "A"] if "AA" in line else ["A", "G"])
 
 
 # --- Chromosome normalization ---
@@ -84,7 +90,7 @@ def test_genotype_parsing(
     result = parse_myheritage([line])
     v = result.variants[0]
 
-    assert v.genotype == expected_genotype
+    assert v.genotype == to_alleles(expected_genotype)
     if expect_error:
         assert len(result.errors) == 1
         assert "invalid" in result.errors[0].lower()
@@ -112,4 +118,4 @@ def test_extra_columns_ignored() -> None:
     v = result.variants[0]
 
     assert len(result.variants) == 1
-    assert v.genotype == "AG"
+    assert v.genotype == ["A", "G"]

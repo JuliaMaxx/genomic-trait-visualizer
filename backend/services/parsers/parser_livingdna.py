@@ -55,8 +55,6 @@ def parse_livingdna(lines: list[str]) -> ParseResult:
             continue
 
         parts = split_line(line)
-        print(len(parts))
-
         if header_fields is None:
             header_fields = _parse_header_row(parts)
             if header_fields is not None:
@@ -91,7 +89,7 @@ def parse_livingdna(lines: list[str]) -> ParseResult:
             logger.warning(msg)
             errors.append(msg)
 
-        genotype: str | None
+        genotype: list[str] | None
         if header_fields:
             if "allele1" in header_fields and "allele2" in header_fields:
                 allele1 = (

@@ -3,6 +3,12 @@ import pytest
 from backend.services.parsers import parse_ancestry
 
 
+def to_alleles(genotype: str | None) -> list[str] | None:
+    if genotype is None:
+        return None
+    return [allele for allele in genotype]
+
+
 # --- Header / BOM / Comment handling ---
 @pytest.mark.parametrize(
     "lines",
@@ -28,7 +34,7 @@ def test_skips_headers_and_strips_bom(lines: list[str]) -> None:
 
     assert len(result.variants) == 1
     assert v.rsid == "rs123"
-    assert v.genotype == "AA"
+    assert v.genotype == ["A", "A"]
     assert (
         result.errors == [] or result.errors is not None
     )  # BOM or comment lines produce no errors
@@ -51,7 +57,7 @@ def test_accepts_delimiter_variations(line: str) -> None:
     assert len(result.variants) == 1
     assert v.chromosome == "1"
     assert v.position == 1000
-    assert v.genotype == "AA"
+    assert v.genotype == ["A", "A"]
 
 
 # --- Chromosome mapping ---
@@ -87,7 +93,7 @@ def test_genotype_assembly(
     result = parse_ancestry([f"rs1,1,1000,{allele1},{allele2}"])
     v = result.variants[0]
 
-    assert v.genotype == expected_genotype
+    assert v.genotype == to_alleles(expected_genotype)
     if expected_genotype is None:
         assert len(result.errors) == 1
     else:
@@ -116,4 +122,4 @@ def test_extra_columns_ignored() -> None:
     assert v.rsid == "rs1"
     assert v.chromosome == "1"
     assert v.position == 100
-    assert v.genotype == "AA"
+    assert v.genotype == ["A", "A"]

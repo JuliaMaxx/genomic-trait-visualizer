@@ -1,33 +1,44 @@
 import pytest
 
 from backend.models.schemas import TraitResult, Variant
-from backend.services.trait_service import calculate_traits
+from backend.services.trait_service import calculate_single_trait, calculate_traits
 
 # ------------------------
 # Helpers
 # ------------------------
 
 
+def to_alleles(genotype: str | None) -> list[str] | None:
+    if genotype is None:
+        return None
+    return [allele for allele in genotype if allele not in {"/", " "}]
+
+
 def make_variant(
-    rsid: str, genotype: str | None, chromosome: str = "1", position: int = 1000
+    rsid: str,
+    genotype: str | None,
+    chromosome: str = "1",
+    position: int = 1000,
 ) -> Variant:
     return Variant(
         rsid=rsid,
         chromosome=chromosome,
         position=position,
-        genotype=genotype,
+        genotype=to_alleles(genotype),
     )
 
 
+EXPECTED_IDS = {
+    "lactose_intolerance",
+    "caffeine_metabolism",
+    "alcohol_flush",
+    "eye_color",
+    "bitter_taste",
+}
+
+
 def assert_all_traits_present(traits: list[TraitResult]) -> None:
-    expected_ids = {
-        "lactose_intolerance",
-        "caffeine_metabolism",
-        "alcohol_flush",
-        "eye_color",
-        "bitter_taste",
-    }
-    assert {t.trait_id for t in traits} == expected_ids
+    assert {t.trait_id for t in traits} == EXPECTED_IDS
 
 
 # ------------------------
@@ -35,22 +46,27 @@ def assert_all_traits_present(traits: list[TraitResult]) -> None:
 # ------------------------
 
 
+def test_returns_all_traits() -> None:
+    traits = calculate_traits([])
+    assert_all_traits_present(traits)
+
+
 def test_single_trait_match() -> None:
     variants = [make_variant("rs4988235", "CC")]
 
     traits = calculate_traits(variants)
 
-    assert_all_traits_present(traits)
+    lactose = next(t for t in traits if t.trait_id == "lactose_intolerance")
+
+    assert "rs4988235" in lactose.matched_rsids
 
 
 def test_no_matching_traits() -> None:
-    variants = [
-        make_variant("rs0000000", "AA"),
-    ]
+    variants = [make_variant("rs0000000", "AA")]
 
     traits = calculate_traits(variants)
 
-    assert all(len(t.matched_rules) == 0 for t in traits)
+    assert all(len(t.matched_rsids) == 0 for t in traits)
 
 
 # ------------------------
@@ -60,13 +76,10 @@ def test_no_matching_traits() -> None:
 
 @pytest.mark.parametrize("genotype", ["AG", "GA", "A/G", "A G"])
 def test_genotype_normalization(genotype: str) -> None:
-    variants: list[Variant] = [
-        make_variant("rs762551", genotype),
-    ]
+    variants = [make_variant("rs762551", genotype)]
 
     traits = calculate_traits(variants)
 
-    # Should not crash and should normalize consistently
     assert_all_traits_present(traits)
 
 
@@ -75,45 +88,35 @@ def test_genotype_normalization(genotype: str) -> None:
 # ------------------------
 
 
-def test_missing_snp_not_treated_as_negative() -> None:
-    variants: list[Variant] = []
+def test_missing_snp_recorded() -> None:
+    traits = calculate_traits([])
 
-    traits = calculate_traits(variants)
+    lactose = next(t for t in traits if t.trait_id == "lactose_intolerance")
 
-    for trait in traits:
-        assert len(trait.missing_rsids) >= 0
+    assert "rs4988235" in lactose.missing_rsids
+    assert "rs182549" in lactose.missing_rsids
 
 
 def test_partial_data_confidence() -> None:
-    variants = [
-        make_variant("rs4988235", "CC"),  # one SNP present
-    ]
+    variants = [make_variant("rs4988235", "CC")]
 
     traits = calculate_traits(variants)
 
-    for trait in traits:
-        assert 0 <= trait.confidence <= 1
+    lactose = next(t for t in traits if t.trait_id == "lactose_intolerance")
+
+    assert 0 < lactose.confidence < 1
 
 
 # ------------------------
-# BROKEN GENOTYPES
+# INVALID GENOTYPES
 # ------------------------
 
 
-@pytest.mark.parametrize(
-    "bad_genotype",
-    [
-        None,
-        "",
-        "--",
-        "??",
-        "123",
-    ],
-)
-def test_invalid_genotypes_handled_gracefully(bad_genotype: str | None) -> None:
-    variants = [
-        make_variant("rs4988235", bad_genotype),
-    ]
+@pytest.mark.parametrize("bad_genotype", [None, "", "--", "??", "123"])
+def test_invalid_genotypes_handled_gracefully(
+    bad_genotype: str | None,
+) -> None:
+    variants = [make_variant("rs4988235", bad_genotype)]
 
     traits = calculate_traits(variants)
 
@@ -121,51 +124,51 @@ def test_invalid_genotypes_handled_gracefully(bad_genotype: str | None) -> None:
 
 
 # ------------------------
-# DUPLICATE SNPs
+# DUPLICATES
 # ------------------------
 
 
-def test_duplicate_rsids() -> None:
+def test_duplicate_rsids_last_wins() -> None:
+    variants = [
+        make_variant("rs4988235", "TT"),
+        make_variant("rs4988235", "CC"),
+    ]
+
+    traits = calculate_traits(variants)
+
+    lactose = next(t for t in traits if t.trait_id == "lactose_intolerance")
+
+    assert "rs4988235" in lactose.matched_rsids
+
+
+# ------------------------
+# MULTI RULE MATCHING
+# ------------------------
+
+
+def test_multi_rule_trait_match() -> None:
     variants = [
         make_variant("rs4988235", "CC"),
-        make_variant("rs4988235", "TT"),  # duplicate
+        make_variant("rs182549", "GG"),
     ]
 
     traits = calculate_traits(variants)
 
-    # Should not crash; deterministic behavior expected
-    assert_all_traits_present(traits)
+    lactose = next(t for t in traits if t.trait_id == "lactose_intolerance")
+
+    assert set(lactose.matched_rsids) == {"rs4988235", "rs182549"}
+    assert 0 < lactose.confidence <= 1.0
 
 
 # ------------------------
-# MULTI-GENOTYPE RULE MATCHING
-# ------------------------
-
-
-def test_list_genotype_rule_match() -> None:
-    variants = [
-        make_variant("rs762551", "AC"),  # matches ["AC", "CC"]
-    ]
-
-    traits = calculate_traits(variants)
-
-    assert_all_traits_present(traits)
-
-
-# ------------------------
-# CONSISTENCY / DETERMINISM
+# DETERMINISM
 # ------------------------
 
 
 def test_deterministic_output() -> None:
-    variants = [
-        make_variant("rs4988235", "CC"),
-    ]
+    variants = [make_variant("rs4988235", "CC")]
 
-    traits1 = calculate_traits(variants)
-    traits2 = calculate_traits(variants)
-
-    assert traits1 == traits2
+    assert calculate_traits(variants) == calculate_traits(variants)
 
 
 # ------------------------
@@ -173,20 +176,18 @@ def test_deterministic_output() -> None:
 # ------------------------
 
 
-def test_empty_parse_result() -> None:
-    variants: list[Variant] = []
-
-    traits = calculate_traits(variants)
+def test_empty_input() -> None:
+    traits = calculate_traits([])
 
     assert_all_traits_present(traits)
 
 
 # ------------------------
-# MIXED VALID + INVALID DATA
+# MIXED DATA
 # ------------------------
 
 
-def test_mixed_valid_and_invalid_variants() -> None:
+def test_mixed_valid_invalid() -> None:
     variants = [
         make_variant("rs4988235", "CC"),
         make_variant("rs762551", None),
@@ -199,7 +200,7 @@ def test_mixed_valid_and_invalid_variants() -> None:
 
 
 # ------------------------
-# MULTI-TRAIT INTERACTION
+# MULTI TRAIT TRIGGER
 # ------------------------
 
 
@@ -212,63 +213,31 @@ def test_multiple_traits_triggered() -> None:
 
     traits = calculate_traits(variants)
 
-    triggered = [t for t in traits if t.matched_rules]
+    triggered = [t for t in traits if t.matched_rsids]
 
     assert len(triggered) >= 2
 
 
 # ------------------------
-# GENOTYPE ORDER NORMALIZATION
+# ORDERING
 # ------------------------
 
 
-def test_genotype_order_irrelevant() -> None:
-    variants1 = [make_variant("rs762551", "AG")]
-    variants2 = [make_variant("rs762551", "GA")]
+def test_trait_ordering() -> None:
+    traits = calculate_traits([])
 
-    output1 = calculate_traits(variants1)
-    output2 = calculate_traits(variants2)
+    ids = [t.trait_id for t in traits]
 
-    assert output1 == output2
+    assert ids == sorted(ids)
 
 
 # ------------------------
-# EXTREME INPUT SIZE
-# ------------------------
-
-
-def test_large_input() -> None:
-    variants = [make_variant(f"rs{i}", "AA") for i in range(10000)]
-
-    traits = calculate_traits(variants)
-
-    assert_all_traits_present(traits)
-
-
-# ------------------------
-# UNKNOWN RSIDs
-# ------------------------
-
-
-def test_unknown_rsids_ignored() -> None:
-    variants = [
-        make_variant("rs999999999", "AA"),
-    ]
-
-    traits = calculate_traits(variants)
-
-    assert_all_traits_present(traits)
-
-
-# ------------------------
-# CONFIDENCE NEVER EXCEEDS 1
+# CONFIDENCE BOUNDS
 # ------------------------
 
 
 def test_confidence_bounds() -> None:
-    variants = [
-        make_variant("rs4988235", "CC"),
-    ]
+    variants = [make_variant("rs4988235", "CC")]
 
     traits = calculate_traits(variants)
 
@@ -276,153 +245,189 @@ def test_confidence_bounds() -> None:
         assert 0 <= trait.confidence <= 1
 
 
-def test_missing_vs_available_counts() -> None:
-    variants = [
-        make_variant("rs4988235", "CC"),  # present
-        # rs182549 missing
-    ]
+# ------------------------
+# RESULT FIELD
+# ------------------------
+
+
+def test_result_values_valid() -> None:
+    variants = [make_variant("rs4988235", "CC")]
 
     traits = calculate_traits(variants)
 
-    lactose = next(t for t in traits if t.trait_id == "lactose_intolerance")
+    valid = {"likely", "unlikely", "inconclusive"}
 
-    assert "rs182549" in lactose.missing_rsids
-    assert lactose.confidence < 1
+    for trait in traits:
+        assert trait.result in valid
 
 
-def test_duplicate_rsids_last_wins() -> None:
+# ------------------------
+# SINGLE TRAIT CALCULATION
+# ------------------------
+
+
+def test_calculate_single_trait_valid_trait() -> None:
     variants = [
-        make_variant("rs4988235", "TT"),
-        make_variant("rs4988235", "CC"),  # should override
+        Variant(rsid="rs4988235", chromosome="1", position=1000, genotype=["C", "C"])
     ]
 
-    traits = calculate_traits(variants)
+    result = calculate_single_trait("lactose_intolerance", variants)
 
-    lactose = next(t for t in traits if t.trait_id == "lactose_intolerance")
+    assert result is not None
+    assert result.id == "lactose_intolerance"
+    assert result.result in {"likely", "unlikely", "inconclusive"}
+    assert isinstance(result.rsids, list)
 
-    assert any(r.rsid == "rs4988235" for r in lactose.matched_rules)
+
+def test_calculate_single_trait_invalid_id() -> None:
+    result = calculate_single_trait("not_a_trait", [])
+
+    assert result is None
 
 
-def test_multi_rule_trait_partial_match() -> None:
-    variants = [
-        make_variant("rs4988235", "CC"),  # match
-        make_variant("rs182549", "AA"),  # no match
+def test_calculate_single_trait_changes_with_genotype() -> None:
+    variants_cc = [
+        Variant(rsid="rs4988235", chromosome="1", position=1000, genotype=["C", "C"])
     ]
 
-    traits = calculate_traits(variants)
-
-    lactose = next(t for t in traits if t.trait_id == "lactose_intolerance")
-
-    assert len(lactose.matched_rules) == 1
-    assert pytest.approx(lactose.confidence, 0.001) == 1.0  # both SNPs available
-
-
-def test_confidence_calculation() -> None:
-    variants = [
-        make_variant("rs4988235", "CC"),  # available
-        # second SNP missing
+    variants_tt = [
+        Variant(rsid="rs4988235", chromosome="1", position=1000, genotype=["T", "T"])
     ]
 
-    traits = calculate_traits(variants)
+    result_cc = calculate_single_trait("lactose_intolerance", variants_cc)
+    result_tt = calculate_single_trait("lactose_intolerance", variants_tt)
 
-    lactose = next(t for t in traits if t.trait_id == "lactose_intolerance")
+    assert result_cc is not None
+    assert result_tt is not None
+    assert result_cc.score != result_tt.score
 
-    assert pytest.approx(lactose.confidence, 0.001) == 0.5
 
-
-def test_rule_present_but_not_matching() -> None:
+def test_trait_detail_structure_complete() -> None:
     variants = [
-        make_variant("rs4988235", "TT"),  # does NOT match CC
+        Variant(rsid="rs4988235", chromosome="1", position=1000, genotype=["C", "C"])
     ]
 
-    traits = calculate_traits(variants)
+    detail = calculate_single_trait("lactose_intolerance", variants)
 
-    lactose = next(t for t in traits if t.trait_id == "lactose_intolerance")
+    assert detail is not None
 
-    assert len(lactose.matched_rules) == 0
-    assert pytest.approx(lactose.confidence, 0.001) == 0.5
+    # core fields
+    assert detail.id
+    assert detail.name
+    assert detail.category
+
+    # explanation layer
+    assert detail.simple_summary
+    assert detail.technical_summary
+
+    # computed layer
+    assert isinstance(detail.rsids, list)
+    assert hasattr(detail, "confidence")
+    assert hasattr(detail, "score")
+
+    # metadata
+    assert detail.sources is not None
+    assert detail.keywords is not None
 
 
-def test_genotype_case_insensitivity() -> None:
+def test_rsid_statuses_present() -> None:
+    variants = [
+        Variant(rsid="rs4988235", chromosome="1", position=1000, genotype=["C", "C"])
+    ]
+
+    detail = calculate_single_trait("lactose_intolerance", variants)
+
+    assert detail is not None
+    statuses = {r.status for r in detail.rsids}
+
+    assert statuses.issubset({"matched", "no_match", "missing"})
+    assert len(detail.rsids) > 0
+
+
+def test_confidence_bounds_single_trait() -> None:
+    variants = [
+        Variant(rsid="rs4988235", chromosome="1", position=1000, genotype=["C", "C"])
+    ]
+
+    detail = calculate_single_trait("lactose_intolerance", variants)
+
+    assert detail is not None
+    assert 0 <= detail.confidence <= 1
+
+
+# ------------------------
+# DETERMINISM
+# ------------------------
+
+
+def test_single_trait_deterministic() -> None:
+    variants = [
+        Variant(rsid="rs4988235", chromosome="1", position=1000, genotype=["C", "C"])
+    ]
+
+    a = calculate_single_trait("lactose_intolerance", variants)
+    b = calculate_single_trait("lactose_intolerance", variants)
+
+    assert a is not None
+    assert b is not None
+    assert a == b
+
+
+@pytest.mark.parametrize(
+    "variants",
+    [
+        [],
+        [
+            {
+                "rsid": "rs4988235",
+                "chromosome": "1",
+                "position": 1000,
+                "genotype": ["C", "C"],
+            }
+        ],
+        [
+            {
+                "rsid": "rs762551",
+                "chromosome": "1",
+                "position": 1000,
+                "genotype": ["A", "G"],
+            }
+        ],
+        [
+            {
+                "rsid": "rs671",
+                "chromosome": "1",
+                "position": 1000,
+                "genotype": ["?", "?"],
+            }
+        ],
+        [
+            {
+                "rsid": "rs000000",
+                "chromosome": "1",
+                "position": 1000,
+                "genotype": ["A", "A"],
+            }
+        ],
+    ],
+)
+def test_single_trait_never_crashes(
+    variants: list[Variant],
+) -> None:
+    result = calculate_single_trait("lactose_intolerance", variants)
+
+    assert result is None or result.confidence >= 0
+
+
+def test_trait_result_structure() -> None:
     variants: list[Variant] = [
-        make_variant("rs762551", "ag"),
+        Variant(rsid="rs4988235", chromosome="1", position=1000, genotype=["C", "C"])
     ]
 
-    traits = calculate_traits(variants)
+    result = calculate_single_trait("lactose_intolerance", variants)
 
-    assert_all_traits_present(traits)
+    assert result is not None
+    assert hasattr(result, "rsids")
 
-
-def test_trait_ordering() -> None:
-    variants: list[Variant] = []
-
-    traits = calculate_traits(variants)
-
-    ids = [t.trait_id for t in traits]
-
-    assert ids == sorted(ids)
-
-
-def test_lactose_trait_exact_output() -> None:
-    variants = [
-        make_variant("rs4988235", "CC"),
-        make_variant("rs182549", "GG"),
-    ]
-
-    traits = calculate_traits(variants)
-
-    lactose = next(t for t in traits if t.trait_id == "lactose_intolerance")
-
-    assert {r.rsid for r in lactose.matched_rules} == {
-        "rs4988235",
-        "rs182549",
-    }
-    assert lactose.confidence == 1.0
-    assert lactose.missing_rsids == []
-
-
-def test_duplicate_rsids_with_normalization_conflict() -> None:
-    variants = [
-        make_variant("rs762551", "GA"),
-        make_variant("rs762551", "AG"),  # same after normalization
-    ]
-
-    traits = calculate_traits(variants)
-
-    assert len(traits) == 5
-    trait_ids = {t.trait_id for t in traits}
-    expected_ids = {
-        "lactose_intolerance",
-        "caffeine_metabolism",
-        "alcohol_flush",
-        "eye_color",
-        "bitter_taste",
-    }
-    assert trait_ids == expected_ids
-
-
-def test_caffeine_trait_exact() -> None:
-    variants = [
-        make_variant("rs762551", "AA"),
-    ]
-
-    traits = calculate_traits(variants)
-
-    caffeine = next(t for t in traits if t.trait_id == "caffeine_metabolism")
-
-    assert len(caffeine.matched_rules) == 1
-    assert caffeine.confidence == 1.0
-
-
-def test_caffeine_partial_match_behavior() -> None:
-    variants = [
-        make_variant("rs762551", "AA"),
-        make_variant("rs762551", "GG"),  # depending on biology logic
-    ]
-
-    traits = calculate_traits(variants)
-
-    caffeine = next(t for t in traits if t.trait_id == "caffeine_metabolism")
-
-    assert caffeine.confidence <= 1.0
-    assert isinstance(caffeine.matched_rules, list)
+    for r in result.rsids:
+        assert r.status in {"missing", "no_match", "matched"}

@@ -3,6 +3,12 @@ import pytest
 from backend.services.parsers import parse_23andme
 
 
+def to_alleles(genotype: str | None) -> list[str] | None:
+    if genotype is None:
+        return None
+    return [allele for allele in genotype]
+
+
 # --- Header / BOM / Comment handling ---
 def test_skips_headers_and_comments() -> None:
     lines = [
@@ -33,7 +39,7 @@ def test_accepts_delimiter_variations(line: str) -> None:
     v = result.variants[0]
     assert v.chromosome == "1"
     assert v.position == 1000
-    assert v.genotype == "AA"
+    assert v.genotype == ["A", "A"]
 
 
 # --- Chromosome normalization ---
@@ -100,7 +106,7 @@ def test_genotype_handling(
 ) -> None:
     result = parse_23andme([f"rs123\t1\t1000\t{genotype_input}"])
     v = result.variants[0]
-    assert v.genotype == expected_genotype
+    assert v.genotype == to_alleles(expected_genotype)
     if expect_error:
         assert len(result.errors) == 1
     else:
@@ -144,4 +150,4 @@ def test_extra_columns_are_ignored() -> None:
     assert v.rsid == "rs123"
     assert v.chromosome == "1"
     assert v.position == 1000
-    assert v.genotype == "AA"
+    assert v.genotype == ["A", "A"]

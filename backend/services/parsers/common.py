@@ -43,7 +43,7 @@ def normalize_genotype(
     genotype: str | None = None,
     allele1: str | None = None,
     allele2: str | None = None,
-) -> str | None:
+) -> list[str] | None:
     """
     Universal genotype normalizer.
 
@@ -81,7 +81,7 @@ def normalize_genotype(
         if not alleles:
             return None
 
-        return "".join(alleles)
+        return alleles
 
     # ---- Case 2: Single genotype string
     if genotype is None:
@@ -94,7 +94,7 @@ def normalize_genotype(
 
     # Fast path: already clean
     if _VALID_GENOTYPE_RE.fullmatch(g):
-        return g
+        return list(g)
 
     # Fallback: extract valid alleles
     for char in g:
@@ -104,4 +104,4 @@ def normalize_genotype(
     if not alleles:
         return None
 
-    return "".join(alleles)
+    return alleles

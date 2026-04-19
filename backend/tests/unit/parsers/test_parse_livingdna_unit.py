@@ -3,6 +3,12 @@ import pytest
 from backend.services.parsers import parse_livingdna
 
 
+def to_alleles(genotype: str | None) -> list[str] | None:
+    if genotype is None:
+        return None
+    return [allele for allele in genotype]
+
+
 # --- Header / BOM / Comment handling ---
 @pytest.mark.parametrize(
     "lines",
@@ -30,7 +36,7 @@ def test_skips_headers_and_strips_bom(lines: list[str]) -> None:
     assert v.rsid == "rs123"
     assert v.chromosome == "1"
     assert v.position == 1000
-    assert v.genotype == "AA"
+    assert v.genotype == ["A", "A"]
 
 
 # --- Delimiter + layout flexibility (structure still valid) ---
@@ -51,7 +57,7 @@ def test_accepts_mixed_delimiters(line: str) -> None:
 
     assert v.chromosome == "1"
     assert v.position == 1000
-    assert v.genotype == "AG"
+    assert v.genotype == ["A", "G"]
 
 
 # --- Structure validation (ONLY chrom + position can drop) ---
@@ -139,7 +145,7 @@ def test_haploid_supported(line: str, expected: str) -> None:
     result = parse_livingdna([line])
 
     assert len(result.variants) == 1
-    assert result.variants[0].genotype == expected
+    assert result.variants[0].genotype == to_alleles(expected)
 
 
 # --- Chromosome normalization ---
@@ -186,7 +192,7 @@ def test_extra_columns_ignored() -> None:
     result = parse_livingdna(["rs123\t1\t1000\tA\tG\tEXTRA\tVALUE"])
 
     assert len(result.variants) == 1
-    assert result.variants[0].genotype == "AG"
+    assert result.variants[0].genotype == ["A", "G"]
 
 
 # --- Whitespace robustness ---
@@ -201,7 +207,7 @@ def test_whitespace_handling() -> None:
 def test_lowercase_alleles_normalized() -> None:
     result = parse_livingdna(["rs123\t1\t1000\ta\tg"])
 
-    assert result.variants[0].genotype == "AG"
+    assert result.variants[0].genotype == ["A", "G"]
 
 
 # --- Error format contract ---

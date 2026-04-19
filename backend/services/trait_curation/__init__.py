@@ -1,6 +1,5 @@
-from .dna_format_detector import detect_format
-from .dna_service import process_dna_file
-from .trait_curation import (
+from .catalog import (
+    CATALOG_PATH,
     build_trait_detail,
     build_trait_result,
     evaluate_trait,
@@ -8,16 +7,13 @@ from .trait_curation import (
     list_trait_definitions,
     load_trait_catalog,
 )
-from .trait_service import calculate_traits
 
 __all__ = [
+    "CATALOG_PATH",
     "build_trait_detail",
     "build_trait_result",
-    "calculate_traits",
-    "detect_format",
     "evaluate_trait",
     "get_trait_definition",
     "list_trait_definitions",
     "load_trait_catalog",
-    "process_dna_file",
 ]

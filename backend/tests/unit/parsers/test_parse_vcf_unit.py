@@ -3,6 +3,12 @@ import pytest
 from backend.services.parsers import parse_vcf
 
 
+def to_alleles(genotype: str | None) -> list[str] | None:
+    if genotype is None:
+        return None
+    return [allele for allele in genotype]
+
+
 # --- VCF Header and Comment Handling ---
 def test_skips_vcf_header_and_comments() -> None:
     lines = [
@@ -59,7 +65,7 @@ def test_vcf_genotype_parsing(
     result = parse_vcf(lines)
 
     assert len(result.variants) == 1
-    assert result.variants[0].genotype == expected_genotype
+    assert result.variants[0].genotype == to_alleles(expected_genotype)
 
 
 # --- Chromosome Normalization ---
@@ -184,8 +190,8 @@ def test_multiple_alt_alleles() -> None:
     result = parse_vcf(lines)
 
     assert len(result.variants) == 2
-    assert result.variants[0].genotype == "AG"
-    assert result.variants[1].genotype == "CT"
+    assert result.variants[0].genotype == ["A", "G"]
+    assert result.variants[1].genotype == ["C", "T"]
 
 
 # --- No ALT (ALT == ".") ---
@@ -199,7 +205,7 @@ def test_no_alternate_allele() -> None:
     result = parse_vcf(lines)
 
     assert len(result.variants) == 1
-    assert result.variants[0].genotype == "AA"
+    assert result.variants[0].genotype == ["A", "A"]
 
 
 # --- Invalid Genotype (SOFT FAIL) ---
@@ -218,7 +224,7 @@ def test_invalid_genotype_soft_fail() -> None:
     # First two have None genotype
     assert result.variants[0].genotype is None
     assert result.variants[1].genotype is None
-    assert result.variants[2].genotype == "AA"
+    assert result.variants[2].genotype == ["A", "A"]
     # Errors for first two
     assert len(result.errors) == 2
 
@@ -277,7 +283,7 @@ def test_extra_columns_ignored() -> None:
 
     # Should use only sample1 (column 9)
     assert len(result.variants) == 1
-    assert result.variants[0].genotype == "AA"
+    assert result.variants[0].genotype == ["A", "A"]
 
 
 # --- Phased vs Unphased Equivalence ---
@@ -291,8 +297,8 @@ def test_phased_unphased_treated_same() -> None:
     result = parse_vcf(lines)
 
     # Both should produce the same genotype
-    assert result.variants[0].genotype == "AG"
-    assert result.variants[1].genotype == "AG"
+    assert result.variants[0].genotype == ["A", "G"]
+    assert result.variants[1].genotype == ["A", "G"]
 
 
 # --- BOM Handling ---
@@ -414,4 +420,4 @@ def test_uses_first_sample_only() -> None:
     ]
     result = parse_vcf(lines)
 
-    assert result.variants[0].genotype == "AA"
+    assert result.variants[0].genotype == ["A", "A"]

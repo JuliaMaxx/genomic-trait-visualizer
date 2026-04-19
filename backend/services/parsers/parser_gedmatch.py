@@ -80,7 +80,7 @@ def parse_gedmatch(lines: list[str]) -> ParseResult:
             logger.warning(msg)
             errors.append(msg)
 
-        genotype: str | None
+        genotype: list[str] | None
         if len(parts) >= 5:
             genotype = normalize_genotype(allele1=parts[3], allele2=parts[4])
         elif len(parts) >= 4:

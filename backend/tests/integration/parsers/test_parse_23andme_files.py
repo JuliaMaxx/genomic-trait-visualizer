@@ -1,6 +1,12 @@
 from backend.services.parsers import parse_23andme
 
 
+def to_alleles(genotype: str | None) -> list[str] | None:
+    if genotype is None:
+        return None
+    return [allele for allele in genotype]
+
+
 def load_lines(path: str) -> list[str]:
     with open(path, "r", encoding="utf-8", errors="ignore") as f:
         return f.readlines()
@@ -14,7 +20,7 @@ def test_parse_23andme_valid_file() -> None:
     assert result.errors == []
 
     # Spot-check
-    assert result.variants[0].genotype == "AA"
+    assert result.variants[0].genotype == ["A", "A"]
     assert result.variants[-1].chromosome == "1"
 
 
@@ -28,10 +34,10 @@ def test_parse_23andme_edge_file() -> None:
     assert len(result.errors) == 1
 
     # Spot-check
-    assert result.variants[0].genotype == "A"  # haploid
+    assert result.variants[0].genotype == ["A"]  # haploid
     assert result.variants[1].rsid == "."  # missing rsid allowed
     assert result.variants[2].genotype is None  # missing genotype
-    assert result.variants[4].genotype == "ID"  # indel normalization
+    assert result.variants[4].genotype == ["I", "D"]  # indel normalization
 
 
 def test_parse_23andme_messy_file() -> None:
@@ -42,7 +48,7 @@ def test_parse_23andme_messy_file() -> None:
     assert len(result.errors) == 2
 
     # normalization
-    assert result.variants[0].genotype == "AA"
+    assert result.variants[0].genotype == ["A", "A"]
 
     # invalid genotype handled
     assert any(v.genotype is None for v in result.variants)

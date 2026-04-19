@@ -11,7 +11,9 @@ from backend.services.parsers.common import (
 )
 
 
-def _parse_vcf_genotype(genotype_str: str, ref: str, alt_list: list[str]) -> str | None:
+def _parse_vcf_genotype(
+    genotype_str: str, ref: str, alt_list: list[str]
+) -> list[str] | None:
     """
     Parse VCF genotype string into normalized alleles.
 
@@ -30,7 +32,7 @@ def _parse_vcf_genotype(genotype_str: str, ref: str, alt_list: list[str]) -> str
         alt_list: List of alternate alleles
 
     Returns:
-        Normalized genotype string (e.g., "AC") or None if missing/invalid
+        Normalized genotype alleles (e.g., ["A", "C"]) or None if missing/invalid
     """
     # Normalize the genotype string
     # Replace phasing character | with / for uniform processing
