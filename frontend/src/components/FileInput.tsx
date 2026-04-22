@@ -52,9 +52,12 @@ function FileInput({
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
-      className={`block cursor-pointer rounded-(--radius-base) border border-dashed px-(--spacing-dropzone-x) py-(--spacing-dropzone-y) ${
-        isDragging ? 'border-brand' : 'border-content'
-      } text-content ${className}`.trim()}
+      className={`block cursor-pointer rounded-(--radius-card) border px-(--spacing-dropzone-x) py-(--spacing-dropzone-y) text-content shadow-(--shadow-panel) backdrop-blur-sm transition duration-200 ${
+        isDragging
+          ? 'border-(--color-brand-line) bg-(--color-brand-soft)'
+          : 'border-(--color-border-strong) bg-(--color-app-surface)'
+      } ${className}`.trim()}
+      style={{ backgroundImage: 'var(--background-panel)' }}
     >
       <input
         id={inputId}
@@ -66,15 +69,23 @@ function FileInput({
       />
 
       <div className="flex flex-col items-center gap-3 text-center">
-        <div>
-          <p className="text-base">Drag and drop your DNA file here</p>
-          <p className="mt-1 text-sm">or click to browse from your computer</p>
+        <div className="inline-flex rounded-full border border-(--color-border) bg-black/20 px-3 py-1 font-mono text-[0.7rem] uppercase tracking-(--tracking-eyebrow) text-content-faint">
+          command interface input
         </div>
 
-        <p className="text-sm">
+        <div className="space-y-2">
+          <p className="text-xl font-medium tracking-tight">
+            Drag and drop your DNA file here
+          </p>
+          <p className="text-sm text-content-subtle">
+            or click to browse from your computer
+          </p>
+        </div>
+
+        <p className="font-mono text-xs text-content-faint">
           Supported formats: {supportedFormats.join(', ')}
         </p>
-        <p className="text-sm">
+        <p className="rounded-full border border-(--color-border) px-4 py-2 text-sm text-content-muted">
           {selectedFile
             ? `Selected file: ${selectedFile.name}`
             : 'No file selected'}
