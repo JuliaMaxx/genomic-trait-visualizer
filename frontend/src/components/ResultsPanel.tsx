@@ -17,18 +17,18 @@ function ResultsPanel({
 }: Props) {
   if (isLoading) {
     return (
-      <div className="w-full max-w-(--width-content) rounded-(--radius-card) border border-(--color-border-strong) bg-(--color-app-surface) p-(--spacing-card-padding) text-sm text-content-muted shadow-(--shadow-panel) backdrop-blur-sm">
-        <p className="font-mono text-[0.7rem] uppercase tracking-(--tracking-eyebrow) text-content-faint">
-          analysis status
+      <div className="ui-panel w-full max-w-(--width-content) text-sm text-content-muted">
+        <p className="ui-eyebrow">analysis status</p>
+        <p className="mt-section-offset-md text-base text-content">
+          Analyzing file...
         </p>
-        <p className="mt-3 text-base text-content">Analyzing file...</p>
       </div>
     );
   }
 
   if (errorMessage) {
     return (
-      <div className="w-full max-w-(--width-content) rounded-(--radius-card) border border-rose-500/30 bg-rose-500/8 p-(--spacing-card-padding) text-sm text-rose-200 shadow-(--shadow-panel)">
+      <div className="ui-panel-error w-full max-w-(--width-content)">
         {errorMessage}
       </div>
     );
@@ -36,27 +36,25 @@ function ResultsPanel({
 
   if (traits.length === 0) {
     return (
-      <div className="w-full max-w-(--width-content) rounded-(--radius-card) border border-(--color-border-strong) bg-(--color-app-surface) p-(--spacing-card-padding) text-sm text-content-muted shadow-(--shadow-panel) backdrop-blur-sm">
+      <div className="ui-panel w-full max-w-(--width-content) text-sm text-content-muted">
         No traits found.
       </div>
     );
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-(--width-content) flex-col gap-(--spacing-stack-gap)">
-      <div className="rounded-(--radius-card) border border-(--color-border-strong) bg-(--color-app-surface) p-(--spacing-card-padding) shadow-(--shadow-panel) backdrop-blur-sm">
-        <p className="font-mono text-[0.7rem] uppercase tracking-(--tracking-eyebrow) text-content-faint">
-          interpretation summary
-        </p>
-        <p className="mt-3 text-lg font-medium tracking-tight text-content">
+    <div className="mx-auto flex w-full max-w-(--width-content) flex-col gap-stack-gap">
+      <div className="ui-panel">
+        <p className="ui-eyebrow">interpretation summary</p>
+        <p className="mt-section-offset-md text-lg font-medium leading-tight tracking-tight text-content">
           Results for <span className="text-brand">{selectedFile.name}</span>
         </p>
-        <p className="mt-2 text-sm text-content-subtle">
+        <p className="mt-section-offset-sm text-sm text-content-subtle">
           Showing {traits.length} traits
           {matchedTraitCount > 0 ? `, ${matchedTraitCount} with matches` : ''}
         </p>
       </div>
-      <div className="grid gap-(--spacing-panel-padding) md:grid-cols-2">
+      <div className="grid gap-panel-padding md:grid-cols-2">
         {traits.map((trait) => (
           <TraitCard key={trait.trait_id} trait={trait} />
         ))}

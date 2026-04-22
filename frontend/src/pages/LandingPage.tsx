@@ -19,43 +19,39 @@ function LandingPage() {
   };
 
   return (
-    <div className="flex flex-1 items-center justify-center py-8">
-      <div className="grid w-full items-start gap-6 lg:grid-cols-(--layout-main-columns)">
-        <section className="space-y-6">
-          <div className="inline-flex rounded-full border border-border bg-white/3 px-3 py-1.5 font-mono text-eyebrow uppercase tracking-eyebrow text-content-faint">
-            command-driven genomic upload
-          </div>
+    <div className="flex flex-1 items-center justify-center py-page-y">
+      <div className="grid w-full items-start gap-grid-gap lg:grid-cols-(--layout-main-columns)">
+        <section className="space-y-section-gap">
+          <div className="ui-badge">command-driven genomic upload</div>
 
-          <div className="space-y-4">
+          <div className="space-y-stack-gap">
             <h1 className="max-w-(--width-text) text-display-lg leading-tight sm:text-display-xl">
               Start with a DNA file and explore traits through a clearer,
               research-grade interface.
             </h1>
-            <p className="max-w-(--width-text) text-base leading-7 text-content-subtle">
+            <p className="max-w-(--width-text) text-base leading-body text-content-subtle">
               Your file will be processed locally and will not be uploaded to
               any server.
             </p>
           </div>
 
-          <div className="rounded-(--radius-card) border border-border-strong bg-app-surface p-(--spacing-card-padding) shadow-(--shadow-panel) backdrop-blur-sm">
-            <p className="font-mono text-eyebrow uppercase tracking-eyebrow text-content-faint">
-              dual-layer interface note
-            </p>
-            <div className="mt-4 grid gap-4 sm:grid-cols-2">
-              <div className="rounded-panel border border-border bg-black/15 p-4">
+          <div className="ui-panel">
+            <p className="ui-eyebrow">dual-layer interface note</p>
+            <div className="mt-section-offset-lg grid gap-grid-gap-sm sm:grid-cols-2">
+              <div className="ui-panel-subtle">
                 <p className="font-mono text-xs uppercase tracking-eyebrow text-content-faint">
                   data layer
                 </p>
-                <p className="mt-2 text-sm text-content-muted">
+                <p className="mt-section-offset-sm text-sm text-content-muted">
                   Upload inputs stay visually distinct from analysis results so
                   the workflow feels more transparent.
                 </p>
               </div>
-              <div className="rounded-panel border border-brand-line bg-brand-soft p-4">
-                <p className="font-mono text-xs uppercase tracking-eyebrow text-orange-200">
+              <div className="ui-panel-accent">
+                <p className="font-mono text-xs uppercase tracking-eyebrow text-content-accent">
                   interpretation layer
                 </p>
-                <p className="mt-2 text-sm text-content-muted">
+                <p className="mt-section-offset-sm text-sm text-content-muted">
                   Warm accent surfaces highlight meaning and outcome without
                   changing the scope of the current feature set.
                 </p>
@@ -64,7 +60,10 @@ function LandingPage() {
           </div>
         </section>
 
-        <form onSubmit={handleSubmit} className="flex w-full flex-col gap-4">
+        <form
+          onSubmit={handleSubmit}
+          className="flex w-full flex-col gap-grid-gap-sm"
+        >
           <FileInput
             onFileSelect={setSelectedFile}
             selectedFile={selectedFile}

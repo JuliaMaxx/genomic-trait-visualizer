@@ -6,12 +6,17 @@
   --color-app: #09090b;
   --color-app-elevated: #111217;
   --color-app-surface: rgba(24, 24, 27, 0.82);
+  --color-surface-overlay: rgba(255, 255, 255, 0.03);
+  --color-surface-overlay-strong: rgba(0, 0, 0, 0.2);
+  --color-surface-overlay-muted: rgba(0, 0, 0, 0.15);
 
   /* Content */
   --color-content: #f4f4f5;
   --color-content-muted: #d4d4d8;
   --color-content-subtle: #a1a1aa;
   --color-content-faint: #71717a;
+  --color-content-inverse: #09090b;
+  --color-content-accent: #ffedd5;
 
   /* Brand */
   --color-brand: #f97316;
@@ -25,6 +30,9 @@
   /* System */
   --color-success: #34d399;
   --color-danger: #fb7185;
+  --color-danger-soft: rgba(244, 63, 94, 0.08);
+  --color-danger-line: rgba(244, 63, 94, 0.3);
+  --color-danger-content: #fecdd3;
 
   /* Fonts */
   --font-sans:
@@ -41,6 +49,11 @@
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
   --text-display-lg: 2.25rem;
   --text-display-xl: 3rem;
 
@@ -77,14 +90,25 @@
   --spacing-panel-padding: 1rem;
   --spacing-control-x: 1rem;
   --spacing-control-y: 0.75rem;
+  --spacing-badge-x: 0.75rem;
+  --spacing-badge-y: 0.375rem;
+  --spacing-pill-x: 1rem;
+  --spacing-pill-y: 0.5rem;
   --spacing-dropzone-x: 1.75rem;
   --spacing-dropzone-y: 2.5rem;
   --spacing-empty-x: 1.5rem;
   --spacing-empty-y: 3rem;
+  --spacing-section-offset-sm: 0.5rem;
+  --spacing-section-offset-md: 0.75rem;
+  --spacing-section-offset-lg: 1rem;
+  --spacing-section-offset-xl: 1.25rem;
   --spacing-section-gap: 1.5rem; /* space-y-6 equivalent */
   --spacing-stack-gap: 1rem; /* space-y-4 */
   --spacing-grid-gap: 1.5rem; /* gap-6 */
   --spacing-grid-gap-sm: 1rem; /* gap-4 */
+  --spacing-header-padding-bottom: 1.25rem;
+  --spacing-inline-gap: 1rem;
+  --spacing-inline-gap-sm: 0.75rem;
 
   /* Radius */
   --radius-button: 0.9rem;
@@ -102,4 +126,60 @@
   --border-base: 1px solid var(--color-border);
 
   --layout-main-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+}
+
+@utility bg-app-chrome {
+  background-image: var(--background-radial), var(--background-grid);
+  background-size:
+    auto,
+    32px 32px;
+  background-position:
+    calc(var(--mx, 0px) * 0.05) calc(var(--my, 0px) * 0.05),
+    0 0;
+
+  transition: background-position 0.1s ease-out;
+}
+
+@utility bg-panel-gradient {
+  background-image: var(--background-panel);
+}
+
+@utility ui-eyebrow {
+  @apply font-mono text-eyebrow uppercase tracking-eyebrow text-content-faint;
+}
+
+@utility ui-badge {
+  @apply inline-flex rounded-pill border border-border bg-surface-overlay px-badge-x py-badge-y font-mono text-eyebrow uppercase tracking-eyebrow text-content-faint;
+}
+
+@utility ui-panel {
+  @apply rounded-card border border-border-strong bg-app-surface p-card-padding shadow-panel backdrop-blur-sm;
+}
+
+@utility ui-panel-gradient {
+  @apply rounded-card border border-border-strong bg-app-surface p-card-padding shadow-panel backdrop-blur-sm bg-panel-gradient;
+}
+
+@utility ui-panel-subtle {
+  @apply rounded-panel border border-border bg-surface-overlay-muted p-panel-padding;
+}
+
+@utility ui-panel-accent {
+  @apply rounded-panel border border-brand-line bg-brand-soft p-panel-padding;
+}
+
+@utility ui-panel-error {
+  @apply rounded-card border border-danger-line bg-danger-soft p-card-padding text-sm text-danger-content shadow-panel;
+}
+
+@utility ui-status-pill {
+  @apply rounded-pill border border-border bg-surface-overlay-strong px-badge-x py-badge-y text-xs text-content-muted;
+}
+
+@utility ui-button-base {
+  @apply inline-flex items-center justify-center rounded-button px-control-x py-control-y text-sm font-semibold leading-tight tracking-tight transition duration-200 disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+@utility ui-button-primary {
+  @apply border border-brand-line bg-brand text-content-inverse shadow-button hover:brightness-105;
 }

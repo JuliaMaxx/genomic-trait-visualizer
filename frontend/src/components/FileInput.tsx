@@ -52,12 +52,11 @@ function FileInput({
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
-      className={`block cursor-pointer rounded-(--radius-card) border px-(--spacing-dropzone-x) py-(--spacing-dropzone-y) text-content shadow-(--shadow-panel) backdrop-blur-sm transition duration-200 ${
+      className={`bg-panel-gradient block cursor-pointer rounded-card border px-dropzone-x py-dropzone-y text-content shadow-panel backdrop-blur-sm transition duration-200 ${
         isDragging
-          ? 'border-(--color-brand-line) bg-(--color-brand-soft)'
-          : 'border-(--color-border-strong) bg-(--color-app-surface)'
+          ? 'border-brand-line bg-brand-soft'
+          : 'border-border-strong bg-app-surface'
       } ${className}`.trim()}
-      style={{ backgroundImage: 'var(--background-panel)' }}
     >
       <input
         id={inputId}
@@ -68,13 +67,13 @@ function FileInput({
         {...props}
       />
 
-      <div className="flex flex-col items-center gap-3 text-center">
-        <div className="inline-flex rounded-full border border-(--color-border) bg-black/20 px-3 py-1 font-mono text-[0.7rem] uppercase tracking-(--tracking-eyebrow) text-content-faint">
+      <div className="flex flex-col items-center gap-inline-gap-sm text-center">
+        <div className="ui-badge bg-surface-overlay-strong py-1">
           command interface input
         </div>
 
-        <div className="space-y-2">
-          <p className="text-xl font-medium tracking-tight">
+        <div className="space-y-section-offset-sm">
+          <p className="text-xl font-medium leading-tight tracking-tight">
             Drag and drop your DNA file here
           </p>
           <p className="text-sm text-content-subtle">
@@ -82,10 +81,10 @@ function FileInput({
           </p>
         </div>
 
-        <p className="font-mono text-xs text-content-faint">
+        <p className="ui-eyebrow text-xs normal-case tracking-normal">
           Supported formats: {supportedFormats.join(', ')}
         </p>
-        <p className="rounded-full border border-(--color-border) px-4 py-2 text-sm text-content-muted">
+        <p className="rounded-pill border border-border px-pill-x py-pill-y text-sm text-content-muted">
           {selectedFile
             ? `Selected file: ${selectedFile.name}`
             : 'No file selected'}
