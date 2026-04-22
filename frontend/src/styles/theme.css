@@ -102,10 +102,11 @@
   --spacing-section-offset-md: 0.75rem;
   --spacing-section-offset-lg: 1rem;
   --spacing-section-offset-xl: 1.25rem;
-  --spacing-section-gap: 1.5rem; /* space-y-6 equivalent */
-  --spacing-stack-gap: 1rem; /* space-y-4 */
-  --spacing-grid-gap: 1.5rem; /* gap-6 */
-  --spacing-grid-gap-sm: 1rem; /* gap-4 */
+  --spacing-section-gap: 1.5rem;
+  --spacing-stack-gap: 1rem;
+  --spacing-grid-gap: 1.5rem;
+  --spacing-grid-gap-sm: 1rem;
+  --spacing-grid-gap-lg: 2rem;
   --spacing-header-padding-bottom: 1.25rem;
   --spacing-inline-gap: 1rem;
   --spacing-inline-gap-sm: 0.75rem;
@@ -182,4 +183,8 @@
 
 @utility ui-button-primary {
   @apply border border-brand-line bg-brand text-content-inverse shadow-button hover:brightness-105;
+}
+
+@utility ui-button-secondary {
+  @apply border border-border-strong bg-surface-overlay px-control-x py-control-y text-content hover:border-brand-line hover:text-content-accent;
 }

@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { analyzeDnaFile } from '../services/analyzeDnaFile';
+import { analyzeDnaFile } from '../services/traitApi';
+import type { TraitResult } from '../types/analysis';
 
-function useTraitAnalysis(file: File | null) {
-  const [traits, setTraits] = useState<Trait[]>([]);
+function useTraitOverview(file: File | null) {
+  const [traits, setTraits] = useState<TraitResult[]>([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -14,7 +15,7 @@ function useTraitAnalysis(file: File | null) {
       return;
     }
 
-    let isCancelled = false; // TODO: use AbortController instead of this flag
+    let isCancelled = false;
 
     async function loadTraits() {
       setIsLoading(true);
@@ -32,12 +33,12 @@ function useTraitAnalysis(file: File | null) {
           setErrorMessage(
             error instanceof Error
               ? error.message
-              : 'Something went wrong while contacting the backend.',
+              : 'Something went wrong while loading trait results.',
           );
         }
       } finally {
         if (!isCancelled) {
-          setIsLoading(false); // TODO: avoid retetting loading manually
+          setIsLoading(false);
         }
       }
     }
@@ -56,4 +57,4 @@ function useTraitAnalysis(file: File | null) {
   };
 }
 
-export default useTraitAnalysis;
+export default useTraitOverview;

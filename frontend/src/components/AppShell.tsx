@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { WithChildren } from '../types/react';
 
 function AppShell({ children }: WithChildren) {
@@ -8,16 +9,22 @@ function AppShell({ children }: WithChildren) {
         className="bg-app-chrome pointer-events-none absolute inset-0 opacity-70"
       />
       <div className="relative mx-auto flex min-h-screen w-full max-w-(--width-app) flex-col px-page-x py-page-y sm:px-page-x-sm lg:px-page-x-lg">
-        <header className="mb-section-gap flex items-center justify-between gap-inline-gap border-b border-border pb-header-padding-bottom">
+        <header className="mb-section-gap flex flex-wrap items-center justify-between gap-inline-gap border-b border-border pb-header-padding-bottom">
           <div>
-            <p className="ui-eyebrow">whoami / genomic explorer</p>
-            <p className="mt-section-offset-sm text-lg font-semibold text-content">
-              Genomic Trait Visualizer
-            </p>
+            <p className="ui-eyebrow">Genomic trait visualizer</p>
+            <Link
+              to="/"
+              className="mt-section-offset-sm block text-lg font-semibold text-content"
+            >
+              WHOAMI
+            </Link>
           </div>
-          <p className="ui-badge hidden sm:inline-flex">
-            dual-layer analysis interface
-          </p>
+
+          <div className="flex flex-wrap items-center gap-inline-gap-sm">
+            <span className="ui-badge hidden sm:inline-flex">
+              free and open-source
+            </span>
+          </div>
         </header>
         {children}
       </div>

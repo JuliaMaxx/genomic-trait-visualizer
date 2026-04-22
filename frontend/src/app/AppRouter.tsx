@@ -2,12 +2,14 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 
 import AnalysisPage from '../pages/AnalysisPage';
 import LandingPage from '../pages/LandingPage';
+import TraitDetailPage from '../pages/TraitDetailPage';
 
 function AppRouter() {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/analysis" element={<AnalysisPage />} />
+      <Route path="/analysis/traits/:traitId" element={<TraitDetailPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

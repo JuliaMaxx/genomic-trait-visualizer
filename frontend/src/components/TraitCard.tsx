@@ -1,75 +1,56 @@
+import { Link } from 'react-router-dom';
+import type { TraitResult } from '../types/analysis';
 import { formatConfidence } from '../utils/formatConfidence';
+import { formatCategoryLabel } from '../utils/formatResultLabel';
+import ResultToneBadge from './ResultToneBadge';
+import StatPill from './StatPill';
 
 type Props = {
-  trait: Trait;
+  trait: TraitResult;
 };
 
-// TODO: make confidence more visually prominent, e.g. with colors or icons
-// TODO: change when backened simplifies this
-// TODO: make sure long lists look good too, eg. +X more
-// TODO: add odds ration and notes that are returned from the backend
 function TraitCard({ trait }: Props) {
   return (
-    <article className="ui-panel-gradient">
+    <Link
+      to={`/analysis/traits/${trait.trait_id}`}
+      className="flex flex-col justify-between ui-panel-gradient group transition duration-200 hover:-translate-y-0.5 hover:border-brand-line hover:shadow-button"
+    >
       <div className="flex items-start justify-between gap-inline-gap">
         <div>
-          <p className="ui-eyebrow">
-            trait interpretation
-          </p>
-          <h3 className="mt-section-offset-sm text-xl text-content">
+          <p className="ui-eyebrow">{formatCategoryLabel(trait.category)}</p>
+          <h3 className="mt-section-offset-sm text-xl text-content transition group-hover:text-content-accent">
             {trait.name}
           </h3>
-          <p className="mt-1 font-mono text-xs text-content-faint">
-            {trait.trait_id}
+          <p className="mt-section-offset-sm text-sm leading-body text-content-subtle">
+            {trait.simple_summary}
           </p>
         </div>
-        <span className="ui-status-pill">
-          Confidence {formatConfidence(trait.confidence)}
-        </span>
+        <ResultToneBadge result={trait.result} />
       </div>
 
-      <div className="mt-section-offset-xl space-y-stack-gap text-sm">
-        <div>
-          <p className="ui-eyebrow">
-            matched rules
-          </p>
-          {trait.matched_rules.length === 0 ? (
-            <p className="mt-section-offset-sm text-content-subtle">
-              No matching rules for this upload.
-            </p>
-          ) : (
-            <ul className="mt-section-offset-sm space-y-section-offset-sm">
-              {trait.matched_rules.map((rule, index) => (
-                <li key={`${trait.trait_id}-${rule.rsid}-${index}`}>
-                  <div className="ui-panel-accent text-sm">
-                    <p className="font-mono text-sm font-medium text-content-accent">
-                      {rule.rsid} -{' '}
-                      {Array.isArray(rule.genotype)
-                        ? rule.genotype.join(', ')
-                        : rule.genotype}
-                    </p>
-                    <p className="mt-section-offset-sm text-content-muted">
-                      {rule.description}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
+      <div>
+        <div className="mt-section-offset-xl flex flex-wrap gap-inline-gap-sm">
+          <StatPill
+            label="Confidence"
+            value={formatConfidence(trait.confidence)}
+          />
+          <StatPill
+            label="Matched rsIDs"
+            value={String(trait.matched_rsids.length)}
+            tone="accent"
+          />
+          <StatPill
+            label="Missing rsIDs"
+            value={String(trait.missing_rsids.length)}
+          />
         </div>
 
-        <div>
-          <p className="ui-eyebrow">
-            missing rsids
-          </p>
-          <p className="mt-section-offset-sm text-content-subtle">
-            {trait.missing_rsids.length > 0
-              ? trait.missing_rsids.join(', ')
-              : 'None'}
-          </p>
+        <div className="mt-section-offset-xl flex items-center justify-between text-sm text-content-faint">
+          <span className="font-mono">{trait.trait_id}</span>
+          <span>Open drill-down</span>
         </div>
       </div>
-    </article>
+    </Link>
   );
 }
 

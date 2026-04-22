@@ -7,6 +7,7 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
 
 const variants = {
   primary: 'ui-button-primary',
+  secondary: 'ui-button-secondary',
 };
 
 function Button({

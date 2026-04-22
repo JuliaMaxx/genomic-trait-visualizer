@@ -1,4 +1,4 @@
-import { useId, useState } from 'react';
+import { type DragEvent, useId, useState } from 'react';
 
 type Props = {
   onFileSelect?: (file: File | null) => void;
@@ -10,10 +10,6 @@ type Props = {
 
 const defaultFormats = ['.tsv', '.csv', '.vcf', '.txt'];
 
-// TODO: validate file's size and type
-// TODO: add error handling: invalid format, empty file, corrupted file
-// TODO: add keyboard accessibility
-// TODO: handle drag flicker issues
 function FileInput({
   className = '',
   onFileSelect,
@@ -30,17 +26,17 @@ function FileInput({
     onFileSelect?.(file);
   }
 
-  function handleDragOver(event: React.DragEvent<HTMLLabelElement>) {
+  function handleDragOver(event: DragEvent<HTMLLabelElement>) {
     event.preventDefault();
     setIsDragging(true);
   }
 
-  function handleDragLeave(event: React.DragEvent<HTMLLabelElement>) {
+  function handleDragLeave(event: DragEvent<HTMLLabelElement>) {
     event.preventDefault();
     setIsDragging(false);
   }
 
-  function handleDrop(event: React.DragEvent<HTMLLabelElement>) {
+  function handleDrop(event: DragEvent<HTMLLabelElement>) {
     event.preventDefault();
     setIsDragging(false);
     handleFiles(event.dataTransfer.files);
@@ -55,7 +51,7 @@ function FileInput({
       className={`bg-panel-gradient block cursor-pointer rounded-card border px-dropzone-x py-dropzone-y text-content shadow-panel backdrop-blur-sm transition duration-200 ${
         isDragging
           ? 'border-brand-line bg-brand-soft'
-          : 'border-border-strong bg-app-surface'
+          : 'border-border-strong bg-app-surface hover:border-brand-line'
       } ${className}`.trim()}
     >
       <input
@@ -69,7 +65,7 @@ function FileInput({
 
       <div className="flex flex-col items-center gap-inline-gap-sm text-center">
         <div className="ui-badge bg-surface-overlay-strong py-1">
-          command interface input
+          Your journey starts here
         </div>
 
         <div className="space-y-section-offset-sm">
