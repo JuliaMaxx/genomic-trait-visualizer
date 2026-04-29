@@ -40,6 +40,18 @@ class TraitSource(BaseModel):
     notes: str | None = None
 
 
+class TraitContentSection(BaseModel):
+    title: str
+    body: str
+
+
+class TraitResultContent(BaseModel):
+    card_tooltip: str
+    headline: str
+    headline_tooltip: str
+    outcome_summary: str
+
+
 class GenotypeInterpretation(BaseModel):
     genotype: list[str]
     meaning: str
@@ -74,6 +86,14 @@ class TraitDefinition(BaseModel):
 
     keywords: list[str] = Field(default_factory=list)
     sources: list[TraitSource] = Field(default_factory=list)
+    result_content: dict[TraitResultLabel, TraitResultContent] = Field(
+        default_factory=dict
+    )
+    practical_takeaway: list[TraitContentSection] = Field(default_factory=list)
+    simple_explanation: list[TraitContentSection] = Field(default_factory=list)
+    technical_explanation: list[TraitContentSection] = Field(default_factory=list)
+    research_spotlight: list[TraitContentSection] = Field(default_factory=list)
+    calculation_notes: list[TraitContentSection] = Field(default_factory=list)
 
     rules: list[CuratedTraitRule]
 
@@ -120,6 +140,12 @@ class RawTrait(TypedDict):
     evidence_level: str
     keywords: list[str]
     sources: list[dict]
+    result_content: dict
+    practical_takeaway: list[dict]
+    simple_explanation: list[dict]
+    technical_explanation: list[dict]
+    research_spotlight: list[dict]
+    calculation_notes: list[dict]
     rules: list[dict]
 
 
@@ -140,11 +166,17 @@ class TraitResult(BaseModel):
     trait_id: str
     name: str
     category: TraitCategory
+    description: str
     missing_rsids: list[str]
     matched_rsids: list[str]
+    observed_rsids: list[str]
     confidence: float
+    coverage: float
     result: TraitResultLabel
     simple_summary: str
+    user_summary: str
+    explanation_preview: str
+    result_badge_tooltip: str
 
 
 # =========================
@@ -163,6 +195,13 @@ class TraitRsidDetail(BaseModel):
     meaning: str
     rule_description: str
     status: Literal["matched", "no_match", "missing"]
+    status_explanation: str
+    contribution: Literal["raises", "lowers", "neutral", "unknown"]
+    contribution_label: str
+    contribution_explanation: str
+    weight: float
+    evidence_level: EvidenceLevel | None = None
+    source_refs: list[str] = Field(default_factory=list)
 
 
 class TraitDetail(BaseModel):
@@ -178,6 +217,14 @@ class TraitDetail(BaseModel):
     keywords: list[str]
     coverage: float
     score: float
+    headline: str
+    headline_tooltip: str
+    outcome_summary: str
+    result_badge_tooltip: str
+    practical_takeaway: list[TraitContentSection] = Field(default_factory=list)
+    simple_explanation: list[TraitContentSection] = Field(default_factory=list)
+    technical_explanation: list[TraitContentSection] = Field(default_factory=list)
+    research_spotlight: list[TraitContentSection] = Field(default_factory=list)
+    calculation_summary: list[TraitContentSection] = Field(default_factory=list)
     rsids: list[TraitRsidDetail]
     sources: list[TraitSource] = Field(default_factory=list)
-    notes: list[str] = Field(default_factory=list)

@@ -165,8 +165,14 @@ def test_build_trait_result(
     assert result.trait_id == "test_trait"
     assert result.result == "likely"
     assert result.confidence > 0
+    assert result.description == "desc"
     assert result.matched_rsids == ["rs1"]
+    assert result.observed_rsids == ["rs1"]
+    assert result.coverage == 1.0
     assert result.simple_summary == "simple"
+    assert "Test Trait" in result.user_summary
+    assert "coverage" in result.explanation_preview.lower()
+    assert result.result_badge_tooltip
 
 
 # --- Test detail building ---
@@ -183,6 +189,8 @@ def test_trait_detail_matched(
     assert rsid.meaning == "positive"
     assert rsid.effect == "good"
     assert rsid.user_genotype == ["A", "A"]
+    assert rsid.contribution == "raises"
+    assert "matched" in rsid.status_explanation.lower()
 
 
 def test_trait_detail_no_match(
@@ -194,6 +202,7 @@ def test_trait_detail_no_match(
 
     assert rsid.status == "no_match"
     assert rsid.meaning is not None
+    assert rsid.contribution == "unknown"
 
 
 def test_trait_detail_missing(
@@ -205,6 +214,7 @@ def test_trait_detail_missing(
 
     assert rsid.status == "missing"
     assert "No genotype detected" in rsid.meaning
+    assert "did not include" in rsid.status_explanation
 
 
 # --- Test odds ratio and score inclusion in detail ---
@@ -219,6 +229,15 @@ def test_trait_detail_includes_odds_ratio(
 
     assert rsid.odds_ratio is None or isinstance(rsid.odds_ratio, float)
     assert isinstance(rsid.score, float)
+    assert detail.headline
+    assert detail.headline_tooltip
+    assert detail.outcome_summary
+    assert detail.result_badge_tooltip
+    assert detail.practical_takeaway
+    assert detail.simple_explanation
+    assert detail.technical_explanation
+    assert detail.research_spotlight
+    assert detail.calculation_summary
 
 
 # --- Test multiple rules and real-world case ---

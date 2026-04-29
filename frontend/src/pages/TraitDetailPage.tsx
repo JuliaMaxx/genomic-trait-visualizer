@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { type ReactNode, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 
+import InfoTooltip from '../components/InfoTooltip';
 import ResultToneBadge from '../components/ResultToneBadge';
 import StatPill from '../components/StatPill';
 import TraitDetailRsidCard from '../components/TraitDetailRsidCard';
@@ -13,12 +14,43 @@ import {
   formatEvidenceLabel,
 } from '../utils/formatResultLabel';
 
+type DisclosurePanelProps = {
+  title: string;
+  eyebrow: string;
+  children: ReactNode;
+  panelStyle?: 'default' | 'accent' | 'subtle';
+};
+
+function DisclosurePanel({
+  title,
+  eyebrow,
+  children,
+  panelStyle = 'default',
+}: DisclosurePanelProps) {
+  return (
+    <section className={`ui-panel ui-panel-${panelStyle}`}>
+      <details className="group">
+        <summary className="ui-disclosure-summary">
+          <div>
+            <p className="ui-eyebrow">{eyebrow}</p>
+            <h2 className="mt-section-offset-sm text-2xl">{title}</h2>
+          </div>
+          <span className="ui-status-pill transition duration-200 group-open:rotate-45">
+            +
+          </span>
+        </summary>
+        <div className="mt-section-offset-xl">{children}</div>
+      </details>
+    </section>
+  );
+}
+
 function TraitDetailPage() {
   const { traitId = '' } = useParams();
   const { selectedFile } = useAnalysisSession();
-  const [explanationMode, setExplanationMode] = useState<'simple' | 'technical'>(
-    'simple',
-  );
+  const [explanationMode, setExplanationMode] = useState<
+    'simple' | 'technical'
+  >('simple');
   const { traitDetail, errorMessage, isLoading } = useTraitDetail(
     selectedFile,
     traitId,
@@ -32,10 +64,11 @@ function TraitDetailPage() {
     return <Navigate to="/analysis" replace />;
   }
 
-  const explanation =
-    explanationMode === 'simple'
-      ? traitDetail?.simple_summary
-      : traitDetail?.technical_summary;
+  const observedCount =
+    traitDetail?.rsids.filter((rsid) => rsid.user_genotype !== null).length ??
+    0;
+  const matchedCount =
+    traitDetail?.rsids.filter((rsid) => rsid.status === 'matched').length ?? 0;
 
   return (
     <div className="flex flex-1 flex-col gap-grid-gap py-card-padding">
@@ -46,7 +79,9 @@ function TraitDetailPage() {
           </Link>
           <div className="ui-badge">trait detail page</div>
         </div>
-        <p className="font-mono text-sm text-content-faint">{selectedFile.name}</p>
+        <p className="font-mono text-sm text-content-faint">
+          {selectedFile.name}
+        </p>
       </div>
 
       {isLoading ? (
@@ -58,47 +93,92 @@ function TraitDetailPage() {
         </div>
       ) : null}
 
-      {errorMessage ? <div className="ui-panel-error">{errorMessage}</div> : null}
+      {errorMessage ? (
+        <div className="ui-panel-error">{errorMessage}</div>
+      ) : null}
 
       {traitDetail ? (
         <>
           <section className="ui-panel-gradient">
             <div className="flex flex-wrap items-start justify-between gap-grid-gap">
-              <div>
-                <p className="ui-eyebrow">{formatCategoryLabel(traitDetail.category)}</p>
+              <div className="max-w-(--width-text)">
+                <p className="ui-eyebrow">
+                  {formatCategoryLabel(traitDetail.category)}
+                </p>
                 <div className="mt-section-offset-sm flex flex-wrap items-center gap-inline-gap-sm">
-                  <h1 className="text-3xl sm:text-4xl">{traitDetail.name}</h1>
-                  <ResultToneBadge result={traitDetail.result} />
+                  <span className="ui-badge">{traitDetail.name}</span>
+                  <ResultToneBadge
+                    result={traitDetail.result}
+                    tooltip={traitDetail.result_badge_tooltip}
+                  />
                 </div>
-                <p className="mt-section-offset-md max-w-(--width-text) text-base leading-body text-content-subtle">
+                <div className="mt-section-offset-lg flex flex-wrap items-start gap-inline-gap-sm">
+                  <h1 className="max-w-(--width-text) text-3xl font-semibold leading-tight text-content-accent sm:text-4xl">
+                    {traitDetail.headline}
+                  </h1>
+                  <InfoTooltip content={traitDetail.headline_tooltip} />
+                </div>
+                <p className="mt-section-offset-md text-base leading-body text-content-subtle">
                   {traitDetail.description}
+                </p>
+                <p className="mt-section-offset-lg text-lg leading-body text-content">
+                  {traitDetail.outcome_summary}
                 </p>
               </div>
 
               <div className="flex flex-wrap gap-inline-gap-sm">
-                <StatPill label="Confidence" value={formatConfidence(traitDetail.confidence)} tone="accent" />
-                <StatPill label="Coverage" value={formatPercent(traitDetail.coverage)} />
-                <StatPill label="Evidence" value={formatEvidenceLabel(traitDetail.evidence_level)} />
-                <StatPill label="Score" value={traitDetail.score.toFixed(2)} />
+                <StatPill
+                  label="Confidence"
+                  value={formatConfidence(traitDetail.confidence)}
+                  tone="accent"
+                  tooltip="Confidence tells you how dependable this educational result is. It is based on how much trait data was found in your file and how strong the curated evidence is."
+                />
+                <StatPill
+                  label="Coverage"
+                  value={formatPercent(traitDetail.coverage)}
+                  tooltip="Coverage tells you what share of this trait's rsIDs were actually available in your uploaded DNA file."
+                />
+                <StatPill
+                  label="Evidence"
+                  value={formatEvidenceLabel(traitDetail.evidence_level)}
+                  tooltip="Evidence describes how strong the overall research support is for this simplified trait model."
+                />
+                <StatPill
+                  label="Score"
+                  value={traitDetail.score.toFixed(2)}
+                  tooltip="Score is the combined direction of all matched genotype rules. Positive values lean toward the trait, negative values lean away."
+                />
+                <StatPill
+                  label="Observed rsIDs"
+                  value={String(observedCount)}
+                  tooltip="Observed rsIDs are the ones from this trait model that were actually present in your uploaded DNA file."
+                />
+                <StatPill
+                  label="Matched rules"
+                  value={String(matchedCount)}
+                  tooltip="Matched rules are the observed rsIDs where your genotype matched one of the curated interpretations used by the model."
+                />
               </div>
             </div>
           </section>
 
-          <section className="grid gap-grid-gap lg:grid-cols-[minmax(0,1.2fr)_minmax(18rem,0.8fr)]">
+          <section className="mt-section-offset-xl grid gap-grid-gap-sm md:grid-cols-2">
             <div className="ui-panel">
               <div className="flex flex-wrap items-center justify-between gap-grid-gap-sm">
                 <div>
-                  <p className="ui-eyebrow">progressive explanation</p>
-                  <h2 className="mt-section-offset-sm text-2xl">Interpretation layer</h2>
+                  <p className="ui-eyebrow">trait field guide</p>
+                  <h2 className="mt-section-offset-sm text-2xl">
+                    Interpretation layer
+                  </h2>
                 </div>
-                <div className="flex rounded-pill border border-border bg-surface-overlay p-1">
+                <div className="ui-segmented-control">
                   <button
                     type="button"
                     onClick={() => setExplanationMode('simple')}
-                    className={`rounded-pill px-badge-x py-badge-y text-sm transition ${
+                    className={`ui-segmented-control-option ${
                       explanationMode === 'simple'
-                        ? 'bg-brand text-content-inverse'
-                        : 'text-content-subtle'
+                        ? 'ui-segmented-control-option-active'
+                        : 'ui-segmented-control-option-inactive'
                     }`}
                   >
                     Simple
@@ -106,10 +186,10 @@ function TraitDetailPage() {
                   <button
                     type="button"
                     onClick={() => setExplanationMode('technical')}
-                    className={`rounded-pill px-badge-x py-badge-y text-sm transition ${
+                    className={`ui-segmented-control-option ${
                       explanationMode === 'technical'
-                        ? 'bg-brand text-content-inverse'
-                        : 'text-content-subtle'
+                        ? 'ui-segmented-control-option-active'
+                        : 'ui-segmented-control-option-inactive'
                     }`}
                   >
                     Technical
@@ -120,57 +200,128 @@ function TraitDetailPage() {
               <div className="mt-section-offset-xl ui-panel-accent">
                 <p className="ui-eyebrow text-content-accent">
                   {explanationMode === 'simple'
-                    ? 'simple explanation'
-                    : 'technical explanation'}
+                    ? 'reader-friendly view'
+                    : 'technical view'}
                 </p>
-                <p className="mt-section-offset-md text-sm leading-body text-content-muted">
-                  {explanation}
-                </p>
+                <div className="mt-section-offset-xl grid gap-grid-gap-sm">
+                  {(explanationMode === 'simple'
+                    ? traitDetail.simple_explanation
+                    : traitDetail.technical_explanation
+                  ).map((entry) => (
+                    <div key={entry.title} className="ui-panel-subtle">
+                      <p className="text-sm font-semibold text-content">
+                        {entry.title}
+                      </p>
+                      <p className="mt-section-offset-sm text-sm leading-body text-content-subtle">
+                        {entry.body}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-
-            <aside className="ui-panel">
-              <p className="ui-eyebrow">analysis notes</p>
-              <div className="mt-section-offset-lg space-y-section-offset-md">
-                {traitDetail.notes.map((note) => (
-                  <p key={note} className="text-sm leading-body text-content-subtle">
-                    {note}
-                  </p>
+            <div className="ui-panel">
+              <p className="ui-eyebrow">personal relevance</p>
+              <h2 className="mt-section-offset-sm text-2xl">
+                What should I do with this?
+              </h2>
+              <div className="mt-section-offset-xl grid gap-grid-gap-sm">
+                {traitDetail.practical_takeaway.map((entry) => (
+                  <div key={entry.title} className="ui-panel-subtle">
+                    <p className="text-sm font-semibold text-content">
+                      {entry.title}
+                    </p>
+                    <p className="mt-section-offset-sm text-sm leading-body text-content-subtle">
+                      {entry.body}
+                    </p>
+                  </div>
                 ))}
               </div>
-
-              {traitDetail.keywords.length > 0 ? (
-                <div className="mt-section-offset-xl">
-                  <p className="ui-eyebrow">keywords</p>
-                  <div className="mt-section-offset-md flex flex-wrap gap-inline-gap-sm">
-                    {traitDetail.keywords.map((keyword) => (
-                      <span key={keyword} className="ui-status-pill">
-                        {keyword}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ) : null}
-            </aside>
+            </div>
           </section>
 
-          <section className="space-y-grid-gap-sm">
-            <div className="flex flex-wrap items-center justify-between gap-grid-gap-sm">
-              <div>
-                <p className="ui-eyebrow">data layer</p>
-                <h2 className="mt-section-offset-sm text-2xl">
-                  rsID contribution trace
-                </h2>
+          <DisclosurePanel eyebrow="deep dive" title="Research spotlight">
+            <div className="mt-section-offset-xl grid gap-grid-gap-sm md:grid-cols-2">
+              {traitDetail.research_spotlight.map((item) => (
+                <div key={item.title} className="ui-panel-subtle">
+                  <p className="text-sm font-semibold text-content">
+                    {item.title}
+                  </p>
+                  <p className="mt-section-offset-sm text-sm leading-body text-content-subtle">
+                    {item.body}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </DisclosurePanel>
+
+          <DisclosurePanel
+            eyebrow="transparency layer"
+            title="But how did you actually calculate this?"
+          >
+            <div className="flex flex-wrap items-stretch gap-inline-gap-sm">
+              <div className="ui-flow-step min-w-40 flex-1">
+                <p className="text-sm font-semibold text-content">
+                  Observed markers
+                </p>
+                <p className="mt-section-offset-sm text-sm text-content-subtle">
+                  {observedCount} out of {traitDetail.rsids.length}
+                </p>
               </div>
-              <StatPill label="Contributing rsIDs" value={String(traitDetail.rsids.length)} />
+              <span className="ui-flow-arrow hidden md:inline">=&gt;</span>
+              <div className="ui-flow-step min-w-40 flex-1">
+                <p className="text-sm font-semibold text-content">
+                  Weighted score
+                </p>
+                <p className="mt-section-offset-sm text-sm text-content-subtle">
+                  {traitDetail.score.toFixed(2)}
+                </p>
+              </div>
+              <span className="ui-flow-arrow hidden md:inline">-&gt;</span>
+              <div className="ui-flow-step min-w-40 flex-1">
+                <p className="text-sm font-semibold text-content">
+                  Final confidence
+                </p>
+                <p className="mt-section-offset-sm text-sm text-content-subtle">
+                  {formatConfidence(traitDetail.confidence)}
+                </p>
+              </div>
             </div>
 
-            <div className="grid gap-grid-gap">
+            <div className="mt-section-offset-lg ui-panel-accent">
+              <p className="ui-eyebrow text-content-accent">formula snapshot</p>
+              <p className="mt-section-offset-sm text-sm leading-body text-content">
+                Score = normalized weighted sum of matched marker effects.
+                Confidence = coverage x evidence-strength modifier.
+              </p>
+            </div>
+
+            <div className="mt-section-offset-xl grid gap-grid-gap-sm md:grid-cols-2">
+              {traitDetail.calculation_summary.map((entry) => (
+                <div key={entry.title} className="ui-panel-subtle">
+                  <p className="text-sm font-semibold text-content">
+                    {entry.title}
+                  </p>
+                  <p className="mt-section-offset-sm text-sm leading-body text-content-subtle">
+                    {entry.body}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </DisclosurePanel>
+
+          <DisclosurePanel eyebrow="data layer" title="rsID-by-rsID trace">
+            <StatPill
+              label="rsIDs in model"
+              value={String(traitDetail.rsids.length)}
+              tooltip="This is the total number of rsIDs the current trait model uses."
+            />
+            <div className="mt-section-offset-lg grid gap-grid-gap">
               {traitDetail.rsids.map((rsid) => (
                 <TraitDetailRsidCard key={rsid.rsid} rsid={rsid} />
               ))}
             </div>
-          </section>
+          </DisclosurePanel>
 
           {traitDetail.sources.length > 0 ? (
             <section className="ui-panel">
@@ -182,9 +333,11 @@ function TraitDetailPage() {
                     href={source.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="ui-panel-subtle block transition hover:border-brand-line"
+                    className="ui-panel-subtle ui-interactive-panel-link"
                   >
-                    <p className="text-sm font-semibold text-content">{source.name}</p>
+                    <p className="text-sm font-semibold text-content">
+                      {source.name}
+                    </p>
                     {source.reference ? (
                       <p className="mt-section-offset-sm text-sm text-content-subtle">
                         {source.reference}

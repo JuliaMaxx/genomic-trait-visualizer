@@ -29,7 +29,17 @@
 
   /* System */
   --color-success: #34d399;
+  --color-success-soft: rgba(52, 211, 153, 0.1);
+  --color-success-line: rgba(52, 211, 153, 0.25);
+  --color-success-content: #d1fae5;
+  --color-warning: #fcd34d;
+  --color-warning-soft: rgba(252, 211, 77, 0.1);
+  --color-warning-line: rgba(252, 211, 77, 0.25);
+  --color-warning-content: #fef3c7;
   --color-danger: #fb7185;
+  --color-danger-soft-strong: rgba(251, 113, 133, 0.1);
+  --color-danger-line-strong: rgba(251, 113, 133, 0.25);
+  --color-danger-content-strong: #ffe4e6;
   --color-danger-soft: rgba(244, 63, 94, 0.08);
   --color-danger-line: rgba(244, 63, 94, 0.3);
   --color-danger-content: #fecdd3;
@@ -109,7 +119,10 @@
   --spacing-grid-gap-lg: 2rem;
   --spacing-header-padding-bottom: 1.25rem;
   --spacing-inline-gap: 1rem;
+  --spacing-inline-gap-compact: 0.5rem;
   --spacing-inline-gap-sm: 0.75rem;
+  --spacing-inline-gap-tight: 0.25rem;
+  --spacing-control-inset: 0.25rem;
 
   /* Radius */
   --radius-button: 0.9rem;
@@ -161,6 +174,30 @@
   @apply rounded-card border border-border-strong bg-app-surface p-card-padding shadow-panel backdrop-blur-sm bg-panel-gradient;
 }
 
+@utility ui-interactive-lift {
+  @apply transition duration-200 hover:-translate-y-0.5;
+}
+
+@utility ui-interactive-border-accent {
+  @apply transition duration-200 hover:border-brand-line;
+}
+
+@utility ui-interactive-text-accent {
+  @apply transition duration-200 hover:text-content-accent;
+}
+
+@utility ui-interactive-panel-link {
+  @apply block transition duration-200 hover:border-brand-line;
+}
+
+@utility ui-card-link {
+  @apply flex flex-col justify-between ui-panel-gradient ui-interactive-lift hover:border-brand-line hover:shadow-button;
+}
+
+@utility ui-card-link-heading {
+  @apply transition duration-200 group-hover:text-content-accent;
+}
+
 @utility ui-panel-subtle {
   @apply rounded-panel border border-border bg-surface-overlay-muted p-panel-padding;
 }
@@ -175,6 +212,102 @@
 
 @utility ui-status-pill {
   @apply rounded-pill border border-border bg-surface-overlay-strong px-badge-x py-badge-y text-xs text-content-muted;
+}
+
+@utility ui-result-badge {
+  @apply inline-flex items-center gap-inline-gap-tight rounded-pill border px-badge-x py-badge-y text-xs font-medium tracking-tight;
+}
+
+@utility ui-result-tone-likely {
+  @apply border-success-line bg-success-soft text-success-content;
+}
+
+@utility ui-result-tone-unlikely {
+  @apply border-danger-line-strong bg-danger-soft-strong text-danger-content-strong;
+}
+
+@utility ui-result-tone-inconclusive {
+  @apply border-warning-line bg-warning-soft text-warning-content;
+}
+
+@utility ui-stat-pill {
+  @apply inline-flex items-center gap-inline-gap-compact rounded-pill border px-pill-x py-pill-y text-sm;
+}
+
+@utility ui-stat-pill-default {
+  @apply border-border bg-surface-overlay text-content-muted;
+}
+
+@utility ui-stat-pill-accent {
+  @apply border-brand-line bg-brand-soft text-content;
+}
+
+@utility ui-stat-pill-label {
+  @apply inline-flex items-center gap-inline-gap-tight text-content-faint;
+}
+
+@utility ui-tooltip-trigger {
+  @apply inline-flex h-4 w-4 items-center justify-center rounded-full border border-border bg-surface-overlay text-[10px] leading-none text-content-faint transition duration-200 hover:border-brand-line hover:text-content;
+}
+
+@utility ui-tooltip-panel {
+  @apply pointer-events-none absolute bottom-[calc(100%+0.5rem)] left-1/2 z-50 hidden w-56 -translate-x-1/2 rounded-xl border border-border bg-app px-3 py-2 text-left text-xs leading-body text-content-subtle shadow-panel group-hover/tooltip:block group-focus-within/tooltip:block;
+}
+
+@utility ui-segmented-control {
+  @apply flex rounded-pill border border-border bg-surface-overlay p-control-inset;
+}
+
+@utility ui-segmented-control-option {
+  @apply rounded-pill px-badge-x py-badge-y text-sm transition duration-200;
+}
+
+@utility ui-segmented-control-option-active {
+  @apply bg-brand text-content-inverse;
+}
+
+@utility ui-segmented-control-option-inactive {
+  @apply text-content-subtle;
+}
+
+@utility ui-detail-layout {
+  @apply grid items-start gap-grid-gap lg:grid-cols-[minmax(0,1.2fr)_minmax(18rem,0.8fr)];
+}
+
+@utility ui-disclosure-summary {
+  @apply flex cursor-pointer list-none items-center justify-between gap-inline-gap-sm text-left;
+}
+
+@utility ui-flow-step {
+  @apply rounded-panel border border-border bg-surface-overlay-muted p-panel-padding;
+}
+
+@utility ui-flow-arrow {
+  @apply text-lg text-content-faint;
+}
+
+@utility ui-rsid-card {
+  @apply rounded-card border p-card-padding shadow-panel backdrop-blur-sm;
+}
+
+@utility ui-rsid-status-matched {
+  @apply border-success-line bg-success-soft;
+}
+
+@utility ui-rsid-status-no-match {
+  @apply border-warning-line bg-warning-soft;
+}
+
+@utility ui-rsid-status-missing {
+  @apply border-border bg-surface-overlay-muted;
+}
+
+@utility ui-dropzone {
+  @apply block cursor-pointer rounded-card border border-border-strong bg-app-surface px-dropzone-x py-dropzone-y text-content shadow-panel backdrop-blur-sm transition duration-200 hover:border-brand-line;
+}
+
+@utility ui-dropzone-active {
+  @apply border-brand-line bg-brand-soft;
 }
 
 @utility ui-button-base {

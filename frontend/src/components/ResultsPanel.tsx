@@ -15,6 +15,10 @@ function ResultsPanel({
   selectedFile,
   traits,
 }: Props) {
+  const visibleTraits = traits.filter(
+    (trait) => trait.observed_rsids.length > 0,
+  );
+
   if (isLoading) {
     return (
       <div className="ui-panel w-full max-w-(--width-content)">
@@ -34,20 +38,25 @@ function ResultsPanel({
     );
   }
 
-  if (traits.length === 0) {
+  if (visibleTraits.length === 0) {
     return (
       <div className="ui-panel w-full max-w-(--width-content) text-sm text-content-muted">
-        No traits were returned for this upload.
+        No traits with usable rsIDs were found for this upload.
       </div>
     );
   }
 
-  const matchedTraitCount = traits.filter(
+  const matchedTraitCount = visibleTraits.filter(
     (trait) => trait.matched_rsids.length > 0,
   ).length;
-  const likelyCount = traits.filter(
-    (trait) => trait.result === 'likely',
+  const deterministicCount = visibleTraits.filter(
+    (trait) => trait.result === 'likely' || trait.result === 'unlikely',
   ).length;
+  const averageCoverage = Math.round(
+    (visibleTraits.reduce((sum, trait) => sum + trait.coverage, 0) /
+      visibleTraits.length) *
+      100,
+  );
 
   return (
     <div className="mx-auto flex w-full max-w-(--width-content) flex-col gap-stack-gap">
@@ -57,24 +66,38 @@ function ResultsPanel({
           Results for <span className="text-brand">{selectedFile.name}</span>
         </p>
         <p className="mt-section-offset-sm max-w-(--width-text) text-sm leading-body text-content-subtle">
-          Each card is an exploration entry point. Open any trait to trace its
-          result back to the rsIDs, genotypes, and interpretation logic returned
-          by the backend.
+          Each card below gives a quick read on one trait. Open any trait to
+          see which rsIDs were found, which genotypes matched the rule set, and
+          how the final interpretation was produced.
         </p>
 
         <div className="mt-section-offset-xl flex flex-wrap gap-inline-gap-sm">
-          <StatPill label="Traits" value={String(traits.length)} />
           <StatPill
-            label="With matches"
+            label="Shown traits"
+            value={String(visibleTraits.length)}
+            tooltip="Only traits with at least one rsID found in your uploaded file are shown here."
+          />
+          <StatPill
+            label="Traits with matches"
             value={String(matchedTraitCount)}
             tone="accent"
+            tooltip="These are traits where at least one of your observed genotypes matched a curated rule used by the model."
           />
-          <StatPill label="Likely results" value={String(likelyCount)} />
+          <StatPill
+            label="Deterministic results"
+            value={String(deterministicCount)}
+            tooltip="Deterministic means the result leaned clearly one way or the other: either 'likely' or 'unlikely'. Inconclusive traits are not counted here."
+          />
+          <StatPill
+            label="Average coverage"
+            value={`${averageCoverage}%`}
+            tooltip="Coverage tells you how much of each trait's rsID rule set could actually be checked using your uploaded DNA file."
+          />
         </div>
       </div>
 
       <div className="grid gap-panel-padding md:grid-cols-2">
-        {traits.map((trait) => (
+        {visibleTraits.map((trait) => (
           <TraitCard key={trait.trait_id} trait={trait} />
         ))}
       </div>

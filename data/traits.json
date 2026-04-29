@@ -1,314 +1,898 @@
-[
-  {
-    "id": "lactose_intolerance",
-    "name": "Lactose Digestion Ability",
-    "category": "nutrition",
-    "description": "This trait estimates whether your body can digest lactose (milk sugar) as an adult.",
-    "simple_summary": "You are more likely to either digest lactose comfortably or feel digestive discomfort from milk sugar.",
-    "technical_summary": "This educational trait uses rs4988235 and rs182549 as proxy markers linked to lactase persistence patterns. It is intended for learning and exploration, not diagnosis.",
-    "evidence_level": "strong",
-    "keywords": [
-      "lactose intolerance",
-      "lactose tolerance",
-      "lactose",
-      "lactase",
-      "dairy digestion",
-      "milk sugar",
-      "rs4988235"
-    ],
-    "sources": [
-      {
-        "name": "NCBI dbSNP",
-        "url": "https://www.ncbi.nlm.nih.gov/snp/rs4988235",
-        "reference": "rs4988235",
-        "notes": "Variant reference page for the main lactase-persistence marker."
+{
+  "version": "2.0",
+  "traits": [
+    {
+      "id": "lactose_intolerance",
+      "name": "Lactose Digestion Ability",
+      "category": "nutrition",
+      "description": "This trait estimates whether your body can digest lactose, the main sugar in milk, well into adulthood.",
+      "simple_summary": "You are more likely to either digest lactose comfortably or feel digestive discomfort from milk sugar.",
+      "technical_summary": "This educational trait uses rs4988235 and rs182549 as proxy markers linked to lactase persistence patterns. It is intended for learning and exploration, not diagnosis.",
+      "evidence_level": "strong",
+      "keywords": [
+        "lactose intolerance",
+        "lactase persistence",
+        "dairy digestion",
+        "milk sugar",
+        "LCT",
+        "MCM6",
+        "rs4988235"
+      ],
+      "sources": [
+        {
+          "name": "NCBI dbSNP",
+          "url": "https://www.ncbi.nlm.nih.gov/snp/rs4988235",
+          "reference": "rs4988235",
+          "notes": "Variant reference page for the main lactase-persistence marker used in the model."
+        },
+        {
+          "name": "NCBI dbSNP",
+          "url": "https://www.ncbi.nlm.nih.gov/snp/rs182549",
+          "reference": "rs182549",
+          "notes": "Variant reference page for the second regulatory marker near the lactase locus."
+        },
+        {
+          "name": "Enattah et al. 2002",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/11788828/",
+          "reference": "Nature Genetics, PMID: 11788828",
+          "notes": "Landmark study that identified a key variant associated with adult-type hypolactasia."
+        },
+        {
+          "name": "Jarvela 2005",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/16019716/",
+          "reference": "Annals of Medicine, PMID: 16019716",
+          "notes": "Review explaining the genetics and evolutionary background of adult lactase persistence."
+        }
+      ],
+      "result_content": {
+        "likely": {
+          "card_tooltip": "For lactose digestion ability, this result means your DNA leans toward keeping lactase activity turned on into adulthood.",
+          "headline": "You are likely to digest lactose well as an adult.",
+          "headline_tooltip": "This means the markers found in your file look more like the patterns commonly associated with lactase persistence, not that every dairy product will always feel the same to you.",
+          "outcome_summary": "In this simplified model, your observed markers lean toward lactase persistence, which usually means milk sugar is more likely to be broken down comfortably after childhood."
+        },
+        "unlikely": {
+          "card_tooltip": "For lactose digestion ability, this result means your DNA leans away from lifelong lactase activity and toward lower lactose tolerance in adulthood.",
+          "headline": "You are less likely to digest lactose comfortably as an adult.",
+          "headline_tooltip": "This is a genetic lean toward lower adult lactase activity. It does not diagnose lactose intolerance, because symptoms also depend on diet, gut biology, and how much lactose you consume at once.",
+          "outcome_summary": "In this simplified model, your observed markers lean toward lower lactase persistence, which can make digestive discomfort after milk-based foods more likely."
+        },
+        "inconclusive": {
+          "card_tooltip": "For lactose digestion ability, the markers in your file did not create a clear lean toward either adult lactase persistence or non-persistence.",
+          "headline": "Your DNA does not show a clear lactose-digestion lean here.",
+          "headline_tooltip": "This usually means your available markers were mixed or incomplete, so the model cannot confidently lean toward either adult lactose tolerance or lactose sensitivity.",
+          "outcome_summary": "The rule set stayed in the middle for this trait, so the result is best read as uncertain rather than neutral or average."
+        }
       },
-      {
-        "name": "NCBI dbSNP",
-        "url": "https://www.ncbi.nlm.nih.gov/snp/rs182549",
-        "reference": "rs182549",
-        "notes": "Second marker used in the curated educational rule set."
+      "model_limit_summary": "This result is based on 2 curated markers that are especially well studied in European lactase-persistence research, so it may not fully represent global lactose-digestion genetics or your real digestive experience.",
+      "mental_model": [
+        {
+          "title": "Regulatory markers",
+          "body": "We start with rs4988235 and rs182549 near the lactase-control region."
+        },
+        {
+          "title": "Gene activity timing",
+          "body": "Those markers are used as clues about whether LCT stays more active after childhood."
+        },
+        {
+          "title": "Enzyme availability",
+          "body": "More lactase activity generally means more ability to break down milk sugar."
+        },
+        {
+          "title": "Trait result",
+          "body": "The combined signal becomes a lean toward adult lactose tolerance, lower tolerance, or no clear call."
+        }
+      ],
+      "practical_takeaway": [
+        {
+          "title": "If the result is inconclusive, test real life gently",
+          "body": "If this trait matters to you, your own experience with milk, yogurt, cheese, or lactose-free products will often be more informative than an uncertain genetic read."
+        },
+        {
+          "title": "Notice symptom-genotype mismatch",
+          "body": "If your genes lean one way but your digestion behaves another way, that can still make sense. Portion size, gut adaptation, other gastrointestinal issues, and food type all affect how lactose feels in practice."
+        },
+        {
+          "title": "Fermented dairy can behave differently",
+          "body": "Yogurt and aged cheeses are often easier for people with lower lactose tolerance because bacteria or processing reduce the lactose load compared with straight milk."
+        },
+        {
+          "title": "Dose often matters more than yes/no",
+          "body": "Lactose tolerance is rarely absolute. Many people can handle small amounts without symptoms, especially when dairy is consumed with other foods, so experimenting with portion size can be useful."
+        }
+      ],
+      "simple_explanation": [
+        {
+          "title": "Why this trait exists at all",
+          "body": "Most mammals stop making much lactase after weaning, because milk stops being a major food source. Humans are unusual: in some populations, a regulatory switch near the LCT gene keeps lactase activity going through adulthood, which is why some people can drink milk easily while others feel bloating, cramping, or digestive upset."
+        },
+        {
+          "title": "The interesting human story",
+          "body": "Lactase persistence is one of the classic examples of recent human evolution. It likely spread in populations where dairying became important, because being able to use milk as food gave a practical nutritional advantage. That makes this trait a neat meeting point between genetics, culture, and history."
+        },
+        {
+          "title": "How to read your result",
+          "body": "This result is not saying dairy is automatically good or bad for you. It is only estimating whether your genes look more like the patterns associated with keeping the lactase enzyme active in adulthood. Real-life experience still depends on portion size, fermented foods, gut adaptation, and individual sensitivity."
+        }
+      ],
+      "technical_explanation": [
+        {
+          "title": "Regulatory genetics, not a broken protein",
+          "body": "The best-known lactase persistence markers sit in the MCM6 regulatory region upstream of LCT rather than inside the lactase enzyme coding sequence itself. Their importance comes from how they influence transcriptional control of LCT expression after childhood, which is why this trait is fundamentally about gene regulation timing."
+        },
+        {
+          "title": "Why these rsIDs were chosen",
+          "body": "This model uses rs4988235 and rs182549 as compact proxy signals because they are strongly tied to European-ancestry lactase persistence literature and are common in consumer DNA files. That makes them practical educational markers, even though global lactase persistence involves additional variants in other populations."
+        },
+        {
+          "title": "Scientific caution",
+          "body": "The phenotype people care about is lactose tolerance in day-to-day life, but the genotype more directly reflects adult lactase persistence potential. Symptoms can diverge from genotype because of microbiome adaptation, serving size, gastrointestinal disorders, or differences between self-reported intolerance and formal lactose malabsorption testing."
+        }
+      ],
+      "research_spotlight": [
+        {
+          "title": "Where the story took off",
+          "body": "A landmark paper by Enattah and colleagues in 2002 connected variation near the lactase locus to adult-type hypolactasia, helping turn lactase persistence into a textbook example of a regulatory human trait with evolutionary significance."
+        },
+        {
+          "title": "Why researchers love this trait",
+          "body": "This trait is unusually readable from a genetics perspective because a relatively small number of well-studied regulatory markers can carry meaningful signal. It has been used to study gene-culture coevolution, migration patterns, and how strongly natural selection can shape human populations in only a few thousand years."
+        },
+        {
+          "title": "What remains important to remember",
+          "body": "Even though the research base is strong, the cleanest associations are population-dependent. A two-marker educational model is most interpretable where these specific regulatory variants were heavily studied, and less complete in populations where different lactase-persistence variants matter more."
+        },
+        {
+          "title": "Expanding beyond European markers",
+          "body": "More recent research has identified multiple independent lactase-persistence variants in African and Middle Eastern populations, reinforcing that this trait evolved convergently in different regions rather than coming from a single global mutation."
+        }
+      ],
+      "calculation_notes": [
+        {
+          "title": "Trait-specific assumption",
+          "body": "This trait assumes that the curated regulatory markers near LCT are reasonable proxies for adult lactase persistence in the simplified educational model. It does not model digestive symptoms directly, only the genetic signal that often underlies them."
+        }
+      ],
+      "rules": [
+        {
+          "rsid": "rs4988235",
+          "odds_ratio": 1.8,
+          "description": "Regulatory variant near the LCT gene associated with continued lactase enzyme production in adulthood.",
+          "gene": "LCT",
+          "weight": 1.0,
+          "priority": 1,
+          "genotype_meanings": [
+            {
+              "genotype": ["CC"],
+              "meaning": "This marker suggests reduced lactase persistence in adulthood.",
+              "effect": "Lower likelihood of adult lactase persistence",
+              "score": -0.7
+            },
+            {
+              "genotype": ["CT", "TT"],
+              "meaning": "This marker suggests lactase persistence is more likely in adulthood.",
+              "effect": "Higher likelihood of adult lactase persistence",
+              "score": 0.45
+            }
+          ],
+          "evidence_level": "strong",
+          "source_refs": ["NCBI dbSNP", "Enattah et al. 2002"]
+        },
+        {
+          "rsid": "rs182549",
+          "odds_ratio": 1.6,
+          "description": "Variant in the MCM6 region that influences expression of the nearby LCT gene involved in lactose digestion.",
+          "gene": "MCM6/LCT regulatory region",
+          "weight": 1.0,
+          "priority": 2,
+          "genotype_meanings": [
+            {
+              "genotype": ["GG"],
+              "meaning": "This marker suggests reduced lactase persistence in adulthood.",
+              "effect": "Lower likelihood of adult lactase persistence",
+              "score": -0.6
+            },
+            {
+              "genotype": ["AG", "AA"],
+              "meaning": "This marker suggests lactase persistence is more likely in adulthood.",
+              "effect": "Higher likelihood of adult lactase persistence",
+              "score": 0.35
+            }
+          ],
+          "evidence_level": "strong",
+          "source_refs": ["NCBI dbSNP", "Jarvela 2005"]
+        }
+      ]
+    },
+    {
+      "id": "caffeine_metabolism",
+      "name": "Caffeine Processing Speed",
+      "category": "nutrition",
+      "description": "This trait estimates how quickly your body is likely to clear caffeine after you drink it.",
+      "simple_summary": "You are more likely to clear caffeine faster or feel it for longer.",
+      "technical_summary": "This educational trait uses rs762551 in CYP1A2 as a proxy marker for caffeine metabolism speed. It reflects probability, not a guaranteed outcome.",
+      "evidence_level": "moderate",
+      "keywords": [
+        "caffeine sensitivity",
+        "coffee",
+        "caffeine clearance",
+        "CYP1A2",
+        "liver metabolism",
+        "rs762551"
+      ],
+      "sources": [
+        {
+          "name": "NCBI dbSNP",
+          "url": "https://www.ncbi.nlm.nih.gov/snp/rs762551",
+          "reference": "rs762551",
+          "notes": "Variant reference page for the CYP1A2 marker used in this model."
+        },
+        {
+          "name": "Nikrandt et al. 2022",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/35905656/",
+          "reference": "Nutrition Research, PMID: 35905656",
+          "notes": "Study discussing rs762551 in relation to caffeine response and coffee intake."
+        },
+        {
+          "name": "Mahdavi et al. 2023",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/36701157/",
+          "reference": "JAMA Network Open, PMID: 36701157",
+          "notes": "Recent population study linking CYP1A2 genotype, coffee intake, and downstream health outcomes."
+        }
+      ],
+      "result_content": {
+        "likely": {
+          "card_tooltip": "For caffeine processing speed, this result means your DNA leans toward the faster-processing side of the model.",
+          "headline": "You are likely to process caffeine relatively quickly.",
+          "headline_tooltip": "This is a genetic lean toward faster caffeine metabolism in the simplified model. It does not mean you will never feel jittery, because dose, sleep, medication use, and timing still matter a lot.",
+          "outcome_summary": "Your observed marker pattern leans toward faster CYP1A2-related caffeine clearance, which often means caffeine leaves the system more quickly."
+        },
+        "unlikely": {
+          "card_tooltip": "For caffeine processing speed, this result means your DNA leans toward slower caffeine clearance, so caffeine may stay noticeable for longer.",
+          "headline": "You are less likely to clear caffeine quickly.",
+          "headline_tooltip": "This suggests a slower-processing pattern in the simplified model. It is not a diagnosis of caffeine sensitivity, but it can help explain why one cup affects people very differently.",
+          "outcome_summary": "Your observed marker pattern leans toward slower caffeine metabolism, which can make the effects of coffee, tea, or energy drinks linger longer."
+        },
+        "inconclusive": {
+          "card_tooltip": "For caffeine processing speed, the available marker did not create a strong enough lean toward either faster or slower processing.",
+          "headline": "Your DNA does not show a clear caffeine-speed lean here.",
+          "headline_tooltip": "This usually means the rule set stayed too close to the middle to call you a faster or slower metabolizer with confidence.",
+          "outcome_summary": "This model stayed in its uncertain zone, so it cannot clearly place your caffeine response on the faster or slower side."
+        }
       },
-      {
-        "name": "NHGRI-EBI GWAS Catalog",
-        "url": "https://www.ebi.ac.uk/gwas/search?query=rs4988235",
-        "reference": "GWAS search",
-        "notes": "Curated summary source for lactase-persistence association literature."
-      }
-    ],
-    "rules": [
-      {
-        "rsid": "rs4988235",
-        "odds_ratio": 1.8,
-        "description": "Regulatory variant near the LCT gene associated with continued lactase enzyme production in adulthood.",
-        "gene": "LCT",
-        "weight": 1.0,
-        "priority": 1,
-        "genotype_meanings": [
-          {
-            "genotype": ["CC"],
-            "meaning": "This marker suggests reduced lactase persistence in adulthood.",
-            "effect": "Lower likelihood of adult lactase persistence",
-            "score": -0.7
-          },
-          {
-            "genotype": ["CT", "TT"],
-            "meaning": "This marker suggests lactase persistence is more likely in adulthood.",
-            "effect": "Higher likelihood of adult lactase persistence",
-            "score": 0.45
-          }
-        ],
-        "evidence_level": "strong",
-        "source_refs": ["NCBI dbSNP", "NHGRI-EBI GWAS Catalog"]
+      "model_limit_summary": "This result is based on 1 commonly used CYP1A2 marker, so it captures only a narrow slice of caffeine biology and may not reflect sleep, anxiety, dose, medications, or broader ancestry-specific variation.",
+      "mental_model": [
+        {
+          "title": "One marker",
+          "body": "We read rs762551 in the CYP1A2 pathway."
+        },
+        {
+          "title": "Liver metabolism",
+          "body": "That marker is used as a clue about how quickly caffeine is broken down."
+        },
+        {
+          "title": "Effect duration",
+          "body": "Faster clearance can shorten the effect window, while slower clearance can make caffeine linger."
+        },
+        {
+          "title": "Trait result",
+          "body": "The model turns that signal into a lean toward faster, slower, or unclear caffeine processing."
+        }
+      ],
+      "practical_takeaway": [
+        {
+          "title": "Use timing as your experiment",
+          "body": "If you want to compare this result with real life, notice how late-day caffeine affects your sleep rather than focusing only on how intense it feels right after drinking."
+        },
+        {
+          "title": "Dose still matters more than labels",
+          "body": "Even a faster-processing pattern does not make high intake harmless. Cup size, concentration, energy drinks, and stacking multiple servings often matter more than the genetic shorthand."
+        },
+        {
+          "title": "Mismatch is still informative",
+          "body": "If your lived experience feels much more sensitive or much less sensitive than the genetic result suggests, that usually points to sleep state, anxiety, tolerance, medication use, or other biology outside this one-marker model."
+        },
+        {
+          "title": "Watch for hidden caffeine sources",
+          "body": "Caffeine is not only in coffee. Tea, chocolate, sodas, pre-workout supplements, and some medications can add up throughout the day, making total intake higher than expected."
+        }
+      ],
+      "simple_explanation": [
+        {
+          "title": "What this trait is really about",
+          "body": "When people say they are 'good with caffeine' or 'wrecked by one coffee,' they are usually describing a mix of metabolism, brain sensitivity, sleep habits, and dose. This trait focuses on one specific piece of that puzzle: how quickly the liver is likely to break caffeine down."
+        },
+        {
+          "title": "Why it feels so familiar",
+          "body": "Caffeine is one of the easiest genetic traits to connect to daily life because people notice it fast. A slower-processing pattern can mean a late afternoon coffee still feels active at night, while a faster-processing pattern may fade sooner and sometimes encourages higher intake simply because the effect does not last as long."
+        },
+        {
+          "title": "The fun nuance",
+          "body": "A fast metabolizer is not automatically 'better' at caffeine, and a slower metabolizer is not automatically 'worse'. They just often experience different timing. The same drink can feel smooth, intense, short-lived, or sleep-disrupting depending on the rest of the person and the rest of the day."
+        }
+      ],
+      "technical_explanation": [
+        {
+          "title": "The gene behind the shorthand",
+          "body": "CYP1A2 encodes a liver enzyme responsible for metabolizing caffeine and several other compounds. The rs762551 marker is widely used as a practical proxy when discussing rapid versus slower caffeine metabolism, although the full biology of caffeine response also involves adenosine signaling, environment, and behavior."
+        },
+        {
+          "title": "Why the model is intentionally compact",
+          "body": "This trait uses a single-marker educational design because rs762551 is common in genotype files and appears often in nutrigenomics discussions. That makes the trait easy to explain, but also limits completeness: a one-SNP model cannot capture total caffeine sensitivity, tolerance, or downstream cardiovascular context by itself."
+        },
+        {
+          "title": "What scientists would add",
+          "body": "A fuller research model would consider exposure level, habitual intake, medication interactions, smoking status, and additional loci affecting caffeine response, perception, and behavior. That is why this page frames the result as a directional interpretation rather than a personal pharmacokinetic measurement."
+        }
+      ],
+      "research_spotlight": [
+        {
+          "title": "How this marker entered the conversation",
+          "body": "CYP1A2 became a favorite candidate-gene marker in nutrition and coffee-response research because it sits close to the chemistry people care about: how quickly caffeine is processed in the liver. Recent studies such as Nikrandt et al. 2022 and Mahdavi et al. 2023 keep using rs762551 because it remains a practical genotype anchor."
+        },
+        {
+          "title": "Why the literature is still interesting",
+          "body": "Caffeine is a great example of a trait where behavior feeds back into genetics research. People with different processing profiles may drink different amounts of coffee, feel different timing of effects, and show different associations in studies of sleep, blood pressure, or kidney outcomes."
+        },
+        {
+          "title": "Why the evidence is moderate, not absolute",
+          "body": "The research signal is real, but the phenotype is broader than a single SNP. This model therefore gives rs762551 moderate educational weight rather than pretending it captures the whole experience of stimulants, alertness, or insomnia."
+        },
+        {
+          "title": "Where research is heading",
+          "body": "Newer studies are moving beyond single markers toward multi-factor models that combine genetics, wearable sleep data, and real-world intake tracking to better understand how caffeine affects individuals over time."
+        }
+      ],
+      "calculation_notes": [
+        {
+          "title": "Trait-specific assumption",
+          "body": "This trait treats rs762551 as a compact stand-in for caffeine processing speed. That is useful for education, but it intentionally leaves out other genes and the equally important behavioral side of caffeine response."
+        }
+      ],
+      "rules": [
+        {
+          "rsid": "rs762551",
+          "description": "Variant in the CYP1A2 gene affecting the rate at which caffeine is metabolized in the liver.",
+          "gene": "CYP1A2",
+          "weight": 1.0,
+          "priority": 1,
+          "genotype_meanings": [
+            {
+              "genotype": ["AA"],
+              "meaning": "This marker suggests faster caffeine metabolism.",
+              "effect": "Faster caffeine clearance",
+              "score": 0.55
+            },
+            {
+              "genotype": ["AC", "CC"],
+              "meaning": "This marker suggests slower caffeine metabolism.",
+              "effect": "Slower caffeine clearance",
+              "score": -0.4
+            }
+          ],
+          "evidence_level": "moderate",
+          "source_refs": [
+            "NCBI dbSNP",
+            "Nikrandt et al. 2022",
+            "Mahdavi et al. 2023"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "alcohol_flush",
+      "name": "Alcohol Flush Reaction",
+      "category": "health",
+      "description": "This trait estimates your likelihood of facial flushing and related discomfort after drinking alcohol.",
+      "simple_summary": "You are more likely to experience stronger or weaker flushing after alcohol.",
+      "technical_summary": "This educational trait uses rs671 in ALDH2 as a proxy marker for alcohol flush response. It is for interpretation and learning, not medical advice.",
+      "evidence_level": "strong",
+      "keywords": [
+        "alcohol flush",
+        "acetaldehyde",
+        "ALDH2",
+        "facial flushing",
+        "East Asian flush",
+        "rs671"
+      ],
+      "sources": [
+        {
+          "name": "NCBI dbSNP",
+          "url": "https://www.ncbi.nlm.nih.gov/snp/rs671",
+          "reference": "rs671",
+          "notes": "Variant reference page for the ALDH2 marker used here."
+        },
+        {
+          "name": "Crabb et al. 1989",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/2562960/",
+          "reference": "Journal of Clinical Investigation, PMID: 2562960",
+          "notes": "Classic paper showing the inactive ALDH2 allele behaves dominantly for alcohol sensitivity."
+        },
+        {
+          "name": "Cho et al. 2023",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/37875790/",
+          "reference": "BMC Genomics, PMID: 37875790",
+          "notes": "Large modern GWAS confirming ALDH2 rs671 as a major signal for alcohol flushing in East Asian populations."
+        }
+      ],
+      "result_content": {
+        "likely": {
+          "card_tooltip": "For alcohol flush reaction, this result means your DNA leans toward stronger flushing and acetaldehyde-related discomfort after drinking.",
+          "headline": "You are likely to flush after drinking alcohol.",
+          "headline_tooltip": "This pattern is associated with reduced ALDH2 activity, which can allow acetaldehyde to build up more quickly. The result is educational and does not replace medical advice about alcohol risk.",
+          "outcome_summary": "Your observed marker pattern leans toward a stronger alcohol flush response, which often means facial warmth, redness, and a more uncomfortable reaction after drinking."
+        },
+        "unlikely": {
+          "card_tooltip": "For alcohol flush reaction, this result means your DNA leans away from the classic ALDH2-related flushing pattern.",
+          "headline": "You are less likely to have the classic alcohol flush reaction.",
+          "headline_tooltip": "This means the model did not find the stronger ALDH2 flushing signal. It does not mean alcohol is harmless or that you will never react strongly for other reasons.",
+          "outcome_summary": "Your observed marker pattern leans away from the best-known ALDH2-related flushing response, suggesting the classic rapid flushing pattern is less likely in this model."
+        },
+        "inconclusive": {
+          "card_tooltip": "For alcohol flush reaction, the available markers did not create a strong enough lean toward either stronger or weaker flushing.",
+          "headline": "Your DNA does not show a clear alcohol-flush lean here.",
+          "headline_tooltip": "This means the current educational rule set did not get enough clear signal to place you confidently on either side of the flushing pattern.",
+          "outcome_summary": "The model stayed uncertain, so this result should be read as unresolved rather than as evidence for no reaction."
+        }
       },
-      {
-        "rsid": "rs182549",
-        "odds_ratio": 1.6,
-        "description": "Variant in the MCM6 region that influences expression of the nearby LCT gene involved in lactose digestion.",
-        "gene": "MCM6/LCT regulatory region",
-        "weight": 1.0,
-        "priority": 2,
-        "genotype_meanings": [
-          {
-            "genotype": ["GG"],
-            "meaning": "This marker suggests reduced lactase persistence in adulthood.",
-            "effect": "Lower likelihood of adult lactase persistence",
-            "score": -0.6
-          },
-          {
-            "genotype": ["AG", "AA"],
-            "meaning": "This marker suggests lactase persistence is more likely in adulthood.",
-            "effect": "Higher likelihood of adult lactase persistence",
-            "score": 0.35
-          }
-        ],
-        "evidence_level": "strong",
-        "source_refs": ["NCBI dbSNP", "NHGRI-EBI GWAS Catalog"]
-      }
-    ]
-  },
-  {
-    "id": "caffeine_metabolism",
-    "name": "Caffeine Processing Speed",
-    "category": "nutrition",
-    "description": "This trait estimates how quickly your body is likely to process caffeine.",
-    "simple_summary": "You are more likely to clear caffeine faster or feel it for longer.",
-    "technical_summary": "This educational trait uses rs762551 in CYP1A2 as a proxy marker for caffeine metabolism speed. It reflects probability, not a guaranteed outcome.",
-    "evidence_level": "moderate",
-    "keywords": [
-      "caffeine sensitivity",
-      "caffeine clearance",
-      "caffeine",
-      "coffee",
-      "cyp1a2",
-      "rs762551"
-    ],
-    "sources": [
-      {
-        "name": "NCBI dbSNP",
-        "url": "https://www.ncbi.nlm.nih.gov/snp/rs762551",
-        "reference": "rs762551",
-        "notes": "Variant reference page for the CYP1A2 marker used here."
+      "model_limit_summary": "This result is based mainly on the strong ALDH2 rs671 signal, which is especially informative in populations where that variant is common, but it does not fully model alcohol response, risk, or non-genetic reasons for reacting badly to alcohol.",
+      "mental_model": [
+        {
+          "title": "ALDH2 marker",
+          "body": "We begin with rs671 in the ALDH2 pathway."
+        },
+        {
+          "title": "Acetaldehyde breakdown",
+          "body": "That marker is used as a clue about how effectively acetaldehyde gets cleared after drinking."
+        },
+        {
+          "title": "Body reaction",
+          "body": "Slower acetaldehyde clearance can make warmth, redness, nausea, or discomfort more likely."
+        },
+        {
+          "title": "Trait result",
+          "body": "The simplified model turns that pathway signal into a lean toward stronger flushing, weaker flushing, or no clear call."
+        }
+      ],
+      "practical_takeaway": [
+        {
+          "title": "Treat symptoms as real data",
+          "body": "If alcohol already makes you flush, feel unwell, or react quickly, that lived response matters more than trying to argue with the genotype."
+        },
+        {
+          "title": "Do not confuse lower flushing with lower risk",
+          "body": "A result leaning away from flushing does not mean alcohol is safe or especially well tolerated. It only means the classic ALDH2 flushing signal is less evident in this model."
+        },
+        {
+          "title": "If the result is unclear, observe context",
+          "body": "Dose, speed of drinking, food intake, ancestry background, and other alcohol-metabolism genes can all shape your experience, so an inconclusive result is a good reason to focus on real reactions instead of genetic certainty."
+        },
+        {
+          "title": "Pacing can change the experience",
+          "body": "Drinking more slowly and spacing intake over time can reduce the intensity of flushing and discomfort, as it gives the body more time to process acetaldehyde between drinks."
+        }
+      ],
+      "simple_explanation": [
+        {
+          "title": "What the trait actually describes",
+          "body": "Alcohol flushing is not just a cosmetic red-cheek effect. It usually happens because acetaldehyde, a toxic intermediate produced while alcohol is being processed, builds up faster than the body can clear it. That buildup can trigger warmth, redness, nausea, palpitations, and a strong sense that alcohol feels unpleasant."
+        },
+        {
+          "title": "Why people remember this one",
+          "body": "This is one of the most instantly noticeable genetics traits because it can show up within minutes of drinking. It is also one of the clearest examples where a single well-known variant can meaningfully shape a familiar everyday response."
+        },
+        {
+          "title": "The important practical nuance",
+          "body": "A lower flushing tendency is not a green light for alcohol, and a higher flushing tendency is not just an aesthetic quirk. This trait is better thought of as a clue about alcohol metabolism than as a personality label or lifestyle recommendation."
+        }
+      ],
+      "technical_explanation": [
+        {
+          "title": "Why ALDH2 matters so much",
+          "body": "ALDH2 encodes mitochondrial aldehyde dehydrogenase 2, a key enzyme for oxidizing acetaldehyde to acetate during alcohol metabolism. The rs671 variant is a classic functional marker because reduced enzyme activity leads to higher acetaldehyde exposure and a much more noticeable physiologic response after alcohol intake."
+        },
+        {
+          "title": "Why this signal is unusually strong",
+          "body": "Unlike many consumer-genetics traits built from diffuse small effects, alcohol flushing has a well-established major contributor in ALDH2. That is why a compact educational model can still be informative here, particularly in populations where rs671 has been extensively studied."
+        },
+        {
+          "title": "Why the interpretation still has limits",
+          "body": "A full phenotype model would also consider alcohol dehydrogenase variants, amount consumed, sex, ancestry background, habitual drinking, and study design. This page therefore describes a major genetic signal, not a complete alcohol-risk profile."
+        }
+      ],
+      "research_spotlight": [
+        {
+          "title": "The classic foundation",
+          "body": "Crabb and colleagues showed in 1989 that the inactive ALDH2 allele behaves dominantly for alcohol sensitivity, helping explain why one copy of the variant can strongly affect real-world alcohol response."
+        },
+        {
+          "title": "What newer work adds",
+          "body": "Modern population studies, including Cho et al. 2023, continue to confirm rs671 as one of the strongest genetic signals for self-reported alcohol flushing, especially in East Asian cohorts where the variant is much more common."
+        },
+        {
+          "title": "Why researchers care beyond flushing",
+          "body": "Because flushing tracks acetaldehyde exposure, this variant has become important in epidemiology, addiction research, and studies of alcohol-related disease risk. It is a vivid example of how a visible response can reflect deeper metabolic biology."
+        },
+        {
+          "title": "A model example in genetics education",
+          "body": "Alcohol flushing is often used in teaching because it shows a clear path from gene variant to enzyme activity to observable effect, making it one of the most intuitive real-world demonstrations of functional genetics."
+        }
+      ],
+      "calculation_notes": [
+        {
+          "title": "Trait-specific assumption",
+          "body": "This model treats rs671 as the dominant educational marker for alcohol flush response. That keeps the interpretation understandable, but it deliberately leaves out other genes and environmental factors that also shape alcohol reactions."
+        }
+      ],
+      "rules": [
+        {
+          "rsid": "rs671",
+          "odds_ratio": 3.0,
+          "description": "Variant in the ALDH2 gene affecting the breakdown of acetaldehyde, a byproduct of alcohol metabolism.",
+          "gene": "ALDH2",
+          "weight": 1.0,
+          "priority": 1,
+          "genotype_meanings": [
+            {
+              "genotype": ["AA", "AG"],
+              "meaning": "This marker suggests higher likelihood of alcohol flushing.",
+              "effect": "Higher flushing likelihood",
+              "score": 0.6
+            },
+            {
+              "genotype": ["GG"],
+              "meaning": "This marker suggests lower likelihood of alcohol flushing.",
+              "effect": "Lower flushing likelihood",
+              "score": -0.6
+            }
+          ],
+          "evidence_level": "strong",
+          "source_refs": ["NCBI dbSNP", "Crabb et al. 1989", "Cho et al. 2023"]
+        }
+      ]
+    },
+    {
+      "id": "eye_color",
+      "name": "Likely Eye Color Pattern",
+      "category": "appearance",
+      "description": "This trait estimates whether your genetics lean toward lighter or darker eye pigmentation in a simplified one-marker model.",
+      "simple_summary": "You are more likely to have lighter eyes or darker eyes in this simplified model.",
+      "technical_summary": "This educational trait uses rs12913832 in the HERC2/OCA2 region as a compact proxy signal. Eye color is polygenic, so this remains a simplified approximation.",
+      "evidence_level": "strong",
+      "keywords": [
+        "eye color",
+        "iris pigmentation",
+        "HERC2",
+        "OCA2",
+        "blue eyes",
+        "brown eyes",
+        "rs12913832"
+      ],
+      "sources": [
+        {
+          "name": "NCBI dbSNP",
+          "url": "https://www.ncbi.nlm.nih.gov/snp/rs12913832",
+          "reference": "rs12913832",
+          "notes": "Variant reference page for the HERC2/OCA2 marker."
+        },
+        {
+          "name": "Liu et al. 2010",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/20457063/",
+          "reference": "Forensic Science International Genetics, PMID: 20457063",
+          "notes": "Study discussing predictive value of HERC2 and related markers for broad eye-color categories."
+        },
+        {
+          "name": "Salvo et al. 2023",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10048254/",
+          "reference": "Genes, PMCID: PMC10048254",
+          "notes": "Modern paper showing why the HERC2/OCA2 region is powerful but still not the whole story."
+        }
+      ],
+      "result_content": {
+        "likely": {
+          "card_tooltip": "For likely eye color pattern, this result means your DNA leans toward the lighter-eye side of this simplified pigmentation model.",
+          "headline": "You are likely to have lighter eyes in this model.",
+          "headline_tooltip": "This is a simplified read on one major pigmentation signal, not a guaranteed eye color call. Real eye color is polygenic and can include hazel, green, amber, mixed, or intermediate outcomes.",
+          "outcome_summary": "Your observed marker pattern leans toward lower iris melanin in the model, which is why the interpretation points toward a lighter-eye pattern."
+        },
+        "unlikely": {
+          "card_tooltip": "For likely eye color pattern, this result means your DNA leans toward the darker-eye side of this simplified pigmentation model.",
+          "headline": "You are likely to have darker eyes in this model.",
+          "headline_tooltip": "This is a one-marker pigmentation lean rather than a full trait prediction. It is useful because the marker is strong, but it cannot capture every shade or every ancestry background.",
+          "outcome_summary": "Your observed marker pattern leans toward higher iris melanin in the model, which is why the interpretation points toward a darker-eye pattern."
+        },
+        "inconclusive": {
+          "card_tooltip": "For likely eye color pattern, the available marker did not create a strong enough lean toward lighter or darker pigmentation.",
+          "headline": "Your DNA does not show a clear eye-color lean here.",
+          "headline_tooltip": "This usually means the simplified rule set stayed too close to the middle to confidently describe the direction of pigmentation.",
+          "outcome_summary": "The model did not get enough directional signal to land clearly on the lighter-eye or darker-eye side."
+        }
       },
-      {
-        "name": "NHGRI-EBI GWAS Catalog",
-        "url": "https://www.ebi.ac.uk/gwas/search?query=rs762551",
-        "reference": "GWAS search",
-        "notes": "Association summary for caffeine metabolism literature."
-      }
-    ],
-    "rules": [
-      {
-        "rsid": "rs762551",
-        "description": "Variant in the CYP1A2 gene affecting the rate at which caffeine is metabolized in the liver.",
-        "gene": "CYP1A2",
-        "weight": 1.0,
-        "priority": 1,
-        "genotype_meanings": [
-          {
-            "genotype": ["AA"],
-            "meaning": "This marker suggests faster caffeine metabolism.",
-            "effect": "Faster caffeine clearance",
-            "score": 0.55
-          },
-          {
-            "genotype": ["AC", "CC"],
-            "meaning": "This marker suggests slower caffeine metabolism.",
-            "effect": "Slower caffeine clearance",
-            "score": -0.4
-          }
-        ],
-        "evidence_level": "moderate",
-        "source_refs": ["NCBI dbSNP", "NHGRI-EBI GWAS Catalog"]
-      }
-    ]
-  },
-  {
-    "id": "alcohol_flush",
-    "name": "Alcohol Flush Reaction",
-    "category": "health",
-    "description": "This trait estimates your likelihood of facial flushing after drinking alcohol.",
-    "simple_summary": "You are more likely to experience stronger or weaker flushing after alcohol.",
-    "technical_summary": "This educational trait uses rs671 in ALDH2 as a proxy marker for alcohol flush response. It is for interpretation and learning, not medical advice.",
-    "evidence_level": "strong",
-    "keywords": [
-      "alcohol flush",
-      "flushing reaction",
-      "aldehyde dehydrogenase deficiency",
-      "alcohol",
-      "flush",
-      "aldh2",
-      "rs671"
-    ],
-    "sources": [
-      {
-        "name": "NCBI dbSNP",
-        "url": "https://www.ncbi.nlm.nih.gov/snp/rs671",
-        "reference": "rs671",
-        "notes": "Variant reference page for the ALDH2 marker."
+      "model_limit_summary": "This result is based on 1 major pigmentation marker in the HERC2/OCA2 region. It is useful for broad direction, but eye color is polygenic and this shortcut cannot fully capture intermediate shades or all ancestry backgrounds.",
+      "mental_model": [
+        {
+          "title": "Pigmentation marker",
+          "body": "We start with rs12913832 in the HERC2/OCA2 region."
+        },
+        {
+          "title": "OCA2 regulation",
+          "body": "That marker is used as a clue about how strongly a major pigmentation pathway is regulated."
+        },
+        {
+          "title": "Iris melanin",
+          "body": "Differences in iris melanin often shift the broad appearance toward lighter or darker eyes."
+        },
+        {
+          "title": "Trait result",
+          "body": "The model converts that single strong signal into a broad pigmentation lean, not an exact color label."
+        }
+      ],
+      "practical_takeaway": [
+        {
+          "title": "Read this as direction, not a color certificate",
+          "body": "This trait is best understood as a broad pigmentation lean. It is much better at saying lighter versus darker tendency than at naming exact shades like hazel, gray, or mixed eyes."
+        },
+        {
+          "title": "Exceptions are scientifically normal",
+          "body": "If your real eye color does not seem to fit the expected direction, that is not unusual. Eye color is a classic example of one strong marker plus many modifiers working together."
+        },
+        {
+          "title": "Use it as a genetics lesson more than a life decision",
+          "body": "Unlike digestion or caffeine, this trait is mainly interesting for understanding how visible traits can be strongly influenced by a major regulatory region without being fully determined by it."
+        },
+        {
+          "title": "Lighting and perception can mislead",
+          "body": "Eye color can appear different depending on lighting, clothing, and surrounding colors, so even real-world observation is not always a fixed reference point."
+        }
+      ],
+      "simple_explanation": [
+        {
+          "title": "What this trait is really measuring",
+          "body": "Eye color is mostly about melanin in the iris. More melanin usually means darker-looking eyes, while lower melanin makes the iris scatter light differently and appear lighter. This page is not trying to name every shade. It is estimating the broad direction of pigmentation."
+        },
+        {
+          "title": "Why eye color fascinates people",
+          "body": "This is one of the most visible human traits, so it feels intuitive and personal right away. It is also a favorite in forensic genetics because a few strong pigmentation markers can already say something meaningful, even though the full trait is more complicated than the simple blue-versus-brown story people usually tell."
+        },
+        {
+          "title": "The fun but important catch",
+          "body": "Light versus dark is easier to model than exact color labels. Green, hazel, gray, and mixed eyes sit in the interesting middle ground where additional genes, ancestry background, and modifier variants can change the final look."
+        }
+      ],
+      "technical_explanation": [
+        {
+          "title": "Why HERC2 and OCA2 dominate the discussion",
+          "body": "The rs12913832 signal in the HERC2 region is important because it regulates OCA2 expression, and OCA2 strongly influences pigmentation. That regulatory relationship makes this locus one of the most studied and most predictive components of broad eye-color variation in European-focused datasets."
+        },
+        {
+          "title": "Why one marker is useful but incomplete",
+          "body": "A single SNP can provide a surprisingly strong educational signal for broad eye-pigmentation direction, but not enough for a complete phenotype model. Real-world eye color depends on additional loci such as SLC45A2, TYR, TYRP1, IRF4, and other modifiers documented in pigmentation genetics and forensic phenotyping research."
+        },
+        {
+          "title": "What scientists mean by polygenic here",
+          "body": "Polygenic does not mean the major marker is unimportant. It means one strong variant explains a large share of the variance, while a network of other variants refines the final phenotype, especially when a person’s actual eye color does not match the broad expectation from rs12913832 alone."
+        }
+      ],
+      "research_spotlight": [
+        {
+          "title": "The main early breakthrough",
+          "body": "Work on HERC2 and OCA2 in the late 2000s established this region as the standout predictor for broad eye-color categories, which is why rs12913832 became central in forensic DNA phenotyping systems."
+        },
+        {
+          "title": "What newer studies revealed",
+          "body": "Later studies, including Salvo et al. 2023, showed that even a very strong marker leaves room for exceptions. Some people with the expected genotype still end up with surprising eye colors, which is exactly what makes the trait scientifically interesting instead of boringly deterministic."
+        },
+        {
+          "title": "Why this section is not redundant",
+          "body": "The key research takeaway is not just that HERC2/OCA2 matters. It is that this locus is both powerful and incomplete, making eye color a great example of how a single major signal and a broader polygenic background can coexist."
+        },
+        {
+          "title": "Ongoing refinement in prediction models",
+          "body": "Modern forensic and genetics models are gradually incorporating more variants to improve prediction accuracy, especially for intermediate eye colors where single-marker approaches are least precise."
+        }
+      ],
+      "calculation_notes": [
+        {
+          "title": "Trait-specific assumption",
+          "body": "This trait intentionally compresses a polygenic pigmentation trait into one major educational signal. That makes the result easy to read, but it also means intermediate shades and ancestry-specific modifiers are underrepresented."
+        }
+      ],
+      "rules": [
+        {
+          "rsid": "rs12913832",
+          "description": "Regulatory variant in the HERC2/OCA2 region influencing melanin production and eye pigmentation.",
+          "gene": "HERC2/OCA2",
+          "weight": 1.0,
+          "priority": 1,
+          "genotype_meanings": [
+            {
+              "genotype": ["AA"],
+              "meaning": "This marker suggests a higher likelihood of lighter eye color.",
+              "effect": "Higher likelihood of lighter eyes",
+              "score": 0.5
+            },
+            {
+              "genotype": ["AG", "GG"],
+              "meaning": "This marker suggests a higher likelihood of darker eye color.",
+              "effect": "Higher likelihood of darker eyes",
+              "score": -0.4
+            }
+          ],
+          "evidence_level": "strong",
+          "source_refs": ["NCBI dbSNP", "Liu et al. 2010", "Salvo et al. 2023"]
+        }
+      ]
+    },
+    {
+      "id": "bitter_taste",
+      "name": "Bitter Taste Response",
+      "category": "nutrition",
+      "description": "This trait estimates how strongly you may perceive certain bitter-tasting compounds.",
+      "simple_summary": "You are more likely to notice bitter flavors strongly or find them milder.",
+      "technical_summary": "This educational trait uses rs713598 in TAS2R38 as a proxy marker for bitter taste perception. It is a simplified signal for learning and exploration.",
+      "evidence_level": "moderate",
+      "keywords": [
+        "bitter taste",
+        "PROP tasting",
+        "TAS2R38",
+        "taste receptors",
+        "broccoli bitterness",
+        "rs713598"
+      ],
+      "sources": [
+        {
+          "name": "NCBI dbSNP",
+          "url": "https://www.ncbi.nlm.nih.gov/snp/rs713598",
+          "reference": "rs713598",
+          "notes": "Variant reference page for the TAS2R38 marker used here."
+        },
+        {
+          "name": "Duffy et al. 2004",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/15547448/",
+          "reference": "Alcohol and Alcoholism, PMID: 15547448",
+          "notes": "Classic paper connecting TAS2R38-related bitterness differences with PROP tasting and alcohol perception."
+        },
+        {
+          "name": "Kim et al. 2024",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12158849/",
+          "reference": "Phenome-wide investigation, PMCID: PMC12158849",
+          "notes": "Recent broad overview of dietary and health outcomes linked to TAS2R38 variation."
+        }
+      ],
+      "result_content": {
+        "likely": {
+          "card_tooltip": "For bitter taste response, this result means your DNA leans toward stronger perception of certain bitter compounds.",
+          "headline": "You are likely to notice bitterness more strongly.",
+          "headline_tooltip": "This is a genetic lean in a classic taste-receptor pathway, not a statement about every bitter food. Real flavor perception also depends on preparation, smell, habit, and culture.",
+          "outcome_summary": "Your observed marker pattern leans toward a stronger TAS2R38-type bitter response, which can make some vegetables, drinks, or tasting compounds feel more intense."
+        },
+        "unlikely": {
+          "card_tooltip": "For bitter taste response, this result means your DNA leans toward milder perception of certain bitter compounds.",
+          "headline": "You are less likely to perceive bitterness strongly.",
+          "headline_tooltip": "This suggests a milder response in the simplified bitter-taste model. It does not mean you dislike bitterness less in every context, only that a well-known receptor pathway may be less intense.",
+          "outcome_summary": "Your observed marker pattern leans toward a milder TAS2R38-type bitter response, which can make some classic bitter compounds feel less sharp."
+        },
+        "inconclusive": {
+          "card_tooltip": "For bitter taste response, the available marker did not create a strong enough lean toward stronger or weaker bitter perception.",
+          "headline": "Your DNA does not show a clear bitter-taste lean here.",
+          "headline_tooltip": "This means the model could not place you confidently on either side of the stronger-versus-milder bitter perception pattern.",
+          "outcome_summary": "The result stayed uncertain, so this page cannot clearly call your bitter perception stronger or milder from the available evidence."
+        }
       },
-      {
-        "name": "NHGRI-EBI GWAS Catalog",
-        "url": "https://www.ebi.ac.uk/gwas/search?query=rs671",
-        "reference": "GWAS search",
-        "notes": "Association summary for flushing-related literature."
-      }
-    ],
-    "rules": [
-      {
-        "rsid": "rs671",
-        "odds_ratio": 3.0,
-        "description": "Variant in the ALDH2 gene affecting the breakdown of acetaldehyde, a byproduct of alcohol metabolism.",
-        "gene": "ALDH2",
-        "weight": 1.0,
-        "priority": 1,
-        "genotype_meanings": [
-          {
-            "genotype": ["AA", "AG"],
-            "meaning": "This marker suggests higher likelihood of alcohol flushing.",
-            "effect": "Higher flushing likelihood",
-            "score": 0.6
-          },
-          {
-            "genotype": ["GG"],
-            "meaning": "This marker suggests lower likelihood of alcohol flushing.",
-            "effect": "Lower flushing likelihood",
-            "score": -0.6
-          }
-        ],
-        "evidence_level": "strong",
-        "source_refs": ["NCBI dbSNP", "NHGRI-EBI GWAS Catalog"]
-      }
-    ]
-  },
-  {
-    "id": "eye_color",
-    "name": "Likely Eye Color Pattern",
-    "category": "appearance",
-    "description": "This trait estimates whether your genetics lean toward lighter or darker eye color.",
-    "simple_summary": "You are more likely to have lighter eyes or darker eyes in this simplified model.",
-    "technical_summary": "This educational trait uses rs12913832 in the HERC2/OCA2 region as a compact proxy signal. Eye color is polygenic, so this remains a simplified approximation.",
-    "evidence_level": "strong",
-    "keywords": [
-      "blue eyes",
-      "brown eyes",
-      "pigmentation",
-      "eye color",
-      "rs12913832"
-    ],
-    "sources": [
-      {
-        "name": "NCBI dbSNP",
-        "url": "https://www.ncbi.nlm.nih.gov/snp/rs12913832",
-        "reference": "rs12913832",
-        "notes": "Variant reference page for the HERC2/OCA2 marker."
-      },
-      {
-        "name": "NHGRI-EBI GWAS Catalog",
-        "url": "https://www.ebi.ac.uk/gwas/search?query=rs12913832",
-        "reference": "GWAS search",
-        "notes": "Association summary for eye-color literature."
-      }
-    ],
-    "rules": [
-      {
-        "rsid": "rs12913832",
-        "description": "Regulatory variant in the HERC2/OCA2 region influencing melanin production and eye pigmentation.",
-        "gene": "HERC2/OCA2",
-        "weight": 1.0,
-        "priority": 1,
-        "genotype_meanings": [
-          {
-            "genotype": ["AA"],
-            "meaning": "This marker suggests a higher likelihood of lighter eye color.",
-            "effect": "Higher likelihood of lighter eyes",
-            "score": 0.5
-          },
-          {
-            "genotype": ["AG", "GG"],
-            "meaning": "This marker suggests a higher likelihood of darker eye color.",
-            "effect": "Higher likelihood of darker eyes",
-            "score": -0.4
-          }
-        ],
-        "evidence_level": "strong",
-        "source_refs": ["NCBI dbSNP", "NHGRI-EBI GWAS Catalog"]
-      }
-    ]
-  },
-  {
-    "id": "bitter_taste",
-    "name": "Bitter Taste Response",
-    "category": "nutrition",
-    "description": "This trait estimates how strongly you may perceive bitter tastes.",
-    "simple_summary": "You are more likely to notice bitter flavors strongly or find them milder.",
-    "technical_summary": "This educational trait uses rs713598 in TAS2R38 as a proxy marker for bitter taste perception. It is a simplified signal for learning and exploration.",
-    "evidence_level": "moderate",
-    "keywords": [
-      "taste sensitivity",
-      "broccoli taste",
-      "coffee bitterness",
-      "bitter taste",
-      "tas2r38",
-      "rs713598"
-    ],
-    "sources": [
-      {
-        "name": "NCBI dbSNP",
-        "url": "https://www.ncbi.nlm.nih.gov/snp/rs713598",
-        "reference": "rs713598",
-        "notes": "Variant reference page for the TAS2R38 marker."
-      },
-      {
-        "name": "NHGRI-EBI GWAS Catalog",
-        "url": "https://www.ebi.ac.uk/gwas/search?query=rs713598",
-        "reference": "GWAS search",
-        "notes": "Association summary for bitter taste literature."
-      }
-    ],
-    "rules": [
-      {
-        "rsid": "rs713598",
-        "description": "Variant in the TAS2R38 gene affecting sensitivity to certain bitter-tasting compounds.",
-        "gene": "TAS2R38",
-        "weight": 1.0,
-        "priority": 1,
-        "genotype_meanings": [
-          {
-            "genotype": ["CC", "CG"],
-            "meaning": "This marker suggests higher bitter taste sensitivity.",
-            "effect": "Stronger bitter perception",
-            "score": 0.45
-          },
-          {
-            "genotype": ["GG"],
-            "meaning": "This marker suggests lower bitter taste sensitivity.",
-            "effect": "Weaker bitter perception",
-            "score": -0.35
-          }
-        ],
-        "source_refs": ["NCBI dbSNP", "NHGRI-EBI GWAS Catalog"]
-      }
-    ]
-  }
-]
+      "model_limit_summary": "This result is based on 1 TAS2R38-related marker and is best read as a shortcut for one bitter-receptor pathway, not as a complete model of flavor preference, food choice, or overall taste sensitivity.",
+      "mental_model": [
+        {
+          "title": "Taste receptor marker",
+          "body": "We begin with rs713598 in the TAS2R38 pathway."
+        },
+        {
+          "title": "Receptor response",
+          "body": "That marker is used as a clue about how strongly some bitter compounds activate the receptor."
+        },
+        {
+          "title": "Perceived intensity",
+          "body": "A stronger receptor signal can make bitterness feel sharper or more noticeable."
+        },
+        {
+          "title": "Trait result",
+          "body": "The simplified model turns that receptor signal into a lean toward stronger, milder, or unclear bitter perception."
+        }
+      ],
+      "practical_takeaway": [
+        {
+          "title": "Separate perception from preference",
+          "body": "You can taste bitterness strongly and still enjoy bitter foods. This result is more about sensory intensity than about whether you should or should not like coffee, greens, or hoppy drinks."
+        },
+        {
+          "title": "Use repeated exposure as context",
+          "body": "If the genetic result suggests stronger bitterness but your food habits say otherwise, learning and familiarity may be doing a lot of work. Taste biology and taste culture often pull together rather than in conflict."
+        },
+        {
+          "title": "If it is unclear, trust your plate",
+          "body": "An inconclusive result simply means this one-marker shortcut did not lean hard enough either way. Your actual reactions to foods remain the better guide."
+        },
+        {
+          "title": "Preparation can change perception",
+          "body": "Cooking methods, seasoning, and food pairing can soften or mask bitterness, meaning the same ingredient may feel very different depending on how it is prepared."
+        }
+      ],
+      "simple_explanation": [
+        {
+          "title": "Why this trait feels surprisingly personal",
+          "body": "Bitterness is not just a flavor preference. It is a sensory warning system that evolved to help organisms notice potentially harmful compounds. That is why one person may call kale, tonic water, or dark greens pleasantly sharp while another experiences them as harsh or even unpleasant."
+        },
+        {
+          "title": "The famous kitchen-table version",
+          "body": "TAS2R38 is well known from the classic 'supertaster versus nontaster' conversations. The simplified truth is that some people get a stronger receptor signal from bitter compounds such as PROP-like molecules, and that difference can spill into how certain foods or drinks are experienced."
+        },
+        {
+          "title": "A fun caveat",
+          "body": "Stronger bitterness perception does not automatically mean disliking bitter foods. Plenty of people learn to enjoy coffee, grapefruit, hoppy beer, or Brussels sprouts even when they taste the bitter edge very clearly. Culture and repeated exposure can be just as important as receptor biology."
+        }
+      ],
+      "technical_explanation": [
+        {
+          "title": "The receptor behind the trait",
+          "body": "TAS2R38 encodes a bitter taste receptor that helps detect compounds related to PTC and PROP, which are widely used in taste genetics research. Variation at rs713598 often travels with other linked TAS2R38 variants and contributes to haplotypes associated with stronger or weaker bitter perception."
+        },
+        {
+          "title": "Why a one-marker model is still only a shortcut",
+          "body": "This trait uses rs713598 as a practical educational signal because it sits in one of the best-known bitter taste pathways. However, overall flavor perception is influenced by multiple receptors, oral anatomy, olfaction, prior exposure, and even expectations, so the phenotype is broader than one SNP."
+        },
+        {
+          "title": "What researchers study beyond the tongue",
+          "body": "TAS2R receptors are also expressed in tissues outside the mouth, which is one reason the literature around TAS2R38 goes beyond taste intensity and into nutrition, food choice, and broader physiology. That wider context is interesting, but it is also why simple consumer interpretation should stay modest."
+        }
+      ],
+      "research_spotlight": [
+        {
+          "title": "The classic taste-genetics appeal",
+          "body": "Bitter-taste genetics became popular because it connects molecular biology to an experience people can notice instantly. Duffy et al. 2004 helped reinforce the idea that TAS2R38-related variation is not just a lab curiosity but something tied to real sensory differences."
+        },
+        {
+          "title": "What modern work expanded",
+          "body": "Recent broader analyses such as Kim et al. 2024 look beyond single tasting experiments and ask how TAS2R38 variation relates to dietary habits and health-related traits across large datasets. That shift makes the research feel less like a classroom demo and more like a systems-biology question."
+        },
+        {
+          "title": "Why the model is moderate, not maximal",
+          "body": "The biology is compelling, but the everyday phenotype is noisy. Food preparation, learning, smell, and social context all change what 'bitter' means in practice, so this educational model keeps its confidence modest."
+        },
+        {
+          "title": "Why this trait keeps being revisited",
+          "body": "TAS2R38 remains a popular research target because it offers a rare combination of clear genetic signal and measurable real-world behavior, making it useful for studying how sensory biology influences diet and health over time."
+        }
+      ],
+      "calculation_notes": [
+        {
+          "title": "Trait-specific assumption",
+          "body": "This trait treats rs713598 as a usable stand-in for a broader TAS2R38 bitterness pattern. That is educationally convenient, but it compresses a richer haplotype story and a very messy real-world flavor experience."
+        }
+      ],
+      "rules": [
+        {
+          "rsid": "rs713598",
+          "description": "Variant in the TAS2R38 gene affecting sensitivity to certain bitter-tasting compounds.",
+          "gene": "TAS2R38",
+          "weight": 1.0,
+          "priority": 1,
+          "genotype_meanings": [
+            {
+              "genotype": ["CC", "CG"],
+              "meaning": "This marker suggests higher bitter taste sensitivity.",
+              "effect": "Stronger bitter perception",
+              "score": 0.45
+            },
+            {
+              "genotype": ["GG"],
+              "meaning": "This marker suggests lower bitter taste sensitivity.",
+              "effect": "Weaker bitter perception",
+              "score": -0.35
+            }
+          ],
+          "evidence_level": "moderate",
+          "source_refs": ["NCBI dbSNP", "Duffy et al. 2004", "Kim et al. 2024"]
+        }
+      ]
+    }
+  ]
+}

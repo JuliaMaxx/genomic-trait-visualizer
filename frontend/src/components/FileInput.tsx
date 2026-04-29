@@ -48,11 +48,7 @@ function FileInput({
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
-      className={`bg-panel-gradient block cursor-pointer rounded-card border px-dropzone-x py-dropzone-y text-content shadow-panel backdrop-blur-sm transition duration-200 ${
-        isDragging
-          ? 'border-brand-line bg-brand-soft'
-          : 'border-border-strong bg-app-surface hover:border-brand-line'
-      } ${className}`.trim()}
+      className={`${isDragging ? 'ui-dropzone ui-dropzone-active' : 'ui-dropzone bg-panel-gradient'} ${className}`.trim()}
     >
       <input
         id={inputId}

@@ -1,7 +1,6 @@
 import { Link, Navigate } from 'react-router-dom';
 
 import ResultsPanel from '../components/ResultsPanel';
-import StatPill from '../components/StatPill';
 import { useAnalysisSession } from '../context/useAnalysisSession';
 import useTraitOverview from '../hooks/useTraitOverview';
 
@@ -22,9 +21,10 @@ function AnalysisPage() {
               Trait exploration overview
             </h1>
             <p className="mt-section-offset-md max-w-(--width-text) text-base leading-body text-content-subtle">
-              The overview mirrors the new backend logic: trait-level outcomes
-              lead directly into rsID-level explanations, genotype meaning, and
-              progressive disclosure.
+              This page shows the traits that could be checked using your
+              uploaded DNA file. Start with the short summaries here, then open
+              any trait to see the rsIDs behind the result and how your
+              genotypes were interpreted.
             </p>
           </div>
 

@@ -1,22 +1,23 @@
 import type { TraitResultLabel } from '../types/analysis';
 import { formatResultLabel } from '../utils/formatResultLabel';
+import InfoTooltip from './InfoTooltip';
 
 type Props = {
   result: TraitResultLabel;
+  tooltip?: string;
 };
 
 const toneClasses: Record<TraitResultLabel, string> = {
-  likely: 'border-emerald-400/25 bg-emerald-400/10 text-emerald-100',
-  unlikely: 'border-rose-400/25 bg-rose-400/10 text-rose-100',
-  inconclusive: 'border-amber-300/25 bg-amber-300/10 text-amber-100',
+  likely: 'ui-result-tone-likely',
+  unlikely: 'ui-result-tone-unlikely',
+  inconclusive: 'ui-result-tone-inconclusive',
 };
 
-function ResultToneBadge({ result }: Props) {
+function ResultToneBadge({ result, tooltip }: Props) {
   return (
-    <span
-      className={`rounded-pill border px-badge-x py-badge-y text-xs font-medium tracking-tight ${toneClasses[result]}`}
-    >
+    <span className={`ui-result-badge ${toneClasses[result]}`}>
       {formatResultLabel(result)}
+      {tooltip ? <InfoTooltip content={tooltip} /> : null}
     </span>
   );
 }
