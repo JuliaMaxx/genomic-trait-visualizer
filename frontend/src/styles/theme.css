@@ -417,7 +417,7 @@
 }
 
 @utility ui-select {
-  @apply appearance-none cursor-pointer rounded-button border border-border-strong bg-app-elevated px-control-x py-control-y pr-11 text-sm font-semibold text-content outline-none shadow-inner transition duration-200 [color-scheme:dark] hover:border-brand-line focus:border-brand-line focus:bg-app-surface;
+  @apply appearance-none cursor-pointer rounded-button border border-border-strong bg-app-elevated px-control-x py-control-y pr-11 text-sm font-semibold text-content outline-none shadow-inner transition duration-200 scheme-dark hover:border-brand-line focus:border-brand-line focus:bg-app-surface;
   background-image:
     linear-gradient(
       180deg,
@@ -454,7 +454,7 @@
 }
 
 @utility ui-dropdown-menu {
-  @apply absolute left-0 right-0 top-[calc(100%+0.5rem)] z-[60] grid gap-1 rounded-panel border border-border-strong bg-app-elevated p-control-inset shadow-panel backdrop-blur-sm;
+  @apply absolute left-0 right-0 top-[calc(100%+0.5rem)] z-60 grid gap-1 rounded-panel border border-border-strong bg-app-elevated p-control-inset shadow-panel backdrop-blur-sm;
 }
 
 @utility ui-dropdown-option {
