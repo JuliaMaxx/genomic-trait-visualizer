@@ -455,6 +455,10 @@
   @apply shrink-0 text-xs font-medium text-content-faint;
 }
 
+@utility ui-filter-reset-button {
+  @apply relative inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-button border border-border-strong bg-surface-overlay text-content-subtle transition duration-200 hover:border-brand-line hover:text-content-accent focus:border-brand-line focus:outline-none before:absolute before:h-4 before:w-0.5 before:rotate-45 before:rounded-pill before:bg-current after:absolute after:h-4 after:w-0.5 after:-rotate-45 after:rounded-pill after:bg-current;
+}
+
 @utility ui-empty-state {
   @apply ui-panel w-full text-sm leading-body text-content-subtle;
 }

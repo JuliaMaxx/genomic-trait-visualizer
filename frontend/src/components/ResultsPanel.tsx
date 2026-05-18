@@ -31,6 +31,20 @@ function ResultsPanel({
     (trait) => trait.observed_rsids.length > 0,
   );
   const visibleTraits = filterAnalysisTraits(traits, filters);
+  const hasActiveFilters =
+    filters.query !== '' ||
+    filters.likelihood !== 'all' ||
+    filters.confidence !== 'all' ||
+    filters.category !== 'all';
+
+  function resetFilters() {
+    setFilters({
+      query: '',
+      likelihood: 'all',
+      confidence: 'all',
+      category: 'all',
+    });
+  }
 
   if (isLoading) {
     return (
@@ -113,7 +127,8 @@ function ResultsPanel({
       </div>
 
       <div className="ui-filter-panel">
-        <div className="ui-filter-grid">
+        <div className="flex items-start justify-between gap-inline-gap-sm">
+          <div className="ui-filter-grid flex-1">
           <label className="ui-filter-label">
             Search
             <input
@@ -187,6 +202,16 @@ function ResultsPanel({
               ]}
             />
           </label>
+          </div>
+          {hasActiveFilters ? (
+            <button
+              type="button"
+              className="ui-filter-reset-button"
+              aria-label="Reset filters"
+              title="Reset filters"
+              onClick={resetFilters}
+            />
+          ) : null}
         </div>
       </div>
 

@@ -24,6 +24,18 @@ function TraitCatalogPage() {
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const visibleTraits = filterTraitCatalog(traits, filters);
+  const hasActiveFilters =
+    filters.query !== '' ||
+    filters.category !== 'all' ||
+    filters.evidence !== 'all';
+
+  function resetFilters() {
+    setFilters({
+      query: '',
+      category: 'all',
+      evidence: 'all',
+    });
+  }
 
   useEffect(() => {
     let isCancelled = false;
@@ -87,7 +99,8 @@ function TraitCatalogPage() {
       ) : null}
 
       <div className="ui-filter-panel">
-        <div className="ui-filter-grid">
+        <div className="flex items-start justify-between gap-inline-gap-sm">
+          <div className="ui-filter-grid flex-1">
           <label className="ui-filter-label">
             Search
             <input
@@ -142,6 +155,16 @@ function TraitCatalogPage() {
               ]}
             />
           </label>
+          </div>
+          {hasActiveFilters ? (
+            <button
+              type="button"
+              className="ui-filter-reset-button"
+              aria-label="Reset filters"
+              title="Reset filters"
+              onClick={resetFilters}
+            />
+          ) : null}
         </div>
       </div>
 

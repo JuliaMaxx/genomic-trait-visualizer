@@ -20,6 +20,14 @@ function RsidCatalogPage() {
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const visibleRsids = filterRsidCatalog(rsids, filters);
+  const hasActiveFilters = filters.query !== '' || filters.evidence !== 'all';
+
+  function resetFilters() {
+    setFilters({
+      query: '',
+      evidence: 'all',
+    });
+  }
 
   useEffect(() => {
     let isCancelled = false;
@@ -79,7 +87,8 @@ function RsidCatalogPage() {
       ) : null}
 
       <div className="ui-filter-panel">
-        <div className="ui-filter-grid">
+        <div className="flex items-start justify-between gap-inline-gap-sm">
+          <div className="ui-filter-grid flex-1">
           <label className="ui-filter-label">
             Search
             <input
@@ -114,6 +123,16 @@ function RsidCatalogPage() {
               ]}
             />
           </label>
+          </div>
+          {hasActiveFilters ? (
+            <button
+              type="button"
+              className="ui-filter-reset-button"
+              aria-label="Reset filters"
+              title="Reset filters"
+              onClick={resetFilters}
+            />
+          ) : null}
         </div>
       </div>
 
