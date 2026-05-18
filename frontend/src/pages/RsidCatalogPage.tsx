@@ -89,40 +89,40 @@ function RsidCatalogPage() {
       <div className="ui-filter-panel">
         <div className="flex items-start justify-between gap-inline-gap-sm">
           <div className="ui-filter-grid flex-1">
-          <label className="ui-filter-label">
-            Search
-            <input
-              className="ui-search-input"
-              value={filters.query}
-              onChange={(event) =>
-                setFilters((current) => ({
-                  ...current,
-                  query: event.target.value,
-                }))
-              }
-              placeholder="rsID, gene, trait keyword"
-              type="search"
-            />
-          </label>
-          <label className="ui-filter-label">
-            Evidence
-            <FilterDropdown
-              ariaLabel="Evidence filter"
-              value={filters.evidence}
-              onChange={(evidence) =>
-                setFilters((current) => ({
-                  ...current,
-                  evidence,
-                }))
-              }
-              options={[
-                { value: 'all', label: 'All evidence' },
-                { value: 'strong', label: 'Strong' },
-                { value: 'moderate', label: 'Moderate' },
-                { value: 'limited', label: 'Limited' },
-              ]}
-            />
-          </label>
+            <label className="ui-filter-label">
+              Search
+              <input
+                className="ui-search-input"
+                value={filters.query}
+                onChange={(event) =>
+                  setFilters((current) => ({
+                    ...current,
+                    query: event.target.value,
+                  }))
+                }
+                placeholder="rsID, gene, trait keyword"
+                type="search"
+              />
+            </label>
+            <label className="ui-filter-label">
+              Evidence
+              <FilterDropdown
+                ariaLabel="Evidence filter"
+                value={filters.evidence}
+                onChange={(evidence) =>
+                  setFilters((current) => ({
+                    ...current,
+                    evidence,
+                  }))
+                }
+                options={[
+                  { value: 'all', label: 'All evidence' },
+                  { value: 'strong', label: 'Strong' },
+                  { value: 'moderate', label: 'Moderate' },
+                  { value: 'limited', label: 'Limited' },
+                ]}
+              />
+            </label>
           </div>
           {hasActiveFilters ? (
             <button

@@ -129,79 +129,79 @@ function ResultsPanel({
       <div className="ui-filter-panel">
         <div className="flex items-start justify-between gap-inline-gap-sm">
           <div className="ui-filter-grid flex-1">
-          <label className="ui-filter-label">
-            Search
-            <input
-              className="ui-search-input"
-              value={filters.query}
-              onChange={(event) =>
-                setFilters((current) => ({
-                  ...current,
-                  query: event.target.value,
-                }))
-              }
-              placeholder="Trait, keyword, rsID"
-              type="search"
-            />
-          </label>
-          <label className="ui-filter-label">
-            Likelihood
-            <FilterDropdown
-              ariaLabel="Likelihood filter"
-              value={filters.likelihood}
-              onChange={(likelihood) =>
-                setFilters((current) => ({
-                  ...current,
-                  likelihood,
-                }))
-              }
-              options={[
-                { value: 'all', label: 'All likelihoods' },
-                { value: 'likely', label: 'Likely' },
-                { value: 'unlikely', label: 'Unlikely' },
-                { value: 'inconclusive', label: 'Inconclusive' },
-              ]}
-            />
-          </label>
-          <label className="ui-filter-label">
-            Confidence
-            <FilterDropdown
-              ariaLabel="Confidence filter"
-              value={filters.confidence}
-              onChange={(confidence) =>
-                setFilters((current) => ({
-                  ...current,
-                  confidence,
-                }))
-              }
-              options={[
-                { value: 'all', label: 'All confidence' },
-                { value: 'high', label: 'High' },
-                { value: 'medium', label: 'Medium' },
-                { value: 'low', label: 'Low' },
-              ]}
-            />
-          </label>
-          <label className="ui-filter-label">
-            Category
-            <FilterDropdown
-              ariaLabel="Category filter"
-              value={filters.category}
-              onChange={(category) =>
-                setFilters((current) => ({
-                  ...current,
-                  category,
-                }))
-              }
-              options={[
-                { value: 'all', label: 'All categories' },
-                { value: 'nutrition', label: 'Nutrition' },
-                { value: 'appearance', label: 'Appearance' },
-                { value: 'health', label: 'Health' },
-                { value: 'behavior', label: 'Behavior' },
-              ]}
-            />
-          </label>
+            <label className="ui-filter-label">
+              Search
+              <input
+                className="ui-search-input"
+                value={filters.query}
+                onChange={(event) =>
+                  setFilters((current) => ({
+                    ...current,
+                    query: event.target.value,
+                  }))
+                }
+                placeholder="Trait, keyword, rsID"
+                type="search"
+              />
+            </label>
+            <label className="ui-filter-label">
+              Likelihood
+              <FilterDropdown
+                ariaLabel="Likelihood filter"
+                value={filters.likelihood}
+                onChange={(likelihood) =>
+                  setFilters((current) => ({
+                    ...current,
+                    likelihood,
+                  }))
+                }
+                options={[
+                  { value: 'all', label: 'All likelihoods' },
+                  { value: 'likely', label: 'Likely' },
+                  { value: 'unlikely', label: 'Unlikely' },
+                  { value: 'inconclusive', label: 'Inconclusive' },
+                ]}
+              />
+            </label>
+            <label className="ui-filter-label">
+              Confidence
+              <FilterDropdown
+                ariaLabel="Confidence filter"
+                value={filters.confidence}
+                onChange={(confidence) =>
+                  setFilters((current) => ({
+                    ...current,
+                    confidence,
+                  }))
+                }
+                options={[
+                  { value: 'all', label: 'All confidence' },
+                  { value: 'high', label: 'High' },
+                  { value: 'medium', label: 'Medium' },
+                  { value: 'low', label: 'Low' },
+                ]}
+              />
+            </label>
+            <label className="ui-filter-label">
+              Category
+              <FilterDropdown
+                ariaLabel="Category filter"
+                value={filters.category}
+                onChange={(category) =>
+                  setFilters((current) => ({
+                    ...current,
+                    category,
+                  }))
+                }
+                options={[
+                  { value: 'all', label: 'All categories' },
+                  { value: 'nutrition', label: 'Nutrition' },
+                  { value: 'appearance', label: 'Appearance' },
+                  { value: 'health', label: 'Health' },
+                  { value: 'behavior', label: 'Behavior' },
+                ]}
+              />
+            </label>
           </div>
           {hasActiveFilters ? (
             <button
