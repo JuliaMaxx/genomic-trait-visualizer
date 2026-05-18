@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from backend.services.parsers import parse_ftdna
 
 
@@ -8,12 +10,13 @@ def to_alleles(genotype: str | None) -> list[str] | None:
 
 
 def load_lines(path: str) -> list[str]:
-    with open(path, "r", encoding="utf-8", errors="ignore") as f:
+    sample_path = Path(__file__).resolve().parents[2] / path
+    with open(sample_path, "r", encoding="utf-8", errors="ignore") as f:
         return f.readlines()
 
 
 def test_parse_ftdna_edge_file() -> None:
-    lines = load_lines("backend/tests/dna_samples/ftdna/ftdna_edge.csv")
+    lines = load_lines("dna_samples/ftdna/ftdna_edge.csv")
     result = parse_ftdna(lines)
 
     # All rows structurally valid → all kept
@@ -37,7 +40,7 @@ def test_parse_ftdna_edge_file() -> None:
 
 
 def test_parse_ftdna_messy_file() -> None:
-    lines = load_lines("backend/tests/dna_samples/ftdna/ftdna_messy.txt")
+    lines = load_lines("dna_samples/ftdna/ftdna_messy.txt")
     result = parse_ftdna(lines)
 
     # All rows structurally valid → all kept
@@ -62,7 +65,7 @@ def test_parse_ftdna_messy_file() -> None:
 
 
 def test_parse_ftdna_valid_file() -> None:
-    lines = load_lines("backend/tests/dna_samples/ftdna/ftdna_valid.csv")
+    lines = load_lines("dna_samples/ftdna/ftdna_valid.csv")
     result = parse_ftdna(lines)
 
     assert len(result.variants) == 5
@@ -78,7 +81,7 @@ def test_parse_ftdna_valid_file() -> None:
 
 
 def test_parse_ftdna_broken_file() -> None:
-    lines = load_lines("backend/tests/dna_samples/ftdna/ftdna_broken.csv")
+    lines = load_lines("dna_samples/ftdna/ftdna_broken.csv")
     result = parse_ftdna(lines)
 
     # All rows structurally invalid → all dropped

@@ -78,3 +78,52 @@ export type TraitDetail = {
   rsids: TraitRsidDetail[];
   sources: TraitSource[];
 };
+
+export type TraitDefinition = {
+  id: string;
+  name: string;
+  category: TraitCategory;
+  description: string;
+  simple_summary: string;
+  technical_summary: string;
+  evidence_level: EvidenceLevel;
+  keywords: string[];
+};
+
+export type RsidCatalogItem = {
+  rsid: string;
+  gene?: string | null;
+  plain_english_summary: string;
+  trait_count: number;
+  evidence_level?: EvidenceLevel | null;
+};
+
+export type RsidTraitLink = {
+  trait_id: string;
+  trait_name: string;
+  category: TraitCategory;
+  description: string;
+  effect?: string | null;
+  evidence_level?: EvidenceLevel | null;
+  source_refs: string[];
+};
+
+export type RsidDetail = {
+  rsid: string;
+  gene?: string | null;
+  plain_english_summary: string;
+  technical_summary: string;
+  description: string;
+  genotype_meanings: {
+    genotype: string[];
+    meaning: string;
+    effect?: string | null;
+    score: number;
+  }[];
+  effect_directions: string[];
+  traits: RsidTraitLink[];
+  story_sections: TraitContentSection[];
+  interpretation_notes: TraitContentSection[];
+  research_context: TraitContentSection[];
+  sources: TraitSource[];
+};

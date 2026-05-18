@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from backend.services.parsers import parse_gedmatch
 
 
@@ -8,12 +10,13 @@ def to_alleles(genotype: str | None) -> list[str] | None:
 
 
 def load_lines(path: str) -> list[str]:
-    with open(path, "r", encoding="utf-8", errors="ignore") as f:
+    sample_path = Path(__file__).resolve().parents[2] / path
+    with open(sample_path, "r", encoding="utf-8", errors="ignore") as f:
         return f.readlines()
 
 
 def test_parse_gedmatch_edge_file() -> None:
-    lines = load_lines("backend/tests/dna_samples/gedmatch/gedmatch_edge.txt")
+    lines = load_lines("dna_samples/gedmatch/gedmatch_edge.txt")
     result = parse_gedmatch(lines)
 
     # All structurally valid → all kept
@@ -30,7 +33,7 @@ def test_parse_gedmatch_edge_file() -> None:
 
 
 def test_parse_gedmatch_messy_file() -> None:
-    lines = load_lines("backend/tests/dna_samples/gedmatch/gedmatch_messy.txt")
+    lines = load_lines("dna_samples/gedmatch/gedmatch_messy.txt")
     result = parse_gedmatch(lines)
 
     print(result.variants)
@@ -49,7 +52,7 @@ def test_parse_gedmatch_messy_file() -> None:
 
 
 def test_parse_gedmatch_valid_file() -> None:
-    lines = load_lines("backend/tests/dna_samples/gedmatch/gedmatch_valid.txt")
+    lines = load_lines("dna_samples/gedmatch/gedmatch_valid.txt")
     result = parse_gedmatch(lines)
 
     assert len(result.variants) == 4
@@ -61,7 +64,7 @@ def test_parse_gedmatch_valid_file() -> None:
 
 
 def test_parse_gedmatch_broken_file() -> None:
-    lines = load_lines("backend/tests/dna_samples/gedmatch/gedmatch_broken.txt")
+    lines = load_lines("dna_samples/gedmatch/gedmatch_broken.txt")
     result = parse_gedmatch(lines)
 
     assert len(result.variants) == 0

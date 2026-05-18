@@ -66,9 +66,9 @@ function ResultsPanel({
           Results for <span className="text-brand">{selectedFile.name}</span>
         </p>
         <p className="mt-section-offset-sm max-w-(--width-text) text-sm leading-body text-content-subtle">
-          Each card below gives a quick read on one trait. Open any trait to
-          see which rsIDs were found, which genotypes matched the rule set, and
-          how the final interpretation was produced.
+          Each card below gives a quick read on one trait. Open any trait to see
+          which rsIDs were found, which genotypes matched the rule set, and how
+          the final interpretation was produced.
         </p>
 
         <div className="mt-section-offset-xl flex flex-wrap gap-inline-gap-sm">

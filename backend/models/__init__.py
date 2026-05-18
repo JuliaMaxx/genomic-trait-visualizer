@@ -7,6 +7,9 @@ from .schemas import (
     RawCatalog,
     RawCatalogDict,
     RawTrait,
+    RsidCatalogItem,
+    RsidDetail,
+    RsidTraitLink,
     TraitCatalog,
     TraitCategory,
     TraitContentSection,
@@ -42,4 +45,7 @@ __all__ = [
     "RawCatalog",
     "RawTrait",
     "RawCatalogDict",
+    "RsidCatalogItem",
+    "RsidDetail",
+    "RsidTraitLink",
 ]

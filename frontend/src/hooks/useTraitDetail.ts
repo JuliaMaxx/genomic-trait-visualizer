@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { evaluateTrait } from '../services/traitApi';
+import { evaluateTrait, fetchTraitDetail } from '../services/traitApi';
 import type { TraitDetail } from '../types/analysis';
 
 function useTraitDetail(file: File | null, traitId: string) {
@@ -8,7 +8,7 @@ function useTraitDetail(file: File | null, traitId: string) {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (!file || !traitId) {
+    if (!traitId) {
       setTraitDetail(null);
       setErrorMessage('');
       setIsLoading(false);
@@ -22,7 +22,9 @@ function useTraitDetail(file: File | null, traitId: string) {
       setErrorMessage('');
 
       try {
-        const data = await evaluateTrait(traitId, file);
+        const data = file
+          ? await evaluateTrait(traitId, file)
+          : await fetchTraitDetail(traitId);
 
         if (!isCancelled) {
           setTraitDetail(data);

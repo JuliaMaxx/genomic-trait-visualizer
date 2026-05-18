@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from backend.services.parsers import parse_23andme
 
 
@@ -8,12 +10,13 @@ def to_alleles(genotype: str | None) -> list[str] | None:
 
 
 def load_lines(path: str) -> list[str]:
-    with open(path, "r", encoding="utf-8", errors="ignore") as f:
+    sample_path = Path(__file__).resolve().parents[2] / path
+    with open(sample_path, "r", encoding="utf-8", errors="ignore") as f:
         return f.readlines()
 
 
 def test_parse_23andme_valid_file() -> None:
-    lines = load_lines("backend/tests/dna_samples/23andme/23andme_valid.txt")
+    lines = load_lines("dna_samples/23andme/23andme_valid.txt")
     result = parse_23andme(lines)
 
     assert len(result.variants) == 3
@@ -25,7 +28,7 @@ def test_parse_23andme_valid_file() -> None:
 
 
 def test_parse_23andme_edge_file() -> None:
-    lines = load_lines("backend/tests/dna_samples/23andme/23andme_edge.txt")
+    lines = load_lines("dna_samples/23andme/23andme_edge.txt")
     result = parse_23andme(lines)
 
     # All are structurally valid
@@ -41,7 +44,7 @@ def test_parse_23andme_edge_file() -> None:
 
 
 def test_parse_23andme_messy_file() -> None:
-    lines = load_lines("backend/tests/dna_samples/23andme/23andme_messy.txt")
+    lines = load_lines("dna_samples/23andme/23andme_messy.txt")
     result = parse_23andme(lines)
 
     assert len(result.variants) == 5
@@ -58,7 +61,7 @@ def test_parse_23andme_messy_file() -> None:
 
 
 def test_parse_23andme_broken_file() -> None:
-    lines = load_lines("backend/tests/dna_samples/23andme/23andme_broken.txt")
+    lines = load_lines("dna_samples/23andme/23andme_broken.txt")
     result = parse_23andme(lines)
 
     # All structurally invalid → drop

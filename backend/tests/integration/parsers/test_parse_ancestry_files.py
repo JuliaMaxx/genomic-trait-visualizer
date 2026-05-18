@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from backend.services.parsers import parse_ancestry
 
 
@@ -8,12 +10,13 @@ def to_alleles(genotype: str | None) -> list[str] | None:
 
 
 def load_lines(path: str) -> list[str]:
-    with open(path, "r", encoding="utf-8", errors="ignore") as f:
+    sample_path = Path(__file__).resolve().parents[2] / path
+    with open(sample_path, "r", encoding="utf-8", errors="ignore") as f:
         return f.readlines()
 
 
 def test_parse_ancestry_edge_file() -> None:
-    lines = load_lines("backend/tests/dna_samples/ancestry/ancestry_edge.csv")
+    lines = load_lines("dna_samples/ancestry/ancestry_edge.csv")
     result = parse_ancestry(lines)
 
     # All rows structurally valid → all kept
@@ -37,7 +40,7 @@ def test_parse_ancestry_edge_file() -> None:
 
 
 def test_parse_ancestry_messy_file() -> None:
-    lines = load_lines("backend/tests/dna_samples/ancestry/ancestry_messy.txt")
+    lines = load_lines("dna_samples/ancestry/ancestry_messy.txt")
     result = parse_ancestry(lines)
 
     # All rows structurally valid → all kept
@@ -62,7 +65,7 @@ def test_parse_ancestry_messy_file() -> None:
 
 
 def test_parse_ancestry_valid_file() -> None:
-    lines = load_lines("backend/tests/dna_samples/ancestry/ancestry_valid.csv")
+    lines = load_lines("dna_samples/ancestry/ancestry_valid.csv")
     result = parse_ancestry(lines)
 
     assert len(result.variants) == 5
@@ -78,7 +81,7 @@ def test_parse_ancestry_valid_file() -> None:
 
 
 def test_parse_ancestry_broken_file() -> None:
-    file_path = "backend/tests/dna_samples/ancestry/ancestry_broken.csv"
+    file_path = "dna_samples/ancestry/ancestry_broken.csv"
     lines = load_lines(file_path)
 
     result = parse_ancestry(lines)

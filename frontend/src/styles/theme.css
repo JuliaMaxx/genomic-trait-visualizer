@@ -162,6 +162,10 @@
   @apply font-mono text-eyebrow uppercase tracking-eyebrow text-content-faint;
 }
 
+@utility ui-eyebrow-accent {
+  @apply ui-eyebrow text-content-accent;
+}
+
 @utility ui-badge {
   @apply inline-flex rounded-pill border border-border bg-surface-overlay px-badge-x py-badge-y font-mono text-eyebrow uppercase tracking-eyebrow text-content-faint;
 }
@@ -214,6 +218,10 @@
   @apply rounded-pill border border-border bg-surface-overlay-strong px-badge-x py-badge-y text-xs text-content-muted;
 }
 
+@utility ui-small-pill {
+  @apply rounded-pill border border-border bg-surface-overlay-strong px-badge-x py-badge-y text-sm text-content-muted;
+}
+
 @utility ui-result-badge {
   @apply inline-flex items-center gap-inline-gap-tight rounded-pill border px-badge-x py-badge-y text-xs font-medium tracking-tight;
 }
@@ -263,7 +271,7 @@
 }
 
 @utility ui-segmented-control-option-active {
-  @apply bg-brand text-content-inverse;
+  @apply bg-brand-line text-content-inverse;
 }
 
 @utility ui-segmented-control-option-inactive {
@@ -278,12 +286,32 @@
   @apply flex cursor-pointer list-none items-center justify-between gap-inline-gap-sm text-left;
 }
 
+@utility ui-disclosure {
+  @apply block;
+}
+
+@utility ui-disclosure-title {
+  @apply mt-section-offset-sm text-2xl leading-tight text-content;
+}
+
+@utility ui-disclosure-toggle {
+  @apply ui-status-pill transition duration-200;
+}
+
+@utility ui-disclosure-body {
+  @apply mt-section-offset-xl;
+}
+
 @utility ui-flow-step {
   @apply rounded-panel border border-border bg-surface-overlay-muted p-panel-padding;
 }
 
 @utility ui-flow-arrow {
   @apply text-lg text-content-faint;
+}
+
+@utility ui-flow-arrow-responsive {
+  @apply ui-flow-arrow hidden md:inline;
 }
 
 @utility ui-rsid-card {
@@ -320,4 +348,289 @@
 
 @utility ui-button-secondary {
   @apply border border-border-strong bg-surface-overlay px-control-x py-control-y text-content hover:border-brand-line hover:text-content-accent;
+}
+
+@utility ui-button-active {
+  @apply border-brand-line bg-brand text-content-inverse shadow-button cursor-default;
+}
+
+@utility ui-page-stack {
+  @apply flex flex-1 flex-col gap-grid-gap py-card-padding;
+}
+
+@utility ui-detail-hero-layout {
+  @apply grid items-start gap-grid-gap;
+}
+
+@utility ui-detail-hero-copy {
+  @apply max-w-(--width-text);
+}
+
+@utility ui-detail-title {
+  @apply mt-section-offset-sm max-w-(--width-text) text-3xl font-semibold leading-tight text-content-accent sm:text-4xl;
+}
+
+@utility ui-detail-title-mono {
+  @apply mt-section-offset-sm font-mono text-3xl leading-tight text-content-accent sm:text-4xl;
+}
+
+@utility ui-detail-lede {
+  @apply mt-section-offset-md max-w-(--width-text) text-base leading-body text-content;
+}
+
+@utility ui-detail-lede-lg {
+  @apply mt-section-offset-md max-w-(--width-text) text-lg leading-body text-content;
+}
+
+@utility ui-detail-body {
+  @apply mt-section-offset-sm max-w-(--width-text) text-sm leading-body text-content-subtle;
+}
+
+@utility ui-detail-note {
+  @apply mt-section-offset-lg text-xs leading-body text-content-faint;
+}
+
+@utility ui-side-panel {
+  @apply ui-panel-accent self-start;
+}
+
+@utility ui-side-panel-title {
+  @apply ui-eyebrow text-content-accent;
+}
+
+@utility ui-side-panel-list {
+  @apply mt-section-offset-sm grid gap-inline-gap-tight;
+}
+
+@utility ui-section-heading {
+  @apply text-2xl leading-tight text-content;
+}
+
+@utility ui-section-title {
+  @apply mt-section-offset-sm text-2xl leading-tight text-content;
+}
+
+@utility ui-section-copy {
+  @apply mt-section-offset-sm max-w-(--width-text) text-sm leading-body text-content-subtle;
+}
+
+@utility ui-section-content {
+  @apply mt-section-offset-xl;
+}
+
+@utility ui-section-content-grid {
+  @apply mt-section-offset-xl grid gap-grid-gap-sm;
+}
+
+@utility ui-section-content-equal {
+  @apply mt-section-offset-xl grid gap-grid-gap-sm;
+}
+
+@utility ui-section-content-three {
+  @apply mt-section-offset-xl grid gap-grid-gap-sm;
+}
+
+@utility ui-content-pair {
+  @apply grid gap-grid-gap;
+}
+
+@utility ui-equal-grid {
+  @apply grid gap-grid-gap-sm;
+}
+
+@utility ui-three-grid {
+  @apply grid gap-grid-gap-sm;
+}
+
+@utility ui-feature-panel {
+  @apply ui-panel-accent;
+}
+
+@utility ui-feature-panel-title {
+  @apply mt-section-offset-sm text-2xl leading-tight text-content;
+}
+
+@utility ui-feature-panel-body {
+  @apply mt-section-offset-md text-sm leading-body text-content;
+}
+
+@utility ui-card-header {
+  @apply flex flex-wrap items-start justify-between gap-grid-gap-sm;
+}
+
+@utility ui-card-header-stack {
+  @apply flex flex-col items-start gap-inline-gap-sm;
+}
+
+@utility ui-card-title {
+  @apply mt-section-offset-sm text-lg leading-tight text-content;
+}
+
+@utility ui-pill-row {
+  @apply flex flex-wrap gap-inline-gap-sm;
+}
+
+@utility ui-pill-row-spaced {
+  @apply mt-section-offset-md flex flex-wrap gap-inline-gap-sm;
+}
+
+@utility ui-mono-link {
+  @apply font-mono text-sm text-content-faint ui-interactive-text-accent;
+}
+
+@utility ui-numbered-item {
+  @apply flex gap-inline-gap-sm;
+}
+
+@utility ui-number-token {
+  @apply ui-status-pill h-fit shrink-0 font-mono;
+}
+
+@utility ui-item-title {
+  @apply text-sm font-semibold text-content;
+}
+
+@utility ui-item-body {
+  @apply mt-section-offset-sm text-sm leading-body text-content-subtle;
+}
+
+@utility ui-timeline-stack {
+  @apply space-y-stack-gap;
+}
+
+@utility ui-timeline-item {
+  @apply border-l border-border pl-panel-padding;
+}
+
+@utility ui-timeline-item-accent {
+  @apply border-l border-brand-line pl-panel-padding;
+}
+
+@utility ui-timeline-title {
+  @apply text-sm font-semibold text-content;
+}
+
+@utility ui-timeline-title-accent {
+  @apply text-sm font-semibold text-content-accent;
+}
+
+@utility ui-source-list {
+  @apply divide-y divide-border;
+}
+
+@utility ui-source-link {
+  @apply block py-panel-padding ui-interactive-text-accent;
+}
+
+@utility ui-technical-row {
+  @apply grid gap-inline-gap-sm border-b border-border py-panel-padding;
+}
+
+@utility ui-technical-value {
+  @apply text-sm leading-body text-content;
+}
+
+@utility ui-genotype-card {
+  @apply rounded-panel border border-border bg-surface-overlay-muted p-panel-padding;
+}
+
+@utility ui-genotype-card-header {
+  @apply flex flex-wrap items-start justify-between gap-inline-gap-sm;
+}
+
+@utility ui-genotype-value {
+  @apply mt-section-offset-sm font-mono text-xl leading-tight text-content;
+}
+
+@utility ui-score-chip {
+  @apply rounded-pill border px-pill-x py-pill-y font-mono text-sm;
+}
+
+@utility ui-score-chip-positive {
+  @apply border-success-line bg-success-soft text-success-content;
+}
+
+@utility ui-score-chip-negative {
+  @apply border-danger-line-strong bg-danger-soft-strong text-danger-content-strong;
+}
+
+@utility ui-score-chip-neutral {
+  @apply border-warning-line bg-warning-soft text-warning-content;
+}
+
+@utility ui-action-row {
+  @apply mt-section-offset-lg flex flex-wrap gap-inline-gap-sm;
+}
+
+@utility ui-detail-action {
+  @apply mt-section-offset-lg inline-flex;
+}
+
+@utility ui-page-toolbar {
+  @apply flex flex-wrap items-center justify-between gap-grid-gap-sm;
+}
+
+@utility ui-file-label {
+  @apply font-mono text-sm text-content-faint;
+}
+
+@utility ui-loading-copy {
+  @apply mt-section-offset-md text-base text-content;
+}
+
+@utility ui-heading-row {
+  @apply mt-section-offset-lg flex flex-wrap items-start gap-inline-gap-sm;
+}
+
+@utility ui-flow-row {
+  @apply flex flex-wrap items-stretch gap-inline-gap-sm;
+}
+
+@utility ui-flow-step-flex {
+  @apply ui-flow-step min-w-40 flex-1;
+}
+
+@media (min-width: 48rem) {
+  .ui-section-content-equal {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ui-section-content-three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .ui-equal-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ui-three-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .ui-technical-row {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: baseline;
+  }
+
+  .ui-technical-value {
+    text-align: right;
+  }
+}
+
+@media (min-width: 64rem) {
+  .ui-detail-hero-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.42fr);
+  }
+
+  .ui-detail-hero-layout-single {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ui-content-pair {
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  }
+}
+
+.ui-disclosure[open] .ui-disclosure-toggle {
+  transform: rotate(45deg);
 }

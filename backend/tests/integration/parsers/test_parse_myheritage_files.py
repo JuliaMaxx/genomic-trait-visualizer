@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from backend.services.parsers import parse_myheritage
 
 
@@ -8,12 +10,13 @@ def to_alleles(genotype: str | None) -> list[str] | None:
 
 
 def load_lines(path: str) -> list[str]:
-    with open(path, "r", encoding="utf-8", errors="ignore") as f:
+    sample_path = Path(__file__).resolve().parents[2] / path
+    with open(sample_path, "r", encoding="utf-8", errors="ignore") as f:
         return f.readlines()
 
 
 def test_parse_myheritage_edge_file() -> None:
-    lines = load_lines("backend/tests/dna_samples/myheritage/myheritage_edge.csv")
+    lines = load_lines("dna_samples/myheritage/myheritage_edge.csv")
     result = parse_myheritage(lines)
 
     # All rows structurally valid → all kept
@@ -30,7 +33,7 @@ def test_parse_myheritage_edge_file() -> None:
 
 
 def test_parse_myheritage_messy_file() -> None:
-    lines = load_lines("backend/tests/dna_samples/myheritage/myheritage_messy.txt")
+    lines = load_lines("dna_samples/myheritage/myheritage_messy.txt")
     result = parse_myheritage(lines)
 
     assert len(result.variants) == 5
@@ -47,7 +50,7 @@ def test_parse_myheritage_messy_file() -> None:
 
 
 def test_parse_myheritage_valid_file() -> None:
-    lines = load_lines("backend/tests/dna_samples/myheritage/myheritage_valid.csv")
+    lines = load_lines("dna_samples/myheritage/myheritage_valid.csv")
     result = parse_myheritage(lines)
 
     assert len(result.variants) == 4
@@ -59,7 +62,7 @@ def test_parse_myheritage_valid_file() -> None:
 
 
 def test_parse_myheritage_broken_file() -> None:
-    file_path = "backend/tests/dna_samples/myheritage/myheritage_broken.csv"
+    file_path = "dna_samples/myheritage/myheritage_broken.csv"
     lines = load_lines(file_path)
 
     result = parse_myheritage(lines)

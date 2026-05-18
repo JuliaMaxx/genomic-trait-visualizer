@@ -1,7 +1,10 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import { useAnalysisSession } from '../context/useAnalysisSession';
 import { WithChildren } from '../types/react';
 
 function AppShell({ children }: WithChildren) {
+  const { selectedFile } = useAnalysisSession();
+
   return (
     <main className="relative min-h-screen overflow-hidden bg-app text-content">
       <div
@@ -21,6 +24,38 @@ function AppShell({ children }: WithChildren) {
           </div>
 
           <div className="flex flex-wrap items-center gap-inline-gap-sm">
+            {selectedFile ? (
+              <NavLink
+                to="/analysis"
+                className={({ isActive }) =>
+                  `ui-button-base ui-button-secondary${
+                    isActive ? ' ui-button-active' : ''
+                  }`
+                }
+              >
+                Analysis
+              </NavLink>
+            ) : null}
+            <NavLink
+              to="/traits"
+              className={({ isActive }) =>
+                `ui-button-base ui-button-secondary${
+                  isActive ? ' ui-button-active' : ''
+                }`
+              }
+            >
+              Trait catalog
+            </NavLink>
+            <NavLink
+              to="/rsids"
+              className={({ isActive }) =>
+                `ui-button-base ui-button-secondary${
+                  isActive ? ' ui-button-active' : ''
+                }`
+              }
+            >
+              rsID catalog
+            </NavLink>
             <span className="ui-badge hidden sm:inline-flex">
               free and open-source
             </span>

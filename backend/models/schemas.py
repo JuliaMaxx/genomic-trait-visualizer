@@ -228,3 +228,36 @@ class TraitDetail(BaseModel):
     calculation_summary: list[TraitContentSection] = Field(default_factory=list)
     rsids: list[TraitRsidDetail]
     sources: list[TraitSource] = Field(default_factory=list)
+
+
+class RsidTraitLink(BaseModel):
+    trait_id: str
+    trait_name: str
+    category: TraitCategory
+    description: str
+    effect: str | None = None
+    evidence_level: EvidenceLevel | None = None
+    source_refs: list[str] = Field(default_factory=list)
+
+
+class RsidCatalogItem(BaseModel):
+    rsid: str
+    gene: str | None = None
+    plain_english_summary: str
+    trait_count: int
+    evidence_level: EvidenceLevel | None = None
+
+
+class RsidDetail(BaseModel):
+    rsid: str
+    gene: str | None = None
+    plain_english_summary: str
+    technical_summary: str
+    description: str
+    genotype_meanings: list[GenotypeInterpretation] = Field(default_factory=list)
+    effect_directions: list[str] = Field(default_factory=list)
+    traits: list[RsidTraitLink] = Field(default_factory=list)
+    story_sections: list[TraitContentSection] = Field(default_factory=list)
+    interpretation_notes: list[TraitContentSection] = Field(default_factory=list)
+    research_context: list[TraitContentSection] = Field(default_factory=list)
+    sources: list[TraitSource] = Field(default_factory=list)

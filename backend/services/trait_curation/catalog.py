@@ -11,6 +11,9 @@ from backend.models import (
     RawCatalog,
     RawCatalogDict,
     RawTrait,
+    RsidCatalogItem,
+    RsidDetail,
+    RsidTraitLink,
     TraitCatalog,
     TraitContentSection,
     TraitDefinition,
@@ -19,6 +22,7 @@ from backend.models import (
     TraitResult,
     TraitResultContent,
     TraitRsidDetail,
+    TraitSource,
     Variant,
 )
 
@@ -71,6 +75,279 @@ def list_trait_definitions() -> list[TraitDefinition]:
 
 def get_trait_definition(trait_id: str) -> TraitDefinition | None:
     return _trait_lookup_by_id().get(trait_id)
+
+
+def _evidence_rank(level: str | None) -> int:
+    return {"limited": 1, "moderate": 2, "strong": 3}.get(level or "", 0)
+
+
+def _strongest_evidence(
+    levels: list[Literal["strong", "moderate", "limited"] | None],
+) -> Literal["strong", "moderate", "limited"] | None:
+    available = [level for level in levels if level is not None]
+    if not available:
+        return None
+    return max(available, key=_evidence_rank)
+
+
+def _sources_for_ref(
+    trait: TraitDefinition,
+    ref: str,
+    rule: CuratedTraitRule,
+) -> list[TraitSource]:
+    matches = [source for source in trait.sources if source.name == ref]
+    exact_matches = [
+        source
+        for source in matches
+        if source.reference is not None and rule.rsid in source.reference
+    ]
+    return exact_matches or matches
+
+
+def _plain_rsid_summary(rsid: str, links: list[RsidTraitLink], gene: str | None) -> str:
+    if not links:
+        return f"{rsid} is part of the current curated marker catalog."
+
+    trait_names = ", ".join(link.trait_name for link in links[:2])
+    extra = len(links) - 2
+    trait_text = trait_names if extra <= 0 else f"{trait_names}, and {extra} more"
+    gene_text = f" near or in {gene}" if gene else ""
+    return (
+        f"{rsid}{gene_text} appears in studies or curated rules connected to "
+        f"{trait_text}. Its effect depends on genotype and research context."
+    )
+
+
+def _technical_rsid_summary(
+    rsid: str,
+    rules: list[CuratedTraitRule],
+    links: list[RsidTraitLink],
+    gene: str | None,
+) -> str:
+    genotype_count = sum(len(rule.genotype_meanings) for rule in rules)
+    evidence = _strongest_evidence([link.evidence_level for link in links])
+    gene_text = gene or "an unspecified gene or regulatory region"
+    evidence_text = evidence or "ungraded"
+    return (
+        f"{rsid} is represented by {len(rules)} curated rule"
+        f"{'s' if len(rules) != 1 else ''} mapped to {gene_text}. "
+        f"The current catalog recognizes {genotype_count} genotype interpretation"
+        f"{'s' if genotype_count != 1 else ''} for this marker and links it to "
+        f"{len(links)} trait model{'s' if len(links) != 1 else ''}. "
+        f"The strongest curated evidence level attached to it is {evidence_text}."
+    )
+
+
+def _rsid_story_sections(
+    rsid: str,
+    links: list[RsidTraitLink],
+    rules: list[CuratedTraitRule],
+) -> list[TraitContentSection]:
+    linked_traits = ", ".join(link.trait_name for link in links)
+    source_refs = sorted({ref for rule in rules for ref in rule.source_refs})
+    return [
+        TraitContentSection(
+            title="Why this marker is here",
+            body=(
+                f"{rsid} appears because at least one curated trait model uses it "
+                f"as a compact signal for {linked_traits or 'a trait pathway'}. "
+                "A single SNP rarely explains a whole trait by itself; here it is "
+                "one piece in a transparent educational rule set."
+            ),
+        ),
+        TraitContentSection(
+            title="What the catalog is really saying",
+            body=(
+                "The catalog stores genotype-level associations, not destiny. "
+                "Different genotypes can push a simplified model in different "
+                "directions, and missing ancestry, environment, measurement, or "
+                "other variants can change how well that association travels."
+            ),
+        ),
+        TraitContentSection(
+            title="Where the evidence comes from",
+            body=(
+                "The linked source labels for this marker are "
+                f"{', '.join(source_refs) if source_refs else 'not separately listed'}."
+            ),
+        ),
+    ]
+
+
+def _rsid_interpretation_notes(
+    rules: list[CuratedTraitRule],
+    meanings: list[GenotypeInterpretation],
+) -> list[TraitContentSection]:
+    positive = sum(1 for meaning in meanings if meaning.score > 0)
+    negative = sum(1 for meaning in meanings if meaning.score < 0)
+    neutral = sum(1 for meaning in meanings if meaning.score == 0)
+    weighted = any(rule.weight != 1.0 or rule.odds_ratio for rule in rules)
+    notes = [
+        TraitContentSection(
+            title="Score direction",
+            body=(
+                f"This marker has {positive} positive, {negative} negative, "
+                f"and {neutral} neutral genotype interpretation"
+                f"{'s' if len(meanings) != 1 else ''} in the current catalog."
+            ),
+        ),
+        TraitContentSection(
+            title="How it enters a trait model",
+            body=(
+                "When a user's genotype matches one of these interpretations, "
+                "the score becomes a directional contribution inside the linked "
+                "trait. If it does not match, the marker may be observed but not "
+                "used for the final call."
+            ),
+        ),
+    ]
+    if weighted:
+        notes.append(
+            TraitContentSection(
+                title="Association strength",
+                body=(
+                    "At least one linked rule uses a custom weight or odds ratio. "
+                    "That changes how strongly the matched genotype contributes, "
+                    "but it still is not a personal probability."
+                ),
+            )
+        )
+    return notes
+
+
+def _rsid_research_context(
+    rsid: str,
+    sources: list[TraitSource],
+) -> list[TraitContentSection]:
+    if not sources:
+        return [
+            TraitContentSection(
+                title="Source context",
+                body=(
+                    f"{rsid} is curated through the trait rule set, but no separate "
+                    "source card is attached to this marker yet."
+                ),
+            )
+        ]
+
+    return [
+        TraitContentSection(
+            title=source.name,
+            body=" ".join(
+                part
+                for part in [source.reference, source.notes]
+                if part is not None and part
+            ),
+        )
+        for source in sources
+    ]
+
+
+def _rsid_links(rsid: str) -> tuple[list[RsidTraitLink], list[TraitSource]]:
+    links: list[RsidTraitLink] = []
+    sources: list[TraitSource] = []
+    seen_sources: set[str] = set()
+
+    for trait in list_trait_definitions():
+        for rule in trait.rules:
+            if rule.rsid != rsid:
+                continue
+
+            links.append(
+                RsidTraitLink(
+                    trait_id=trait.id,
+                    trait_name=trait.name,
+                    category=trait.category,
+                    description=rule.description,
+                    effect=rule.effect,
+                    evidence_level=rule.evidence_level or trait.evidence_level,
+                    source_refs=rule.source_refs,
+                )
+            )
+
+            for ref in rule.source_refs:
+                for source in _sources_for_ref(trait, ref, rule):
+                    source_key = source.url
+                    if source_key in seen_sources:
+                        continue
+                    sources.append(source)
+                    seen_sources.add(source_key)
+
+    return links, sources
+
+
+def list_rsid_catalog() -> list[RsidCatalogItem]:
+    rsids = sorted(
+        {rule.rsid for trait in list_trait_definitions() for rule in trait.rules}
+    )
+    items: list[RsidCatalogItem] = []
+
+    for rsid in rsids:
+        links, _ = _rsid_links(rsid)
+        genes = [
+            rule.gene
+            for trait in list_trait_definitions()
+            for rule in trait.rules
+            if rule.rsid == rsid and rule.gene
+        ]
+        gene = genes[0] if genes else None
+        items.append(
+            RsidCatalogItem(
+                rsid=rsid,
+                gene=gene,
+                plain_english_summary=_plain_rsid_summary(rsid, links, gene),
+                trait_count=len(links),
+                evidence_level=_strongest_evidence(
+                    [link.evidence_level for link in links]
+                ),
+            )
+        )
+
+    return items
+
+
+def get_rsid_detail(rsid: str) -> RsidDetail | None:
+    rules = [
+        rule
+        for trait in list_trait_definitions()
+        for rule in trait.rules
+        if rule.rsid.lower() == rsid.lower()
+    ]
+    if not rules:
+        return None
+
+    canonical_rsid = rules[0].rsid
+    links, sources = _rsid_links(canonical_rsid)
+    genes = [rule.gene for rule in rules if rule.gene]
+    gene = genes[0] if genes else None
+    meanings: list[GenotypeInterpretation] = []
+    effects: list[str] = []
+    descriptions: list[str] = []
+
+    for rule in rules:
+        descriptions.append(rule.description)
+        if rule.effect and rule.effect not in effects:
+            effects.append(rule.effect)
+        for meaning in rule.genotype_meanings:
+            if meaning.effect and meaning.effect not in effects:
+                effects.append(meaning.effect)
+            if meaning not in meanings:
+                meanings.append(meaning)
+
+    return RsidDetail(
+        rsid=canonical_rsid,
+        gene=gene,
+        plain_english_summary=_plain_rsid_summary(canonical_rsid, links, gene),
+        technical_summary=_technical_rsid_summary(canonical_rsid, rules, links, gene),
+        description=" ".join(dict.fromkeys(descriptions)),
+        genotype_meanings=meanings,
+        effect_directions=effects,
+        traits=links,
+        story_sections=_rsid_story_sections(canonical_rsid, links, rules),
+        interpretation_notes=_rsid_interpretation_notes(rules, meanings),
+        research_context=_rsid_research_context(canonical_rsid, sources),
+        sources=sources,
+    )
 
 
 def _normalize_genotype(genotype: str | list[str]) -> str:

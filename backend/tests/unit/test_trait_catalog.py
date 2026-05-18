@@ -12,6 +12,8 @@ from backend.services.trait_curation.catalog import (
     build_trait_detail,
     build_trait_result,
     evaluate_trait,
+    get_rsid_detail,
+    list_rsid_catalog,
     list_trait_definitions,
 )
 
@@ -296,3 +298,24 @@ def test_real_lactose_case() -> None:
 
     assert evaluation.coverage > 0
     assert evaluation.result in ["likely", "unlikely", "inconclusive"]
+
+
+def test_list_rsid_catalog_includes_curated_markers() -> None:
+    catalog = list_rsid_catalog()
+
+    assert any(item.rsid == "rs4988235" for item in catalog)
+    assert all(item.trait_count > 0 for item in catalog)
+
+
+def test_get_rsid_detail_cross_links_traits() -> None:
+    detail = get_rsid_detail("rs4988235")
+
+    assert detail is not None
+    assert detail.rsid == "rs4988235"
+    assert any(link.trait_id == "lactose_intolerance" for link in detail.traits)
+    assert detail.genotype_meanings
+    assert detail.technical_summary
+    assert detail.story_sections
+    assert detail.interpretation_notes
+    assert detail.research_context
+    assert any(source.reference == "rs4988235" for source in detail.sources)

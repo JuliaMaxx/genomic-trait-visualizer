@@ -1,10 +1,13 @@
+from pathlib import Path
+
 import pytest
 
 from backend.services import detect_format
 
 
 def load_lines(path: str) -> list[str]:
-    with open(path, "r", encoding="utf-8", errors="ignore") as f:
+    sample_path = Path(__file__).resolve().parents[1] / path
+    with open(sample_path, "r", encoding="utf-8", errors="ignore") as f:
         return f.readlines()
 
 
@@ -24,7 +27,7 @@ def load_lines(path: str) -> list[str]:
     ],
 )
 def test_detect_format(filename: str, format: str) -> None:
-    file_path: str = f"backend/tests/dna_samples/{format}/{filename}"
+    file_path: str = f"dna_samples/{format}/{filename}"
     lines: list[str] = load_lines(file_path)
     fmt: str = detect_format(lines)
     assert fmt == format

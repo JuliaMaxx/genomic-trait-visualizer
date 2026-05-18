@@ -11,7 +11,10 @@ type Props = {
 
 function TraitCard({ trait }: Props) {
   return (
-    <Link to={`/analysis/traits/${trait.trait_id}`} className="group ui-card-link">
+    <Link
+      to={`/analysis/traits/${trait.trait_id}`}
+      className="group ui-card-link"
+    >
       <div className="flex items-start justify-between gap-inline-gap">
         <div>
           <p className="ui-eyebrow">{formatCategoryLabel(trait.category)}</p>
