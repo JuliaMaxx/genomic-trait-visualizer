@@ -10,6 +10,9 @@ from .schemas import (
     RsidCatalogItem,
     RsidDetail,
     RsidTraitLink,
+    SearchResponse,
+    SearchResult,
+    SearchResultKind,
     TraitCatalog,
     TraitCategory,
     TraitContentSection,
@@ -48,4 +51,7 @@ __all__ = [
     "RsidCatalogItem",
     "RsidDetail",
     "RsidTraitLink",
+    "SearchResponse",
+    "SearchResult",
+    "SearchResultKind",
 ]

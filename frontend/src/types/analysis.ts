@@ -88,6 +88,12 @@ export type TraitDefinition = {
   technical_summary: string;
   evidence_level: EvidenceLevel;
   keywords: string[];
+  rules?: {
+    rsid: string;
+    gene?: string | null;
+    description: string;
+    effect?: string | null;
+  }[];
 };
 
 export type RsidCatalogItem = {
@@ -126,4 +132,25 @@ export type RsidDetail = {
   interpretation_notes: TraitContentSection[];
   research_context: TraitContentSection[];
   sources: TraitSource[];
+};
+
+export type SearchResultKind = 'trait' | 'rsid';
+
+export type SearchResult = {
+  kind: SearchResultKind;
+  title: string;
+  subtitle: string;
+  description: string;
+  url: string;
+  category?: TraitCategory | null;
+  evidence_level?: EvidenceLevel | null;
+  rsid?: string | null;
+  gene?: string | null;
+  keywords: string[];
+};
+
+export type SearchResponse = {
+  query: string;
+  traits: SearchResult[];
+  rsids: SearchResult[];
 };

@@ -15,6 +15,7 @@ from backend.services.trait_curation.catalog import (
     get_rsid_detail,
     list_rsid_catalog,
     list_trait_definitions,
+    search_catalog,
 )
 
 
@@ -319,3 +320,24 @@ def test_get_rsid_detail_cross_links_traits() -> None:
     assert detail.interpretation_notes
     assert detail.research_context
     assert any(source.reference == "rs4988235" for source in detail.sources)
+
+
+def test_search_catalog_finds_traits_by_keyword() -> None:
+    results = search_catalog("dairy digestion")
+
+    assert any(result.url == "/traits/lactose_intolerance" for result in results.traits)
+
+
+def test_search_catalog_finds_rsids_by_marker() -> None:
+    results = search_catalog("rs4988235")
+
+    assert any(result.url == "/rsids/rs4988235" for result in results.rsids)
+
+
+def test_search_catalog_filters_by_category() -> None:
+    results = search_catalog("lactose", category="appearance")
+
+    assert all(result.category == "appearance" for result in results.traits)
+    assert not any(
+        result.url == "/traits/lactose_intolerance" for result in results.traits
+    )

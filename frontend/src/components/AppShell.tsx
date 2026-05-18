@@ -1,6 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import { useAnalysisSession } from '../context/useAnalysisSession';
 import { WithChildren } from '../types/react';
+import GlobalSearch from './GlobalSearch';
 
 function AppShell({ children }: WithChildren) {
   const { selectedFile } = useAnalysisSession();
@@ -24,6 +25,7 @@ function AppShell({ children }: WithChildren) {
           </div>
 
           <div className="flex flex-wrap items-center gap-inline-gap-sm">
+            <GlobalSearch />
             {selectedFile ? (
               <NavLink
                 to="/analysis"

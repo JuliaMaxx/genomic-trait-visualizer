@@ -1,4 +1,10 @@
+import { useState } from 'react';
 import type { TraitResult } from '../types/analysis';
+import {
+  filterAnalysisTraits,
+  type AnalysisFilters,
+} from '../utils/searchFilters';
+import FilterDropdown from './FilterDropdown';
 import StatPill from './StatPill';
 import TraitCard from './TraitCard';
 
@@ -15,9 +21,16 @@ function ResultsPanel({
   selectedFile,
   traits,
 }: Props) {
-  const visibleTraits = traits.filter(
+  const [filters, setFilters] = useState<AnalysisFilters>({
+    query: '',
+    likelihood: 'all',
+    confidence: 'all',
+    category: 'all',
+  });
+  const traitsWithObservedRsids = traits.filter(
     (trait) => trait.observed_rsids.length > 0,
   );
+  const visibleTraits = filterAnalysisTraits(traits, filters);
 
   if (isLoading) {
     return (
@@ -38,7 +51,7 @@ function ResultsPanel({
     );
   }
 
-  if (visibleTraits.length === 0) {
+  if (traitsWithObservedRsids.length === 0) {
     return (
       <div className="ui-panel w-full max-w-(--width-content) text-sm text-content-muted">
         No traits with usable rsIDs were found for this upload.
@@ -52,11 +65,14 @@ function ResultsPanel({
   const deterministicCount = visibleTraits.filter(
     (trait) => trait.result === 'likely' || trait.result === 'unlikely',
   ).length;
-  const averageCoverage = Math.round(
-    (visibleTraits.reduce((sum, trait) => sum + trait.coverage, 0) /
-      visibleTraits.length) *
-      100,
-  );
+  const averageCoverage =
+    visibleTraits.length > 0
+      ? Math.round(
+          (visibleTraits.reduce((sum, trait) => sum + trait.coverage, 0) /
+            visibleTraits.length) *
+            100,
+        )
+      : 0;
 
   return (
     <div className="mx-auto flex w-full max-w-(--width-content) flex-col gap-stack-gap">
@@ -95,6 +111,90 @@ function ResultsPanel({
           />
         </div>
       </div>
+
+      <div className="ui-filter-panel">
+        <div className="ui-filter-grid">
+          <label className="ui-filter-label">
+            Search
+            <input
+              className="ui-search-input"
+              value={filters.query}
+              onChange={(event) =>
+                setFilters((current) => ({
+                  ...current,
+                  query: event.target.value,
+                }))
+              }
+              placeholder="Trait, keyword, rsID"
+              type="search"
+            />
+          </label>
+          <label className="ui-filter-label">
+            Likelihood
+            <FilterDropdown
+              ariaLabel="Likelihood filter"
+              value={filters.likelihood}
+              onChange={(likelihood) =>
+                setFilters((current) => ({
+                  ...current,
+                  likelihood,
+                }))
+              }
+              options={[
+                { value: 'all', label: 'All likelihoods' },
+                { value: 'likely', label: 'Likely' },
+                { value: 'unlikely', label: 'Unlikely' },
+                { value: 'inconclusive', label: 'Inconclusive' },
+              ]}
+            />
+          </label>
+          <label className="ui-filter-label">
+            Confidence
+            <FilterDropdown
+              ariaLabel="Confidence filter"
+              value={filters.confidence}
+              onChange={(confidence) =>
+                setFilters((current) => ({
+                  ...current,
+                  confidence,
+                }))
+              }
+              options={[
+                { value: 'all', label: 'All confidence' },
+                { value: 'high', label: 'High' },
+                { value: 'medium', label: 'Medium' },
+                { value: 'low', label: 'Low' },
+              ]}
+            />
+          </label>
+          <label className="ui-filter-label">
+            Category
+            <FilterDropdown
+              ariaLabel="Category filter"
+              value={filters.category}
+              onChange={(category) =>
+                setFilters((current) => ({
+                  ...current,
+                  category,
+                }))
+              }
+              options={[
+                { value: 'all', label: 'All categories' },
+                { value: 'nutrition', label: 'Nutrition' },
+                { value: 'appearance', label: 'Appearance' },
+                { value: 'health', label: 'Health' },
+                { value: 'behavior', label: 'Behavior' },
+              ]}
+            />
+          </label>
+        </div>
+      </div>
+
+      {visibleTraits.length === 0 ? (
+        <div className="ui-empty-state">
+          No analysis traits match the current search and filters.
+        </div>
+      ) : null}
 
       <div className="grid gap-panel-padding md:grid-cols-2">
         {visibleTraits.map((trait) => (

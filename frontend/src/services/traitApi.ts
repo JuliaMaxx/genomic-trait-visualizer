@@ -2,6 +2,7 @@ import { API_BASE_URL } from '../config/env';
 import type {
   RsidCatalogItem,
   RsidDetail,
+  SearchResponse,
   TraitDefinition,
   TraitDetail,
   TraitResult,
@@ -59,4 +60,9 @@ export function fetchRsidCatalog() {
 
 export function fetchRsidDetail(rsid: string) {
   return getJson<RsidDetail>(`/rsids/${rsid}`);
+}
+
+export function searchCatalog(query: string) {
+  const params = new URLSearchParams({ q: query });
+  return getJson<SearchResponse>(`/search/?${params.toString()}`);
 }

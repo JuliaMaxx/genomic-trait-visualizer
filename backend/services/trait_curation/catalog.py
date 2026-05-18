@@ -14,6 +14,8 @@ from backend.models import (
     RsidCatalogItem,
     RsidDetail,
     RsidTraitLink,
+    SearchResponse,
+    SearchResult,
     TraitCatalog,
     TraitContentSection,
     TraitDefinition,
@@ -347,6 +349,107 @@ def get_rsid_detail(rsid: str) -> RsidDetail | None:
         interpretation_notes=_rsid_interpretation_notes(rules, meanings),
         research_context=_rsid_research_context(canonical_rsid, sources),
         sources=sources,
+    )
+
+
+def _search_text_matches(query: str, values: list[str | None]) -> bool:
+    normalized_query = query.strip().lower()
+    if not normalized_query:
+        return True
+
+    tokens = [token for token in normalized_query.split() if token]
+    searchable = " ".join(value for value in values if value).lower()
+    return all(token in searchable for token in tokens)
+
+
+def search_catalog(
+    query: str,
+    category: str | None = None,
+    evidence_level: str | None = None,
+    limit: int = 8,
+) -> SearchResponse:
+    normalized_category = category.strip().lower() if category else None
+    normalized_evidence = evidence_level.strip().lower() if evidence_level else None
+    traits: list[SearchResult] = []
+    rsids: list[SearchResult] = []
+
+    for trait in list_trait_definitions():
+        if normalized_category and trait.category != normalized_category:
+            continue
+        if normalized_evidence and trait.evidence_level != normalized_evidence:
+            continue
+
+        trait_rsids = [rule.rsid for rule in trait.rules]
+        trait_genes = [rule.gene for rule in trait.rules if rule.gene]
+        if not _search_text_matches(
+            query,
+            [
+                trait.id,
+                trait.name,
+                trait.category,
+                trait.description,
+                trait.simple_summary,
+                trait.technical_summary,
+                " ".join(trait.keywords),
+                " ".join(trait_rsids),
+                " ".join(trait_genes),
+            ],
+        ):
+            continue
+
+        traits.append(
+            SearchResult(
+                kind="trait",
+                title=trait.name,
+                subtitle=trait.category,
+                description=trait.simple_summary,
+                url=f"/traits/{trait.id}",
+                category=trait.category,
+                evidence_level=trait.evidence_level,
+                keywords=trait.keywords[:5],
+            )
+        )
+
+    for item in list_rsid_catalog():
+        if normalized_evidence and item.evidence_level != normalized_evidence:
+            continue
+
+        detail = get_rsid_detail(item.rsid)
+        linked_traits = detail.traits if detail else []
+        linked_trait_categories = {link.category for link in linked_traits}
+        if normalized_category and normalized_category not in linked_trait_categories:
+            continue
+
+        if not _search_text_matches(
+            query,
+            [
+                item.rsid,
+                item.gene,
+                item.plain_english_summary,
+                " ".join(link.trait_name for link in linked_traits),
+                " ".join(link.description for link in linked_traits),
+                " ".join(link.effect or "" for link in linked_traits),
+            ],
+        ):
+            continue
+
+        rsids.append(
+            SearchResult(
+                kind="rsid",
+                title=item.rsid,
+                subtitle=item.gene or "genetic marker",
+                description=item.plain_english_summary,
+                url=f"/rsids/{item.rsid}",
+                evidence_level=item.evidence_level,
+                rsid=item.rsid,
+                gene=item.gene,
+            )
+        )
+
+    return SearchResponse(
+        query=query,
+        traits=traits[:limit],
+        rsids=rsids[:limit],
     )
 
 

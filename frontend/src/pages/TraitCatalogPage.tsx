@@ -2,17 +2,28 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import StatPill from '../components/StatPill';
+import FilterDropdown from '../components/FilterDropdown';
 import { fetchTraitCatalog } from '../services/traitApi';
 import type { TraitDefinition } from '../types/analysis';
 import {
   formatCategoryLabel,
   formatEvidenceLabel,
 } from '../utils/formatResultLabel';
+import {
+  filterTraitCatalog,
+  type TraitCatalogFilters,
+} from '../utils/searchFilters';
 
 function TraitCatalogPage() {
   const [traits, setTraits] = useState<TraitDefinition[]>([]);
+  const [filters, setFilters] = useState<TraitCatalogFilters>({
+    query: '',
+    category: 'all',
+    evidence: 'all',
+  });
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const visibleTraits = filterTraitCatalog(traits, filters);
 
   useEffect(() => {
     let isCancelled = false;
@@ -75,8 +86,73 @@ function TraitCatalogPage() {
         <div className="ui-panel-error">{errorMessage}</div>
       ) : null}
 
+      <div className="ui-filter-panel">
+        <div className="ui-filter-grid">
+          <label className="ui-filter-label">
+            Search
+            <input
+              className="ui-search-input"
+              value={filters.query}
+              onChange={(event) =>
+                setFilters((current) => ({
+                  ...current,
+                  query: event.target.value,
+                }))
+              }
+              placeholder="Trait, keyword, gene, rsID"
+              type="search"
+            />
+          </label>
+          <label className="ui-filter-label">
+            Category
+            <FilterDropdown
+              ariaLabel="Category filter"
+              value={filters.category}
+              onChange={(category) =>
+                setFilters((current) => ({
+                  ...current,
+                  category,
+                }))
+              }
+              options={[
+                { value: 'all', label: 'All categories' },
+                { value: 'nutrition', label: 'Nutrition' },
+                { value: 'appearance', label: 'Appearance' },
+                { value: 'health', label: 'Health' },
+                { value: 'behavior', label: 'Behavior' },
+              ]}
+            />
+          </label>
+          <label className="ui-filter-label">
+            Evidence
+            <FilterDropdown
+              ariaLabel="Evidence filter"
+              value={filters.evidence}
+              onChange={(evidence) =>
+                setFilters((current) => ({
+                  ...current,
+                  evidence,
+                }))
+              }
+              options={[
+                { value: 'all', label: 'All evidence' },
+                { value: 'strong', label: 'Strong' },
+                { value: 'moderate', label: 'Moderate' },
+                { value: 'limited', label: 'Limited' },
+              ]}
+            />
+          </label>
+        </div>
+      </div>
+
+      {!isLoading && visibleTraits.length === 0 ? (
+        <div className="ui-empty-state">
+          No catalog traits match the current search and filters.
+        </div>
+      ) : null}
+
       <div className="grid gap-panel-padding md:grid-cols-2">
-        {traits.map((trait) => (
+        {visibleTraits.map((trait) => (
           <Link
             key={trait.id}
             to={`/traits/${trait.id}`}

@@ -2,14 +2,24 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import StatPill from '../components/StatPill';
+import FilterDropdown from '../components/FilterDropdown';
 import { fetchRsidCatalog } from '../services/traitApi';
 import type { RsidCatalogItem } from '../types/analysis';
 import { formatEvidenceLabel } from '../utils/formatResultLabel';
+import {
+  filterRsidCatalog,
+  type RsidCatalogFilters,
+} from '../utils/searchFilters';
 
 function RsidCatalogPage() {
   const [rsids, setRsids] = useState<RsidCatalogItem[]>([]);
+  const [filters, setFilters] = useState<RsidCatalogFilters>({
+    query: '',
+    evidence: 'all',
+  });
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const visibleRsids = filterRsidCatalog(rsids, filters);
 
   useEffect(() => {
     let isCancelled = false;
@@ -68,8 +78,53 @@ function RsidCatalogPage() {
         <div className="ui-panel-error">{errorMessage}</div>
       ) : null}
 
+      <div className="ui-filter-panel">
+        <div className="ui-filter-grid">
+          <label className="ui-filter-label">
+            Search
+            <input
+              className="ui-search-input"
+              value={filters.query}
+              onChange={(event) =>
+                setFilters((current) => ({
+                  ...current,
+                  query: event.target.value,
+                }))
+              }
+              placeholder="rsID, gene, trait keyword"
+              type="search"
+            />
+          </label>
+          <label className="ui-filter-label">
+            Evidence
+            <FilterDropdown
+              ariaLabel="Evidence filter"
+              value={filters.evidence}
+              onChange={(evidence) =>
+                setFilters((current) => ({
+                  ...current,
+                  evidence,
+                }))
+              }
+              options={[
+                { value: 'all', label: 'All evidence' },
+                { value: 'strong', label: 'Strong' },
+                { value: 'moderate', label: 'Moderate' },
+                { value: 'limited', label: 'Limited' },
+              ]}
+            />
+          </label>
+        </div>
+      </div>
+
+      {!isLoading && visibleRsids.length === 0 ? (
+        <div className="ui-empty-state">
+          No rsIDs match the current search and filters.
+        </div>
+      ) : null}
+
       <div className="grid gap-panel-padding md:grid-cols-2 lg:grid-cols-3">
-        {rsids.map((rsid) => (
+        {visibleRsids.map((rsid) => (
           <Link
             key={rsid.rsid}
             to={`/rsids/${rsid.rsid}`}

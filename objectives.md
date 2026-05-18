@@ -80,7 +80,11 @@ Enable **free exploration** across the system.
   - rsIDs
   - keyword (“eye color”, “caffeine”)
 
-- [ ] Display results grouped by type
+- [ ] Implement filtering system:
+  - by likelihood
+  - by confidence
+  - by category
+
 - [ ] Link results to:
   - Trait page
   - rsID page (next phase)

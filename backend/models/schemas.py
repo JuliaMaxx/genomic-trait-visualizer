@@ -9,6 +9,7 @@ from pydantic import BaseModel, Field
 TraitCategory = Literal["nutrition", "appearance", "health", "behavior"]
 EvidenceLevel = Literal["strong", "moderate", "limited"]
 TraitResultLabel = Literal["likely", "unlikely", "inconclusive"]
+SearchResultKind = Literal["trait", "rsid"]
 
 
 # =========================
@@ -261,3 +262,22 @@ class RsidDetail(BaseModel):
     interpretation_notes: list[TraitContentSection] = Field(default_factory=list)
     research_context: list[TraitContentSection] = Field(default_factory=list)
     sources: list[TraitSource] = Field(default_factory=list)
+
+
+class SearchResult(BaseModel):
+    kind: SearchResultKind
+    title: str
+    subtitle: str
+    description: str
+    url: str
+    category: TraitCategory | None = None
+    evidence_level: EvidenceLevel | None = None
+    rsid: str | None = None
+    gene: str | None = None
+    keywords: list[str] = Field(default_factory=list)
+
+
+class SearchResponse(BaseModel):
+    query: str
+    traits: list[SearchResult] = Field(default_factory=list)
+    rsids: list[SearchResult] = Field(default_factory=list)
