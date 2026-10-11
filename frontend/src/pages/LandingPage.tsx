@@ -25,11 +25,11 @@ function LandingPage() {
           <div className="ui-badge">find out exactly who you are</div>
 
           <div className="space-y-stack-gap">
-            <h1 className="max-w-(--width-text) text-display-lg leading-tight sm:text-display-xl">
+            <h1 className="ui-detail-title max-w-(--width-text)">
               Start with a DNA file and explore traits through a clear,
               research-grade interface.
             </h1>
-            <p className="max-w-(--width-text) text-base leading-body text-content-subtle">
+            <p className="ui-detail-lede max-w-(--width-text)">
               Your file will be processed locally and will not be uploaded to
               any server.
             </p>

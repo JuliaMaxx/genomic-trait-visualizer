@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 
 import StatPill from '../components/StatPill';
 import FilterDropdown from '../components/FilterDropdown';
+import TeaserCard from '../components/TeaserCard';
 import { fetchRsidCatalog } from '../services/traitApi';
 import type { RsidCatalogItem } from '../types/analysis';
 import { formatEvidenceLabel } from '../utils/formatResultLabel';
@@ -67,14 +67,14 @@ function RsidCatalogPage() {
     <div className="flex flex-1 flex-col gap-grid-gap py-card-padding">
       <section className="ui-panel-gradient">
         <p className="ui-eyebrow">rsID catalog</p>
-        <h1 className="mt-section-offset-sm max-w-(--width-text) text-3xl sm:text-4xl">
+        <h1 className="ui-detail-title max-w-(--width-text)">
           Browse the SNP markers behind the trait system.
         </h1>
-        <p className="mt-section-offset-md max-w-(--width-text) text-base leading-body text-content-subtle">
+        <p className="ui-detail-lede max-w-(--width-text)">
           Each marker page starts with the technical rule data, then lets you
           expand the plain-English story, linked traits, and sources.
         </p>
-        <p className="mt-section-offset-lg text-xs leading-body text-content-faint">
+        <p className="ui-detail-note">
           Educational, not medical advice. SNP effects are probabilistic and
           research can vary by study or population.
         </p>
@@ -144,36 +144,32 @@ function RsidCatalogPage() {
 
       <div className="grid gap-panel-padding md:grid-cols-2 lg:grid-cols-3">
         {visibleRsids.map((rsid) => (
-          <Link
+          <TeaserCard
             key={rsid.rsid}
             to={`/rsids/${rsid.rsid}`}
-            className="group ui-card-link"
-          >
-            <div>
-              <p className="ui-eyebrow">{rsid.gene ?? 'genetic marker'}</p>
-              <h2 className="ui-card-link-heading mt-section-offset-sm font-mono text-xl text-content">
-                {rsid.rsid}
-              </h2>
-              <p className="mt-section-offset-sm text-sm leading-body text-content-subtle">
-                {rsid.plain_english_summary}
-              </p>
-            </div>
-            <div className="mt-section-offset-xl flex flex-wrap gap-inline-gap-sm">
-              <StatPill
-                label="Linked traits"
-                value={String(rsid.trait_count)}
-                tone="accent"
-                tooltip="How many current trait models use this marker."
-              />
-              {rsid.evidence_level ? (
+            eyebrow={rsid.gene ?? 'genetic marker'}
+            title={rsid.rsid}
+            titleAs="h2"
+            titleClassName="font-mono"
+            description={rsid.plain_english_summary}
+            footer={
+              <>
                 <StatPill
-                  label="Evidence"
-                  value={formatEvidenceLabel(rsid.evidence_level)}
-                  tooltip="Strongest evidence level among current rules using this rsID."
+                  label="Linked traits"
+                  value={String(rsid.trait_count)}
+                  tone="accent"
+                  tooltip="How many current trait models use this marker."
                 />
-              ) : null}
-            </div>
-          </Link>
+                {rsid.evidence_level ? (
+                  <StatPill
+                    label="Evidence"
+                    value={formatEvidenceLabel(rsid.evidence_level)}
+                    tooltip="Strongest evidence level among current rules using this rsID."
+                  />
+                ) : null}
+              </>
+            }
+          />
         ))}
       </div>
     </div>

@@ -1,7 +1,8 @@
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAnalysisSession } from '../context/useAnalysisSession';
 import { WithChildren } from '../types/react';
 import GlobalSearch from './GlobalSearch';
+import NavButton from './NavButton';
 
 function AppShell({ children }: WithChildren) {
   const { selectedFile } = useAnalysisSession();
@@ -27,37 +28,16 @@ function AppShell({ children }: WithChildren) {
           <div className="flex flex-wrap items-center gap-inline-gap-sm">
             <GlobalSearch />
             {selectedFile ? (
-              <NavLink
-                to="/analysis"
-                className={({ isActive }) =>
-                  `ui-button-base ui-button-secondary${
-                    isActive ? ' ui-button-active' : ''
-                  }`
-                }
-              >
+              <NavButton to="/analysis" variant="secondary">
                 Analysis
-              </NavLink>
+              </NavButton>
             ) : null}
-            <NavLink
-              to="/traits"
-              className={({ isActive }) =>
-                `ui-button-base ui-button-secondary${
-                  isActive ? ' ui-button-active' : ''
-                }`
-              }
-            >
+            <NavButton to="/traits" variant="secondary">
               Trait catalog
-            </NavLink>
-            <NavLink
-              to="/rsids"
-              className={({ isActive }) =>
-                `ui-button-base ui-button-secondary${
-                  isActive ? ' ui-button-active' : ''
-                }`
-              }
-            >
+            </NavButton>
+            <NavButton to="/rsids" variant="secondary">
               rsID catalog
-            </NavLink>
+            </NavButton>
             <span className="ui-badge hidden sm:inline-flex">
               free and open-source
             </span>

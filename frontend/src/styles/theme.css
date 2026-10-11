@@ -136,9 +136,6 @@
   --width-form: 48rem;
   --width-text: 42rem;
 
-  --radius-base: 1rem;
-  --border-base: 1px solid var(--color-border);
-
   --layout-main-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
 }
 
@@ -148,10 +145,8 @@
     auto,
     32px 32px;
   background-position:
-    calc(var(--mx, 0px) * 0.05) calc(var(--my, 0px) * 0.05),
+    center,
     0 0;
-
-  transition: background-position 0.1s ease-out;
 }
 
 @utility bg-panel-gradient {
@@ -184,14 +179,6 @@
 
 @utility ui-interactive-border-accent {
   @apply transition duration-200 hover:border-brand-line;
-}
-
-@utility ui-interactive-text-accent {
-  @apply transition duration-200 hover:text-content-accent;
-}
-
-@utility ui-interactive-panel-link {
-  @apply block transition duration-200 hover:border-brand-line;
 }
 
 @utility ui-card-link {
@@ -278,10 +265,6 @@
   @apply text-content-subtle;
 }
 
-@utility ui-detail-layout {
-  @apply grid items-start gap-grid-gap lg:grid-cols-[minmax(0,1.2fr)_minmax(18rem,0.8fr)];
-}
-
 @utility ui-disclosure-summary {
   @apply flex cursor-pointer list-none items-center justify-between gap-inline-gap-sm text-left;
 }
@@ -312,10 +295,6 @@
 
 @utility ui-flow-arrow-responsive {
   @apply ui-flow-arrow hidden md:inline;
-}
-
-@utility ui-rsid-card {
-  @apply rounded-card border p-card-padding shadow-panel backdrop-blur-sm;
 }
 
 @utility ui-rsid-status-matched {
@@ -416,27 +395,6 @@
   @apply grid gap-inline-gap-tight text-xs font-semibold text-content-subtle;
 }
 
-@utility ui-select {
-  @apply appearance-none cursor-pointer rounded-button border border-border-strong bg-app-elevated px-control-x py-control-y pr-11 text-sm font-semibold text-content outline-none shadow-inner transition duration-200 scheme-dark hover:border-brand-line focus:border-brand-line focus:bg-app-surface;
-  background-image:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.05),
-      rgba(255, 255, 255, 0.02)
-    ),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23a1a1aa' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E");
-  background-position:
-    0 0,
-    right 0.95rem center;
-  background-repeat: no-repeat;
-  background-size: auto, 0.9rem;
-}
-
-.ui-select option {
-  background: var(--color-app-elevated);
-  color: var(--color-content);
-}
-
 @utility ui-dropdown-root {
   @apply relative z-50;
 }
@@ -513,22 +471,6 @@
   @apply mt-section-offset-lg text-xs leading-body text-content-faint;
 }
 
-@utility ui-side-panel {
-  @apply ui-panel-accent self-start;
-}
-
-@utility ui-side-panel-title {
-  @apply ui-eyebrow text-content-accent;
-}
-
-@utility ui-side-panel-list {
-  @apply mt-section-offset-sm grid gap-inline-gap-tight;
-}
-
-@utility ui-section-heading {
-  @apply text-2xl leading-tight text-content;
-}
-
 @utility ui-section-title {
   @apply mt-section-offset-sm text-2xl leading-tight text-content;
 }
@@ -549,44 +491,12 @@
   @apply mt-section-offset-xl grid gap-grid-gap-sm;
 }
 
-@utility ui-section-content-three {
-  @apply mt-section-offset-xl grid gap-grid-gap-sm;
-}
-
-@utility ui-content-pair {
-  @apply grid gap-grid-gap;
-}
-
-@utility ui-equal-grid {
-  @apply grid gap-grid-gap-sm;
-}
-
-@utility ui-three-grid {
-  @apply grid gap-grid-gap-sm;
-}
-
 @utility ui-feature-panel {
   @apply ui-panel-accent;
 }
 
-@utility ui-feature-panel-title {
-  @apply mt-section-offset-sm text-2xl leading-tight text-content;
-}
-
 @utility ui-feature-panel-body {
   @apply mt-section-offset-md text-sm leading-body text-content;
-}
-
-@utility ui-card-header {
-  @apply flex flex-wrap items-start justify-between gap-grid-gap-sm;
-}
-
-@utility ui-card-header-stack {
-  @apply flex flex-col items-start gap-inline-gap-sm;
-}
-
-@utility ui-card-title {
-  @apply mt-section-offset-sm text-lg leading-tight text-content;
 }
 
 @utility ui-pill-row {
@@ -597,64 +507,12 @@
   @apply mt-section-offset-md flex flex-wrap gap-inline-gap-sm;
 }
 
-@utility ui-mono-link {
-  @apply font-mono text-sm text-content-faint ui-interactive-text-accent;
-}
-
-@utility ui-numbered-item {
-  @apply flex gap-inline-gap-sm;
-}
-
-@utility ui-number-token {
-  @apply ui-status-pill h-fit shrink-0 font-mono;
-}
-
 @utility ui-item-title {
   @apply text-sm font-semibold text-content;
 }
 
 @utility ui-item-body {
   @apply mt-section-offset-sm text-sm leading-body text-content-subtle;
-}
-
-@utility ui-timeline-stack {
-  @apply space-y-stack-gap;
-}
-
-@utility ui-timeline-item {
-  @apply border-l border-border pl-panel-padding;
-}
-
-@utility ui-timeline-item-accent {
-  @apply border-l border-brand-line pl-panel-padding;
-}
-
-@utility ui-timeline-title {
-  @apply text-sm font-semibold text-content;
-}
-
-@utility ui-timeline-title-accent {
-  @apply text-sm font-semibold text-content-accent;
-}
-
-@utility ui-source-list {
-  @apply divide-y divide-border;
-}
-
-@utility ui-source-link {
-  @apply block py-panel-padding ui-interactive-text-accent;
-}
-
-@utility ui-technical-row {
-  @apply grid gap-inline-gap-sm border-b border-border py-panel-padding;
-}
-
-@utility ui-technical-value {
-  @apply text-sm leading-body text-content;
-}
-
-@utility ui-genotype-card {
-  @apply rounded-panel border border-border bg-surface-overlay-muted p-panel-padding;
 }
 
 @utility ui-genotype-card-header {
@@ -679,10 +537,6 @@
 
 @utility ui-score-chip-neutral {
   @apply border-warning-line bg-warning-soft text-warning-content;
-}
-
-@utility ui-action-row {
-  @apply mt-section-offset-lg flex flex-wrap gap-inline-gap-sm;
 }
 
 @utility ui-detail-action {
@@ -718,29 +572,8 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .ui-section-content-three {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .ui-equal-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .ui-three-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
   .ui-filter-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .ui-technical-row {
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-    align-items: baseline;
-  }
-
-  .ui-technical-value {
-    text-align: right;
   }
 }
 
@@ -751,10 +584,6 @@
 
   .ui-detail-hero-layout-single {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  .ui-content-pair {
-    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
   }
 }
 

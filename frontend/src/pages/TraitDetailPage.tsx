@@ -1,10 +1,13 @@
 import { type ReactNode, useState } from 'react';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 
+import Button from '../components/Button';
 import InfoTooltip from '../components/InfoTooltip';
 import ResultToneBadge from '../components/ResultToneBadge';
+import LinkButton from '../components/LinkButton';
 import StatPill from '../components/StatPill';
 import TraitDetailRsidCard from '../components/TraitDetailRsidCard';
+import TeaserCard from '../components/TeaserCard';
 import { useAnalysisSession } from '../context/useAnalysisSession';
 import useTraitDetail from '../hooks/useTraitDetail';
 import type { TraitRsidDetail } from '../types/analysis';
@@ -62,13 +65,15 @@ function SectionIntro({
 
 function CatalogRsidCard({ rsid }: { rsid: TraitRsidDetail }) {
   return (
-    <Link to={`/rsids/${rsid.rsid}`} key={rsid.rsid} className="ui-card-link">
-      <div className="ui-card-header-stack">
-        <div>
-          <div className="ui-mono-link">{rsid.rsid}</div>
-          <h3 className="ui-card-title">{rsid.gene ?? 'Genetic marker'}</h3>
-        </div>
-        <div className="ui-pill-row mb-section-offset-sm">
+    <TeaserCard
+      key={rsid.rsid}
+      to={`/rsids/${rsid.rsid}`}
+      eyebrow={rsid.rsid}
+      title={rsid.gene ?? 'Genetic marker'}
+      titleAs="h3"
+      description={rsid.rule_description}
+      footer={
+        <>
           {rsid.genotype ? (
             <StatPill
               label="Known genotypes"
@@ -84,10 +89,9 @@ function CatalogRsidCard({ rsid }: { rsid: TraitRsidDetail }) {
               tooltip="Evidence level for this marker rule."
             />
           ) : null}
-        </div>
-      </div>
-      <p className="ui-item-body">{rsid.rule_description}</p>
-    </Link>
+        </>
+      }
+    />
   );
 }
 
@@ -158,9 +162,7 @@ function CatalogTraitView({
           <div className="flex flex-wrap items-center justify-between gap-grid-gap-sm">
             <div>
               <p className="ui-eyebrow">trait field guide</p>
-              <h2 className="mt-section-offset-sm text-2xl">
-                Interpretation layer
-              </h2>
+              <h2 className="ui-section-title">Interpretation layer</h2>
             </div>
             <div className="ui-segmented-control">
               <button
@@ -251,7 +253,7 @@ function CatalogTraitView({
         </div>
       </section>
       <DisclosurePanel eyebrow="model ingredients" title="Genetic contributors">
-        <div className="ui-equal-grid">
+        <div className="ui-section-content-equal">
           {traitDetail.rsids.map((rsid) => (
             <CatalogRsidCard rsid={rsid} />
           ))}
@@ -303,18 +305,16 @@ function AnalysisTraitView({
     <>
       <div className="ui-page-toolbar">
         <div>
-          <Link
-            to="/analysis"
-            className="ui-button-base ui-button-secondary mr-badge-x"
-          >
+          <LinkButton to="/analysis" variant="secondary" className="mr-badge-x">
             Back to analysis
-          </Link>
-          <Link
+          </LinkButton>
+          <LinkButton
             to={`/traits/${traitDetail.id}`}
-            className="ui-detail-action ui-button-base ui-button-secondary"
+            variant="secondary"
+            className="ui-detail-action"
           >
             See full trait breakdown
-          </Link>
+          </LinkButton>
         </div>
         <p className="ui-file-label">{selectedFile.name}</p>
       </div>
@@ -489,13 +489,9 @@ function TraitDetailPage({ mode }: TraitDetailPageProps) {
     <div className="ui-page-stack">
       {mode === 'catalog' ? (
         <div className="ui-page-toolbar">
-          <button
-            type="button"
-            className="ui-button-base ui-button-secondary"
-            onClick={handleCatalogBack}
-          >
+          <Button type="button" variant="secondary" onClick={handleCatalogBack}>
             Go back
-          </button>
+          </Button>
         </div>
       ) : null}
       {isLoading ? (

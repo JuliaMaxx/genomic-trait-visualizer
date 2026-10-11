@@ -1,6 +1,7 @@
-import { Link, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import ResultsPanel from '../components/ResultsPanel';
+import LinkButton from '../components/LinkButton';
 import { useAnalysisSession } from '../context/useAnalysisSession';
 import useTraitOverview from '../hooks/useTraitOverview';
 
@@ -28,9 +29,9 @@ function AnalysisPage() {
             </p>
           </div>
 
-          <Link to="/" className="ui-button-base ui-button-secondary">
+          <LinkButton to="/" variant="secondary">
             Change file
-          </Link>
+          </LinkButton>
         </div>
       </section>
 

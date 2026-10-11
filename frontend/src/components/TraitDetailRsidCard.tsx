@@ -34,7 +34,7 @@ function formatGenotype(genotype: string[] | null) {
 function TraitDetailRsidCard({ rsid }: Props) {
   return (
     <Link to={`/rsids/${rsid.rsid}`}>
-      <article className={`ui-card-link hover:border-brand-line`}>
+      <article className="ui-card-link">
         <div className="flex flex-wrap items-start justify-between gap-grid-gap-sm">
           <div>
             <div className="flex items-center gap-inline-gap-sm">
@@ -42,7 +42,13 @@ function TraitDetailRsidCard({ rsid }: Props) {
                 {rsid.rsid}
               </div>
               <span
-                className={`ui-status-pill ${rsid.status === 'matched' ? 'bg-success-soft' : rsid.status === 'missing' ? 'bg-danger-soft' : 'bg-warning-soft'}`}
+                className={
+                  rsid.status === 'matched'
+                    ? 'ui-status-pill ui-rsid-status-matched'
+                    : rsid.status === 'missing'
+                      ? 'ui-status-pill ui-rsid-status-missing'
+                      : 'ui-status-pill ui-rsid-status-no-match'
+                }
               >
                 {statusLabels[rsid.status]}
               </span>

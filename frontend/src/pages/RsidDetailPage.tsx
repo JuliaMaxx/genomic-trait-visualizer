@@ -1,6 +1,7 @@
 import { type ReactNode, useEffect, useState } from 'react';
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 
+import Button from '../components/Button';
 import StatPill from '../components/StatPill';
 import { fetchRsidDetail } from '../services/traitApi';
 import type { RsidDetail } from '../types/analysis';
@@ -103,13 +104,9 @@ function RsidDetailPage() {
   return (
     <div className="ui-page-stack">
       <div className="ui-page-toolbar">
-        <button
-          type="button"
-          className="ui-button-base ui-button-secondary"
-          onClick={handleBack}
-        >
+        <Button type="button" variant="secondary" onClick={handleBack}>
           Go back
-        </button>
+        </Button>
       </div>
       {isLoading ? <div className="ui-panel">Loading rsID detail.</div> : null}
 
@@ -225,7 +222,7 @@ function RsidDetailPage() {
           </section>
 
           <DisclosurePanel eyebrow="cross-links" title="Traits using this SNP">
-            <div className="ui-equal-grid">
+            <div className="ui-section-content-equal">
               {detail.traits.map((trait) => (
                 <Link
                   key={trait.trait_id}
