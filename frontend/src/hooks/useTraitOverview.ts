@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { analyzeDnaFile } from '../services/traitApi';
 import type { TraitResult } from '../types/analysis';
 
@@ -7,53 +7,58 @@ function useTraitOverview(file: File | null) {
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
+  const controllerRef = useRef<AbortController | null>(null);
+
+  const loadTraits = useCallback(async () => {
+    controllerRef.current?.abort();
+
     if (!file) {
+      controllerRef.current = null;
       setTraits([]);
       setErrorMessage('');
       setIsLoading(false);
       return;
     }
 
-    let isCancelled = false;
+    const controller = new AbortController();
+    controllerRef.current = controller;
 
-    async function loadTraits() {
-      setIsLoading(true);
-      setErrorMessage('');
+    setIsLoading(true);
+    setErrorMessage('');
 
-      try {
-        const data = await analyzeDnaFile(file);
+    try {
+      const data = await analyzeDnaFile(file, controller.signal);
 
-        if (!isCancelled) {
-          setTraits(data);
-        }
-      } catch (error) {
-        if (!isCancelled) {
-          setTraits([]);
-          setErrorMessage(
-            error instanceof Error
-              ? error.message
-              : 'Something went wrong while loading trait results.',
-          );
-        }
-      } finally {
-        if (!isCancelled) {
-          setIsLoading(false);
-        }
+      if (!controller.signal.aborted) {
+        setTraits(data);
+      }
+    } catch (error) {
+      if (!controller.signal.aborted) {
+        console.error('Failed to analyze DNA file:', error);
+        setTraits([]);
+        setErrorMessage('Unable to analyze your DNA file. Please try again.');
+      }
+    } finally {
+      if (!controller.signal.aborted) {
+        setIsLoading(false);
+        controllerRef.current = null;
       }
     }
+  }, [file]);
 
-    loadTraits();
+  useEffect(() => {
+    void loadTraits();
 
     return () => {
-      isCancelled = true;
+      controllerRef.current?.abort();
     };
-  }, [file]);
+  }, [loadTraits]);
 
   return {
     traits,
     errorMessage,
     isLoading,
+    retry: loadTraits,
   };
 }
 

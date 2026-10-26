@@ -6,23 +6,22 @@ import RsidCatalogPage from '../pages/RsidCatalogPage';
 import RsidDetailPage from '../pages/RsidDetailPage';
 import TraitCatalogPage from '../pages/TraitCatalogPage';
 import TraitDetailPage from '../pages/TraitDetailPage';
+import TraitAnalysisPage from '../pages/TraitAnalysisPage';
 
 function AppRouter() {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
+
       <Route path="/analysis" element={<AnalysisPage />} />
-      <Route
-        path="/analysis/traits/:traitId"
-        element={<TraitDetailPage mode="analysis" />}
-      />
+      <Route path="/analysis/traits/:traitId" element={<TraitAnalysisPage />} />
+
       <Route path="/traits" element={<TraitCatalogPage />} />
-      <Route
-        path="/traits/:traitId"
-        element={<TraitDetailPage mode="catalog" />}
-      />
+      <Route path="/traits/:traitId" element={<TraitDetailPage />} />
+
       <Route path="/rsids" element={<RsidCatalogPage />} />
       <Route path="/rsids/:rsid" element={<RsidDetailPage />} />
+
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

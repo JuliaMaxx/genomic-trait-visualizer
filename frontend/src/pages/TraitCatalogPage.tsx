@@ -1,10 +1,6 @@
-import { useEffect, useState } from 'react';
-
+import { useState } from 'react';
 import StatPill from '../components/StatPill';
-import FilterDropdown from '../components/FilterDropdown';
 import TeaserCard from '../components/TeaserCard';
-import { fetchTraitCatalog } from '../services/traitApi';
-import type { TraitDefinition } from '../types/analysis';
 import {
   formatCategoryLabel,
   formatEvidenceLabel,
@@ -13,21 +9,38 @@ import {
   filterTraitCatalog,
   type TraitCatalogFilters,
 } from '../utils/searchFilters';
+import Button from '../components/Button';
+import useTraitCatalog from '../hooks/useTraitCatalog';
+import FilterPanel from '../components/FilterPanel';
 
 function TraitCatalogPage() {
-  const [traits, setTraits] = useState<TraitDefinition[]>([]);
+  const { traits, errorMessage, isLoading, retry } = useTraitCatalog();
   const [filters, setFilters] = useState<TraitCatalogFilters>({
     query: '',
     category: 'all',
     evidence: 'all',
   });
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
   const visibleTraits = filterTraitCatalog(traits, filters);
+
   const hasActiveFilters =
     filters.query !== '' ||
     filters.category !== 'all' ||
     filters.evidence !== 'all';
+
+  const categories = [
+    { value: 'all', label: 'All categories' },
+    { value: 'nutrition', label: 'Nutrition' },
+    { value: 'appearance', label: 'Appearance' },
+    { value: 'health', label: 'Health' },
+    { value: 'behavior', label: 'Behavior' },
+  ];
+
+  const evidenceLevels = [
+    { value: 'all', label: 'All evidence' },
+    { value: 'strong', label: 'Strong' },
+    { value: 'moderate', label: 'Moderate' },
+    { value: 'limited', label: 'Limited' },
+  ];
 
   function resetFilters() {
     setFilters({
@@ -37,52 +50,30 @@ function TraitCatalogPage() {
     });
   }
 
-  useEffect(() => {
-    let isCancelled = false;
+  if (isLoading) {
+    return <div className="ui-empty-state">Loading trait catalog...</div>;
+  }
 
-    async function loadCatalog() {
-      setIsLoading(true);
-      setErrorMessage('');
-
-      try {
-        const data = await fetchTraitCatalog();
-        if (!isCancelled) {
-          setTraits(data);
-        }
-      } catch (error) {
-        if (!isCancelled) {
-          setErrorMessage(
-            error instanceof Error
-              ? error.message
-              : 'Something went wrong while loading the trait catalog.',
-          );
-        }
-      } finally {
-        if (!isCancelled) {
-          setIsLoading(false);
-        }
-      }
-    }
-
-    loadCatalog();
-
-    return () => {
-      isCancelled = true;
-    };
-  }, []);
+  if (errorMessage) {
+    return (
+      <div className="ui-panel-error flex justify-between items-center">
+        <p>{errorMessage}</p>
+        <Button onClick={() => void retry()}>Retry</Button>
+      </div>
+    );
+  }
 
   return (
-    <div className="flex flex-1 flex-col gap-grid-gap py-card-padding">
+    <div className="ui-page-stack">
       <section className="ui-panel-gradient">
         <p className="ui-eyebrow">trait catalog</p>
-        <h1 className="ui-detail-title max-w-(--width-text)">
+        <h1 className="ui-detail-title mb-section-offset-xl">
           Explore every trait currently used by the system.
         </h1>
-        <p className="ui-detail-lede max-w-(--width-text)">
-          This is the browsing catalog for every trait in the current model.
-          Each page starts with a plain-English explanation, then opens into
-          genetic contributors, research spotlight, sources, and cross-links to
-          rsIDs.
+        <p className="ui-detail-lede">
+          This is the browsing catalog for every trait in the current model. See
+          plain-English explanations, genetic contributors, research spotlight,
+          sources, and cross-links to rsIDs.
         </p>
         <p className="ui-detail-note">
           Educational, not medical advice. Effects are probabilistic and
@@ -90,91 +81,58 @@ function TraitCatalogPage() {
         </p>
       </section>
 
-      {isLoading ? (
-        <div className="ui-panel">Loading trait catalog.</div>
-      ) : null}
+      <FilterPanel
+        searchValue={filters.query}
+        onSearchChange={(query) =>
+          setFilters((current) => ({
+            ...current,
+            query,
+          }))
+        }
+        searchPlaceholder="Trait, keyword, gene, rsID"
+        hasActiveFilters={hasActiveFilters}
+        onReset={resetFilters}
+        filters={[
+          {
+            id: 'category',
+            label: 'Category',
+            ariaLabel: 'Category filter',
+            value: filters.category,
+            onChange: (value) => {
+              if (categories.map((c) => c.value).includes(value)) {
+                setFilters((current) => ({
+                  ...current,
+                  category: value as typeof filters.category,
+                }));
+              }
+            },
+            options: categories,
+          },
+          {
+            id: 'evidence',
+            label: 'Evidence',
+            ariaLabel: 'Evidence filter',
+            value: filters.evidence,
+            onChange: (value) => {
+              if (evidenceLevels.map((e) => e.value).includes(value)) {
+                setFilters((current) => ({
+                  ...current,
+                  evidence: value as typeof filters.evidence,
+                }));
+              }
+            },
+            options: evidenceLevels,
+          },
+        ]}
+      />
 
-      {errorMessage ? (
-        <div className="ui-panel-error">{errorMessage}</div>
-      ) : null}
-
-      <div className="ui-filter-panel">
-        <div className="flex items-start justify-between gap-inline-gap-sm">
-          <div className="ui-filter-grid flex-1">
-            <label className="ui-filter-label">
-              Search
-              <input
-                className="ui-search-input"
-                value={filters.query}
-                onChange={(event) =>
-                  setFilters((current) => ({
-                    ...current,
-                    query: event.target.value,
-                  }))
-                }
-                placeholder="Trait, keyword, gene, rsID"
-                type="search"
-              />
-            </label>
-            <label className="ui-filter-label">
-              Category
-              <FilterDropdown
-                ariaLabel="Category filter"
-                value={filters.category}
-                onChange={(category) =>
-                  setFilters((current) => ({
-                    ...current,
-                    category,
-                  }))
-                }
-                options={[
-                  { value: 'all', label: 'All categories' },
-                  { value: 'nutrition', label: 'Nutrition' },
-                  { value: 'appearance', label: 'Appearance' },
-                  { value: 'health', label: 'Health' },
-                  { value: 'behavior', label: 'Behavior' },
-                ]}
-              />
-            </label>
-            <label className="ui-filter-label">
-              Evidence
-              <FilterDropdown
-                ariaLabel="Evidence filter"
-                value={filters.evidence}
-                onChange={(evidence) =>
-                  setFilters((current) => ({
-                    ...current,
-                    evidence,
-                  }))
-                }
-                options={[
-                  { value: 'all', label: 'All evidence' },
-                  { value: 'strong', label: 'Strong' },
-                  { value: 'moderate', label: 'Moderate' },
-                  { value: 'limited', label: 'Limited' },
-                ]}
-              />
-            </label>
-          </div>
-          {hasActiveFilters ? (
-            <button
-              type="button"
-              className="ui-filter-reset-button"
-              aria-label="Reset filters"
-              title="Reset filters"
-              onClick={resetFilters}
-            />
-          ) : null}
-        </div>
-      </div>
-
-      {!isLoading && visibleTraits.length === 0 ? (
-        <div className="ui-empty-state">
+      {visibleTraits.length === 0 ? (
+        <div className="ui-empty-state" role="status" aria-live="polite">
           No catalog traits match the current search and filters.
         </div>
       ) : null}
 
-      <div className="grid gap-panel-padding md:grid-cols-2">
+      <div className="grid gap-grid-gap-lg md:grid-cols-2">
         {visibleTraits.map((trait) => (
           <TeaserCard
             key={trait.id}
@@ -187,12 +145,12 @@ function TraitCatalogPage() {
                 <StatPill
                   label="Evidence"
                   value={formatEvidenceLabel(trait.evidence_level)}
-                  tooltip="Evidence describes how strong the overall research support is for this simplified trait model."
+                  tone="accent"
+                  tooltip="Evidence describes how strong the overall research support is for this trait model."
                 />
                 <StatPill
                   label="Keywords"
                   value={String(trait.keywords.length)}
-                  tone="accent"
                   tooltip="Keywords are alternate names or search terms for this trait in the catalog."
                 />
               </>

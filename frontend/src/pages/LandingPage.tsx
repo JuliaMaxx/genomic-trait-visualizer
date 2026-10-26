@@ -20,16 +20,16 @@ function LandingPage() {
 
   return (
     <div className="flex flex-1 items-center justify-center py-page-y">
-      <div className="grid w-full items-center gap-grid-gap-lg lg:grid-cols-(--layout-main-columns)">
+      <div className="grid items-center gap-grid-gap-lg lg:grid-cols-(--layout-main-columns)">
         <section className="space-y-section-gap">
           <div className="ui-badge">find out exactly who you are</div>
 
-          <div className="space-y-stack-gap">
-            <h1 className="ui-detail-title max-w-(--width-text)">
+          <div className="flex flex-col gap-stack-gap">
+            <h1 className="ui-detail-title">
               Start with a DNA file and explore traits through a clear,
               research-grade interface.
             </h1>
-            <p className="ui-detail-lede max-w-(--width-text)">
+            <p className="ui-detail-lede">
               Your file will be processed locally and will not be uploaded to
               any server.
             </p>
@@ -39,19 +39,15 @@ function LandingPage() {
             <p className="ui-eyebrow">get what you need</p>
             <div className="mt-section-offset-lg grid gap-grid-gap-sm sm:grid-cols-2">
               <div className="ui-panel-subtle">
-                <p className="font-mono text-xs uppercase tracking-eyebrow text-content-faint">
-                  whether...
-                </p>
-                <p className="mt-section-offset-sm text-sm text-content-muted">
+                <p className="ui-eyebrow text-xs">whether...</p>
+                <p className="ui-panel-content">
                   You want to understand the underlying algorithms, data
                   processing steps and raw outputs of DNA analysis.
                 </p>
               </div>
               <div className="ui-panel-accent">
-                <p className="font-mono text-xs uppercase tracking-eyebrow text-content-accent">
-                  or
-                </p>
-                <p className="mt-section-offset-sm text-sm text-content-muted">
+                <p className="ui-eyebrow text-xs text-content-accent">or</p>
+                <p className="ui-panel-content">
                   You're looking for user-friendly, understandable explainations
                   to explore yourself and the world around you.
                 </p>
@@ -60,18 +56,14 @@ function LandingPage() {
           </div>
         </section>
 
-        <form
-          onSubmit={handleSubmit}
-          className="flex w-full flex-col gap-grid-gap-sm"
-        >
+        <form onSubmit={handleSubmit} className="flex flex-col gap-stack-gap">
           <FileInput
             onFileSelect={setSelectedFile}
             selectedFile={selectedFile}
-            accept=".tsv,.csv,.vcf,.txt"
           />
 
           {selectedFile ? (
-            <div className="flex flex-wrap justify-center gap-inline-gap-sm">
+            <div className="flex justify-center">
               <Button type="submit" disabled={!selectedFile}>
                 Continue to analysis
               </Button>

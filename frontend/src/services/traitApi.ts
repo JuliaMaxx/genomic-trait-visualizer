@@ -8,8 +8,8 @@ import type {
   TraitResult,
 } from '../types/analysis';
 
-async function getJson<T>(path: string): Promise<T> {
-  const response = await fetch(`${API_BASE_URL}${path}`);
+async function getJson<T>(path: string, signal?: AbortSignal): Promise<T> {
+  const response = await fetch(`${API_BASE_URL}${path}`, { signal });
 
   if (!response.ok) {
     throw new Error(`Request failed with status ${response.status}.`);
@@ -18,7 +18,11 @@ async function getJson<T>(path: string): Promise<T> {
   return response.json() as Promise<T>;
 }
 
-async function postFile<T>(path: string, file: File | null): Promise<T> {
+async function postFile<T>(
+  path: string,
+  file: File | null,
+  signal?: AbortSignal,
+): Promise<T> {
   if (!file) {
     throw new Error('No DNA file selected.');
   }
@@ -29,6 +33,7 @@ async function postFile<T>(path: string, file: File | null): Promise<T> {
   const response = await fetch(`${API_BASE_URL}${path}`, {
     method: 'POST',
     body: formData,
+    signal,
   });
 
   if (!response.ok) {
@@ -38,31 +43,35 @@ async function postFile<T>(path: string, file: File | null): Promise<T> {
   return response.json() as Promise<T>;
 }
 
-export function analyzeDnaFile(file: File | null) {
-  return postFile<TraitResult[]>('/analyze/', file);
+export function analyzeDnaFile(file: File | null, signal?: AbortSignal) {
+  return postFile<TraitResult[]>('/analyze/', file, signal);
 }
 
-export function evaluateTrait(traitId: string, file: File | null) {
-  return postFile<TraitDetail>(`/traits/${traitId}/evaluate`, file);
+export function evaluateTrait(
+  traitId: string,
+  file: File | null,
+  signal?: AbortSignal,
+) {
+  return postFile<TraitDetail>(`/traits/${traitId}/evaluate`, file, signal);
 }
 
-export function fetchTraitCatalog() {
-  return getJson<TraitDefinition[]>('/traits/');
+export function fetchTraitCatalog(signal?: AbortSignal) {
+  return getJson<TraitDefinition[]>('/traits/', signal);
 }
 
-export function fetchTraitDetail(traitId: string) {
-  return getJson<TraitDetail>(`/traits/${traitId}/detail`);
+export function fetchTraitDetail(traitId: string, signal?: AbortSignal) {
+  return getJson<TraitDetail>(`/traits/${traitId}/detail`, signal);
 }
 
-export function fetchRsidCatalog() {
-  return getJson<RsidCatalogItem[]>('/rsids/');
+export function fetchRsidCatalog(signal?: AbortSignal) {
+  return getJson<RsidCatalogItem[]>('/rsids/', signal);
 }
 
-export function fetchRsidDetail(rsid: string) {
-  return getJson<RsidDetail>(`/rsids/${rsid}`);
+export function fetchRsidDetail(rsid: string, signal?: AbortSignal) {
+  return getJson<RsidDetail>(`/rsids/${rsid}`, signal);
 }
 
-export function searchCatalog(query: string) {
+export function searchCatalog(query: string, signal?: AbortSignal) {
   const params = new URLSearchParams({ q: query });
-  return getJson<SearchResponse>(`/search/?${params.toString()}`);
+  return getJson<SearchResponse>(`/search/?${params.toString()}`, signal);
 }

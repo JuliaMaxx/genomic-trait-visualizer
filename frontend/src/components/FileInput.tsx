@@ -3,19 +3,17 @@ import { type DragEvent, useId, useState } from 'react';
 type Props = {
   onFileSelect?: (file: File | null) => void;
   selectedFile: File | null;
-  supportedFormats?: string[];
+  supportedFormats?: string;
   className?: string;
-  accept?: string;
 };
 
-const defaultFormats = ['.tsv', '.csv', '.vcf', '.txt'];
+const defaultFormats = '.tsv, .csv, .vcf, .txt';
 
 function FileInput({
   className = '',
   onFileSelect,
   selectedFile,
   supportedFormats = defaultFormats,
-  accept,
   ...props
 }: Props) {
   const inputId = useId();
@@ -55,31 +53,30 @@ function FileInput({
         type="file"
         className="sr-only"
         onChange={(event) => handleFiles(event.target.files)}
-        accept={accept}
+        accept={supportedFormats}
         {...props}
       />
 
       <div className="flex flex-col items-center gap-inline-gap-sm text-center">
-        <div className="ui-badge bg-surface-overlay-strong py-1">
-          Your journey starts here
-        </div>
+        <div className="ui-badge-strong">Your journey starts here</div>
 
         <div className="space-y-section-offset-sm">
-          <p className="text-xl font-medium leading-tight tracking-tight">
+          <p className="ui-paragraph-strong">
             Drag and drop your DNA file here
           </p>
-          <p className="text-sm text-content-subtle">
+          <p className="ui-paragraph-subtle">
             or click to browse from your computer
           </p>
         </div>
 
-        <p className="ui-eyebrow text-xs normal-case tracking-normal">
-          Supported formats: {supportedFormats.join(', ')}
+        <p className="ui-paragraph-faint">
+          Supported formats: {supportedFormats}
         </p>
-        <p className="rounded-pill border border-border px-pill-x py-pill-y text-sm text-content-muted">
+
+        <p className="ui-pill">
           {selectedFile
             ? `Selected file: ${selectedFile.name}`
-            : 'No file selected'}
+            : 'Uppload a file to continue'}
         </p>
       </div>
     </label>

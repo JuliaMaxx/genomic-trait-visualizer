@@ -6,7 +6,7 @@
       "name": "Lactose Digestion Ability",
       "category": "nutrition",
       "description": "This trait estimates whether your body can digest lactose, the main sugar in milk, well into adulthood.",
-      "simple_summary": "You are more likely to either digest lactose comfortably or feel digestive discomfort from milk sugar.",
+      "simple_summary": "You are more likely to digest lactose comfortably or feel digestive discomfort from milk sugar.",
       "technical_summary": "This educational trait uses rs4988235 and rs182549 as proxy markers linked to lactase persistence patterns. It is intended for learning and exploration, not diagnosis.",
       "evidence_level": "strong",
       "keywords": [
@@ -553,10 +553,10 @@
     },
     {
       "id": "eye_color",
-      "name": "Likely Eye Color Pattern",
+      "name": "Eye Color",
       "category": "appearance",
       "description": "This trait estimates whether your genetics lean toward lighter or darker eye pigmentation in a simplified one-marker model.",
-      "simple_summary": "You are more likely to have lighter eyes or darker eyes in this simplified model.",
+      "simple_summary": "You are more likely to have lighter eyes or darker eyes.",
       "technical_summary": "This educational trait uses rs12913832 in the HERC2/OCA2 region as a compact proxy signal. Eye color is polygenic, so this remains a simplified approximation.",
       "evidence_level": "strong",
       "keywords": [

@@ -1,26 +1,32 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import StatPill from '../components/StatPill';
-import FilterDropdown from '../components/FilterDropdown';
 import TeaserCard from '../components/TeaserCard';
-import { fetchRsidCatalog } from '../services/traitApi';
-import type { RsidCatalogItem } from '../types/analysis';
 import { formatEvidenceLabel } from '../utils/formatResultLabel';
 import {
   filterRsidCatalog,
   type RsidCatalogFilters,
 } from '../utils/searchFilters';
+import Button from '../components/Button';
+import useRsidCatalog from '../hooks/useRsidCatalog';
+import FilterPanel from '../components/FilterPanel';
 
 function RsidCatalogPage() {
-  const [rsids, setRsids] = useState<RsidCatalogItem[]>([]);
+  const { rsids, errorMessage, isLoading, retry } = useRsidCatalog();
   const [filters, setFilters] = useState<RsidCatalogFilters>({
     query: '',
     evidence: 'all',
   });
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
   const visibleRsids = filterRsidCatalog(rsids, filters);
+
   const hasActiveFilters = filters.query !== '' || filters.evidence !== 'all';
+
+  const evidenceLevels = [
+    { value: 'all', label: 'All evidence' },
+    { value: 'strong', label: 'Strong' },
+    { value: 'moderate', label: 'Moderate' },
+    { value: 'limited', label: 'Limited' },
+  ];
 
   function resetFilters() {
     setFilters({
@@ -29,50 +35,30 @@ function RsidCatalogPage() {
     });
   }
 
-  useEffect(() => {
-    let isCancelled = false;
+  if (isLoading) {
+    return <div className="ui-empty-state">Loading rsID catalog...</div>;
+  }
 
-    async function loadCatalog() {
-      setIsLoading(true);
-      setErrorMessage('');
-
-      try {
-        const data = await fetchRsidCatalog();
-        if (!isCancelled) {
-          setRsids(data);
-        }
-      } catch (error) {
-        if (!isCancelled) {
-          setErrorMessage(
-            error instanceof Error
-              ? error.message
-              : 'Something went wrong while loading the rsID catalog.',
-          );
-        }
-      } finally {
-        if (!isCancelled) {
-          setIsLoading(false);
-        }
-      }
-    }
-
-    loadCatalog();
-
-    return () => {
-      isCancelled = true;
-    };
-  }, []);
+  if (errorMessage) {
+    return (
+      <div className="ui-panel-error flex justify-between items-center">
+        <p>{errorMessage}</p>
+        <Button onClick={() => void retry()}>Retry</Button>
+      </div>
+    );
+  }
 
   return (
-    <div className="flex flex-1 flex-col gap-grid-gap py-card-padding">
+    <div className="ui-page-stack">
       <section className="ui-panel-gradient">
         <p className="ui-eyebrow">rsID catalog</p>
-        <h1 className="ui-detail-title max-w-(--width-text)">
+        <h1 className="ui-detail-title mb-section-offset-xl">
           Browse the SNP markers behind the trait system.
         </h1>
-        <p className="ui-detail-lede max-w-(--width-text)">
-          Each marker page starts with the technical rule data, then lets you
-          expand the plain-English story, linked traits, and sources.
+        <p className="ui-detail-lede">
+          This is a browsing catalog for every rsID in the current model. See
+          plain-English explainations, technical rule data, research behind it,
+          linked traits, and sources.
         </p>
         <p className="ui-detail-note">
           Educational, not medical advice. SNP effects are probabilistic and
@@ -80,93 +66,66 @@ function RsidCatalogPage() {
         </p>
       </section>
 
-      {isLoading ? <div className="ui-panel">Loading rsID catalog.</div> : null}
+      <FilterPanel
+        searchValue={filters.query}
+        onSearchChange={(query) =>
+          setFilters((current) => ({
+            ...current,
+            query,
+          }))
+        }
+        searchPlaceholder="rsID, gene, trait keyword"
+        hasActiveFilters={hasActiveFilters}
+        onReset={resetFilters}
+        filters={[
+          {
+            id: 'evidence',
+            label: 'Evidence',
+            ariaLabel: 'Evidence filter',
+            value: filters.evidence,
+            onChange: (value) => {
+              if (evidenceLevels.map((e) => e.value).includes(value)) {
+                setFilters((current) => ({
+                  ...current,
+                  evidence: value as typeof filters.evidence,
+                }));
+              }
+            },
+            options: evidenceLevels,
+          },
+        ]}
+      />
 
-      {errorMessage ? (
-        <div className="ui-panel-error">{errorMessage}</div>
-      ) : null}
-
-      <div className="ui-filter-panel">
-        <div className="flex items-start justify-between gap-inline-gap-sm">
-          <div className="ui-filter-grid flex-1">
-            <label className="ui-filter-label">
-              Search
-              <input
-                className="ui-search-input"
-                value={filters.query}
-                onChange={(event) =>
-                  setFilters((current) => ({
-                    ...current,
-                    query: event.target.value,
-                  }))
-                }
-                placeholder="rsID, gene, trait keyword"
-                type="search"
-              />
-            </label>
-            <label className="ui-filter-label">
-              Evidence
-              <FilterDropdown
-                ariaLabel="Evidence filter"
-                value={filters.evidence}
-                onChange={(evidence) =>
-                  setFilters((current) => ({
-                    ...current,
-                    evidence,
-                  }))
-                }
-                options={[
-                  { value: 'all', label: 'All evidence' },
-                  { value: 'strong', label: 'Strong' },
-                  { value: 'moderate', label: 'Moderate' },
-                  { value: 'limited', label: 'Limited' },
-                ]}
-              />
-            </label>
-          </div>
-          {hasActiveFilters ? (
-            <button
-              type="button"
-              className="ui-filter-reset-button"
-              aria-label="Reset filters"
-              title="Reset filters"
-              onClick={resetFilters}
-            />
-          ) : null}
-        </div>
-      </div>
-
-      {!isLoading && visibleRsids.length === 0 ? (
-        <div className="ui-empty-state">
+      {visibleRsids.length === 0 ? (
+        <div className="ui-empty-state" role="status" aria-live="polite">
           No rsIDs match the current search and filters.
         </div>
       ) : null}
 
-      <div className="grid gap-panel-padding md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-grid-gap-lg md:grid-cols-2 lg:grid-cols-3">
         {visibleRsids.map((rsid) => (
           <TeaserCard
             key={rsid.rsid}
             to={`/rsids/${rsid.rsid}`}
             eyebrow={rsid.gene ?? 'genetic marker'}
             title={rsid.rsid}
-            titleAs="h2"
-            titleClassName="font-mono"
             description={rsid.plain_english_summary}
+            size="lg"
             footer={
               <>
-                <StatPill
-                  label="Linked traits"
-                  value={String(rsid.trait_count)}
-                  tone="accent"
-                  tooltip="How many current trait models use this marker."
-                />
                 {rsid.evidence_level ? (
                   <StatPill
                     label="Evidence"
                     value={formatEvidenceLabel(rsid.evidence_level)}
+                    tone="accent"
                     tooltip="Strongest evidence level among current rules using this rsID."
                   />
                 ) : null}
+                <StatPill
+                  label="Linked traits"
+                  value={String(rsid.trait_count)}
+                  tooltip="How many current trait models use this marker."
+                />
               </>
             }
           />

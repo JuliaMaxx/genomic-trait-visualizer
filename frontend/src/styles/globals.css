@@ -18,31 +18,27 @@ body {
 }
 
 *::selection {
-  background: color-mix(in srgb, var(--color-brand) 22%, transparent);
+  background: var(--color-brand-soft);
   color: var(--color-content);
+}
+
+@layer base {
+  p {
+    margin: 0;
+  }
 }
 
 h1,
 h2,
 h3 {
-  margin: 0;
   font-family: var(--font-display);
   letter-spacing: -0.04em;
 }
 
-p {
-  margin: 0;
-}
-
-button,
-input {
-  font: inherit;
+input::placeholder {
+  color: var(--color-content-faint);
 }
 
 button {
-  color: inherit;
-}
-
-input::placeholder {
-  color: var(--color-content-faint);
+  cursor: pointer;
 }

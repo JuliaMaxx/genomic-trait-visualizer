@@ -1,4 +1,8 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import searchIcon from '../assets/icons/search.svg';
+import searchAccentIcon from '../assets/icons/search-accent.svg';
+import closeIcon from '../assets/icons/close.svg';
+import closeAccentIcon from '../assets/icons/close-accent.svg';
+import { useEffect, useCallback, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { searchCatalog } from '../services/traitApi';
@@ -13,6 +17,14 @@ function GlobalSearch() {
   const inputRef = useRef<HTMLInputElement>(null);
   const trimmedQuery = query.trim();
 
+  const closeSearch = useCallback(() => {
+    setIsOpen(false);
+    setQuery('');
+    setResults([]);
+    setErrorMessage('');
+    setIsLoading(false);
+  }, []);
+
   useEffect(() => {
     if (!isOpen) {
       return;
@@ -22,7 +34,7 @@ function GlobalSearch() {
 
     function closeOnEscape(event: KeyboardEvent) {
       if (event.key === 'Escape') {
-        setIsOpen(false);
+        closeSearch();
       }
     }
 
@@ -31,7 +43,7 @@ function GlobalSearch() {
     return () => {
       window.removeEventListener('keydown', closeOnEscape);
     };
-  }, [isOpen]);
+  }, [isOpen, closeSearch]);
 
   useEffect(() => {
     if (trimmedQuery.length < 2) {
@@ -41,23 +53,23 @@ function GlobalSearch() {
       return;
     }
 
+    setIsLoading(true);
+    setErrorMessage('');
+    setResults([]);
+
     const controller = new AbortController();
     const timer = window.setTimeout(async () => {
-      setIsLoading(true);
-      setErrorMessage('');
-
       try {
-        const data = await searchCatalog(trimmedQuery);
+        const data = await searchCatalog(trimmedQuery, controller.signal);
         if (!controller.signal.aborted) {
           setResults([...data.traits, ...data.rsids]);
         }
       } catch (error) {
         if (!controller.signal.aborted) {
-          setErrorMessage(
-            error instanceof Error
-              ? error.message
-              : 'Search is unavailable right now.',
-          );
+          setErrorMessage('Search is unavailable right now.');
+          if (error instanceof Error) {
+            console.error('Error searching catalog:', error.message);
+          }
         }
       } finally {
         if (!controller.signal.aborted) {
@@ -72,13 +84,13 @@ function GlobalSearch() {
     };
   }, [trimmedQuery]);
 
-  const statusCopy = useMemo(() => {
+  const statusCopy = (() => {
     if (trimmedQuery.length < 2) {
       return 'Type at least two characters to search traits, rsIDs, and keywords.';
     }
 
     if (isLoading) {
-      return 'Searching catalog.';
+      return 'Searching catalog...';
     }
 
     if (errorMessage) {
@@ -90,23 +102,23 @@ function GlobalSearch() {
     }
 
     return '';
-  }, [errorMessage, isLoading, results.length, trimmedQuery.length]);
-
-  function closeSearch() {
-    setIsOpen(false);
-    setQuery('');
-    setResults([]);
-    setErrorMessage('');
-  }
+  })();
 
   return (
     <>
       <button
-        className="ui-icon-button ui-search-icon-button"
+        className="group ui-icon-button"
         type="button"
         aria-label="Open global search"
         onClick={() => setIsOpen(true)}
-      />
+      >
+        <img src={searchIcon} alt="" className="ui-icon group-hover:hidden" />
+        <img
+          src={searchAccentIcon}
+          alt=""
+          className="hidden ui-icon group-hover:block"
+        />
+      </button>
 
       {isOpen ? (
         <div
@@ -125,30 +137,35 @@ function GlobalSearch() {
             <div className="flex items-start justify-between gap-inline-gap">
               <div>
                 <p className="ui-eyebrow">global search</p>
-                <h2
-                  id="global-search-title"
-                  className="mt-section-offset-sm text-2xl leading-tight text-content"
-                >
+                <h2 id="global-search-title" className="ui-section-title">
                   Search the genomic explorer
                 </h2>
               </div>
               <button
-                className="ui-icon-button ui-close-icon-button"
+                className="group ui-icon-button"
                 type="button"
                 aria-label="Close global search"
                 onClick={closeSearch}
-              />
+              >
+                <img
+                  src={closeIcon}
+                  alt=""
+                  className="ui-icon group-hover:hidden"
+                />
+                <img
+                  src={closeAccentIcon}
+                  alt=""
+                  className="hidden ui-icon group-hover:block"
+                />
+              </button>
             </div>
 
-            <label className="sr-only" htmlFor="global-search">
-              Search traits, rsIDs, or keywords
-            </label>
             <input
               ref={inputRef}
-              id="global-search"
               className="ui-search-input mt-section-offset-xl"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
+              aria-label="Search traits, rsIDs, or keywords"
               placeholder="Search traits, rsIDs, keywords"
               type="search"
             />
@@ -169,10 +186,10 @@ function GlobalSearch() {
                         {result.kind === 'trait' ? 'trait' : 'rsID'} /{' '}
                         {result.subtitle}
                       </p>
-                      <p className="mt-section-offset-sm truncate text-sm font-semibold text-content">
+                      <p className="mt-section-offset-sm truncate ui-item-title">
                         {result.title}
                       </p>
-                      <p className="mt-section-offset-sm line-clamp-2 text-xs leading-body text-content-subtle">
+                      <p className="ui-item-description">
                         {result.description}
                       </p>
                     </div>

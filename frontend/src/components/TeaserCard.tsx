@@ -6,6 +6,7 @@ type Props = {
   eyebrow: ReactNode;
   title: ReactNode;
   description?: ReactNode;
+  size?: 'sm' | 'lg';
   footer?: ReactNode;
   titleAs?: 'h2' | 'h3';
   titleClassName?: string;
@@ -13,30 +14,33 @@ type Props = {
   className?: string;
 };
 
+const sizeClasses = {
+  sm: 'ui-card-link-sm',
+  lg: 'ui-card-link-lg',
+} as const;
+
 function TeaserCard({
   to,
   eyebrow,
   title,
   description,
+  size = 'sm',
   footer,
-  titleAs: TitleTag = 'h2',
   titleClassName = '',
   descriptionClassName = '',
   className = '',
 }: Props) {
   return (
     <div className={className}>
-      <Link to={to} className="group ui-card-link">
+      <Link to={to} className={`group ui-card-link ${sizeClasses[size]}`}>
         <div>
           <p className="ui-eyebrow">{eyebrow}</p>
-          <TitleTag
-            className={`ui-card-link-heading mt-section-offset-sm text-xl text-content ${titleClassName}`.trim()}
-          >
+          <h2 className={`ui-card-link-heading ${titleClassName}`.trim()}>
             {title}
-          </TitleTag>
+          </h2>
           {description ? (
             <p
-              className={`mt-section-offset-sm text-sm leading-body text-content-subtle ${descriptionClassName}`.trim()}
+              className={`leading-body ui-paragraph-subtle ${descriptionClassName}`.trim()}
             >
               {description}
             </p>
@@ -44,7 +48,7 @@ function TeaserCard({
         </div>
       </Link>
       {footer ? (
-        <div className="mt-section-offset-xl flex flex-wrap gap-inline-gap-sm">
+        <div className="mt-section-offset-sm flex flex-wrap gap-inline-gap-sm">
           {footer}
         </div>
       ) : null}

@@ -1,4 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import arrowDownIcon from '../assets/icons/arrow-down.svg';
+import arrowDownAccentIcon from '../assets/icons/arrow-down-accent.svg';
+import arrowUpAccentIcon from '../assets/icons/arrow-up-accent.svg';
 
 type DropdownOption<T extends string> = {
   label: string;
@@ -54,7 +57,7 @@ function FilterDropdown<T extends string>({
     <div ref={rootRef} className={`ui-dropdown-root ${className}`}>
       <button
         type="button"
-        className="ui-dropdown-trigger"
+        className="ui-dropdown-trigger group"
         aria-label={ariaLabel}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
@@ -63,20 +66,23 @@ function FilterDropdown<T extends string>({
         <span className="ui-dropdown-trigger-label">
           {selectedOption.label}
         </span>
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 16 16"
-          className="ui-dropdown-trigger-icon"
-        >
-          <path
-            d="m4 6 4 4 4-4"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.75"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+        <span className="" aria-hidden="true">
+          <img
+            src={arrowDownIcon}
+            alt=""
+            className="ui-icon group-hover:hidden group-aria-expanded:hidden"
           />
-        </svg>
+          <img
+            src={arrowDownAccentIcon}
+            alt=""
+            className="ui-icon hidden group-hover:block group-aria-expanded:hidden"
+          />
+          <img
+            src={arrowUpAccentIcon}
+            alt=""
+            className="ui-icon hidden group-hover:hidden group-aria-expanded:block"
+          />
+        </span>
       </button>
 
       {isOpen ? (

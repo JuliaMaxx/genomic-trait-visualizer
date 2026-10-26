@@ -101,7 +101,10 @@ export function filterTraitCatalog(
       return false;
     }
 
-    if (filters.evidence !== 'all' && trait.evidence_level !== filters.evidence) {
+    if (
+      filters.evidence !== 'all' &&
+      trait.evidence_level !== filters.evidence
+    ) {
       return false;
     }
 

@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import type { TraitResult } from '../types/analysis';
 import { formatConfidence } from '../utils/formatConfidence';
-import { formatCategoryLabel } from '../utils/formatResultLabel';
 import ResultToneBadge from './ResultToneBadge';
 import StatPill from './StatPill';
 
@@ -17,11 +16,9 @@ function TraitCard({ trait }: Props) {
     >
       <div className="flex items-start justify-between gap-inline-gap">
         <div>
-          <p className="ui-eyebrow">{formatCategoryLabel(trait.category)}</p>
-          <h3 className="ui-card-link-heading mt-section-offset-sm text-xl text-content">
-            {trait.name}
-          </h3>
-          <p className="mt-section-offset-sm text-sm leading-body text-content-subtle">
+          <p className="ui-eyebrow">{trait.category}</p>
+          <h3 className="ui-card-link-heading">{trait.name}</h3>
+          <p className="leading-body ui-paragraph-subtle">
             {trait.description}
           </p>
         </div>
@@ -32,7 +29,7 @@ function TraitCard({ trait }: Props) {
       </div>
 
       <div>
-        <div className="mt-section-offset-xl flex flex-wrap gap-inline-gap-sm">
+        <div className="ui-pill-collection">
           <StatPill
             label="Confidence"
             value={formatConfidence(trait.confidence)}
@@ -49,12 +46,6 @@ function TraitCard({ trait }: Props) {
             value={String(trait.missing_rsids.length)}
             tooltip="Missing rules means rsIDs used by this trait model that were not available in your uploaded DNA file."
           />
-        </div>
-
-        <div className="mt-section-offset-xl flex items-center justify-between text-sm text-content-faint">
-          <p className="mt-section-offset-xl font-mono text-xs text-content-faint">
-            {trait.trait_id}
-          </p>
         </div>
       </div>
     </Link>

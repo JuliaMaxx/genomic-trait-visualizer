@@ -13,6 +13,16 @@ const statusLabels: Record<TraitRsidDetail['status'], string> = {
   missing: 'Missing',
 };
 
+function matchTone(status: string) {
+  if (status === 'matched') {
+    return 'ui-result-tone-likely';
+  }
+  if (status === 'missing') {
+    return 'ui-result-tone-inconclusive';
+  }
+  return 'ui-result-tone-unlikely';
+}
+
 const contributionTone: Record<
   TraitRsidDetail['contribution'],
   'default' | 'accent'
@@ -35,25 +45,15 @@ function TraitDetailRsidCard({ rsid }: Props) {
   return (
     <Link to={`/rsids/${rsid.rsid}`}>
       <article className="ui-card-link">
-        <div className="flex flex-wrap items-start justify-between gap-grid-gap-sm">
+        <div className="flex flex-wrap items-center justify-between gap-grid-gap-sm">
           <div>
             <div className="flex items-center gap-inline-gap-sm">
-              <div className="font-mono text-sm text-content-faint">
-                {rsid.rsid}
-              </div>
-              <span
-                className={
-                  rsid.status === 'matched'
-                    ? 'ui-status-pill ui-rsid-status-matched'
-                    : rsid.status === 'missing'
-                      ? 'ui-status-pill ui-rsid-status-missing'
-                      : 'ui-status-pill ui-rsid-status-no-match'
-                }
-              >
+              <div className="ui-paragraph-subtle">{rsid.rsid}</div>
+              <span className={`ui-status-pill ${matchTone(rsid.status)}`}>
                 {statusLabels[rsid.status]}
               </span>
             </div>
-            <h3 className="mt-section-offset-sm text-xl text-content">
+            <h3 className="ui-paragraph-strong mt-inline-gap-compact">
               {rsid.gene ?? 'Genetic marker'}
             </h3>
           </div>
@@ -73,31 +73,23 @@ function TraitDetailRsidCard({ rsid }: Props) {
           </div>
         </div>
 
-        <div className="mt-section-offset-xl grid gap-grid-gap-sm lg:grid-cols-2">
+        <div className="mt-section-offset-lg grid gap-grid-gap-sm lg:grid-cols-2">
           <div className="ui-panel-subtle">
             <p className="ui-eyebrow">what this marker is</p>
-            <p className="mt-section-offset-md text-sm leading-body text-content-muted">
-              {rsid.rule_description}
-            </p>
-            <p className="mt-section-offset-md text-sm leading-body text-content-faint">
-              {rsid.status_explanation}
-            </p>
+            <p className="ui-item-title-subtle">{rsid.rule_description}</p>
+            <p className="ui-item-body-subtle">{rsid.status_explanation}</p>
           </div>
 
           <div className="ui-panel-accent">
-            <p className="ui-eyebrow text-content-accent">
-              what your genotype means
-            </p>
-            <p className="mt-section-offset-md text-sm leading-body text-content-muted">
-              {rsid.meaning}
-            </p>
-            <p className="mt-section-offset-md text-sm leading-body text-content-faint">
+            <p className="ui-eyebrow-accent">what your genotype means</p>
+            <p className="ui-item-title-subtle">{rsid.meaning}</p>
+            <p className="ui-item-body-subtle">
               {rsid.contribution_explanation}
             </p>
           </div>
         </div>
 
-        <div className="mt-section-offset-xl flex flex-wrap gap-inline-gap-sm">
+        <div className="ui-pill-collection">
           {rsid.effect ? (
             <StatPill
               label="Effect"

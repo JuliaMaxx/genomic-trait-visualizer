@@ -1,61 +1,67 @@
-import { useEffect, useState } from 'react';
-import { evaluateTrait, fetchTraitDetail } from '../services/traitApi';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { fetchTraitDetail } from '../services/traitApi';
 import type { TraitDetail } from '../types/analysis';
 
-function useTraitDetail(file: File | null, traitId: string) {
+function useTraitDetail(traitId: string | undefined) {
   const [traitDetail, setTraitDetail] = useState<TraitDetail | null>(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
+  const controllerRef = useRef<AbortController | null>(null);
+
+  const loadDetail = useCallback(async () => {
+    controllerRef.current?.abort();
+
     if (!traitId) {
+      controllerRef.current = null;
       setTraitDetail(null);
       setErrorMessage('');
       setIsLoading(false);
       return;
     }
 
-    let isCancelled = false;
+    const controller = new AbortController();
+    controllerRef.current = controller;
 
-    async function loadTraitDetail() {
-      setIsLoading(true);
-      setErrorMessage('');
+    setIsLoading(true);
+    setErrorMessage('');
 
-      try {
-        const data = file
-          ? await evaluateTrait(traitId, file)
-          : await fetchTraitDetail(traitId);
+    try {
+      const data = await fetchTraitDetail(traitId, controller.signal);
 
-        if (!isCancelled) {
-          setTraitDetail(data);
-        }
-      } catch (error) {
-        if (!isCancelled) {
-          setTraitDetail(null);
-          setErrorMessage(
-            error instanceof Error
-              ? error.message
-              : 'Something went wrong while loading trait details.',
-          );
-        }
-      } finally {
-        if (!isCancelled) {
-          setIsLoading(false);
-        }
+      if (!controller.signal.aborted) {
+        setTraitDetail(data);
+      }
+    } catch (error) {
+      if (!controller.signal.aborted) {
+        setTraitDetail(null);
+        setErrorMessage(
+          error instanceof Error
+            ? error.message
+            : 'Something went wrong while loading trait details.',
+        );
+      }
+    } finally {
+      if (!controller.signal.aborted) {
+        setIsLoading(false);
+        controllerRef.current = null;
       }
     }
+  }, [traitId]);
 
-    loadTraitDetail();
+  useEffect(() => {
+    void loadDetail();
 
     return () => {
-      isCancelled = true;
+      controllerRef.current?.abort();
     };
-  }, [file, traitId]);
+  }, [loadDetail]);
 
   return {
     traitDetail,
     errorMessage,
     isLoading,
+    retry: loadDetail,
   };
 }
 

@@ -13,9 +13,7 @@ function InfoTooltip({ content }: Props) {
       >
         i
       </button>
-      <span className="ui-tooltip-panel">
-        {content}
-      </span>
+      <span className="ui-tooltip-panel">{content}</span>
     </span>
   );
 }
