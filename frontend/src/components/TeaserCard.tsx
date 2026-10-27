@@ -40,7 +40,7 @@ function TeaserCard({
           </h2>
           {description ? (
             <p
-              className={`leading-body ui-paragraph-subtle ${descriptionClassName}`.trim()}
+              className={`leading-regular ui-paragraph-subtle ${descriptionClassName}`.trim()}
             >
               {description}
             </p>
@@ -48,9 +48,7 @@ function TeaserCard({
         </div>
       </Link>
       {footer ? (
-        <div className="mt-section-offset-sm flex flex-wrap gap-inline-gap-sm">
-          {footer}
-        </div>
+        <div className="mt-2xs flex flex-wrap gap-sm">{footer}</div>
       ) : null}
     </div>
   );

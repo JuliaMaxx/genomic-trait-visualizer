@@ -52,7 +52,7 @@ function RsidCatalogPage() {
     <div className="ui-page-stack">
       <section className="ui-panel-gradient">
         <p className="ui-eyebrow">rsID catalog</p>
-        <h1 className="ui-detail-title mb-section-offset-xl">
+        <h1 className="ui-detail-title mb-lg">
           Browse the SNP markers behind the trait system.
         </h1>
         <p className="ui-detail-lede">
@@ -102,7 +102,7 @@ function RsidCatalogPage() {
         </div>
       ) : null}
 
-      <div className="grid gap-grid-gap-lg md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-3xl md:grid-cols-2 lg:grid-cols-3">
         {visibleRsids.map((rsid) => (
           <TeaserCard
             key={rsid.rsid}

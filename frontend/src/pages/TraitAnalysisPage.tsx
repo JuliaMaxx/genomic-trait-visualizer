@@ -76,7 +76,7 @@ function TraitAnalysisPage() {
             type="button"
             variant="secondary"
             onClick={handleBack}
-            className="mr-badge-x"
+            className="mr-sm"
           >
             Go back
           </Button>
@@ -88,7 +88,7 @@ function TraitAnalysisPage() {
       </div>
 
       <section className="ui-panel-gradient">
-        <div className="flex justify-start items-center gap-grid-gap-sm">
+        <div className="flex justify-start items-center gap-md">
           <p className="ui-eyebrow">{traitDetail.category}</p>
           <ResultToneBadge
             result={traitDetail.result}
@@ -139,7 +139,7 @@ function TraitAnalysisPage() {
         <section className="ui-panel  border-brand-line">
           <p className="ui-eyebrow">practical takeaways</p>
           <h2 className="ui-section-title">What this result is useful for</h2>
-          <div className="ui-section-content-equal">
+          <div className="ui-section-content-grid">
             {traitDetail.practical_takeaway.map((entry) => (
               <article key={entry.title} className="ui-panel-subtle">
                 <p className="ui-item-title">{entry.title}</p>
@@ -154,7 +154,7 @@ function TraitAnalysisPage() {
         eyebrow="your marker trace"
         title="How your file was read"
       >
-        <div className="ui-section-content-grid">
+        <div className="ui-section-content-stack">
           {traitDetail.rsids.map((rsid) => (
             <TraitDetailRsidCard key={rsid.rsid} rsid={rsid} />
           ))}
@@ -165,20 +165,20 @@ function TraitAnalysisPage() {
         eyebrow="calculation details"
         title="How the result formed"
       >
-        <div className="ui-flow-row hidden md:flex">
-          <div className="ui-flow-step-flex">
+        <div className="flex-wrap items-center gap-sm hidden md:flex">
+          <div className="ui-flow-step">
             <p className="ui-item-title">Observed markers</p>
             <p className="ui-item-body-brand">
               {observedCount} out of {traitDetail.rsids.length}
             </p>
           </div>
           <span className="ui-flow-arrow">-&gt;</span>
-          <div className="ui-flow-step-flex">
+          <div className="ui-flow-step">
             <p className="ui-item-title">Weighted score</p>
             <p className="ui-item-body-brand">{traitDetail.score.toFixed(2)}</p>
           </div>
           <span className="ui-flow-arrow">-&gt;</span>
-          <div className="ui-flow-step-flex">
+          <div className="ui-flow-step">
             <p className="ui-item-title">Confidence</p>
             <p className="ui-item-body-brand">
               {formatConfidence(traitDetail.confidence)}
@@ -186,7 +186,7 @@ function TraitAnalysisPage() {
           </div>
         </div>
 
-        <div className="ui-section-content-equal">
+        <div className="ui-section-content-grid">
           {traitDetail.calculation_summary.map((entry) => (
             <div key={entry.title} className="ui-panel-subtle">
               <p className="ui-item-title">{entry.title}</p>
@@ -198,7 +198,7 @@ function TraitAnalysisPage() {
 
       {traitDetail.sources.length > 0 ? (
         <DisclosurePanel eyebrow="references" title="Sources">
-          <div className="ui-section-content-equal">
+          <div className="ui-section-content-grid">
             {traitDetail.sources.map((source) => (
               <SourceLink
                 key={`${source.name}-${source.url}`}

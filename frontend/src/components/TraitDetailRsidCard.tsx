@@ -15,12 +15,12 @@ const statusLabels: Record<TraitRsidDetail['status'], string> = {
 
 function matchTone(status: string) {
   if (status === 'matched') {
-    return 'ui-result-tone-likely';
+    return 'ui-badge-success';
   }
   if (status === 'missing') {
-    return 'ui-result-tone-inconclusive';
+    return 'ui-badge-warning';
   }
-  return 'ui-result-tone-unlikely';
+  return 'ui-badge-danger';
 }
 
 const contributionTone: Record<
@@ -45,19 +45,19 @@ function TraitDetailRsidCard({ rsid }: Props) {
   return (
     <Link to={`/rsids/${rsid.rsid}`}>
       <article className="ui-card-link">
-        <div className="flex flex-wrap items-center justify-between gap-grid-gap-sm">
+        <div className="flex flex-wrap items-center justify-between gap-md">
           <div>
-            <div className="flex items-center gap-inline-gap-sm">
+            <div className="flex items-center gap-sm">
               <div className="ui-paragraph-subtle">{rsid.rsid}</div>
-              <span className={`ui-status-pill ${matchTone(rsid.status)}`}>
+              <span className={`ui-result-badge ${matchTone(rsid.status)}`}>
                 {statusLabels[rsid.status]}
               </span>
             </div>
-            <h3 className="ui-paragraph-strong mt-inline-gap-compact">
+            <h3 className="ui-paragraph-strong mt-2xs">
               {rsid.gene ?? 'Genetic marker'}
             </h3>
           </div>
-          <div className="flex flex-wrap gap-inline-gap-sm">
+          <div className="flex flex-wrap gap-sm">
             <StatPill
               label="Your genotype"
               value={formatGenotype(rsid.user_genotype)}
@@ -73,17 +73,17 @@ function TraitDetailRsidCard({ rsid }: Props) {
           </div>
         </div>
 
-        <div className="mt-section-offset-lg grid gap-grid-gap-sm lg:grid-cols-2">
+        <div className="mt-md grid gap-md lg:grid-cols-2">
           <div className="ui-panel-subtle">
             <p className="ui-eyebrow">what this marker is</p>
             <p className="ui-item-title-subtle">{rsid.rule_description}</p>
-            <p className="ui-item-body-subtle">{rsid.status_explanation}</p>
+            <p className="ui-item-body-faint">{rsid.status_explanation}</p>
           </div>
 
           <div className="ui-panel-accent">
             <p className="ui-eyebrow-accent">what your genotype means</p>
             <p className="ui-item-title-subtle">{rsid.meaning}</p>
-            <p className="ui-item-body-subtle">
+            <p className="ui-item-body-faint">
               {rsid.contribution_explanation}
             </p>
           </div>

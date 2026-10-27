@@ -10,8 +10,8 @@ function AppShell({ children }: WithChildren) {
   return (
     <main className="relative min-h-screen text-content">
       <div aria-hidden="true" className="bg-app-grid" />
-      <div className="relative mx-auto flex flex-col min-h-screen w-full max-w-app px-page-x py-page-y sm:px-page-x-sm lg:px-page-x-lg">
-        <header className="mb-section-gap flex flex-wrap items-center justify-between gap-inline-gap border-b border-border pb-header-padding-bottom">
+      <div className="relative mx-auto flex flex-col min-h-screen w-full max-w-app px-lg py-3xl sm:px-2xl lg:px-4xl">
+        <header className="mb-xl flex flex-wrap items-center justify-between gap-md border-b border-border pb-lg">
           <div>
             <p className="ui-eyebrow">Genomic trait visualizer</p>
             <Link to="/" className="ui-logo-text">
@@ -19,7 +19,7 @@ function AppShell({ children }: WithChildren) {
             </Link>
           </div>
 
-          <div className="flex flex-wrap items-center gap-inline-gap-sm">
+          <div className="flex flex-wrap items-center gap-sm">
             <GlobalSearch />
             {selectedFile ? (
               <NavButton to="/analysis" variant="secondary">

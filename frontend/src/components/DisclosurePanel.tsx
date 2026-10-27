@@ -17,7 +17,7 @@ function DisclosurePanel({ title, eyebrow, children }: DisclosurePanelProps) {
           </div>
           <span className="ui-disclosure-toggle">+</span>
         </summary>
-        <div className="ui-section-content">{children}</div>
+        <div className="mt-lg">{children}</div>
       </details>
     </section>
   );

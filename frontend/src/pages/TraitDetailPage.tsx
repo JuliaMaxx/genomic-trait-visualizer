@@ -72,11 +72,11 @@ function TraitDetailPage() {
           </div>
           <div>
             {traitDetail.keywords.length > 0 ? (
-              <div className="ui-section-content">
+              <div className="mt-lg">
                 <p className="ui-eyebrow">keywords</p>
-                <div className="ui-pill-collection-compact">
+                <div className="mt-2xs flex flex-wrap gap-2xs">
                   {traitDetail.keywords.map((keyword, index) => (
-                    <span key={`${keyword}-${index}`} className="ui-small-pill">
+                    <span key={`${keyword}-${index}`} className="ui-pill">
                       {keyword}
                     </span>
                   ))}
@@ -105,9 +105,9 @@ function TraitDetailPage() {
         </div>
       </section>
 
-      <section className="mt-section-offset-xl grid gap-grid-gap-sm lg:grid-cols-2">
+      <section className="mt-lg grid gap-md lg:grid-cols-2">
         <div className="ui-panel">
-          <div className="flex items-center justify-between gap-grid-gap-sm">
+          <div className="flex items-center justify-between gap-md">
             <div>
               <p className="ui-eyebrow">trait field guide</p>
               <h2 className="ui-section-title">Different perspectives</h2>
@@ -138,13 +138,13 @@ function TraitDetailPage() {
             </div>
           </div>
 
-          <div className="mt-section-offset-xl ui-panel-accent">
+          <div className="mt-lg ui-panel-accent">
             <p className="ui-eyebrow-accent">
               {explanationMode === 'simple'
                 ? 'friendly view'
                 : 'technical view'}
             </p>
-            <div className="mt-section-offset-xl grid gap-grid-gap-sm">
+            <div className="mt-lg grid gap-md">
               {(explanationMode === 'simple'
                 ? traitDetail.simple_explanation
                 : traitDetail.technical_explanation
@@ -161,7 +161,7 @@ function TraitDetailPage() {
         <div className="ui-panel">
           <p className="ui-eyebrow">everyday context</p>
           <h2 className="ui-section-title">Useful ways to think about it</h2>
-          <div className="mt-section-offset-xl grid gap-grid-gap-sm">
+          <div className="mt-lg grid gap-md">
             {traitDetail.practical_takeaway.map((entry) => (
               <div key={entry.title} className="ui-panel-subtle">
                 <p className="ui-item-title">{entry.title}</p>
@@ -177,7 +177,7 @@ function TraitDetailPage() {
           <p className="ui-eyebrow">research spotlight</p>
           <h2 className="ui-section-title">Find out more about this trait</h2>
         </div>
-        <div className="ui-section-content-equal">
+        <div className="ui-section-content-grid">
           {traitDetail.research_spotlight.map((entry, index) => (
             <article
               key={entry.title}
@@ -191,7 +191,7 @@ function TraitDetailPage() {
       </section>
 
       <DisclosurePanel eyebrow="model ingredients" title="Genetic contributors">
-        <div className="ui-section-content-equal">
+        <div className="ui-section-content-grid">
           {traitDetail.rsids.map((rsid) => (
             <TeaserCard
               key={rsid.rsid}
@@ -225,7 +225,7 @@ function TraitDetailPage() {
 
       {traitDetail.sources.length > 0 ? (
         <DisclosurePanel eyebrow="references" title="Sources">
-          <div className="ui-section-content-equal">
+          <div className="ui-section-content-grid">
             {traitDetail.sources.map((source) => (
               <SourceLink
                 key={`${source.name}-${source.url}`}

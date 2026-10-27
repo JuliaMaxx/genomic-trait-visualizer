@@ -57,10 +57,10 @@ function FileInput({
         {...props}
       />
 
-      <div className="flex flex-col items-center gap-inline-gap-sm text-center">
+      <div className="flex flex-col items-center gap-sm text-center">
         <div className="ui-badge-strong">Your journey starts here</div>
 
-        <div className="space-y-section-offset-sm">
+        <div className="space-y-2xs">
           <p className="ui-paragraph-strong">
             Drag and drop your DNA file here
           </p>

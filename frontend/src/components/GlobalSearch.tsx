@@ -134,7 +134,7 @@ function GlobalSearch() {
             onClick={closeSearch}
           />
           <div className="ui-search-modal">
-            <div className="flex items-start justify-between gap-inline-gap">
+            <div className="flex items-start justify-between gap-md">
               <div>
                 <p className="ui-eyebrow">global search</p>
                 <h2 id="global-search-title" className="ui-section-title">
@@ -162,7 +162,7 @@ function GlobalSearch() {
 
             <input
               ref={inputRef}
-              className="ui-search-input mt-section-offset-xl"
+              className="ui-search-input mt-lg"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               aria-label="Search traits, rsIDs, or keywords"
@@ -186,10 +186,10 @@ function GlobalSearch() {
                         {result.kind === 'trait' ? 'trait' : 'rsID'} /{' '}
                         {result.subtitle}
                       </p>
-                      <p className="mt-section-offset-sm truncate ui-item-title">
+                      <p className="mt-2xs truncate ui-item-title">
                         {result.title}
                       </p>
-                      <p className="ui-item-description">
+                      <p className="ui-item-body-faint mt-2xs line-clamp-2 text-xs">
                         {result.description}
                       </p>
                     </div>

@@ -54,7 +54,7 @@ function FilterDropdown<T extends string>({
   }, []);
 
   return (
-    <div ref={rootRef} className={`ui-dropdown-root ${className}`}>
+    <div ref={rootRef} className={`relative ${className}`}>
       <button
         type="button"
         className="ui-dropdown-trigger group"

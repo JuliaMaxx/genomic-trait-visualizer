@@ -67,7 +67,7 @@ function TraitCatalogPage() {
     <div className="ui-page-stack">
       <section className="ui-panel-gradient">
         <p className="ui-eyebrow">trait catalog</p>
-        <h1 className="ui-detail-title mb-section-offset-xl">
+        <h1 className="ui-detail-title mb-lg">
           Explore every trait currently used by the system.
         </h1>
         <p className="ui-detail-lede">
@@ -132,7 +132,7 @@ function TraitCatalogPage() {
         </div>
       ) : null}
 
-      <div className="grid gap-grid-gap-lg md:grid-cols-2">
+      <div className="grid gap-3xl md:grid-cols-2">
         {visibleTraits.map((trait) => (
           <TeaserCard
             key={trait.id}

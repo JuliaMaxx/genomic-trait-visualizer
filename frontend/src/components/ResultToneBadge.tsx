@@ -8,9 +8,9 @@ type Props = {
 };
 
 const toneClasses: Record<TraitResultLabel, string> = {
-  likely: 'ui-result-tone-likely',
-  unlikely: 'ui-result-tone-unlikely',
-  inconclusive: 'ui-result-tone-inconclusive',
+  likely: 'ui-badge-success',
+  unlikely: 'ui-badge-danger',
+  inconclusive: 'ui-badge-warning',
 };
 
 function ResultToneBadge({ result, tooltip }: Props) {

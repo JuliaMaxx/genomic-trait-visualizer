@@ -35,7 +35,7 @@ function FilterPanel({
 }: Props) {
   return (
     <div className="ui-filter-panel">
-      <div className="flex items-start justify-between gap-inline-gap-sm">
+      <div className="flex items-start justify-between gap-sm">
         <div className="ui-filter-grid min-w-0 flex-1">
           <label className="ui-filter-label">
             <span>Search</span>

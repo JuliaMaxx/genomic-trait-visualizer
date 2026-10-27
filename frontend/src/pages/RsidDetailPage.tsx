@@ -9,12 +9,12 @@ import useRsidDetail from '../hooks/useRsidDetail';
 
 function scoreTone(score: number) {
   if (score > 0) {
-    return 'ui-result-tone-likely';
+    return 'ui-badge-success';
   }
   if (score < 0) {
-    return 'ui-result-tone-unlikely';
+    return 'ui-badge-danger';
   }
-  return 'ui-result-tone-inconclusive';
+  return 'ui-badge-warning';
 }
 
 function RsidDetailPage() {
@@ -102,31 +102,27 @@ function RsidDetailPage() {
         </div>
       </section>
 
-      <section className="mt-section-offset-xl ui-panel">
+      <section className="mt-lg ui-panel">
         <p className="ui-eyebrow">technical data</p>
         <h2 className="ui-section-title">Rule data in the current catalog</h2>
-        <div className="ui-section-content-equal">
+        <div className="ui-section-content-grid">
           {detail.genotype_meanings.map((meaning) => (
             <div
               key={`${meaning.genotype.join('-')}-${meaning.score}`}
               className="ui-panel"
             >
-              <div className="flex flex-wrap items-start justify-between gap-inline-gap-sm">
+              <div className="flex flex-wrap items-start justify-between gap-sm">
                 <div>
                   <p className="ui-eyebrow">genotype</p>
-                  <p className="ui-genotype-value">
+                  <p className="ui-paragraph-strong mt-2xs">
                     {meaning.genotype.join(' / ')}
                   </p>
                 </div>
-                <span
-                  className={`ui-result-badge-mono-lg ${scoreTone(meaning.score)}`}
-                >
+                <span className={`ui-result-badge ${scoreTone(meaning.score)}`}>
                   {meaning.score.toFixed(2)}
                 </span>
               </div>
-              <p className="mt-section-offset-sm ui-paragraph-muted">
-                {meaning.meaning}
-              </p>
+              <p className="mt-2xs ui-paragraph-muted">{meaning.meaning}</p>
             </div>
           ))}
         </div>
@@ -135,14 +131,14 @@ function RsidDetailPage() {
       <section className="ui-panel">
         <p className="ui-eyebrow">plain English</p>
         <h2 className="ui-section-title">What this marker means</h2>
-        <div className="ui-section-content">
+        <div className="mt-lg">
           <div className="ui-panel-accent">
             <p className="ui-item-title">Short version</p>
-            <p className="ui-item-body-accent">
+            <p className="ui-item-body text-content">
               {detail.plain_english_summary}
             </p>
           </div>
-          <div className="ui-section-content-equal">
+          <div className="ui-section-content-grid">
             <div className="ui-panel-subtle">
               <p className="ui-item-title">Rule description</p>
               <p className="ui-item-body">{detail.description}</p>
@@ -155,7 +151,7 @@ function RsidDetailPage() {
             ))}
           </div>
           {detail.interpretation_notes.length > 0 ? (
-            <div className="ui-section-content-equal">
+            <div className="ui-section-content-grid">
               {detail.interpretation_notes.slice(0, 2).map((section) => (
                 <div key={section.title} className="ui-panel-subtle">
                   <p className="ui-item-title">{section.title}</p>
@@ -168,7 +164,7 @@ function RsidDetailPage() {
       </section>
 
       <DisclosurePanel eyebrow="cross-links" title="Traits using this SNP">
-        <div className="ui-section-content-equal">
+        <div className="ui-section-content-grid">
           {detail.traits.map((trait) => (
             <Link
               key={trait.trait_id}
@@ -203,7 +199,7 @@ function RsidDetailPage() {
 
       {detail.sources.length > 0 ? (
         <DisclosurePanel eyebrow="references" title="Sources">
-          <div className="ui-section-content-equal">
+          <div className="ui-section-content-grid">
             {detail.sources.map((source) => (
               <SourceLink
                 key={`${source.name}-${source.url}`}

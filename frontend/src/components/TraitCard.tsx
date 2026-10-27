@@ -14,11 +14,11 @@ function TraitCard({ trait }: Props) {
       to={`/analysis/traits/${trait.trait_id}`}
       className="group ui-card-link"
     >
-      <div className="flex items-start justify-between gap-inline-gap">
+      <div className="flex items-start justify-between gap-md">
         <div>
           <p className="ui-eyebrow">{trait.category}</p>
           <h3 className="ui-card-link-heading">{trait.name}</h3>
-          <p className="leading-body ui-paragraph-subtle">
+          <p className="leading-regular ui-paragraph-subtle">
             {trait.description}
           </p>
         </div>

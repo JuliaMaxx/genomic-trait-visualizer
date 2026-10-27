@@ -108,7 +108,7 @@ function AnalysisPage() {
   if (traitsWithObservedRsids.length === 0) {
     return (
       <div>
-        <div className="ui-empty-state flex justify-between items-center flex-wrap gap-inline-gap-sm">
+        <div className="ui-empty-state flex justify-between items-center flex-wrap gap-sm">
           No traits with usable rsIDs were found for this upload.
           <LinkButton to="/" variant="secondary">
             Try a different file
@@ -120,12 +120,10 @@ function AnalysisPage() {
 
   return (
     <div className="ui-page-stack">
-      <section className="ui-panel-gradient grid gap-section-gap grid-cols-1 lg:grid-cols-[auto_1fr]">
+      <section className="ui-panel-gradient grid gap-xl grid-cols-1 lg:grid-cols-[auto_1fr]">
         <div>
           <p className="ui-eyebrow">Trait analysis</p>
-          <h1 className="ui-detail-title mb-section-offset-xl">
-            Trait analysis results.
-          </h1>
+          <h1 className="ui-detail-title mb-lg">Trait analysis results.</h1>
           <p className="ui-detail-lede">
             Here are shown all the traits that could be checked using your
             uploaded DNA file.Each card below gives a quick read on one trait.
@@ -137,8 +135,8 @@ function AnalysisPage() {
             research can vary by study or population.
           </p>
         </div>
-        <div className="ui-panel-subtle p-card-padding">
-          <div className="flex justify-start items-center gap-inline-gap-sm">
+        <div className="ui-panel-subtle p-xl">
+          <div className="flex justify-start items-center gap-sm">
             <p className="ui-paragraph-strong">
               Results for{' '}
               <Link to="/" className="ui-link">
@@ -239,7 +237,7 @@ function AnalysisPage() {
         </div>
       ) : null}
 
-      <div className="grid gap-grid-gap md:grid-cols-2">
+      <div className="grid gap-xl md:grid-cols-2">
         {visibleTraits.map((trait) => (
           <TraitCard key={trait.trait_id} trait={trait} />
         ))}
