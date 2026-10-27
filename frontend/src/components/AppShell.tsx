@@ -14,8 +14,9 @@ function AppShell({ children }: WithChildren) {
         <header className="mb-xl flex flex-wrap items-center justify-between gap-md border-b border-border pb-lg">
           <div>
             <p className="ui-eyebrow">Genomic trait visualizer</p>
-            <Link to="/" className="ui-logo-text">
+            <Link to="/" className="ui-logo-text flex items-center gap-2xs">
               WHOAMI
+              <img src="/favicon.svg" alt="Favicon" className="ui-icon" />
             </Link>
           </div>
 
