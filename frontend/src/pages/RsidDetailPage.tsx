@@ -2,7 +2,7 @@ import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 
 import Button from '../components/Button';
 import StatPill from '../components/StatPill';
-import { formatEvidenceLabel } from '../utils/formatResultLabel';
+import { formatEvidenceLabel } from '../utils/formatLabels';
 import DisclosurePanel from '../components/DisclosurePanel';
 import SourceLink from '../components/SourceLink';
 import useRsidDetail from '../hooks/useRsidDetail';

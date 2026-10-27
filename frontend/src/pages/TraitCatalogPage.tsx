@@ -1,10 +1,7 @@
 import { useState } from 'react';
 import StatPill from '../components/StatPill';
 import TeaserCard from '../components/TeaserCard';
-import {
-  formatCategoryLabel,
-  formatEvidenceLabel,
-} from '../utils/formatResultLabel';
+import { formatEvidenceLabel } from '../utils/formatLabels';
 import {
   filterTraitCatalog,
   type TraitCatalogFilters,
@@ -137,7 +134,7 @@ function TraitCatalogPage() {
           <TeaserCard
             key={trait.id}
             to={`/traits/${trait.id}`}
-            eyebrow={formatCategoryLabel(trait.category)}
+            eyebrow={trait.category}
             title={trait.name}
             description={trait.simple_summary}
             footer={

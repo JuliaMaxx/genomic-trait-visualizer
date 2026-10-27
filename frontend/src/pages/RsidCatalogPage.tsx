@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import StatPill from '../components/StatPill';
 import TeaserCard from '../components/TeaserCard';
-import { formatEvidenceLabel } from '../utils/formatResultLabel';
+import { formatEvidenceLabel } from '../utils/formatLabels';
 import {
   filterRsidCatalog,
   type RsidCatalogFilters,

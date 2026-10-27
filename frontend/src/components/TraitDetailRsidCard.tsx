@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import type { TraitRsidDetail } from '../types/analysis';
-import { formatEvidenceLabel } from '../utils/formatResultLabel';
+import { formatEvidenceLabel } from '../utils/formatLabels';
 import StatPill from './StatPill';
 
 type Props = {

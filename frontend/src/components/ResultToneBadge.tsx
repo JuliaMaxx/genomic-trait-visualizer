@@ -1,5 +1,5 @@
 import type { TraitResultLabel } from '../types/analysis';
-import { formatResultLabel } from '../utils/formatResultLabel';
+import { formatResultLabel } from '../utils/formatLabels';
 import InfoTooltip from './InfoTooltip';
 
 type Props = {
