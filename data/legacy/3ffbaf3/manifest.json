@@ -1,0 +1,95 @@
+{
+  "baseline_id": "legacy-3ffbaf3",
+  "captured_on": "2026-11-04",
+  "purpose": "Historical reproduction and regression evidence only.",
+  "scientific_status": "scientifically_superseded_not_independently_validated",
+  "scientific_approval": false,
+  "engine": {
+    "git_commit": "3ffbaf3c564a51e9db8f808b88c1842b1d2b4711",
+    "git_tree": "898692ae03a6066e0e631eaf21505244974315dc",
+    "runtime_sources_sha256_lf": {
+      "backend/__init__.py": "94228634d67571575099454fd7b3d40ff0c837407a0a7af44ff0518b5b79a2f2",
+      "backend/export_openapi.py": "09921b24b5f7a547abcded71d9a24a4cd176c81c941fb8ef278feb2351a2e849",
+      "backend/main.py": "7cd4dac0be91137163e0a5031fb308f309b050d42424794850286392307b869d",
+      "backend/models/__init__.py": "1b09d30dc0fb7596168e6f2251c2c0f8bdcd4f0ad5f4e2c1f824b11d5f8012fe",
+      "backend/models/analysis.py": "072cfd91ba7249c5b82a36a71ba78d1d2c1514cab5015d0ba319f9a4d192ccc6",
+      "backend/models/api.py": "8db4afe740a44e71745ffa662080d8cb4fe810f740fbe78d268933ce705e5028",
+      "backend/models/catalog.py": "cd6035bfbe98abfceac5b05db7dfa0dfe67664832e72949e9bdd0a1ec6404d90",
+      "backend/models/common.py": "d808b931bd2e48d5aaae893259617af54e0e519a372d91d8ff92367c9f405920",
+      "backend/routes/__init__.py": "1b4f54ca233cc124a45fbdf263b679016ef882c9e95b667a255833c36dc80b29",
+      "backend/routes/analyze_dna.py": "62eac96f126d67f12dca33cfadfec15aca701e813babefd42744413f1f6a5f92",
+      "backend/routes/search.py": "cfed533c9c3b3ccb9fa10cb41dfd9e46cd7cac4e4edc4205c6fc82dde634a875",
+      "backend/routes/traits.py": "ab35187db28cb9ef6ec36dc4daf8155cf2e3f43c0bb59fa4b5e8fe3d6aea8548",
+      "backend/services/__init__.py": "d44f70d3dada7219bbea1d1ec61d3791e04401c646dac5d80dfe12ad49b06d99",
+      "backend/services/dna_format_detector.py": "97f4efb24237a3b86c227cba916c47944c161816bed2b2d35fed26ef47d960fb",
+      "backend/services/dna_service.py": "4acd348e3a9b346021538dd891f2c4001baf0a506d957ee50eb25d60902ad88d",
+      "backend/services/parsers/__init__.py": "8429a824f55ed41e1d154ebe5f416ba6e7a925db995b9202acfbe885262f3a45",
+      "backend/services/parsers/common.py": "ecafc7558f9c5e08e1d8145023507e475b2145df522306c7406d27104d280be0",
+      "backend/services/parsers/parser_23andme.py": "3c86284328d1b46d8d93edd3106b34f4c33d4bfb8f90d5bf390e6c42fdb21543",
+      "backend/services/parsers/parser_ancestry.py": "e56d28c462b1343fdb66c60ff10270bc3d894f967b9e2551648161e857d0587a",
+      "backend/services/parsers/parser_ftdna.py": "aa99e5704c10d1fc2f6b11e65a3fadf31d446b6b7db4a7253df6408655b412ed",
+      "backend/services/parsers/parser_gedmatch.py": "70b1a5bfa5f8e8d5f068667229a6096e1a3369c0a5bd77abca51b8212b345296",
+      "backend/services/parsers/parser_livingdna.py": "74345f72144096cad5c6ee8edf2b00392aa3a97b08777ad6b2999877b07763e0",
+      "backend/services/parsers/parser_myheritage.py": "669c8db94ebb1351a930b65b450c42bff69585457a0d172e5ee3d3dc1b9c2842",
+      "backend/services/parsers/parser_vcf.py": "be59f39e855566da0574978764e37861f56af34d28a64cc729e855520cea53e4",
+      "backend/services/trait_curation/__init__.py": "f5f8bb144de7eeacbc43e836dff6c2f66daaa0974e07cd13fd01caead8c17f54",
+      "backend/services/trait_curation/catalog.py": "a3c37993238612022de0ee06f198babb3f138b41e0a415cab93ae41e43589a47",
+      "backend/services/trait_service.py": "3ec6406af30fadf9680f9d0870623d75cd482bbd92dc5d8a54462870041494c2"
+    },
+    "existing_regression_tests_git_reference": "3ffbaf3c564a51e9db8f808b88c1842b1d2b4711:backend/tests"
+  },
+  "catalog": {
+    "original_path": "data/traits.json",
+    "archive_path": "traits.json",
+    "schema_version_field": "version",
+    "schema_version": "2.0",
+    "sha256": "e696a027db45bce4ad799b190b0cb67e19d6658f85003f0fd0150e6bc1808582",
+    "size_bytes": 57474,
+    "line_endings": "CRLF",
+    "git_reference": "3ffbaf3c564a51e9db8f808b88c1842b1d2b4711:data/traits.json",
+    "git_blob": "1dc8864698140fad623274a369446e88d2970ad2",
+    "git_blob_sha256": "6e1a7d7148417ba92c711b204f0c862667eae068b6a174f0b431b219c697a565",
+    "git_blob_size_bytes": 56519,
+    "git_blob_line_endings": "LF"
+  },
+  "environment": {
+    "implementation": "CPython",
+    "python_version": "3.14.3",
+    "python_build": "3.14.3 (tags/v3.14.3:323c59a, Feb  3 2026, 16:04:56) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "machine": "AMD64",
+    "python_platform": "win-amd64",
+    "dependency_snapshot": "requirements.freeze.txt",
+    "dependency_snapshot_sha256": "b86f99f62578a712472b10d005f8c10457a38cdf10e670e348df25ac70bf7b3e",
+    "requirements_git_reference": "3ffbaf3c564a51e9db8f808b88c1842b1d2b4711:requirements.txt",
+    "requirements_git_sha256": "de3ac8db10e57fde7f52c4b2a90d6766a82346748452d8609cafd4bd9316678d",
+    "additional_installed_distributions": {
+      "pip": "26.0.1",
+      "pandas-stubs": "3.0.0.260204"
+    },
+    "node_version": "v24.14.1",
+    "npm_version": "11.11.0",
+    "frontend_lock_git_reference": "3ffbaf3c564a51e9db8f808b88c1842b1d2b4711:frontend/package-lock.json",
+    "frontend_lock_sha256": "52d40bf1765db205a70879362ee23bb4e196a86933fa2f5de178ab1ec8c9533d",
+    "typescript_version": "5.9.3"
+  },
+  "historical_outputs": {
+    "path": "historical-regressions.json",
+    "sha256": "caaaf90895f7e260573ecda50bd7620433cc4c16772c68dcc4e7ea26154b3c99",
+    "case_count": 32,
+    "complete_genotype_case_count": 21,
+    "scientific_ground_truth": false
+  },
+  "contract_artifacts_sha256": {
+    "frontend/openapi.json": "6fdc2b3c881d39de213bb327eb43199bf3adfd83d0ddcc4085198864b7470f5a",
+    "frontend/src/types/generated-api.ts": "00c65bec8668a64dc5951ade3d8ecc8cbf09855328938c5eb113620f12426c60"
+  },
+  "recovery_provenance": {
+    "snapshot_tree": "0196dd10dd0868fd3df5fc9052db68fccfa6a40e",
+    "blobs": {
+      "backend/models/curation.py": "97988ab2b6be9a44cfee6da8f763ed44f66dbf0e",
+      "backend/services/trait_curation/validation.py": "0ae64817b0ce485236a5afe081cf8afb8e0fc0a2",
+      "backend/tests/unit/test_curation_models.py": "1a7b3a2518fce5a578faf8d3ec7af7935dcfa658"
+    }
+  }
+}

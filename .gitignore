@@ -6,3 +6,4 @@ uploads/
 .env.*
 *.coverage
 /*cache*/
+docs/

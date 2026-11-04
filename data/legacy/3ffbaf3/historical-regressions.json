@@ -1,0 +1,1237 @@
+{
+  "purpose": "Historical software regression evidence only; not scientific ground truth.",
+  "origin": "Captured from the unchanged Stage 0 starting engine and catalog before restoring curation code.",
+  "input_scope": "Synthetic direct-service calls with deliberately unrelated coordinates, as in existing tests. The legacy engine ignores locus coordinates. This does not establish upload compatibility.",
+  "cases": [
+    {
+      "case_id": "lactose_intolerance-CC-GG",
+      "trait_id": "lactose_intolerance",
+      "variants": [
+        {
+          "rsid": "rs4988235",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "C",
+            "C"
+          ]
+        },
+        {
+          "rsid": "rs182549",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "G",
+            "G"
+          ]
+        }
+      ],
+      "expected": {
+        "result": "unlikely",
+        "score": -0.34672642148946237,
+        "coverage": 1.0,
+        "confidence": 0.34672642148946237,
+        "headline": "You are less likely to digest lactose comfortably as an adult.",
+        "rules": [
+          {
+            "rsid": "rs4988235",
+            "status": "matched",
+            "user_genotype": [
+              "C",
+              "C"
+            ],
+            "interpretation_score": -0.7,
+            "contribution": "lowers"
+          },
+          {
+            "rsid": "rs182549",
+            "status": "matched",
+            "user_genotype": [
+              "G",
+              "G"
+            ],
+            "interpretation_score": -0.6,
+            "contribution": "lowers"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "lactose_intolerance-CC-AG",
+      "trait_id": "lactose_intolerance",
+      "variants": [
+        {
+          "rsid": "rs4988235",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "C",
+            "C"
+          ]
+        },
+        {
+          "rsid": "rs182549",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "A",
+            "G"
+          ]
+        }
+      ],
+      "expected": {
+        "result": "inconclusive",
+        "score": -0.12347469759773794,
+        "coverage": 1.0,
+        "confidence": 0.2879759678337454,
+        "headline": "Your DNA does not show a clear lactose-digestion lean here.",
+        "rules": [
+          {
+            "rsid": "rs4988235",
+            "status": "matched",
+            "user_genotype": [
+              "C",
+              "C"
+            ],
+            "interpretation_score": -0.7,
+            "contribution": "lowers"
+          },
+          {
+            "rsid": "rs182549",
+            "status": "matched",
+            "user_genotype": [
+              "A",
+              "G"
+            ],
+            "interpretation_score": 0.35,
+            "contribution": "raises"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "lactose_intolerance-CC-AA",
+      "trait_id": "lactose_intolerance",
+      "variants": [
+        {
+          "rsid": "rs4988235",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "C",
+            "C"
+          ]
+        },
+        {
+          "rsid": "rs182549",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "A",
+            "A"
+          ]
+        }
+      ],
+      "expected": {
+        "result": "inconclusive",
+        "score": -0.12347469759773794,
+        "coverage": 1.0,
+        "confidence": 0.2879759678337454,
+        "headline": "Your DNA does not show a clear lactose-digestion lean here.",
+        "rules": [
+          {
+            "rsid": "rs4988235",
+            "status": "matched",
+            "user_genotype": [
+              "C",
+              "C"
+            ],
+            "interpretation_score": -0.7,
+            "contribution": "lowers"
+          },
+          {
+            "rsid": "rs182549",
+            "status": "matched",
+            "user_genotype": [
+              "A",
+              "A"
+            ],
+            "interpretation_score": 0.35,
+            "contribution": "raises"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "lactose_intolerance-CT-GG",
+      "trait_id": "lactose_intolerance",
+      "variants": [
+        {
+          "rsid": "rs4988235",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "C",
+            "T"
+          ]
+        },
+        {
+          "rsid": "rs182549",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "G",
+            "G"
+          ]
+        }
+      ],
+      "expected": {
+        "result": "inconclusive",
+        "score": -0.008749089170743907,
+        "coverage": 1.0,
+        "confidence": 0.2732530883766975,
+        "headline": "Your DNA does not show a clear lactose-digestion lean here.",
+        "rules": [
+          {
+            "rsid": "rs4988235",
+            "status": "matched",
+            "user_genotype": [
+              "C",
+              "T"
+            ],
+            "interpretation_score": 0.45,
+            "contribution": "raises"
+          },
+          {
+            "rsid": "rs182549",
+            "status": "matched",
+            "user_genotype": [
+              "G",
+              "G"
+            ],
+            "interpretation_score": -0.6,
+            "contribution": "lowers"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "lactose_intolerance-CT-AG",
+      "trait_id": "lactose_intolerance",
+      "variants": [
+        {
+          "rsid": "rs4988235",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "C",
+            "T"
+          ]
+        },
+        {
+          "rsid": "rs182549",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "A",
+            "G"
+          ]
+        }
+      ],
+      "expected": {
+        "result": "inconclusive",
+        "score": 0.21450263472098052,
+        "coverage": 1.0,
+        "confidence": 0.21450263472098052,
+        "headline": "Your DNA does not show a clear lactose-digestion lean here.",
+        "rules": [
+          {
+            "rsid": "rs4988235",
+            "status": "matched",
+            "user_genotype": [
+              "C",
+              "T"
+            ],
+            "interpretation_score": 0.45,
+            "contribution": "raises"
+          },
+          {
+            "rsid": "rs182549",
+            "status": "matched",
+            "user_genotype": [
+              "A",
+              "G"
+            ],
+            "interpretation_score": 0.35,
+            "contribution": "raises"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "lactose_intolerance-CT-AA",
+      "trait_id": "lactose_intolerance",
+      "variants": [
+        {
+          "rsid": "rs4988235",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "C",
+            "T"
+          ]
+        },
+        {
+          "rsid": "rs182549",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "A",
+            "A"
+          ]
+        }
+      ],
+      "expected": {
+        "result": "inconclusive",
+        "score": 0.21450263472098052,
+        "coverage": 1.0,
+        "confidence": 0.21450263472098052,
+        "headline": "Your DNA does not show a clear lactose-digestion lean here.",
+        "rules": [
+          {
+            "rsid": "rs4988235",
+            "status": "matched",
+            "user_genotype": [
+              "C",
+              "T"
+            ],
+            "interpretation_score": 0.45,
+            "contribution": "raises"
+          },
+          {
+            "rsid": "rs182549",
+            "status": "matched",
+            "user_genotype": [
+              "A",
+              "A"
+            ],
+            "interpretation_score": 0.35,
+            "contribution": "raises"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "lactose_intolerance-TT-GG",
+      "trait_id": "lactose_intolerance",
+      "variants": [
+        {
+          "rsid": "rs4988235",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "T",
+            "T"
+          ]
+        },
+        {
+          "rsid": "rs182549",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "G",
+            "G"
+          ]
+        }
+      ],
+      "expected": {
+        "result": "inconclusive",
+        "score": -0.008749089170743907,
+        "coverage": 1.0,
+        "confidence": 0.2732530883766975,
+        "headline": "Your DNA does not show a clear lactose-digestion lean here.",
+        "rules": [
+          {
+            "rsid": "rs4988235",
+            "status": "matched",
+            "user_genotype": [
+              "T",
+              "T"
+            ],
+            "interpretation_score": 0.45,
+            "contribution": "raises"
+          },
+          {
+            "rsid": "rs182549",
+            "status": "matched",
+            "user_genotype": [
+              "G",
+              "G"
+            ],
+            "interpretation_score": -0.6,
+            "contribution": "lowers"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "lactose_intolerance-TT-AG",
+      "trait_id": "lactose_intolerance",
+      "variants": [
+        {
+          "rsid": "rs4988235",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "T",
+            "T"
+          ]
+        },
+        {
+          "rsid": "rs182549",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "A",
+            "G"
+          ]
+        }
+      ],
+      "expected": {
+        "result": "inconclusive",
+        "score": 0.21450263472098052,
+        "coverage": 1.0,
+        "confidence": 0.21450263472098052,
+        "headline": "Your DNA does not show a clear lactose-digestion lean here.",
+        "rules": [
+          {
+            "rsid": "rs4988235",
+            "status": "matched",
+            "user_genotype": [
+              "T",
+              "T"
+            ],
+            "interpretation_score": 0.45,
+            "contribution": "raises"
+          },
+          {
+            "rsid": "rs182549",
+            "status": "matched",
+            "user_genotype": [
+              "A",
+              "G"
+            ],
+            "interpretation_score": 0.35,
+            "contribution": "raises"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "lactose_intolerance-TT-AA",
+      "trait_id": "lactose_intolerance",
+      "variants": [
+        {
+          "rsid": "rs4988235",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "T",
+            "T"
+          ]
+        },
+        {
+          "rsid": "rs182549",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "A",
+            "A"
+          ]
+        }
+      ],
+      "expected": {
+        "result": "inconclusive",
+        "score": 0.21450263472098052,
+        "coverage": 1.0,
+        "confidence": 0.21450263472098052,
+        "headline": "Your DNA does not show a clear lactose-digestion lean here.",
+        "rules": [
+          {
+            "rsid": "rs4988235",
+            "status": "matched",
+            "user_genotype": [
+              "T",
+              "T"
+            ],
+            "interpretation_score": 0.45,
+            "contribution": "raises"
+          },
+          {
+            "rsid": "rs182549",
+            "status": "matched",
+            "user_genotype": [
+              "A",
+              "A"
+            ],
+            "interpretation_score": 0.35,
+            "contribution": "raises"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "lactose_intolerance-missing",
+      "trait_id": "lactose_intolerance",
+      "variants": [],
+      "expected": {
+        "result": "inconclusive",
+        "score": null,
+        "coverage": 0.0,
+        "confidence": 0.0,
+        "headline": "There is not enough DNA data to assess lactose digestion ability.",
+        "rules": [
+          {
+            "rsid": "rs4988235",
+            "status": "missing",
+            "user_genotype": null,
+            "interpretation_score": null,
+            "contribution": "unknown"
+          },
+          {
+            "rsid": "rs182549",
+            "status": "missing",
+            "user_genotype": null,
+            "interpretation_score": null,
+            "contribution": "unknown"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "caffeine_metabolism-AA",
+      "trait_id": "caffeine_metabolism",
+      "variants": [
+        {
+          "rsid": "rs762551",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "A",
+            "A"
+          ]
+        }
+      ],
+      "expected": {
+        "result": "likely",
+        "score": 0.55,
+        "coverage": 1.0,
+        "confidence": 0.44000000000000006,
+        "headline": "You are likely to process caffeine relatively quickly.",
+        "rules": [
+          {
+            "rsid": "rs762551",
+            "status": "matched",
+            "user_genotype": [
+              "A",
+              "A"
+            ],
+            "interpretation_score": 0.55,
+            "contribution": "raises"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "caffeine_metabolism-AC",
+      "trait_id": "caffeine_metabolism",
+      "variants": [
+        {
+          "rsid": "rs762551",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "A",
+            "C"
+          ]
+        }
+      ],
+      "expected": {
+        "result": "unlikely",
+        "score": -0.4,
+        "coverage": 1.0,
+        "confidence": 0.32000000000000006,
+        "headline": "You are less likely to clear caffeine quickly.",
+        "rules": [
+          {
+            "rsid": "rs762551",
+            "status": "matched",
+            "user_genotype": [
+              "A",
+              "C"
+            ],
+            "interpretation_score": -0.4,
+            "contribution": "lowers"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "caffeine_metabolism-CC",
+      "trait_id": "caffeine_metabolism",
+      "variants": [
+        {
+          "rsid": "rs762551",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "C",
+            "C"
+          ]
+        }
+      ],
+      "expected": {
+        "result": "unlikely",
+        "score": -0.4,
+        "coverage": 1.0,
+        "confidence": 0.32000000000000006,
+        "headline": "You are less likely to clear caffeine quickly.",
+        "rules": [
+          {
+            "rsid": "rs762551",
+            "status": "matched",
+            "user_genotype": [
+              "C",
+              "C"
+            ],
+            "interpretation_score": -0.4,
+            "contribution": "lowers"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "caffeine_metabolism-missing",
+      "trait_id": "caffeine_metabolism",
+      "variants": [],
+      "expected": {
+        "result": "inconclusive",
+        "score": null,
+        "coverage": 0.0,
+        "confidence": 0.0,
+        "headline": "There is not enough DNA data to assess caffeine processing speed.",
+        "rules": [
+          {
+            "rsid": "rs762551",
+            "status": "missing",
+            "user_genotype": null,
+            "interpretation_score": null,
+            "contribution": "unknown"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "alcohol_flush-AA",
+      "trait_id": "alcohol_flush",
+      "variants": [
+        {
+          "rsid": "rs671",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "A",
+            "A"
+          ]
+        }
+      ],
+      "expected": {
+        "result": "likely",
+        "score": 0.6591673732008658,
+        "coverage": 1.0,
+        "confidence": 0.6591673732008658,
+        "headline": "You are likely to flush after drinking alcohol.",
+        "rules": [
+          {
+            "rsid": "rs671",
+            "status": "matched",
+            "user_genotype": [
+              "A",
+              "A"
+            ],
+            "interpretation_score": 0.6,
+            "contribution": "raises"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "alcohol_flush-AG",
+      "trait_id": "alcohol_flush",
+      "variants": [
+        {
+          "rsid": "rs671",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "A",
+            "G"
+          ]
+        }
+      ],
+      "expected": {
+        "result": "likely",
+        "score": 0.6591673732008658,
+        "coverage": 1.0,
+        "confidence": 0.6591673732008658,
+        "headline": "You are likely to flush after drinking alcohol.",
+        "rules": [
+          {
+            "rsid": "rs671",
+            "status": "matched",
+            "user_genotype": [
+              "A",
+              "G"
+            ],
+            "interpretation_score": 0.6,
+            "contribution": "raises"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "alcohol_flush-GG",
+      "trait_id": "alcohol_flush",
+      "variants": [
+        {
+          "rsid": "rs671",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "G",
+            "G"
+          ]
+        }
+      ],
+      "expected": {
+        "result": "unlikely",
+        "score": -0.6591673732008658,
+        "coverage": 1.0,
+        "confidence": 0.6591673732008658,
+        "headline": "You are less likely to have the classic alcohol flush reaction.",
+        "rules": [
+          {
+            "rsid": "rs671",
+            "status": "matched",
+            "user_genotype": [
+              "G",
+              "G"
+            ],
+            "interpretation_score": -0.6,
+            "contribution": "lowers"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "alcohol_flush-missing",
+      "trait_id": "alcohol_flush",
+      "variants": [],
+      "expected": {
+        "result": "inconclusive",
+        "score": null,
+        "coverage": 0.0,
+        "confidence": 0.0,
+        "headline": "There is not enough DNA data to assess alcohol flush reaction.",
+        "rules": [
+          {
+            "rsid": "rs671",
+            "status": "missing",
+            "user_genotype": null,
+            "interpretation_score": null,
+            "contribution": "unknown"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "eye_color-AA",
+      "trait_id": "eye_color",
+      "variants": [
+        {
+          "rsid": "rs12913832",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "A",
+            "A"
+          ]
+        }
+      ],
+      "expected": {
+        "result": "likely",
+        "score": 0.5,
+        "coverage": 1.0,
+        "confidence": 0.5,
+        "headline": "You are likely to have lighter eyes in this model.",
+        "rules": [
+          {
+            "rsid": "rs12913832",
+            "status": "matched",
+            "user_genotype": [
+              "A",
+              "A"
+            ],
+            "interpretation_score": 0.5,
+            "contribution": "raises"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "eye_color-AG",
+      "trait_id": "eye_color",
+      "variants": [
+        {
+          "rsid": "rs12913832",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "A",
+            "G"
+          ]
+        }
+      ],
+      "expected": {
+        "result": "unlikely",
+        "score": -0.4,
+        "coverage": 1.0,
+        "confidence": 0.4,
+        "headline": "You are likely to have darker eyes in this model.",
+        "rules": [
+          {
+            "rsid": "rs12913832",
+            "status": "matched",
+            "user_genotype": [
+              "A",
+              "G"
+            ],
+            "interpretation_score": -0.4,
+            "contribution": "lowers"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "eye_color-GG",
+      "trait_id": "eye_color",
+      "variants": [
+        {
+          "rsid": "rs12913832",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "G",
+            "G"
+          ]
+        }
+      ],
+      "expected": {
+        "result": "unlikely",
+        "score": -0.4,
+        "coverage": 1.0,
+        "confidence": 0.4,
+        "headline": "You are likely to have darker eyes in this model.",
+        "rules": [
+          {
+            "rsid": "rs12913832",
+            "status": "matched",
+            "user_genotype": [
+              "G",
+              "G"
+            ],
+            "interpretation_score": -0.4,
+            "contribution": "lowers"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "eye_color-missing",
+      "trait_id": "eye_color",
+      "variants": [],
+      "expected": {
+        "result": "inconclusive",
+        "score": null,
+        "coverage": 0.0,
+        "confidence": 0.0,
+        "headline": "There is not enough DNA data to assess eye color.",
+        "rules": [
+          {
+            "rsid": "rs12913832",
+            "status": "missing",
+            "user_genotype": null,
+            "interpretation_score": null,
+            "contribution": "unknown"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "bitter_taste-CC",
+      "trait_id": "bitter_taste",
+      "variants": [
+        {
+          "rsid": "rs713598",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "C",
+            "C"
+          ]
+        }
+      ],
+      "expected": {
+        "result": "likely",
+        "score": 0.45,
+        "coverage": 1.0,
+        "confidence": 0.36000000000000004,
+        "headline": "You are likely to notice bitterness more strongly.",
+        "rules": [
+          {
+            "rsid": "rs713598",
+            "status": "matched",
+            "user_genotype": [
+              "C",
+              "C"
+            ],
+            "interpretation_score": 0.45,
+            "contribution": "raises"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "bitter_taste-CG",
+      "trait_id": "bitter_taste",
+      "variants": [
+        {
+          "rsid": "rs713598",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "C",
+            "G"
+          ]
+        }
+      ],
+      "expected": {
+        "result": "likely",
+        "score": 0.45,
+        "coverage": 1.0,
+        "confidence": 0.36000000000000004,
+        "headline": "You are likely to notice bitterness more strongly.",
+        "rules": [
+          {
+            "rsid": "rs713598",
+            "status": "matched",
+            "user_genotype": [
+              "C",
+              "G"
+            ],
+            "interpretation_score": 0.45,
+            "contribution": "raises"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "bitter_taste-GG",
+      "trait_id": "bitter_taste",
+      "variants": [
+        {
+          "rsid": "rs713598",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "G",
+            "G"
+          ]
+        }
+      ],
+      "expected": {
+        "result": "unlikely",
+        "score": -0.35,
+        "coverage": 1.0,
+        "confidence": 0.27999999999999997,
+        "headline": "You are less likely to perceive bitterness strongly.",
+        "rules": [
+          {
+            "rsid": "rs713598",
+            "status": "matched",
+            "user_genotype": [
+              "G",
+              "G"
+            ],
+            "interpretation_score": -0.35,
+            "contribution": "lowers"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "bitter_taste-missing",
+      "trait_id": "bitter_taste",
+      "variants": [],
+      "expected": {
+        "result": "inconclusive",
+        "score": null,
+        "coverage": 0.0,
+        "confidence": 0.0,
+        "headline": "There is not enough DNA data to assess bitter taste response.",
+        "rules": [
+          {
+            "rsid": "rs713598",
+            "status": "missing",
+            "user_genotype": null,
+            "interpretation_score": null,
+            "contribution": "unknown"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "caffeine-unmatched",
+      "trait_id": "caffeine_metabolism",
+      "variants": [
+        {
+          "rsid": "rs762551",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "T",
+            "T"
+          ]
+        }
+      ],
+      "expected": {
+        "result": "inconclusive",
+        "score": null,
+        "coverage": 1.0,
+        "confidence": 0.0,
+        "headline": "No catalog interpretation matched for caffeine processing speed.",
+        "rules": [
+          {
+            "rsid": "rs762551",
+            "status": "unmatched",
+            "user_genotype": [
+              "T",
+              "T"
+            ],
+            "interpretation_score": null,
+            "contribution": "unknown"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "caffeine-reverse-order",
+      "trait_id": "caffeine_metabolism",
+      "variants": [
+        {
+          "rsid": "rs762551",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "C",
+            "A"
+          ]
+        }
+      ],
+      "expected": {
+        "result": "unlikely",
+        "score": -0.4,
+        "coverage": 1.0,
+        "confidence": 0.32000000000000006,
+        "headline": "You are less likely to clear caffeine quickly.",
+        "rules": [
+          {
+            "rsid": "rs762551",
+            "status": "matched",
+            "user_genotype": [
+              "C",
+              "A"
+            ],
+            "interpretation_score": -0.4,
+            "contribution": "lowers"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "caffeine-no-call",
+      "trait_id": "caffeine_metabolism",
+      "variants": [
+        {
+          "rsid": "rs762551",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": null
+        }
+      ],
+      "expected": {
+        "result": "inconclusive",
+        "score": null,
+        "coverage": 0.0,
+        "confidence": 0.0,
+        "headline": "There is not enough DNA data to assess caffeine processing speed.",
+        "rules": [
+          {
+            "rsid": "rs762551",
+            "status": "missing",
+            "user_genotype": null,
+            "interpretation_score": null,
+            "contribution": "unknown"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "caffeine-duplicate-last-wins",
+      "trait_id": "caffeine_metabolism",
+      "variants": [
+        {
+          "rsid": "rs762551",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "A",
+            "A"
+          ]
+        },
+        {
+          "rsid": "rs762551",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "C",
+            "C"
+          ]
+        }
+      ],
+      "expected": {
+        "result": "unlikely",
+        "score": -0.4,
+        "coverage": 1.0,
+        "confidence": 0.32000000000000006,
+        "headline": "You are less likely to clear caffeine quickly.",
+        "rules": [
+          {
+            "rsid": "rs762551",
+            "status": "matched",
+            "user_genotype": [
+              "C",
+              "C"
+            ],
+            "interpretation_score": -0.4,
+            "contribution": "lowers"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "lactose-primary-only",
+      "trait_id": "lactose_intolerance",
+      "variants": [
+        {
+          "rsid": "rs4988235",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "C",
+            "C"
+          ]
+        }
+      ],
+      "expected": {
+        "result": "inconclusive",
+        "score": -0.20572533271574167,
+        "coverage": 0.5,
+        "confidence": 0.20572533271574167,
+        "headline": "Your DNA does not show a clear lactose-digestion lean here.",
+        "rules": [
+          {
+            "rsid": "rs4988235",
+            "status": "matched",
+            "user_genotype": [
+              "C",
+              "C"
+            ],
+            "interpretation_score": -0.7,
+            "contribution": "lowers"
+          },
+          {
+            "rsid": "rs182549",
+            "status": "missing",
+            "user_genotype": null,
+            "interpretation_score": null,
+            "contribution": "unknown"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "lactose-unmatched-secondary",
+      "trait_id": "lactose_intolerance",
+      "variants": [
+        {
+          "rsid": "rs4988235",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "C",
+            "C"
+          ]
+        },
+        {
+          "rsid": "rs182549",
+          "chromosome": "1",
+          "position": 1000,
+          "genotype": [
+            "C",
+            "C"
+          ]
+        }
+      ],
+      "expected": {
+        "result": "inconclusive",
+        "score": -0.20572533271574167,
+        "coverage": 1.0,
+        "confidence": 0.41145066543148334,
+        "headline": "Your DNA does not show a clear lactose-digestion lean here.",
+        "rules": [
+          {
+            "rsid": "rs4988235",
+            "status": "matched",
+            "user_genotype": [
+              "C",
+              "C"
+            ],
+            "interpretation_score": -0.7,
+            "contribution": "lowers"
+          },
+          {
+            "rsid": "rs182549",
+            "status": "unmatched",
+            "user_genotype": [
+              "C",
+              "C"
+            ],
+            "interpretation_score": null,
+            "contribution": "unknown"
+          }
+        ]
+      }
+    }
+  ]
+}

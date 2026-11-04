@@ -1,0 +1,4 @@
+traits.json -text
+manifest.json text eol=lf
+historical-regressions.json text eol=lf
+requirements.freeze.txt text eol=lf
