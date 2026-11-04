@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { evaluateTrait } from '../services/traitApi';
-import type { TraitDetail } from '../types/analysis';
+import type { TraitAnalysisDetail } from '../types/api';
 
 function useTraitDetailAnalysis(
   file: File | null,
   traitId: string | undefined,
 ) {
-  const [traitDetail, setTraitDetail] = useState<TraitDetail | null>(null);
+  const [traitDetail, setTraitDetail] =
+    useState<TraitAnalysisDetail | null>(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 

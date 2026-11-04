@@ -29,7 +29,7 @@ Variant(
     rsid: str,
     chromosome: str,
     position: int,
-    genotype: str | None
+    genotype: list[str] | None
 )
 ```
 
@@ -84,7 +84,7 @@ normalize_chromosome(chrom) not in VALID_CHROMOSOMES
 #### ❌ Invalid position
 
 ```python
-int(position) fails
+int(position) fails or the coordinate is less than 1 (genomic positions are 1-based)
 ```
 
 👉 For each failure:
@@ -205,7 +205,7 @@ rsid.lstrip("\ufeff")
 
 ### 6.3 Position
 
-* Must be an integer
+* Must be an integer greater than zero
 * No float / string tolerance
 
 ---
@@ -260,7 +260,7 @@ errors.append(msg)
 
 ```python
 from fastapi.logger import logger
-from backend.models.schemas import ParseResult, Variant
+from backend.models import ParseResult, Variant
 from backend.services.parsers.common import (
     VALID_CHROMOSOMES,
     normalize_chromosome,

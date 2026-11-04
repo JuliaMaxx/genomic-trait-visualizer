@@ -52,11 +52,11 @@ function AnalysisPage() {
   ];
 
   const traitsWithObservedRsids = traits.filter(
-    (trait) => trait.observed_rsids.length > 0,
+    (trait) => trait.rule_statuses.some((rule) => rule.status !== 'missing'),
   );
   const visibleTraits = filterAnalysisTraits(traits, filters);
   const matchedTraitCount = traitsWithObservedRsids.filter(
-    (trait) => trait.matched_rsids.length > 0,
+    (trait) => trait.rule_statuses.some((rule) => rule.status === 'matched'),
   ).length;
   const deterministicCount = traitsWithObservedRsids.filter(
     (trait) => trait.result === 'likely' || trait.result === 'unlikely',

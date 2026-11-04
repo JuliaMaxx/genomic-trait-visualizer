@@ -3,10 +3,11 @@ import type {
   RsidCatalogItem,
   RsidDetail,
   SearchResponse,
-  TraitDefinition,
-  TraitDetail,
-  TraitResult,
-} from '../types/analysis';
+  TraitAnalysisDetail,
+  TraitAnalysisSummary,
+  TraitCatalogDetail,
+  TraitCatalogSummary,
+} from '../types/api';
 
 async function getJson<T>(path: string, signal?: AbortSignal): Promise<T> {
   const response = await fetch(`${API_BASE_URL}${path}`, { signal });
@@ -20,13 +21,9 @@ async function getJson<T>(path: string, signal?: AbortSignal): Promise<T> {
 
 async function postFile<T>(
   path: string,
-  file: File | null,
+  file: File,
   signal?: AbortSignal,
 ): Promise<T> {
-  if (!file) {
-    throw new Error('No DNA file selected.');
-  }
-
   const formData = new FormData();
   formData.append('file', file);
 
@@ -43,24 +40,28 @@ async function postFile<T>(
   return response.json() as Promise<T>;
 }
 
-export function analyzeDnaFile(file: File | null, signal?: AbortSignal) {
-  return postFile<TraitResult[]>('/analyze/', file, signal);
+export function analyzeDnaFile(file: File, signal?: AbortSignal) {
+  return postFile<TraitAnalysisSummary[]>('/analyze/', file, signal);
 }
 
 export function evaluateTrait(
   traitId: string,
-  file: File | null,
+  file: File,
   signal?: AbortSignal,
 ) {
-  return postFile<TraitDetail>(`/traits/${traitId}/evaluate`, file, signal);
+  return postFile<TraitAnalysisDetail>(
+    `/traits/${traitId}/evaluate`,
+    file,
+    signal,
+  );
 }
 
 export function fetchTraitCatalog(signal?: AbortSignal) {
-  return getJson<TraitDefinition[]>('/traits/', signal);
+  return getJson<TraitCatalogSummary[]>('/traits/', signal);
 }
 
 export function fetchTraitDetail(traitId: string, signal?: AbortSignal) {
-  return getJson<TraitDetail>(`/traits/${traitId}/detail`, signal);
+  return getJson<TraitCatalogDetail>(`/traits/${traitId}`, signal);
 }
 
 export function fetchRsidCatalog(signal?: AbortSignal) {

@@ -1,4 +1,4 @@
-import type { TraitResultLabel } from '../types/analysis';
+import type { TraitResultLabel } from '../types/api';
 import { formatResultLabel } from '../utils/formatLabels';
 import InfoTooltip from './InfoTooltip';
 

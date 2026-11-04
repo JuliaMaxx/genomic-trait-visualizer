@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { fetchRsidCatalog } from '../services/traitApi';
-import type { RsidCatalogItem } from '../types/analysis';
+import type { RsidCatalogItem } from '../types/api';
 
 function useRsidCatalog() {
   const [rsids, setRsids] = useState<RsidCatalogItem[]>([]);

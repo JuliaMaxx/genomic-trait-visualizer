@@ -7,6 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "npx eslint .",
+    "api:generate": "python ../backend/export_openapi.py && openapi-typescript openapi.json -o src/types/generated-api.ts",
+    "api:check": "python ../backend/export_openapi.py && openapi-typescript openapi.json -o src/types/generated-api.ts --check",
     "preview": "vite preview",
     "typecheck": "npx tsc --noEmit"
   },
@@ -26,6 +28,7 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.4.0",
+    "openapi-typescript": "^7.10.1",
     "prettier": "^3.8.2",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "tailwindcss": "^4.2.2",

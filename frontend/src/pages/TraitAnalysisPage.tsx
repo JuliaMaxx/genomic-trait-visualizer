@@ -61,12 +61,15 @@ function TraitAnalysisPage() {
     );
   }
 
-  const observedCount = traitDetail.rsids.filter(
-    (rsid) => rsid.user_genotype !== null,
+  const trait = traitDetail.trait;
+  const analysis = traitDetail.analysis;
+  const observedCount = analysis.rules.filter(
+    (rule) => rule.status !== 'missing',
   ).length;
-  const matchedCount = traitDetail.rsids.filter(
-    (rsid) => rsid.status === 'matched',
+  const matchedCount = analysis.rules.filter(
+    (rule) => rule.status === 'matched',
   ).length;
+  const scoreLabel = analysis.score === null ? 'Unavailable' : analysis.score.toFixed(2);
 
   return (
     <div className="ui-page-stack">
@@ -80,7 +83,7 @@ function TraitAnalysisPage() {
           >
             Go back
           </Button>
-          <LinkButton to={`/traits/${traitDetail.id}`} variant="secondary">
+          <LinkButton to={`/traits/${trait.id}`} variant="secondary">
             See full trait breakdown
           </LinkButton>
         </div>
@@ -89,16 +92,18 @@ function TraitAnalysisPage() {
 
       <section className="ui-panel-gradient">
         <div className="flex justify-start items-center gap-md">
-          <p className="ui-eyebrow">{traitDetail.category}</p>
+          <p className="ui-eyebrow">{trait.category}</p>
           <ResultToneBadge
-            result={traitDetail.result}
-            tooltip={traitDetail.result_badge_tooltip}
+            result={analysis.result}
+            tooltip={analysis.result_content.card_tooltip}
           />
         </div>
         <div className="ui-detail-hero-layout">
           <div>
-            <h1 className="ui-detail-title">{traitDetail.headline}</h1>
-            <p className="ui-detail-lede-lg">{traitDetail.outcome_summary}</p>
+            <h1 className="ui-detail-title">{analysis.result_content.headline}</h1>
+            <p className="ui-detail-lede-lg">
+              {analysis.result_content.outcome_summary}
+            </p>
             <p className="ui-detail-note">
               This view is based only on markers found in your uploaded file. It
               is educational, not medical advice.
@@ -107,18 +112,18 @@ function TraitAnalysisPage() {
           <div className="ui-pill-collection">
             <StatPill
               label="Confidence"
-              value={formatConfidence(traitDetail.confidence)}
+              value={formatConfidence(analysis.confidence)}
               tone="accent"
               tooltip="Confidence combines data completeness and evidence strength. It is not certainty."
             />
             <StatPill
               label="Coverage"
-              value={formatPercent(traitDetail.coverage)}
+              value={formatPercent(analysis.coverage)}
               tooltip="Coverage tells you what share of this trait's rsIDs were available in your file."
             />
             <StatPill
               label="Score"
-              value={traitDetail.score.toFixed(2)}
+              value={scoreLabel}
               tooltip="Combined direction of matched genotype rules."
             />
             <StatPill
@@ -135,12 +140,12 @@ function TraitAnalysisPage() {
         </div>
       </section>
 
-      {traitDetail.practical_takeaway.length > 0 ? (
+      {trait.practical_takeaway.length > 0 ? (
         <section className="ui-panel  border-brand-line">
           <p className="ui-eyebrow">practical takeaways</p>
           <h2 className="ui-section-title">What this result is useful for</h2>
           <div className="ui-section-content-grid">
-            {traitDetail.practical_takeaway.map((entry) => (
+            {trait.practical_takeaway.map((entry) => (
               <article key={entry.title} className="ui-panel-subtle">
                 <p className="ui-item-title">{entry.title}</p>
                 <p className="ui-item-body">{entry.body}</p>
@@ -155,9 +160,18 @@ function TraitAnalysisPage() {
         title="How your file was read"
       >
         <div className="ui-section-content-stack">
-          {traitDetail.rsids.map((rsid) => (
-            <TraitDetailRsidCard key={rsid.rsid} rsid={rsid} />
-          ))}
+          {analysis.rules.map((ruleAnalysis) => {
+            const rule = trait.rules.find(
+              (candidate) => candidate.rsid === ruleAnalysis.rsid,
+            );
+            return rule ? (
+              <TraitDetailRsidCard
+                key={ruleAnalysis.rsid}
+                analysis={ruleAnalysis}
+                rule={rule}
+              />
+            ) : null;
+          })}
         </div>
       </DisclosurePanel>
 
@@ -169,25 +183,25 @@ function TraitAnalysisPage() {
           <div className="ui-flow-step">
             <p className="ui-item-title">Observed markers</p>
             <p className="ui-item-body-brand">
-              {observedCount} out of {traitDetail.rsids.length}
+              {observedCount} out of {analysis.rules.length}
             </p>
           </div>
           <span className="ui-flow-arrow">-&gt;</span>
           <div className="ui-flow-step">
             <p className="ui-item-title">Weighted score</p>
-            <p className="ui-item-body-brand">{traitDetail.score.toFixed(2)}</p>
+            <p className="ui-item-body-brand">{scoreLabel}</p>
           </div>
           <span className="ui-flow-arrow">-&gt;</span>
           <div className="ui-flow-step">
             <p className="ui-item-title">Confidence</p>
             <p className="ui-item-body-brand">
-              {formatConfidence(traitDetail.confidence)}
+              {formatConfidence(analysis.confidence)}
             </p>
           </div>
         </div>
 
         <div className="ui-section-content-grid">
-          {traitDetail.calculation_summary.map((entry) => (
+          {analysis.calculation_explanation.map((entry) => (
             <div key={entry.title} className="ui-panel-subtle">
               <p className="ui-item-title">{entry.title}</p>
               <p className="ui-item-body">{entry.body}</p>
@@ -196,10 +210,10 @@ function TraitAnalysisPage() {
         </div>
       </DisclosurePanel>
 
-      {traitDetail.sources.length > 0 ? (
+      {trait.sources.length > 0 ? (
         <DisclosurePanel eyebrow="references" title="Sources">
           <div className="ui-section-content-grid">
-            {traitDetail.sources.map((source) => (
+            {trait.sources.map((source) => (
               <SourceLink
                 key={`${source.name}-${source.url}`}
                 source={source}

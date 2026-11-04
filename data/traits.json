@@ -163,20 +163,29 @@
           "priority": 1,
           "genotype_meanings": [
             {
-              "genotype": ["CC"],
+              "genotype": [
+                "CC"
+              ],
               "meaning": "This marker suggests reduced lactase persistence in adulthood.",
               "effect": "Lower likelihood of adult lactase persistence",
               "score": -0.7
             },
             {
-              "genotype": ["CT", "TT"],
+              "genotype": [
+                "CT",
+                "TT"
+              ],
               "meaning": "This marker suggests lactase persistence is more likely in adulthood.",
               "effect": "Higher likelihood of adult lactase persistence",
               "score": 0.45
             }
           ],
           "evidence_level": "strong",
-          "source_refs": ["NCBI dbSNP", "Enattah et al. 2002"]
+          "source_refs": [
+            "NCBI dbSNP",
+            "Enattah et al. 2002"
+          ],
+          "odds_ratio_status": "reported"
         },
         {
           "rsid": "rs182549",
@@ -187,20 +196,29 @@
           "priority": 2,
           "genotype_meanings": [
             {
-              "genotype": ["GG"],
+              "genotype": [
+                "GG"
+              ],
               "meaning": "This marker suggests reduced lactase persistence in adulthood.",
               "effect": "Lower likelihood of adult lactase persistence",
               "score": -0.6
             },
             {
-              "genotype": ["AG", "AA"],
+              "genotype": [
+                "AG",
+                "AA"
+              ],
               "meaning": "This marker suggests lactase persistence is more likely in adulthood.",
               "effect": "Higher likelihood of adult lactase persistence",
               "score": 0.35
             }
           ],
           "evidence_level": "strong",
-          "source_refs": ["NCBI dbSNP", "Jarvela 2005"]
+          "source_refs": [
+            "NCBI dbSNP",
+            "Jarvela 2005"
+          ],
+          "odds_ratio_status": "reported"
         }
       ]
     },
@@ -358,13 +376,18 @@
           "priority": 1,
           "genotype_meanings": [
             {
-              "genotype": ["AA"],
+              "genotype": [
+                "AA"
+              ],
               "meaning": "This marker suggests faster caffeine metabolism.",
               "effect": "Faster caffeine clearance",
               "score": 0.55
             },
             {
-              "genotype": ["AC", "CC"],
+              "genotype": [
+                "AC",
+                "CC"
+              ],
               "meaning": "This marker suggests slower caffeine metabolism.",
               "effect": "Slower caffeine clearance",
               "score": -0.4
@@ -375,7 +398,9 @@
             "NCBI dbSNP",
             "Nikrandt et al. 2022",
             "Mahdavi et al. 2023"
-          ]
+          ],
+          "odds_ratio": null,
+          "odds_ratio_status": "not_reported"
         }
       ]
     },
@@ -534,20 +559,30 @@
           "priority": 1,
           "genotype_meanings": [
             {
-              "genotype": ["AA", "AG"],
+              "genotype": [
+                "AA",
+                "AG"
+              ],
               "meaning": "This marker suggests higher likelihood of alcohol flushing.",
               "effect": "Higher flushing likelihood",
               "score": 0.6
             },
             {
-              "genotype": ["GG"],
+              "genotype": [
+                "GG"
+              ],
               "meaning": "This marker suggests lower likelihood of alcohol flushing.",
               "effect": "Lower flushing likelihood",
               "score": -0.6
             }
           ],
           "evidence_level": "strong",
-          "source_refs": ["NCBI dbSNP", "Crabb et al. 1989", "Cho et al. 2023"]
+          "source_refs": [
+            "NCBI dbSNP",
+            "Crabb et al. 1989",
+            "Cho et al. 2023"
+          ],
+          "odds_ratio_status": "reported"
         }
       ]
     },
@@ -706,20 +741,31 @@
           "priority": 1,
           "genotype_meanings": [
             {
-              "genotype": ["AA"],
+              "genotype": [
+                "AA"
+              ],
               "meaning": "This marker suggests a higher likelihood of lighter eye color.",
               "effect": "Higher likelihood of lighter eyes",
               "score": 0.5
             },
             {
-              "genotype": ["AG", "GG"],
+              "genotype": [
+                "AG",
+                "GG"
+              ],
               "meaning": "This marker suggests a higher likelihood of darker eye color.",
               "effect": "Higher likelihood of darker eyes",
               "score": -0.4
             }
           ],
           "evidence_level": "strong",
-          "source_refs": ["NCBI dbSNP", "Liu et al. 2010", "Salvo et al. 2023"]
+          "source_refs": [
+            "NCBI dbSNP",
+            "Liu et al. 2010",
+            "Salvo et al. 2023"
+          ],
+          "odds_ratio": null,
+          "odds_ratio_status": "not_reported"
         }
       ]
     },
@@ -877,20 +923,31 @@
           "priority": 1,
           "genotype_meanings": [
             {
-              "genotype": ["CC", "CG"],
+              "genotype": [
+                "CC",
+                "CG"
+              ],
               "meaning": "This marker suggests higher bitter taste sensitivity.",
               "effect": "Stronger bitter perception",
               "score": 0.45
             },
             {
-              "genotype": ["GG"],
+              "genotype": [
+                "GG"
+              ],
               "meaning": "This marker suggests lower bitter taste sensitivity.",
               "effect": "Weaker bitter perception",
               "score": -0.35
             }
           ],
           "evidence_level": "moderate",
-          "source_refs": ["NCBI dbSNP", "Duffy et al. 2004", "Kim et al. 2024"]
+          "source_refs": [
+            "NCBI dbSNP",
+            "Duffy et al. 2004",
+            "Kim et al. 2024"
+          ],
+          "odds_ratio": null,
+          "odds_ratio_status": "not_reported"
         }
       ]
     }

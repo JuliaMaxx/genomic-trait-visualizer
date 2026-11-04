@@ -8,6 +8,7 @@ from backend.services.parsers.common import (
     is_standard_rsid,
     normalize_chromosome,
     normalize_genotype,
+    parse_position,
 )
 
 
@@ -145,7 +146,7 @@ def parse_vcf(lines: list[str]) -> ParseResult:
 
         # Parse and validate position
         try:
-            position = int(pos_raw)
+            position = parse_position(pos_raw)
         except ValueError:
             msg = f"Line {line_number}: invalid position"
             logger.warning(msg)

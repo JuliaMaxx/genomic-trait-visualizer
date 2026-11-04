@@ -31,10 +31,10 @@ def test_parse_23andme_edge_file() -> None:
     lines = load_lines("dna_samples/23andme/23andme_edge.txt")
     result = parse_23andme(lines)
 
-    # All are structurally valid
-    assert len(result.variants) == 6
+    # The non-positive coordinate is structurally invalid and is dropped.
+    assert len(result.variants) == 5
 
-    assert len(result.errors) == 1
+    assert len(result.errors) == 2
 
     # Spot-check
     assert result.variants[0].genotype == ["A"]  # haploid

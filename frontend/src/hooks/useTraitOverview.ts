@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { analyzeDnaFile } from '../services/traitApi';
-import type { TraitResult } from '../types/analysis';
+import type { TraitAnalysisSummary } from '../types/api';
 
 function useTraitOverview(file: File | null) {
-  const [traits, setTraits] = useState<TraitResult[]>([]);
+  const [traits, setTraits] = useState<TraitAnalysisSummary[]>([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 

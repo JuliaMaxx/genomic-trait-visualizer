@@ -94,7 +94,7 @@ function TraitDetailPage() {
           />
           <StatPill
             label="rsIDs"
-            value={String(traitDetail.rsids.length)}
+            value={String(traitDetail.rules.length)}
             tooltip="Number of curated marker rules used by this trait."
           />
           <StatPill
@@ -192,30 +192,30 @@ function TraitDetailPage() {
 
       <DisclosurePanel eyebrow="model ingredients" title="Genetic contributors">
         <div className="ui-section-content-grid">
-          {traitDetail.rsids.map((rsid) => (
+          {traitDetail.rules.map((rule) => (
             <TeaserCard
-              key={rsid.rsid}
-              to={`/rsids/${rsid.rsid}`}
-              eyebrow={rsid.rsid}
-              title={rsid.gene ?? 'Genetic marker'}
-              description={rsid.rule_description}
+              key={rule.rsid}
+              to={`/rsids/${rule.rsid}`}
+              eyebrow={rule.rsid}
+              title={rule.gene}
+              description={rule.description}
               footer={
                 <>
-                  {rsid.genotype ? (
+                  {rule.genotype_meanings.length > 0 ? (
                     <StatPill
                       label="Known genotypes"
-                      value={rsid.genotype.join(', ')}
+                      value={rule.genotype_meanings
+                        .flatMap((meaning) => meaning.genotype)
+                        .join(', ')}
                       tooltip="Genotype patterns the current educational rule set knows how to interpret."
                       tone="accent"
                     />
                   ) : null}
-                  {rsid.evidence_level ? (
-                    <StatPill
-                      label="Evidence"
-                      value={formatEvidenceLabel(rsid.evidence_level)}
-                      tooltip="Evidence level for this marker rule."
-                    />
-                  ) : null}
+                  <StatPill
+                    label="Evidence"
+                    value={formatEvidenceLabel(rule.evidence_level)}
+                    tooltip="Evidence level for this marker rule."
+                  />
                 </>
               }
             />

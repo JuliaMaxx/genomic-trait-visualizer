@@ -6,6 +6,7 @@ from backend.services.parsers.common import (
     is_standard_rsid,
     normalize_chromosome,
     normalize_genotype,
+    parse_position,
     split_line,
 )
 
@@ -69,7 +70,7 @@ def parse_ftdna(lines: list[str]) -> ParseResult:
             continue
 
         try:
-            position = int(pos)
+            position = parse_position(pos)
         except ValueError:
             msg = f"Line {line_number}: invalid position"
             logger.warning(msg)

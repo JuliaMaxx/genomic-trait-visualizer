@@ -130,8 +130,8 @@ def test_rsid_validation(rsid_input: str, expect_error: bool) -> None:
         ("1000", True),
         ("1", True),
         ("999999999", True),
-        ("0", True),
-        ("-100", True),  # technically allowed even if unusual
+        ("0", False),  # genomic coordinates are positive and 1-based
+        ("-100", False),
         ("abc", False),  # invalid → drop
         ("1.5", False),  # float not allowed
     ],

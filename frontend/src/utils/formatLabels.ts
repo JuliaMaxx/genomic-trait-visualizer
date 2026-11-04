@@ -1,4 +1,4 @@
-import type { EvidenceLevel, TraitResultLabel } from '../types/analysis';
+import type { EvidenceLevel, TraitResultLabel } from '../types/api';
 
 export function formatResultLabel(result: TraitResultLabel) {
   return result.charAt(0).toUpperCase() + result.slice(1);

@@ -1,0 +1,1387 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Genomic Trait Visualizer",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/analyze/": {
+      "post": {
+        "tags": [
+          "analyze"
+        ],
+        "summary": "Analyze Dna",
+        "operationId": "analyze_dna_analyze__post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_analyze_dna_analyze__post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/TraitAnalysisSummary"
+                  },
+                  "type": "array",
+                  "title": "Response Analyze Dna Analyze  Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/traits/": {
+      "get": {
+        "tags": [
+          "traits"
+        ],
+        "summary": "Read Traits",
+        "operationId": "read_traits_traits__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/TraitCatalogSummary"
+                  },
+                  "type": "array",
+                  "title": "Response Read Traits Traits  Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/traits/{trait_id}": {
+      "get": {
+        "tags": [
+          "traits"
+        ],
+        "summary": "Read Trait",
+        "operationId": "read_trait_traits__trait_id__get",
+        "parameters": [
+          {
+            "name": "trait_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Trait Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TraitCatalogDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/traits/{trait_id}/evaluate": {
+      "post": {
+        "tags": [
+          "traits"
+        ],
+        "summary": "Evaluate Trait",
+        "operationId": "evaluate_trait_traits__trait_id__evaluate_post",
+        "parameters": [
+          {
+            "name": "trait_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Trait Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_evaluate_trait_traits__trait_id__evaluate_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TraitAnalysisDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rsids/": {
+      "get": {
+        "tags": [
+          "rsids"
+        ],
+        "summary": "Read Rsids",
+        "operationId": "read_rsids_rsids__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/RsidCatalogItem"
+                  },
+                  "type": "array",
+                  "title": "Response Read Rsids Rsids  Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rsids/{rsid}": {
+      "get": {
+        "tags": [
+          "rsids"
+        ],
+        "summary": "Read Rsid",
+        "operationId": "read_rsid_rsids__rsid__get",
+        "parameters": [
+          {
+            "name": "rsid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Rsid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RsidDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/search/": {
+      "get": {
+        "tags": [
+          "search"
+        ],
+        "summary": "Search",
+        "operationId": "search_search__get",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 80,
+              "default": "",
+              "title": "Q"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "nutrition",
+                    "appearance",
+                    "health",
+                    "behavior"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Category"
+            }
+          },
+          {
+            "name": "evidence_level",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "strong",
+                    "moderate",
+                    "limited"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Evidence Level"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 20,
+              "minimum": 1,
+              "default": 8,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Body_analyze_dna_analyze__post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_analyze_dna_analyze__post"
+      },
+      "Body_evaluate_trait_traits__trait_id__evaluate_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_evaluate_trait_traits__trait_id__evaluate_post"
+      },
+      "ContentSection": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Title"
+          },
+          "body": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Body"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "title",
+          "body"
+        ],
+        "title": "ContentSection"
+      },
+      "CuratedTraitRule": {
+        "properties": {
+          "rsid": {
+            "type": "string",
+            "pattern": "^rs\\d+$",
+            "title": "Rsid"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Description"
+          },
+          "gene": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Gene"
+          },
+          "odds_ratio": {
+            "anyOf": [
+              {
+                "type": "number",
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Odds Ratio"
+          },
+          "odds_ratio_status": {
+            "type": "string",
+            "enum": [
+              "reported",
+              "not_reported",
+              "not_applicable"
+            ],
+            "title": "Odds Ratio Status"
+          },
+          "weight": {
+            "type": "number",
+            "exclusiveMinimum": 0.0,
+            "title": "Weight"
+          },
+          "priority": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Priority"
+          },
+          "evidence_level": {
+            "type": "string",
+            "enum": [
+              "strong",
+              "moderate",
+              "limited"
+            ],
+            "title": "Evidence Level"
+          },
+          "source_refs": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Source Refs"
+          },
+          "genotype_meanings": {
+            "items": {
+              "$ref": "#/components/schemas/GenotypeInterpretation"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Genotype Meanings"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "rsid",
+          "description",
+          "gene",
+          "odds_ratio",
+          "odds_ratio_status",
+          "weight",
+          "priority",
+          "evidence_level",
+          "source_refs",
+          "genotype_meanings"
+        ],
+        "title": "CuratedTraitRule"
+      },
+      "GenotypeInterpretation": {
+        "properties": {
+          "genotype": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Genotype"
+          },
+          "meaning": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Meaning"
+          },
+          "effect": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Effect"
+          },
+          "score": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": -1.0,
+            "title": "Score"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "genotype",
+          "meaning",
+          "effect",
+          "score"
+        ],
+        "title": "GenotypeInterpretation"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "RsidCatalogItem": {
+        "properties": {
+          "rsid": {
+            "type": "string",
+            "title": "Rsid"
+          },
+          "gene": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gene"
+          },
+          "plain_english_summary": {
+            "type": "string",
+            "title": "Plain English Summary"
+          },
+          "trait_count": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Trait Count"
+          },
+          "evidence_level": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "strong",
+                  "moderate",
+                  "limited"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence Level"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "rsid",
+          "gene",
+          "plain_english_summary",
+          "trait_count",
+          "evidence_level"
+        ],
+        "title": "RsidCatalogItem"
+      },
+      "RsidDetail": {
+        "properties": {
+          "rsid": {
+            "type": "string",
+            "title": "Rsid"
+          },
+          "gene": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gene"
+          },
+          "plain_english_summary": {
+            "type": "string",
+            "title": "Plain English Summary"
+          },
+          "technical_summary": {
+            "type": "string",
+            "title": "Technical Summary"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "genotype_meanings": {
+            "items": {
+              "$ref": "#/components/schemas/GenotypeInterpretation"
+            },
+            "type": "array",
+            "title": "Genotype Meanings"
+          },
+          "effect_directions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Effect Directions"
+          },
+          "traits": {
+            "items": {
+              "$ref": "#/components/schemas/RsidTraitLink"
+            },
+            "type": "array",
+            "title": "Traits"
+          },
+          "story_sections": {
+            "items": {
+              "$ref": "#/components/schemas/ContentSection"
+            },
+            "type": "array",
+            "title": "Story Sections"
+          },
+          "interpretation_notes": {
+            "items": {
+              "$ref": "#/components/schemas/ContentSection"
+            },
+            "type": "array",
+            "title": "Interpretation Notes"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/TraitSource"
+            },
+            "type": "array",
+            "title": "Sources"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "rsid",
+          "gene",
+          "plain_english_summary",
+          "technical_summary",
+          "description",
+          "genotype_meanings",
+          "effect_directions",
+          "traits",
+          "story_sections",
+          "interpretation_notes",
+          "sources"
+        ],
+        "title": "RsidDetail"
+      },
+      "RsidTraitLink": {
+        "properties": {
+          "trait_id": {
+            "type": "string",
+            "title": "Trait Id"
+          },
+          "trait_name": {
+            "type": "string",
+            "title": "Trait Name"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "nutrition",
+              "appearance",
+              "health",
+              "behavior"
+            ],
+            "title": "Category"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "effect": {
+            "type": "string",
+            "title": "Effect"
+          },
+          "evidence_level": {
+            "type": "string",
+            "enum": [
+              "strong",
+              "moderate",
+              "limited"
+            ],
+            "title": "Evidence Level"
+          },
+          "source_refs": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Source Refs"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "trait_id",
+          "trait_name",
+          "category",
+          "description",
+          "effect",
+          "evidence_level",
+          "source_refs"
+        ],
+        "title": "RsidTraitLink"
+      },
+      "SearchResponse": {
+        "properties": {
+          "query": {
+            "type": "string",
+            "title": "Query"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/SearchResult"
+            },
+            "type": "array",
+            "title": "Results"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "query",
+          "results"
+        ],
+        "title": "SearchResponse"
+      },
+      "SearchResult": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "trait",
+              "rsid"
+            ],
+            "title": "Kind"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "subtitle": {
+            "type": "string",
+            "title": "Subtitle"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "kind",
+          "title",
+          "subtitle",
+          "description",
+          "url"
+        ],
+        "title": "SearchResult"
+      },
+      "TraitAnalysisDetail": {
+        "properties": {
+          "trait": {
+            "$ref": "#/components/schemas/TraitCatalogDetail"
+          },
+          "analysis": {
+            "$ref": "#/components/schemas/TraitAnalysisMetrics"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "trait",
+          "analysis"
+        ],
+        "title": "TraitAnalysisDetail"
+      },
+      "TraitAnalysisMetrics": {
+        "properties": {
+          "result": {
+            "type": "string",
+            "enum": [
+              "likely",
+              "unlikely",
+              "inconclusive"
+            ],
+            "title": "Result"
+          },
+          "confidence": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Confidence"
+          },
+          "coverage": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Coverage"
+          },
+          "score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Score"
+          },
+          "result_content": {
+            "$ref": "#/components/schemas/TraitResultContent"
+          },
+          "rules": {
+            "items": {
+              "$ref": "#/components/schemas/TraitRuleAnalysis"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Rules"
+          },
+          "calculation_explanation": {
+            "items": {
+              "$ref": "#/components/schemas/ContentSection"
+            },
+            "type": "array",
+            "title": "Calculation Explanation"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "result",
+          "confidence",
+          "coverage",
+          "score",
+          "result_content",
+          "rules",
+          "calculation_explanation"
+        ],
+        "title": "TraitAnalysisMetrics"
+      },
+      "TraitAnalysisSummary": {
+        "properties": {
+          "trait_id": {
+            "type": "string",
+            "title": "Trait Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "nutrition",
+              "appearance",
+              "health",
+              "behavior"
+            ],
+            "title": "Category"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "rule_statuses": {
+            "items": {
+              "$ref": "#/components/schemas/TraitRuleStatus"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Rule Statuses"
+          },
+          "confidence": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Confidence"
+          },
+          "coverage": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Coverage"
+          },
+          "result": {
+            "type": "string",
+            "enum": [
+              "likely",
+              "unlikely",
+              "inconclusive"
+            ],
+            "title": "Result"
+          },
+          "result_badge_tooltip": {
+            "type": "string",
+            "title": "Result Badge Tooltip"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "trait_id",
+          "name",
+          "category",
+          "description",
+          "rule_statuses",
+          "confidence",
+          "coverage",
+          "result",
+          "result_badge_tooltip"
+        ],
+        "title": "TraitAnalysisSummary"
+      },
+      "TraitCatalogDetail": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "nutrition",
+              "appearance",
+              "health",
+              "behavior"
+            ],
+            "title": "Category"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "simple_summary": {
+            "type": "string",
+            "title": "Simple Summary"
+          },
+          "technical_summary": {
+            "type": "string",
+            "title": "Technical Summary"
+          },
+          "mental_model": {
+            "items": {
+              "$ref": "#/components/schemas/ContentSection"
+            },
+            "type": "array",
+            "title": "Mental Model"
+          },
+          "model_limit_summary": {
+            "type": "string",
+            "title": "Model Limit Summary"
+          },
+          "evidence_level": {
+            "type": "string",
+            "enum": [
+              "strong",
+              "moderate",
+              "limited"
+            ],
+            "title": "Evidence Level"
+          },
+          "keywords": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Keywords"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/TraitSource"
+            },
+            "type": "array",
+            "title": "Sources"
+          },
+          "result_content": {
+            "$ref": "#/components/schemas/TraitResultByOutcome"
+          },
+          "practical_takeaway": {
+            "items": {
+              "$ref": "#/components/schemas/ContentSection"
+            },
+            "type": "array",
+            "title": "Practical Takeaway"
+          },
+          "simple_explanation": {
+            "items": {
+              "$ref": "#/components/schemas/ContentSection"
+            },
+            "type": "array",
+            "title": "Simple Explanation"
+          },
+          "technical_explanation": {
+            "items": {
+              "$ref": "#/components/schemas/ContentSection"
+            },
+            "type": "array",
+            "title": "Technical Explanation"
+          },
+          "research_spotlight": {
+            "items": {
+              "$ref": "#/components/schemas/ContentSection"
+            },
+            "type": "array",
+            "title": "Research Spotlight"
+          },
+          "calculation_notes": {
+            "items": {
+              "$ref": "#/components/schemas/ContentSection"
+            },
+            "type": "array",
+            "title": "Calculation Notes"
+          },
+          "rules": {
+            "items": {
+              "$ref": "#/components/schemas/CuratedTraitRule"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Rules"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "category",
+          "description",
+          "simple_summary",
+          "technical_summary",
+          "mental_model",
+          "model_limit_summary",
+          "evidence_level",
+          "keywords",
+          "sources",
+          "result_content",
+          "practical_takeaway",
+          "simple_explanation",
+          "technical_explanation",
+          "research_spotlight",
+          "calculation_notes",
+          "rules"
+        ],
+        "title": "TraitCatalogDetail"
+      },
+      "TraitCatalogSummary": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "nutrition",
+              "appearance",
+              "health",
+              "behavior"
+            ],
+            "title": "Category"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "simple_summary": {
+            "type": "string",
+            "title": "Simple Summary"
+          },
+          "technical_summary": {
+            "type": "string",
+            "title": "Technical Summary"
+          },
+          "evidence_level": {
+            "type": "string",
+            "enum": [
+              "strong",
+              "moderate",
+              "limited"
+            ],
+            "title": "Evidence Level"
+          },
+          "keywords": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Keywords"
+          },
+          "search_terms": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Search Terms"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "category",
+          "description",
+          "simple_summary",
+          "technical_summary",
+          "evidence_level",
+          "keywords",
+          "search_terms"
+        ],
+        "title": "TraitCatalogSummary"
+      },
+      "TraitResultByOutcome": {
+        "properties": {
+          "likely": {
+            "$ref": "#/components/schemas/TraitResultContent"
+          },
+          "unlikely": {
+            "$ref": "#/components/schemas/TraitResultContent"
+          },
+          "inconclusive": {
+            "$ref": "#/components/schemas/TraitResultContent"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "likely",
+          "unlikely",
+          "inconclusive"
+        ],
+        "title": "TraitResultByOutcome"
+      },
+      "TraitResultContent": {
+        "properties": {
+          "card_tooltip": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Card Tooltip"
+          },
+          "headline": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Headline"
+          },
+          "headline_tooltip": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Headline Tooltip"
+          },
+          "outcome_summary": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Outcome Summary"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "card_tooltip",
+          "headline",
+          "headline_tooltip",
+          "outcome_summary"
+        ],
+        "title": "TraitResultContent"
+      },
+      "TraitRuleAnalysis": {
+        "properties": {
+          "rsid": {
+            "type": "string",
+            "title": "Rsid"
+          },
+          "user_genotype": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "User Genotype"
+          },
+          "interpretation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GenotypeInterpretation"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "missing",
+              "unmatched",
+              "matched"
+            ],
+            "title": "Status"
+          },
+          "status_explanation": {
+            "type": "string",
+            "title": "Status Explanation"
+          },
+          "contribution": {
+            "type": "string",
+            "enum": [
+              "raises",
+              "lowers",
+              "neutral",
+              "unknown"
+            ],
+            "title": "Contribution"
+          },
+          "contribution_label": {
+            "type": "string",
+            "title": "Contribution Label"
+          },
+          "contribution_explanation": {
+            "type": "string",
+            "title": "Contribution Explanation"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "rsid",
+          "user_genotype",
+          "interpretation",
+          "status",
+          "status_explanation",
+          "contribution",
+          "contribution_label",
+          "contribution_explanation"
+        ],
+        "title": "TraitRuleAnalysis"
+      },
+      "TraitRuleStatus": {
+        "properties": {
+          "rsid": {
+            "type": "string",
+            "title": "Rsid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "missing",
+              "unmatched",
+              "matched"
+            ],
+            "title": "Status"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "rsid",
+          "status"
+        ],
+        "title": "TraitRuleStatus"
+      },
+      "TraitSource": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Name"
+          },
+          "url": {
+            "type": "string",
+            "maxLength": 2083,
+            "minLength": 1,
+            "format": "uri",
+            "title": "Url"
+          },
+          "reference": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Reference"
+          },
+          "notes": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Notes"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name",
+          "url",
+          "reference",
+          "notes"
+        ],
+        "title": "TraitSource"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

@@ -6,7 +6,7 @@ import { useEffect, useCallback, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { searchCatalog } from '../services/traitApi';
-import type { SearchResult } from '../types/analysis';
+import type { SearchResult } from '../types/api';
 
 function GlobalSearch() {
   const [isOpen, setIsOpen] = useState(false);
@@ -62,7 +62,7 @@ function GlobalSearch() {
       try {
         const data = await searchCatalog(trimmedQuery, controller.signal);
         if (!controller.signal.aborted) {
-          setResults([...data.traits, ...data.rsids]);
+          setResults(data.results);
         }
       } catch (error) {
         if (!controller.signal.aborted) {

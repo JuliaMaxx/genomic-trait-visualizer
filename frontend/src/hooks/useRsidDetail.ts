@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { fetchRsidDetail } from '../services/traitApi';
-import type { RsidDetail } from '../types/analysis';
+import type { RsidDetail } from '../types/api';
 
 function useRsidDetail(rsid: string | undefined) {
   const [detail, setDetail] = useState<RsidDetail | null>(null);

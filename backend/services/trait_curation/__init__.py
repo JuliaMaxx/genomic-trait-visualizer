@@ -7,8 +7,10 @@ from .catalog import (
     get_trait_definition,
     list_rsid_catalog,
     list_trait_definitions,
+    list_trait_summaries,
     load_trait_catalog,
     search_catalog,
+    trait_catalog_detail,
 )
 
 __all__ = [
@@ -20,6 +22,8 @@ __all__ = [
     "get_trait_definition",
     "list_rsid_catalog",
     "list_trait_definitions",
+    "list_trait_summaries",
     "load_trait_catalog",
     "search_catalog",
+    "trait_catalog_detail",
 ]

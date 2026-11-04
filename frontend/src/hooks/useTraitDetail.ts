@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { fetchTraitDetail } from '../services/traitApi';
-import type { TraitDetail } from '../types/analysis';
+import type { TraitCatalogDetail } from '../types/api';
 
 function useTraitDetail(traitId: string | undefined) {
-  const [traitDetail, setTraitDetail] = useState<TraitDetail | null>(null);
+  const [traitDetail, setTraitDetail] =
+    useState<TraitCatalogDetail | null>(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 

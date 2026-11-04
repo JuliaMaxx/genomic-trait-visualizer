@@ -6,7 +6,9 @@ from .trait_curation import (
     evaluate_trait,
     get_trait_definition,
     list_trait_definitions,
+    list_trait_summaries,
     load_trait_catalog,
+    trait_catalog_detail,
 )
 from .trait_service import calculate_traits
 
@@ -18,6 +20,8 @@ __all__ = [
     "evaluate_trait",
     "get_trait_definition",
     "list_trait_definitions",
+    "list_trait_summaries",
     "load_trait_catalog",
     "process_dna_file",
+    "trait_catalog_detail",
 ]

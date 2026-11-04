@@ -2,10 +2,10 @@ import type {
   EvidenceLevel,
   RsidCatalogItem,
   TraitCategory,
-  TraitDefinition,
-  TraitResult,
+  TraitAnalysisSummary,
+  TraitCatalogSummary,
   TraitResultLabel,
-} from '../types/analysis';
+} from '../types/api';
 
 export type ConfidenceBand = 'high' | 'medium' | 'low';
 
@@ -54,11 +54,11 @@ export function getConfidenceBand(confidence: number): ConfidenceBand {
 }
 
 export function filterAnalysisTraits(
-  traits: TraitResult[],
+  traits: TraitAnalysisSummary[],
   filters: AnalysisFilters,
 ) {
   return traits.filter((trait) => {
-    if (trait.observed_rsids.length === 0) {
+    if (!trait.rule_statuses.some((rule) => rule.status !== 'missing')) {
       return false;
     }
 
@@ -82,18 +82,14 @@ export function filterAnalysisTraits(
       trait.name,
       trait.category,
       trait.description,
-      trait.simple_summary,
-      trait.user_summary,
-      trait.explanation_preview,
       trait.result,
-      ...trait.matched_rsids,
-      ...trait.observed_rsids,
+      ...trait.rule_statuses.map((rule) => rule.rsid),
     ]);
   });
 }
 
 export function filterTraitCatalog(
-  traits: TraitDefinition[],
+  traits: TraitCatalogSummary[],
   filters: TraitCatalogFilters,
 ) {
   return traits.filter((trait) => {
@@ -117,10 +113,7 @@ export function filterTraitCatalog(
       trait.technical_summary,
       trait.evidence_level,
       ...trait.keywords,
-      ...(trait.rules?.map((rule) => rule.rsid) ?? []),
-      ...(trait.rules?.map((rule) => rule.gene) ?? []),
-      ...(trait.rules?.map((rule) => rule.description) ?? []),
-      ...(trait.rules?.map((rule) => rule.effect) ?? []),
+      ...trait.search_terms,
     ]);
   });
 }

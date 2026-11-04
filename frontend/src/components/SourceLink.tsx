@@ -1,4 +1,4 @@
-import type { TraitSource } from '../types/analysis';
+import type { TraitSource } from '../types/api';
 
 type SourceLinkProps = {
   source: TraitSource;
@@ -13,12 +13,8 @@ function SourceLink({ source }: SourceLinkProps) {
       className="ui-panel-subtle ui-interactive-border-accent"
     >
       <p className="ui-item-title">{source.name}</p>
-
-      {source.reference ? (
-        <p className="ui-item-body">{source.reference}</p>
-      ) : null}
-
-      {source.notes ? <p className="ui-detail-note">{source.notes}</p> : null}
+      <p className="ui-item-body">{source.reference}</p>
+      <p className="ui-detail-note">{source.notes}</p>
     </a>
   );
 }

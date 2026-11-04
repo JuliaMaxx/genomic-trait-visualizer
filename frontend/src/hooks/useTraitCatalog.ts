@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { fetchTraitCatalog } from '../services/traitApi';
-import type { TraitDefinition } from '../types/analysis';
+import type { TraitCatalogSummary } from '../types/api';
 
 function useTraitCatalog() {
-  const [traits, setTraits] = useState<TraitDefinition[]>([]);
+  const [traits, setTraits] = useState<TraitCatalogSummary[]>([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 

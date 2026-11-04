@@ -1,343 +1,139 @@
+import json
+from pathlib import Path
+
 import pytest
+from pydantic import ValidationError
 
 from backend.models import (
     CuratedTraitRule,
-    GenotypeInterpretation,
-    TraitDefinition,
+    TraitCatalog,
     Variant,
 )
 from backend.services.trait_curation.catalog import (
     _find_interpretation,
     _normalize_genotype,
     build_trait_detail,
-    build_trait_result,
     evaluate_trait,
     get_rsid_detail,
     list_rsid_catalog,
     list_trait_definitions,
+    load_trait_catalog,
     search_catalog,
 )
 
 
-def to_alleles(genotype: str | None) -> list[str] | None:
-    if genotype is None:
-        return None
-    return [allele for allele in genotype if allele not in {"/", " "}]
+def test_published_catalog_fully_validates() -> None:
+    data = json.loads(Path("data/traits.json").read_text(encoding="utf-8"))
+    catalog = TraitCatalog.model_validate(data)
 
-
-@pytest.fixture
-def simple_trait() -> TraitDefinition:
-    return TraitDefinition(
-        id="test_trait",
-        name="Test Trait",
-        category="health",
-        description="desc",
-        simple_summary="simple",
-        technical_summary="tech",
-        evidence_level="strong",
-        keywords=[],
-        sources=[],
-        rules=[
-            CuratedTraitRule(
-                rsid="rs1",
-                genotype_meanings=[
-                    GenotypeInterpretation(
-                        genotype=["AA"],
-                        meaning="positive",
-                        effect="good",
-                        score=0.5,
-                    ),
-                    GenotypeInterpretation(
-                        genotype=["GG"],
-                        meaning="negative",
-                        effect="bad",
-                        score=-0.5,
-                    ),
-                ],
-                weight=1.0,
-                priority=1,
-                description="rule desc",
-                gene="GENE1",
-            )
-        ],
+    assert len(catalog.traits) == 5
+    assert sum(len(trait.rules) for trait in catalog.traits) == 6
+    assert all(trait.sources for trait in catalog.traits)
+    assert all(
+        len(trait.result_content.model_fields_set) == 3 for trait in catalog.traits
     )
 
 
-@pytest.fixture
-def matching_variant() -> list[Variant]:
-    return [Variant(rsid="rs1", chromosome="1", position=1, genotype=["A", "A"])]
-
-
-@pytest.fixture
-def non_matching_variant() -> list[Variant]:
-    return [Variant(rsid="rs1", chromosome="1", position=1, genotype=["T", "T"])]
-
-
-@pytest.fixture
-def missing_variant() -> list[Variant]:
-    return []
-
-
-# --- Test normalization ---
-
-
-def test_normalize_genotype_orders_letters() -> None:
-    assert _normalize_genotype("GA") == "AG"
-
-
-def test_normalize_genotype_removes_slash() -> None:
-    assert _normalize_genotype("A/G") == "AG"
-
-
-def test_normalize_genotype_uppercase() -> None:
-    assert _normalize_genotype("ag") == "AG"
-
-
-# --- Test interpretation matching ---
-
-
-def test_find_interpretation_match(simple_trait: TraitDefinition) -> None:
-    rule = simple_trait.rules[0]
-    result = _find_interpretation(rule, "AA")
-    assert result is not None
-    assert result.meaning == "positive"
-
-
-def test_find_interpretation_no_match(simple_trait: TraitDefinition) -> None:
-    rule = simple_trait.rules[0]
-    result = _find_interpretation(rule, "TT")
-    assert result is None
-
-
-# --- Test trait evaluation ---
-
-
-def test_evaluate_trait_match(
-    simple_trait: TraitDefinition, matching_variant: list[Variant]
-) -> None:
-    evaluation = evaluate_trait(simple_trait, matching_variant)
-
-    assert evaluation.result == "likely"
-    assert evaluation.score > 0
-    assert evaluation.coverage == 1.0
-    assert len(evaluation.matched_rules) == 1
-
-
-def test_evaluate_trait_no_match(
-    simple_trait: TraitDefinition, non_matching_variant: list[Variant]
-) -> None:
-    evaluation = evaluate_trait(simple_trait, non_matching_variant)
-
-    assert evaluation.result == "inconclusive"
-    assert evaluation.score == 0
-    assert len(evaluation.matched_rules) == 0
-
-
-def test_evaluate_trait_missing(
-    simple_trait: TraitDefinition, missing_variant: list[Variant]
-) -> None:
-    evaluation = evaluate_trait(simple_trait, missing_variant)
-
-    assert evaluation.coverage == 0.0
-    assert evaluation.confidence == 0.0
-    assert evaluation.result == "inconclusive"
-    assert evaluation.missing_rsids == ["rs1"]
-
-
-#  --- Test confidence behaviour ---
-
-
-def test_confidence_reduced_by_missing_data(simple_trait: TraitDefinition) -> None:
-    partial_variants = [Variant(rsid="rs1", chromosome="1", position=1, genotype=None)]
-
-    evaluation = evaluate_trait(simple_trait, partial_variants)
-
-    assert evaluation.coverage == 0.0
-    assert evaluation.confidence == 0.0
-
-
-# --- Test result building ---
-
-
-def test_build_trait_result(
-    simple_trait: TraitDefinition, matching_variant: list[Variant]
-) -> None:
-    evaluation = evaluate_trait(simple_trait, matching_variant)
-    result = build_trait_result(evaluation)
-
-    assert result.trait_id == "test_trait"
-    assert result.result == "likely"
-    assert result.confidence > 0
-    assert result.description == "desc"
-    assert result.matched_rsids == ["rs1"]
-    assert result.observed_rsids == ["rs1"]
-    assert result.coverage == 1.0
-    assert result.simple_summary == "simple"
-    assert "Test Trait" in result.user_summary
-    assert "coverage" in result.explanation_preview.lower()
-    assert result.result_badge_tooltip
-
-
-# --- Test detail building ---
-
-
-def test_trait_detail_matched(
-    simple_trait: TraitDefinition, matching_variant: list[Variant]
-) -> None:
-    detail = build_trait_detail(simple_trait, matching_variant)
-
-    rsid = detail.rsids[0]
-
-    assert rsid.status == "matched"
-    assert rsid.meaning == "positive"
-    assert rsid.effect == "good"
-    assert rsid.user_genotype == ["A", "A"]
-    assert rsid.contribution == "raises"
-    assert "matched" in rsid.status_explanation.lower()
-
-
-def test_trait_detail_no_match(
-    simple_trait: TraitDefinition, non_matching_variant: list[Variant]
-) -> None:
-    detail = build_trait_detail(simple_trait, non_matching_variant)
-
-    rsid = detail.rsids[0]
-
-    assert rsid.status == "no_match"
-    assert rsid.meaning is not None
-    assert rsid.contribution == "unknown"
-
-
-def test_trait_detail_missing(
-    simple_trait: TraitDefinition, missing_variant: list[Variant]
-) -> None:
-    detail = build_trait_detail(simple_trait, missing_variant)
-
-    rsid = detail.rsids[0]
-
-    assert rsid.status == "missing"
-    assert "No genotype detected" in rsid.meaning
-    assert "did not include" in rsid.status_explanation
-
-
-# --- Test odds ratio and score inclusion in detail ---
-
-
-def test_trait_detail_includes_odds_ratio(
-    simple_trait: TraitDefinition, matching_variant: list[Variant]
-) -> None:
-    detail = build_trait_detail(simple_trait, matching_variant)
-
-    rsid = detail.rsids[0]
-
-    assert rsid.odds_ratio is None or isinstance(rsid.odds_ratio, float)
-    assert isinstance(rsid.score, float)
-    assert detail.headline
-    assert detail.headline_tooltip
-    assert detail.outcome_summary
-    assert detail.result_badge_tooltip
-    assert detail.practical_takeaway
-    assert detail.simple_explanation
-    assert detail.technical_explanation
-    assert detail.research_spotlight
-    assert detail.calculation_summary
-
-
-# --- Test multiple rules and real-world case ---
-
-
-def test_multiple_rules_aggregation() -> None:
-    trait = TraitDefinition(
-        id="multi",
-        name="Multi",
-        category="health",
-        description="",
-        simple_summary="",
-        technical_summary="",
-        rules=[
-            CuratedTraitRule(
-                rsid="rs1",
-                genotype_meanings=[
-                    GenotypeInterpretation(genotype=["AA"], meaning="good", score=0.5)
-                ],
-                weight=1.0,
-                description="r1",
-            ),
-            CuratedTraitRule(
-                rsid="rs2",
-                genotype_meanings=[
-                    GenotypeInterpretation(genotype=["AA"], meaning="bad", score=-0.5)
-                ],
-                weight=1.0,
-                description="r2",
-            ),
-        ],
+def test_catalog_loader_is_the_validated_source() -> None:
+    assert load_trait_catalog() == TraitCatalog.model_validate(
+        json.loads(Path("data/traits.json").read_text(encoding="utf-8"))
     )
 
-    variants = [
-        Variant(rsid="rs1", chromosome="1", position=1, genotype=["A", "A"]),
-        Variant(rsid="rs2", chromosome="1", position=2, genotype=["A", "A"]),
-    ]
 
-    evaluation = evaluate_trait(trait, variants)
+def test_published_rule_requires_explicit_odds_ratio_state() -> None:
+    rule = list_trait_definitions()[0].rules[0].model_dump()
+    del rule["odds_ratio"]
 
-    assert evaluation.score == 0  # cancel out
+    with pytest.raises(ValidationError):
+        CuratedTraitRule.model_validate(rule)
+
+
+def test_odds_ratio_value_must_match_reported_state() -> None:
+    rule = list_trait_definitions()[1].rules[0].model_dump()
+    rule["odds_ratio"] = 1.5
+
+    with pytest.raises(ValidationError):
+        CuratedTraitRule.model_validate(rule)
+
+
+def test_non_applicable_odds_ratio_is_distinct_from_not_reported() -> None:
+    rules = [rule for trait in list_trait_definitions() for rule in trait.rules]
+    reported = [rule for rule in rules if rule.odds_ratio_status == "reported"]
+    not_reported = [rule for rule in rules if rule.odds_ratio_status == "not_reported"]
+
+    assert all(rule.odds_ratio is not None for rule in reported)
+    assert all(rule.odds_ratio is None for rule in not_reported)
+    assert not any(rule.odds_ratio_status == "not_applicable" for rule in rules)
+
+
+def test_catalog_rejects_unknown_fields() -> None:
+    data = json.loads(Path("data/traits.json").read_text(encoding="utf-8"))
+    data["traits"][0]["unexpected"] = "extra data must not be silently discarded"
+
+    with pytest.raises(ValidationError):
+        TraitCatalog.model_validate(data)
+
+
+def test_genotype_interpretations_match_order_independently() -> None:
+    rule = list_trait_definitions()[0].rules[0]
+
+    assert _find_interpretation(rule, "CT") == _find_interpretation(
+        rule, _normalize_genotype("TC")
+    )
+    assert _normalize_genotype("a/g") == "AG"
+
+
+def test_analysis_distinguishes_missing_observed_and_matched() -> None:
+    trait = next(
+        trait for trait in list_trait_definitions() if trait.id == "lactose_intolerance"
+    )
+    evaluation = evaluate_trait(
+        trait,
+        [Variant(rsid="rs4988235", chromosome="2", position=1, genotype=["A", "A"])],
+    )
+
+    assert evaluation.evaluated_rules[0].status == "unmatched"
+    assert evaluation.evaluated_rules[1].status == "missing"
+    assert evaluation.observed_rsids == ["rs4988235"]
+    assert evaluation.missing_rsids == ["rs182549"]
+    assert evaluation.matched_rsids == []
+    assert evaluation.score is None
+
+
+def test_no_genotypes_do_not_report_a_zero_score() -> None:
+    trait = list_trait_definitions()[0]
+
+    evaluation = evaluate_trait(trait, [])
+    detail = build_trait_detail(trait, [])
+
     assert evaluation.result == "inconclusive"
+    assert evaluation.score is None
+    assert detail.analysis.score is None
+    assert "not enough dna data" in detail.analysis.result_content.headline.lower()
 
 
-# --- Test real-world case with partial data ---
-
-
-def test_real_lactose_case() -> None:
-    trait = next(t for t in list_trait_definitions() if t.id == "lactose_intolerance")
-    variants = [
-        Variant(rsid="rs4988235", chromosome="2", position=1, genotype=["C", "T"]),
-        Variant(rsid="rs182549", chromosome="2", position=1, genotype=["T", "T"]),
-    ]
-
-    evaluation = evaluate_trait(trait, variants)
-
-    assert evaluation.coverage > 0
-    assert evaluation.result in ["likely", "unlikely", "inconclusive"]
-
-
-def test_list_rsid_catalog_includes_curated_markers() -> None:
+def test_rsid_list_and_detail_are_derived_from_curated_rules() -> None:
     catalog = list_rsid_catalog()
-
-    assert any(item.rsid == "rs4988235" for item in catalog)
-    assert all(item.trait_count > 0 for item in catalog)
-
-
-def test_get_rsid_detail_cross_links_traits() -> None:
     detail = get_rsid_detail("rs4988235")
 
+    assert any(item.rsid == "rs4988235" for item in catalog)
     assert detail is not None
     assert detail.rsid == "rs4988235"
     assert any(link.trait_id == "lactose_intolerance" for link in detail.traits)
     assert detail.genotype_meanings
-    assert detail.technical_summary
-    assert detail.story_sections
-    assert detail.interpretation_notes
-    assert detail.research_context
-    assert any(source.reference == "rs4988235" for source in detail.sources)
+    assert detail.sources
 
 
-def test_search_catalog_finds_traits_by_keyword() -> None:
-    results = search_catalog("dairy digestion")
+def test_search_response_is_one_consistent_result_list() -> None:
+    result = search_catalog("lactose")
 
-    assert any(result.url == "/traits/lactose_intolerance" for result in results.traits)
-
-
-def test_search_catalog_finds_rsids_by_marker() -> None:
-    results = search_catalog("rs4988235")
-
-    assert any(result.url == "/rsids/rs4988235" for result in results.rsids)
+    assert result.query == "lactose"
+    assert any(item.kind == "trait" for item in result.results)
+    assert all(item.title and item.subtitle and item.url for item in result.results)
 
 
-def test_search_catalog_filters_by_category() -> None:
-    results = search_catalog("lactose", category="appearance")
+def test_search_filters_category() -> None:
+    result = search_catalog("lactose", category="appearance")
 
-    assert all(result.category == "appearance" for result in results.traits)
-    assert not any(
-        result.url == "/traits/lactose_intolerance" for result in results.traits
-    )
+    assert all(item.kind != "trait" for item in result.results)
+    assert all("lactose_intolerance" not in item.url for item in result.results)

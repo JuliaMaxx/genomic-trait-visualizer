@@ -77,7 +77,7 @@ def test_rsid_validation(rsid_input: str, expected_count: int) -> None:
     "position_input,keep_row",
     [
         ("1000", True),
-        ("-100", True),  # negative allowed
+        ("-100", False),  # genomic coordinates are positive and 1-based
         ("abc", False),  # invalid → drop
     ],
 )

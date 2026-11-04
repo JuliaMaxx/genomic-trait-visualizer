@@ -19,6 +19,14 @@ def normalize_chromosome(chrom: str) -> str:
     return chrom
 
 
+def parse_position(value: str) -> int:
+    """Return a positive 1-based genomic coordinate or raise ValueError."""
+    position = int(value)
+    if position < 1:
+        raise ValueError("genomic positions are 1-based and must be positive")
+    return position
+
+
 def _is_missing_allele(allele: str) -> bool:
     return allele.strip().upper() in MISSING_ALLELE
 

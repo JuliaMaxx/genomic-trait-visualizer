@@ -1,4 +1,4 @@
-from backend.models import TraitDetail, TraitResult, Variant
+from backend.models import TraitAnalysisDetail, TraitAnalysisSummary, Variant
 from backend.services.trait_curation import (
     build_trait_result,
     evaluate_trait,
@@ -10,7 +10,7 @@ from backend.services.trait_curation.catalog import (
 )
 
 
-def calculate_traits(variants: list[Variant]) -> list[TraitResult]:
+def calculate_traits(variants: list[Variant]) -> list[TraitAnalysisSummary]:
     """
     Calculate traits based on provided variants.
 
@@ -18,13 +18,13 @@ def calculate_traits(variants: list[Variant]) -> list[TraitResult]:
     treats rules as OR conditions (independent signals), tracks missing SNPs,
     and calculates confidence based on data availability.
 
-    Returns a list of TraitResult objects, sorted by trait_id for deterministic output.
+    Returns all trait analysis summaries sorted by trait ID.
     """
     normalized_variants = [
         variant if isinstance(variant, Variant) else Variant(**variant)
         for variant in variants
     ]
-    results = []
+    results: list[TraitAnalysisSummary] = []
 
     for trait in list_trait_definitions():
         evaluation = evaluate_trait(trait, normalized_variants)
@@ -39,7 +39,7 @@ def calculate_traits(variants: list[Variant]) -> list[TraitResult]:
 
 def calculate_single_trait(
     trait_id: str, variants: list[Variant]
-) -> TraitDetail | None:
+) -> TraitAnalysisDetail | None:
     """Evaluate a single trait by its ID using the provided variants."""
     trait = get_trait_definition(trait_id)
     if trait is None:
