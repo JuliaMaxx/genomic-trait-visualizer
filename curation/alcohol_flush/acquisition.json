@@ -1,0 +1,73 @@
+[
+  {
+    "document_id": "ncbi-refsnp-rs671",
+    "source_id": "ncbi-refsnp-rs671",
+    "path": "sources/rs671-refsnp.json",
+    "url": "https://api.ncbi.nlm.nih.gov/variation/v0/refsnp/671",
+    "retrieved": "2026-11-04",
+    "sha256": "a9732a144f124f52610f8f195caff31769b58da397ac157ce4980358a487df22",
+    "role": "experiment",
+    "type": "original",
+    "version": "dbSNP build 157",
+    "license": "NCBI molecular-data policy; redistribution terms need verification."
+  },
+  {
+    "document_id": "cho-2023",
+    "source_id": "cho-2023",
+    "path": "sources/cho-2023.xml",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC10594868/fullTextXML",
+    "retrieved": "2026-11-04",
+    "sha256": "761949cde4f96e35f1a07269a53462853a835b1434896b4e56a1756cf01f4b61",
+    "role": "experiment",
+    "type": "original",
+    "version": "2023-10-24 version of record; Europe PMC JATS",
+    "license": "CC BY 4.0; attribution and third-party exceptions apply."
+  },
+  {
+    "document_id": "cho-2023-supplement1",
+    "source_id": "cho-2023",
+    "path": "sources/cho-2023-supplement1.xlsx",
+    "url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1186%2Fs12864-023-09721-7/MediaObjects/12864_2023_9721_MOESM1_ESM.xlsx",
+    "retrieved": "2026-11-04",
+    "sha256": "305408d50cc319f60891286214c927a3cb6c21e34f915c7cb7c1beaa6c9e8e60",
+    "role": "experiment",
+    "type": "original",
+    "license": "Companion article states CC BY 4.0; supplement-specific reuse needs verification."
+  },
+  {
+    "document_id": "cho-2023-supplement2",
+    "source_id": "cho-2023",
+    "path": "sources/cho-2023-supplement2.docx",
+    "url": "https://static-content.springer.com/esm/art%3A10.1186%2Fs12864-023-09721-7/MediaObjects/12864_2023_9721_MOESM2_ESM.docx",
+    "retrieved": "2026-11-06",
+    "sha256": "757d2a98aa5ed8717a61c23ff2847101ab630feca4f077ccb1a5917b187a840c",
+    "role": "reference",
+    "type": "original",
+    "version": "Supplementary Material 2 accompanying the 2023-10-24 article",
+    "license": "Companion article states CC BY 4.0; supplement-specific reuse needs verification."
+  },
+  {
+    "document_id": "ncbi-clinvar-rs671-mapping",
+    "source_id": "ncbi-clinvar-rs671",
+    "path": "sources/rs671-clinvar-mapping.xml",
+    "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=clinvar&id=18390&rettype=vcv&is_variationid=true",
+    "retrieved": "2026-11-04",
+    "sha256": "12484afbce6314d305a0c67cfc5629c95c8a0d0729a891cdb081f94370e9f1d5",
+    "role": "reference",
+    "type": "excerpt",
+    "version": "VCV000018390.12",
+    "license": "NCBI molecular fields; redistribution terms need verification."
+  },
+  {
+    "document_id": "crabb-1989-excerpt",
+    "source_id": "crabb-1989",
+    "path": "sources/crabb-1989-excerpt.txt",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC303676/",
+    "retrieved": "2026-11-04",
+    "sha256": "ec01336bf676a99720727fceecad5a7a4d586ebd4133af7513adbb6be8093c11",
+    "role": "reference",
+    "type": "excerpt",
+    "version": "Publisher version 1",
+    "license": "ASCI copyright; redistribution permission not verified."
+  }
+]

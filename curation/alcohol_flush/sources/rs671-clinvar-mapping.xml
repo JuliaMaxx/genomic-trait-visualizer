@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ClinVarMolecularMappingExcerpt VariationID="18390" VariationName="NM_000690.4(ALDH2):c.1510G&gt;A (p.Glu504Lys)" VariationType="single nucleotide variant" Accession="VCV000018390" Version="12" RecordType="classified" NumberOfSubmissions="8" NumberOfSubmitters="3" DateLastUpdated="2026-09-13" DateCreated="2013-04-04" MostRecentSubmission="2026-04-04" source_xpath="/ClinVarResult-Set/VariationArchive/ClassifiedRecord/SimpleAllele">
+  <Name>NM_000690.4(ALDH2):c.1510G&gt;A (p.Glu504Lys)</Name>
+  <CanonicalSPDI>NC_000012.12:111803961:G:A</CanonicalSPDI>
+  <VariantType>single nucleotide variant</VariantType>
+  <Location>
+    <CytogeneticLocation>12q24.12</CytogeneticLocation>
+    <SequenceLocation Assembly="GRCh38" AssemblyAccessionVersion="GCF_000001405.38" forDisplay="true" AssemblyStatus="current" Chr="12" Accession="NC_000012.12" start="111803962" stop="111803962" display_start="111803962" display_stop="111803962" variantLength="1" positionVCF="111803962" referenceAlleleVCF="G" alternateAlleleVCF="A" />
+    <SequenceLocation Assembly="GRCh37" AssemblyAccessionVersion="GCF_000001405.25" AssemblyStatus="previous" Chr="12" Accession="NC_000012.11" start="112241766" stop="112241766" display_start="112241766" display_stop="112241766" variantLength="1" positionVCF="112241766" referenceAlleleVCF="G" alternateAlleleVCF="A" />
+  </Location>
+  <OtherNameList>
+    <Name>ALDH2*2</Name>
+    <Name>ALDH2, GLU504LYS (rs671)</Name>
+    <Name>GLU487LYS</Name>
+  </OtherNameList>
+  <HGVSlist>
+    <HGVS Type="protein">
+      <ProteinExpression sequenceAccessionVersion="P05091" sequenceAccession="P05091" change="p.Glu504Lys">
+        <Expression>P05091:p.Glu504Lys</Expression>
+      </ProteinExpression>
+    </HGVS>
+    <HGVS Assembly="GRCh37" Type="genomic, top-level">
+      <NucleotideExpression sequenceAccessionVersion="NC_000012.11" sequenceAccession="NC_000012" sequenceVersion="11" change="g.112241766G&gt;A" Assembly="GRCh37">
+        <Expression>NC_000012.11:g.112241766G&gt;A</Expression>
+      </NucleotideExpression>
+    </HGVS>
+    <HGVS Assembly="GRCh38" Type="genomic, top-level">
+      <NucleotideExpression sequenceAccessionVersion="NC_000012.12" sequenceAccession="NC_000012" sequenceVersion="12" change="g.111803962G&gt;A" Assembly="GRCh38">
+        <Expression>NC_000012.12:g.111803962G&gt;A</Expression>
+      </NucleotideExpression>
+    </HGVS>
+    <HGVS Type="genomic">
+      <NucleotideExpression sequenceAccessionVersion="NG_012250.2" sequenceAccession="NG_012250" sequenceVersion="2" change="g.42076G&gt;A">
+        <Expression>NG_012250.2:g.42076G&gt;A</Expression>
+      </NucleotideExpression>
+    </HGVS>
+    <HGVS Type="coding">
+      <NucleotideExpression sequenceAccessionVersion="NM_000690.4" sequenceAccession="NM_000690" sequenceVersion="4" change="c.1510G&gt;A" MANESelect="true">
+        <Expression>NM_000690.4:c.1510G&gt;A</Expression>
+      </NucleotideExpression>
+      <ProteinExpression sequenceAccessionVersion="NP_000681.2" sequenceAccession="NP_000681" sequenceVersion="2" change="p.Glu504Lys" singleLetterProteinChange="E504K">
+        <Expression>NP_000681.2:p.Glu504Lys</Expression>
+      </ProteinExpression>
+      <MolecularConsequence ID="SO:0001583" Type="missense variant" DB="SO" />
+    </HGVS>
+    <HGVS Type="coding">
+      <NucleotideExpression sequenceAccessionVersion="NM_001204889.2" sequenceAccession="NM_001204889" sequenceVersion="2" change="c.1369G&gt;A">
+        <Expression>NM_001204889.2:c.1369G&gt;A</Expression>
+      </NucleotideExpression>
+      <ProteinExpression sequenceAccessionVersion="NP_001191818.1" sequenceAccession="NP_001191818" sequenceVersion="1" change="p.Glu457Lys" singleLetterProteinChange="E457K">
+        <Expression>NP_001191818.1:p.Glu457Lys</Expression>
+      </ProteinExpression>
+      <MolecularConsequence ID="SO:0001583" Type="missense variant" DB="SO" />
+    </HGVS>
+  </HGVSlist>
+</ClinVarMolecularMappingExcerpt>

@@ -1,0 +1,265 @@
+{
+  "trait_id": "alcohol_flush",
+  "status": "draft_awaiting_human_review",
+  "provenance": "Manually curated 11.06.2026 by a human, based on the following sources and evidence.",
+  "acquisition_file": "acquisition.json",
+  "expected_cases_file": "expected-cases.md",
+  "sources": [
+    {
+      "source_id": "ncbi-refsnp-rs671",
+      "url": "https://api.ncbi.nlm.nih.gov/variation/v0/refsnp/671",
+      "title": "RefSNP rs671",
+      "publication_year": 2024,
+      "authors": ["National Center for Biotechnology Information"],
+      "publication": "dbSNP"
+    },
+    {
+      "source_id": "ncbi-clinvar-rs671",
+      "url": "https://www.ncbi.nlm.nih.gov/clinvar/variation/18390/",
+      "title": "NM_000690.4(ALDH2):c.1510G>A (p.Glu504Lys)",
+      "publication_year": 2026,
+      "authors": ["National Center for Biotechnology Information"],
+      "publication": "ClinVar"
+    },
+    {
+      "source_id": "crabb-1989",
+      "url": "https://www.jci.org/articles/view/113875",
+      "title": "Genotypes for aldehyde dehydrogenase deficiency and alcohol sensitivity. The inactive ALDH2(2) allele is dominant.",
+      "doi": "10.1172/JCI113875",
+      "publication_year": 1989,
+      "authors": [
+        "David W. Crabb",
+        "Howard J. Edenberg",
+        "William F. Bosron",
+        "Ting-Kai Li"
+      ],
+      "volume": "83",
+      "issue": "1",
+      "pages": "314-316",
+      "publication": "Journal of Clinical Investigation"
+    },
+    {
+      "source_id": "cho-2023",
+      "url": "https://link.springer.com/article/10.1186/s12864-023-09721-7",
+      "title": "Genetic influences on alcohol flushing in East Asian populations",
+      "doi": "10.1186/s12864-023-09721-7",
+      "publication_year": 2023,
+      "authors": [
+        "Yoonsu Cho",
+        "Kuang Lin",
+        "Su-Hyun Lee",
+        "Canqing Yu",
+        "Dan Schmidt Valle",
+        "Daniel Avery",
+        "Jun Lv",
+        "Keumji Jung",
+        "Liming Li",
+        "George Davey Smith",
+        "China Kadoorie Biobank Collaborative Group",
+        "Dianjianyi Sun",
+        "Zhengming Chen",
+        "Iona Y. Millwood",
+        "Gibran Hemani",
+        "Robin G. Walters"
+      ],
+      "volume": "24",
+      "article_number": "638",
+      "publication": "BMC Genomics"
+    }
+  ],
+  "variant": {
+    "rsid": "rs671",
+    "gene": "ALDH2",
+    "type": "SNV",
+    "reference_allele": "G",
+    "associated_allele": "A",
+    "orientation": "forward_genomic",
+    "coordinate_system": "1-based",
+
+    "placements": [
+      {
+        "genome_build": "GRCh38",
+        "chromosome": "12",
+        "position": 111803962,
+        "sequence_accession": "NC_000012.12"
+      },
+      {
+        "genome_build": "GRCh37",
+        "chromosome": "12",
+        "position": 112241766,
+        "sequence_accession": "NC_000012.11"
+      }
+    ],
+
+    "transcript": "NM_000690.4:c.1510G>A",
+    "protein": "NP_000681.2:p.Glu504Lys",
+
+    "historical_names": ["ALDH2*2", "E487K"],
+
+    "mapping_evidence_ids": ["E1", "E2", "E3"],
+
+    "notes": "The two genome builds use different coordinates for the same variant. The A allele is associated with reduced ALDH2 function, but does not guarantee alcohol flushing. Genome build and strand compatibility must be verified before interpreting DNA data."
+  },
+  "evidence": [
+    {
+      "evidence_id": "E1",
+      "source_ids": ["ncbi-refsnp-rs671"],
+      "location": "RefSNP placements_with_allele",
+      "finding": "NCBI identifies rs671 as a G>A variant on chromosome 12. It provides verified positions for GRCh37 and GRCh38, as well as transcript and protein representations.",
+      "notes": "Genomic representations are recorded in the variant section. This source does not establish personal symptoms or DNA provider conventions."
+    },
+    {
+      "evidence_id": "E2",
+      "source_ids": ["ncbi-clinvar-rs671", "ncbi-refsnp-rs671"],
+      "location": "ClinVar VCV000018390.12, OtherNameList, HGVSlist and Location",
+      "finding": "ClinVar links the historical names ALDH2*2 and Glu487Lys (E487K) to the modern rs671 representation, including Glu504Lys (E504K).",
+      "data": {
+        "transcript": "NM_000690.4:c.1510G>A",
+        "protein": "NP_000681.2:p.Glu504Lys"
+      },
+      "notes": "Supports variant naming and mapping, not a clinical prediction."
+    },
+    {
+      "evidence_id": "E3",
+      "source_ids": ["crabb-1989"],
+      "location": "Printed page 315, Results and Discussion, left column, first paragraph. The opening sentence identifies the 24 Japanese liver samples; the final sentences report the 10 active, 13 heterozygous deficient and 1 homozygous deficient samples. Publisher scan: https://www.jci.org/articles/view/113875/scanned-page/315",
+      "finding": "Crabb et al. found that carrying the historical ALDH2*2 allele was associated with an enzyme-deficient phenotype in the liver samples studied.",
+      "data": {
+        "population": "24 liver samples from Japanese individuals",
+        "genotype_results": {
+          "*1/*1": "10 enzyme-active samples",
+          "*1/*2": "13 enzyme-deficient samples",
+          "*2/*2": "1 enzyme-deficient sample"
+        }
+      },
+      "notes": "The study measured enzyme function, not individual flushing probability. The retained excerpt contains the abstract's dominance conclusion, not these counts. The original passage is identified for human review; no personal verification is claimed."
+    },
+    {
+      "evidence_id": "E4",
+      "source_ids": ["cho-2023"],
+      "location": "Article Methods: Study population (cho-2023.xml, Par9) and Assessment of alcohol flushing and drinking patterns (Par10); Results: General characteristics of the study population (Par19). Supplementary Material 2 (sources/cho-2023-supplement2.docx): Supplementary methods, KoGES, Samples, first paragraph (page 3); Alcohol flushing and drinking patterns, first paragraph (page 4); Supplementary Table 2, sample headers (page 7). The CKB drinking-frequency wording is in Supplementary methods, China Kadoorie Biobank, Definition of Alcohol flushing for sensitivity GWAS analysis (page 3). Page numbers follow the supplement's table of contents.",
+      "finding": "Cho et al. investigated genetic associations with self-reported alcohol flushing in Chinese and Korean male study populations.",
+      "data": {
+        "CKB": "13,456 Chinese male current drinkers with flushing and genotype information, reported for the regional GWAS analyses.",
+        "CKB_selection": "The article excludes people without genotype data and non-drinkers without flushing information; non-local ancestry was excluded from region-stratified GWAS analyses.",
+        "CKB_current_drinker_definition": "The article describes drinking in most weeks during the previous year. Supplementary Material 2 describes drinking more than once a week; these wordings are not identical.",
+        "KoGES": "1,560 unrelated Korean men from the Ansan cohort's fourth follow-up. Supplementary Table 2 identifies this sample as ever drinkers.",
+        "KoGES_selection": "The supplement lists exclusions for missing flushing, genotype, drinking-status or confounder data. Ever drinkers had consumed alcohol at least once in their lifetime; flushing questions were asked of this group.",
+        "CKB_question": "Do you usually experience hot flushes or dizziness after drinking?",
+        "CKB_flusher_responses": [
+          "Yes, immediately",
+          "Yes, after a small amount of alcohol"
+        ],
+        "CKB_non_flusher_responses": [
+          "Yes, but only after drinking a large amount of alcohol",
+          "No"
+        ],
+        "CKB_question_language": "Mandarin",
+        "KoGES_question": "Have you ever experienced facial flushing after consuming a little alcohol (e.g., a single cup [200 ml] of beer)?",
+        "KoGES_flusher_response": "Yes",
+        "KoGES_question_language": "Korean"
+      },
+      "notes": "CKB current drinkers and KoGES ever drinkers are different selected populations, and their flushing questions are not identical. The reported cohort counts do not establish the sample denominator for every statistical estimate. Abstract and body totals differ (15105 versus 15016); this remains unresolved. Supplementary Material 2 is retained as a supporting reference only, outside the three-document extraction experiment. These findings await human review."
+    },
+    {
+      "evidence_id": "E5",
+      "source_ids": ["cho-2023"],
+      "location": "Results: General characteristics of the study population",
+      "finding": "The rs671 A allele was more common among participants reporting flushing than among non-flushers.",
+      "data": {
+        "measure": "Percentage carrying the A allele within each flushing-status group",
+        "CKB": {
+          "flushers": "45.5%",
+          "non_flushers": "8.7%"
+        },
+        "KoGES": {
+          "flushers": "68.4%",
+          "non_flushers": "9.1%"
+        }
+      },
+      "notes": "These percentages describe allele carriage among flushing-status groups, not the probability of flushing for someone carrying the A allele."
+    },
+    {
+      "evidence_id": "E6",
+      "source_ids": ["cho-2023"],
+      "location": "Table 1 (cho-2023.xml, Tab1), Main / Model 1 / rs671 row and footnote 3; Methods: Genome-wide association analyses, CKB paragraph (Par12), sentences describing conversion of BOLT-LMM estimates before regional meta-analysis",
+      "finding": "Cho reports a statistical association between rs671 and the main alcohol-flushing outcome in the CKB population.",
+      "data": {
+        "genome_build": "hg19 (GRCh37)",
+        "position": "chr12:112241766",
+        "effect_allele": "A",
+        "comparison_allele": "G",
+        "effect_allele_frequency": "0.079",
+        "beta": "2.861",
+        "standard_error": "0.066",
+        "p_value": "8.61E-416"
+      },
+      "notes": "Methods says the BOLT-LMM estimates were converted to log odds ratios before combining regional results. Table 1 footnote 3 instead describes the beta estimates, standard errors and P-values as obtained from linear regression. These descriptions leave unclear whether the displayed beta is before or after that conversion. Keep the reported value without choosing a scale or automatically converting it to an odds ratio. The exact sample denominator for this estimate also remains unresolved. Neither description supplies a personal flushing probability."
+    },
+    {
+      "evidence_id": "E7",
+      "source_ids": ["cho-2023"],
+      "location": "Supplementary Material 1, Supplementary Table 8, cells A2:I3",
+      "finding": "The supplementary table reports the same rs671 association as E6 with more decimal precision.",
+      "data": {
+        "effect_allele": "A",
+        "comparison_allele": "G",
+        "beta": "2.8612",
+        "standard_error": "0.0656",
+        "p_value": "< 1E-319 (8.61E-416)"
+      },
+      "notes": "This is the same underlying result as E6, not independent replication. The statistical-scale uncertainty remains unresolved."
+    }
+  ],
+  "interpretation": {
+    "status": "proposed_requires_human_review",
+    "supporting_evidence_ids": ["E1", "E2", "E3", "E4", "E5", "E6", "E7"],
+
+    "description": "Count the number of A alleles in a valid rs671 genotype. The A allele is associated with reduced ALDH2 function and alcohol flushing in the studied populations.",
+
+    "genotypes": {
+      "GG": 0,
+      "AG": 1,
+      "GA": 1,
+      "AA": 2
+    },
+
+    "missing_data": "If the genotype is missing or cannot be verified, the result is unavailable, not zero copies.",
+
+    "limitations": [
+      "Only interpret genotypes with verified genome build and allele orientation.",
+      "Having the A allele does not guarantee alcohol flushing, and not having it does not exclude flushing.",
+      "One and two copies of the A allele must not be assumed to have identical biological effects.",
+      "Do not predict personal flushing probability, severity or enzyme activity percentage.",
+      "Do not generate unsupported numerical scores, confidence percentages or drinking advice.",
+      "The flushing association comes from specific studied populations and may not generalize to everyone."
+    ]
+  },
+  "unresolved": [
+    {
+      "topic": "Cho statistical results",
+      "issue": "The exact interpretation of the reported beta coefficient and analysis sample size is unclear.",
+      "impact": "Do not use these values to calculate a personal prediction."
+    },
+    {
+      "topic": "Cho sample totals",
+      "issue": "The abstract reports 15,105 participants, while the main text reports 15,016.",
+      "impact": "Do not report a single combined total without clarification."
+    },
+    {
+      "topic": "CKB drinking eligibility",
+      "issue": "The article describes current drinkers as drinking in most weeks in the previous year; Supplementary Material 2 describes drinking more than once a week.",
+      "impact": "Preserve the source-specific wording rather than assuming an identical frequency threshold."
+    },
+    {
+      "topic": "DNA file compatibility",
+      "issue": "Genome builds, strand orientation and genotype representations still need verification for supported DNA providers.",
+      "impact": "Do not apply this interpretation to incompatible or unverified DNA data."
+    },
+    {
+      "topic": "Additional scientific details",
+      "issue": "Some historical naming explanations and supplementary statistical results require further review.",
+      "impact": "Do not use those additional claims until verified."
+    }
+  ]
+}

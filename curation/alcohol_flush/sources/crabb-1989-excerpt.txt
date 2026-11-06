@@ -1,0 +1,22 @@
+Source ID: crabb-1989
+David W. Crabb; Howard J. Edenberg; William F. Bosron; Ting-Kai Li.
+Genotypes for aldehyde dehydrogenase deficiency and alcohol sensitivity.
+The inactive ALDH2(2) allele is dominant.
+Journal of Clinical Investigation 83(1), 314-316 (1989).
+DOI: 10.1172/JCI113875; PMID: 2562960; PMCID: PMC303676.
+Version 1, published 1989-01-01.
+Original: https://www.jci.org/articles/view/113875
+Archive: https://pmc.ncbi.nlm.nih.gov/articles/PMC303676/
+Locator: Abstract, final sentence (also printed page 314, left column).
+
+Verbatim excerpt (18 words, PubMed/PMC plain-text notation):
+"Correlating genotype with phenotype leads to the conclusion that the allele (ALDH2(2)) encoding the abnormal subunit is dominant."
+
+Copyright 1989 The American Society for Clinical Investigation, Inc.
+Only this short attributed quotation and bibliographic facts are retained.
+The freely readable scans/full paper are not redistributed or claimed CC BY.
+JCI's CC BY policy starts with its 2022 issues; see:
+https://www.jci.org/kiosks/terms
+This excerpt is not the complete abstract or paper. The title and excerpt use
+ALDH2(2) for the superscript allele notation in print. No scientific paraphrase
+or evaluation answer is included in this retained source excerpt.
