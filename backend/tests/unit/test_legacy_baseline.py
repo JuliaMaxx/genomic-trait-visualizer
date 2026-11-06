@@ -1,19 +1,19 @@
 """Historical software regressions only; no assertion is scientific ground truth."""
 
 import hashlib
+import inspect
 import json
+import os
+import subprocess
 from pathlib import Path
 
 import pytest
-
-from backend.models import Variant
-from backend.services.trait_service import calculate_single_trait
 
 ROOT = Path(__file__).resolve().parents[3]
 BASELINE = ROOT / "data" / "legacy" / "3ffbaf3"
 MANIFEST = json.loads((BASELINE / "manifest.json").read_text(encoding="utf-8"))
 HISTORICAL = json.loads(
-    (BASELINE / "historical-regressions.json").read_text(encoding="utf-8")
+    (BASELINE / MANIFEST["historical_outputs"]["path"]).read_text(encoding="utf-8")
 )
 
 
@@ -21,19 +21,7 @@ def test_archived_catalog_and_environment_have_recorded_identities() -> None:
     catalog = MANIFEST["catalog"]
     archived = (BASELINE / catalog["archive_path"]).read_bytes()
     assert hashlib.sha256(archived).hexdigest() == catalog["sha256"]
-    assert len(archived) == catalog["size_bytes"]
-    assert (
-        json.loads(archived)[catalog["schema_version_field"]]
-        == catalog["schema_version"]
-    )
-    assert (
-        hashlib.sha256(archived.replace(b"\r\n", b"\n")).hexdigest()
-        == catalog["git_blob_sha256"]
-    )
-    # Git checkouts may use LF or CRLF; the archive itself retains exact bytes.
-    assert (ROOT / catalog["original_path"]).read_bytes().replace(
-        b"\r\n", b"\n"
-    ) == archived.replace(b"\r\n", b"\n")
+    assert json.loads(archived)["version"] == catalog["schema_version"]
     environment = MANIFEST["environment"]
     assert (
         hashlib.sha256(
@@ -41,24 +29,84 @@ def test_archived_catalog_and_environment_have_recorded_identities() -> None:
         ).hexdigest()
         == environment["dependency_snapshot_sha256"]
     )
+
+
+def test_historical_snapshot_has_recorded_identity() -> None:
     outputs = MANIFEST["historical_outputs"]
     assert (
         hashlib.sha256((BASELINE / outputs["path"]).read_bytes()).hexdigest()
         == outputs["sha256"]
     )
-    assert len(HISTORICAL["cases"]) == outputs["case_count"]
-    assert outputs["scientific_ground_truth"] is False
-    assert MANIFEST["scientific_approval"] is False
+    assert len(HISTORICAL["cases"]) == outputs["case_count"] == 32
+    assert len({case["case_id"] for case in HISTORICAL["cases"]}) == 32
+    assert (
+        MANIFEST["scientific_status"]
+        == "scientifically_superseded_not_independently_validated"
+    )
 
 
-def test_legacy_runtime_sources_match_recorded_engine() -> None:
-    for path, expected in MANIFEST["engine"]["runtime_sources_sha256_lf"].items():
-        contents = (ROOT / path).read_bytes().replace(b"\r\n", b"\n")
-        assert hashlib.sha256(contents).hexdigest() == expected, path
+def _git(*args: str) -> bytes:
+    try:
+        completed = subprocess.run(
+            ["git", *args],
+            cwd=ROOT,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=True,
+        )
+    except (OSError, subprocess.CalledProcessError) as exc:
+        raise AssertionError(
+            f"Historical replay Git verification failed: {exc}"
+        ) from exc
+    return completed.stdout
+
+
+@pytest.fixture(scope="module")
+def legacy_checkout() -> None:
+    if os.environ.get("WHOAMI_LEGACY_REPLAY") != "1":
+        pytest.skip(
+            "Set WHOAMI_LEGACY_REPLAY=1 in the original checkout to replay history."
+        )
+
+    commit = MANIFEST["engine_commit"]
+    assert Path(_git("rev-parse", "--show-toplevel").decode().strip()).resolve() == ROOT
+    assert (
+        _git("rev-parse", "HEAD").decode().strip() == commit
+    ), f"Historical replay requires original checkout {commit}."
+    # Archived additions and this replay harness are allowed; original backend
+    # files must match the recorded commit, including staged changes.
+    _git(
+        "diff",
+        "--exit-code",
+        commit,
+        "--",
+        "backend",
+        ":(exclude)backend/tests/unit/test_legacy_baseline.py",
+    )
+    original = _git("show", f"{commit}:data/traits.json").replace(b"\r\n", b"\n")
+    archived = (BASELINE / MANIFEST["catalog"]["archive_path"]).read_bytes()
+    assert archived.replace(b"\r\n", b"\n") == original
+    assert (ROOT / "data" / "traits.json").read_bytes().replace(
+        b"\r\n", b"\n"
+    ) == original
 
 
 @pytest.mark.parametrize("case", HISTORICAL["cases"], ids=lambda case: case["case_id"])
+@pytest.mark.usefixtures("legacy_checkout")
 def test_historical_service_output(case: dict) -> None:
+    # Import only after provenance checks, so normal development tests do not
+    # depend on the legacy models or evaluator still existing.
+    from backend.models import Variant
+    from backend.services.trait_service import calculate_single_trait
+
+    assert (
+        Path(inspect.getfile(Variant)).resolve() == ROOT / "backend/models/analysis.py"
+    )
+    assert (
+        Path(inspect.getfile(calculate_single_trait)).resolve()
+        == ROOT / "backend/services/trait_service.py"
+    )
+
     detail = calculate_single_trait(
         case["trait_id"], [Variant.model_validate(item) for item in case["variants"]]
     )
