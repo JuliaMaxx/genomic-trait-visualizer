@@ -15,23 +15,24 @@ def validate_candidate_references(
     sources: list[EvidenceSource],
 ) -> list[ValidationFinding]:
     """Check record references only; passing does not validate scientific content."""
-    claim_ids = {claim.claim_id for claim in claims}
+    # Preserve the recovered diagnostic names and output shape for existing callers.
+    evidence_ids = {claim.evidence_id for claim in claims}
     source_ids = {source.source_id for source in sources}
     findings: list[ValidationFinding] = []
 
-    for claim_id in candidate.claim_ids:
-        passed = claim_id in claim_ids
+    for evidence_id in candidate.evidence_ids:
+        passed = evidence_id in evidence_ids
         findings.append(
             ValidationFinding(
-                finding_id=f"{candidate.candidate_id}:claim:{claim_id}",
+                finding_id=f"{candidate.candidate_id}:claim:{evidence_id}",
                 candidate_id=candidate.candidate_id,
-                claim_id=claim_id,
+                claim_id=evidence_id,
                 check_name="candidate_claim_reference",
                 severity=FindingSeverity.INFO if passed else FindingSeverity.ERROR,
                 message=(
                     "Claim reference exists."
                     if passed
-                    else f"Candidate references missing claim '{claim_id}'."
+                    else f"Candidate references missing claim '{evidence_id}'."
                 ),
                 passed=passed,
             )
@@ -42,9 +43,11 @@ def validate_candidate_references(
             passed = source_id in source_ids
             findings.append(
                 ValidationFinding(
-                    finding_id=f"{candidate.candidate_id}:source:{claim.claim_id}:{source_id}",
+                    finding_id=(
+                        f"{candidate.candidate_id}:source:{claim.evidence_id}:{source_id}"
+                    ),
                     candidate_id=candidate.candidate_id,
-                    claim_id=claim.claim_id,
+                    claim_id=claim.evidence_id,
                     check_name="claim_source_reference",
                     severity=FindingSeverity.INFO if passed else FindingSeverity.ERROR,
                     message=(

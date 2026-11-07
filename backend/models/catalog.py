@@ -1,3 +1,5 @@
+"""Active legacy v2 models; the successor is staged in published_catalog.py."""
+
 from typing import Literal
 
 from pydantic import (

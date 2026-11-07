@@ -1,0 +1,145 @@
+{
+  "candidate": {
+    "candidate_id": "rs671-stage2-draft",
+    "proposed_id": "alcohol_flush",
+    "proposed_name": "rs671 allele annotation (unapproved draft)",
+    "evidence_ids": ["E1", "E2", "E3"],
+    "source_ids": ["ncbi-refsnp-rs671", "ncbi-clinvar-rs671", "crabb-1989"],
+    "created_at": "2026-11-06T00:00:00Z",
+    "reviewer_notes": [
+      "Schema example transcribed from the Stage 1 dossier; no new scientific review.",
+      "Only the mapping and functional subset is represented here. The full dossier retains the association findings and unresolved questions."
+    ]
+  },
+  "sources": [
+    {
+      "source_id": "ncbi-refsnp-rs671",
+      "source_type": "variant_database",
+      "name": "RefSNP rs671",
+      "url": "https://api.ncbi.nlm.nih.gov/variation/v0/refsnp/671",
+      "source_version": "dbSNP build 157"
+    },
+    {
+      "source_id": "ncbi-clinvar-rs671",
+      "source_type": "variant_database",
+      "name": "ClinVar rs671 mapping",
+      "url": "https://www.ncbi.nlm.nih.gov/clinvar/variation/18390/",
+      "source_version": "VCV000018390.12"
+    },
+    {
+      "source_id": "crabb-1989",
+      "source_type": "scientific_publication",
+      "name": "Crabb et al. (1989)",
+      "title": "Genotypes for aldehyde dehydrogenase deficiency and alcohol sensitivity. The inactive ALDH2(2) allele is dominant.",
+      "url": "https://www.jci.org/articles/view/113875",
+      "doi": "10.1172/JCI113875",
+      "publication_year": 1989
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "E1",
+      "trait_id": "alcohol_flush",
+      "claim_type": "other",
+      "statement": "NCBI identifies rs671 as a G>A variant on chromosome 12 with placements on GRCh37 and GRCh38.",
+      "rsid": "rs671",
+      "source_ids": ["ncbi-refsnp-rs671"],
+      "source_location": {
+        "locator": "sources/rs671-refsnp.json: primary_snapshot_data.placements_with_allele; NC_000012.12 and NC_000012.11; alleles[].hgvs and placement_annot"
+      },
+      "extraction_method": "manual",
+      "extractor_version": "stage2-transcription-of-stage1-draft",
+      "extracted_at": "2026-11-06T00:00:00Z"
+    },
+    {
+      "evidence_id": "E2",
+      "trait_id": "alcohol_flush",
+      "claim_type": "other",
+      "statement": "ClinVar links the historical names ALDH2*2 and Glu487Lys to the modern rs671 representation, including Glu504Lys.",
+      "rsid": "rs671",
+      "source_ids": ["ncbi-clinvar-rs671"],
+      "source_location": {
+        "locator": "sources/rs671-clinvar-mapping.xml: VCV000018390.12, OtherNameList, HGVSlist and Location"
+      },
+      "extraction_method": "manual",
+      "extractor_version": "stage2-transcription-of-stage1-draft",
+      "extracted_at": "2026-11-06T00:00:00Z"
+    },
+    {
+      "evidence_id": "E3",
+      "trait_id": "alcohol_flush",
+      "claim_type": "variant_effect",
+      "statement": "Crabb et al. reported an enzyme-deficient phenotype in liver samples carrying the historical ALDH2*2 allele.",
+      "phenotype": "Enzyme function in the studied Japanese liver samples, not personal flushing probability.",
+      "source_ids": ["crabb-1989"],
+      "source_location": {
+        "page": "315",
+        "section": "Results and Discussion",
+        "locator": "First paragraph in the left column; https://www.jci.org/articles/view/113875/scanned-page/315"
+      },
+      "extraction_method": "manual",
+      "extractor_version": "stage2-transcription-of-stage1-draft",
+      "extracted_at": "2026-11-06T00:00:00Z",
+      "validation_notes": [
+        "The retained excerpt contains the abstract's conclusion, not the original sample counts. The original passage still requires human review."
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "rs671-function-draft",
+      "claim_type": "variant_effect",
+      "statement": "The rs671 A allele is associated with reduced ALDH2 function.",
+      "evidence_ids": ["E1", "E2", "E3"],
+      "scope": "Proposed mapping from forward-genomic rs671 alleles to the historical functional evidence; awaiting human assessment.",
+      "limitations": [
+        "The mapping and functional findings still require human review.",
+        "Copy count does not estimate individual symptoms, severity or enzyme activity percentage.",
+        "Zero A copies does not exclude flushing; one and two copies need not have identical biological effects."
+      ],
+      "status": "pending"
+    }
+  ],
+  "interpretation": {
+    "strategy": "allele_count",
+    "claim_ids": ["rs671-function-draft"],
+    "requirements": {
+      "rsid": "rs671",
+      "placements": [
+        {
+          "genome_build": "GRCh38",
+          "chromosome": "12",
+          "position": 111803962,
+          "sequence_accession": "NC_000012.12"
+        },
+        {
+          "genome_build": "GRCh37",
+          "chromosome": "12",
+          "position": 112241766,
+          "sequence_accession": "NC_000012.11"
+        }
+      ],
+      "orientation": "forward_genomic",
+      "coordinate_system": "1-based",
+      "ploidy": 2,
+      "alleles": ["G", "A"]
+    },
+    "counted_allele": "A",
+    "rules": [
+      {"genotype": "GG", "copies": 0},
+      {"genotype": "AG", "copies": 1},
+      {"genotype": "AA", "copies": 2}
+    ],
+    "unavailable_policy": "withhold"
+  },
+  "explanations": [
+    {
+      "content_id": "rs671-draft-explanation",
+      "kind": "simple_explanation",
+      "title": "Draft allele annotation",
+      "body": "The proposed table describes zero, one or two A copies at rs671. Its connection to reduced ALDH2 function awaits review. It cannot predict personal flushing, and missing or incompatible data must not be treated as zero copies.",
+      "claim_ids": ["rs671-function-draft"],
+      "reviewed": false
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "schema_version": "3.0",
+  "traits": [
+    {
+      "candidate": {
+        "candidate_id": "synthetic-education",
+        "proposed_id": "synthetic_education",
+        "proposed_name": "Synthetic educational topic (test data only)",
+        "status": "approved",
+        "created_at": "2026-11-06T00:00:00Z"
+      },
+      "sources": [
+        {
+          "source_id": "synthetic-study",
+          "source_type": "other",
+          "name": "Fictional study for testing; not a scientific publication"
+        }
+      ],
+      "evidence": [
+        {
+          "evidence_id": "synthetic-finding",
+          "claim_type": "study_limitation",
+          "statement": "In this fictional study, the measured outcome varied with exposure.",
+          "source_ids": ["synthetic-study"],
+          "source_location": {"section": "Fictional results"},
+          "extraction_method": "manual",
+          "extracted_at": "2026-11-06T00:00:00Z"
+        }
+      ],
+      "claims": [
+        {
+          "claim_id": "synthetic-reviewed-claim",
+          "claim_type": "study_limitation",
+          "statement": "This fictional finding needs its exposure context to be understood.",
+          "evidence_ids": ["synthetic-finding"],
+          "scope": "Synthetic fixture only; no claims about real people or variants.",
+          "limitations": ["Fictional data cannot support a personal prediction."],
+          "status": "approved",
+          "assessment": {
+            "assessment_id": "synthetic-assessment",
+            "candidate_id": "synthetic-education",
+            "assessment_rationale": "Synthetic reviewed state for schema tests only; no real scientific approval.",
+            "rubric_version": "synthetic-test",
+            "assessed_at": "2026-11-06T00:00:00Z",
+            "reviewed": true
+          }
+        }
+      ],
+      "interpretation": {
+        "strategy": "educational",
+        "claim_ids": ["synthetic-reviewed-claim"]
+      },
+      "explanations": [
+        {
+          "content_id": "synthetic-explanation",
+          "kind": "simple_explanation",
+          "title": "Understanding context (fictional example)",
+          "body": "This fictional study illustrates why exposure context matters. It offers educational information without an individual genotype result.",
+          "claim_ids": ["synthetic-reviewed-claim"],
+          "reviewed": true
+        }
+      ]
+    }
+  ]
+}

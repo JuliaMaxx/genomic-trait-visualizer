@@ -35,7 +35,7 @@ from backend.services.trait_curation.catalog import load_trait_catalog
 from backend.services.trait_curation.validation import validate_candidate_references
 
 
-def test_source_and_claim_support_optional_provenance() -> None:
+def test_source_and_claim_require_location_but_allow_optional_metadata() -> None:
     source = EvidenceSource(
         source_id="src-1",
         source_type=SourceType.SCIENTIFIC_PUBLICATION,
@@ -44,14 +44,15 @@ def test_source_and_claim_support_optional_provenance() -> None:
         retrieved_at=datetime.now(timezone.utc),
     )
     claim = EvidenceClaim(
-        claim_id="claim-1",
+        evidence_id="claim-1",
         claim_type=ClaimType.TRAIT_ASSOCIATION,
         statement="A reported association.",
         source_ids=[source.source_id],
+        source_location=EvidenceLocation(section="Synthetic results"),
         extraction_method=ExtractionMethod.MANUAL,
     )
     assert claim.extraction_confidence is None
-    assert claim.source_location is None
+    assert claim.source_location.section == "Synthetic results"
     assert claim.status == "pending"
     assert claim.validation_notes == []
 
@@ -63,11 +64,12 @@ def test_invalid_enum_ranges_and_identifiers_rejected() -> None:
         )
     with pytest.raises(ValidationError):
         EvidenceClaim(
-            claim_id="c",
+            evidence_id="c",
             claim_type=ClaimType.OTHER,
             statement="Claim",
             rsid="not-an-rsid",
             source_ids=["s"],
+            source_location=EvidenceLocation(section="Synthetic results"),
             extraction_method=ExtractionMethod.MANUAL,
             extraction_confidence=1.1,
         )
@@ -75,10 +77,11 @@ def test_invalid_enum_ranges_and_identifiers_rejected() -> None:
         EvidenceAssessment(assessment_id="a", candidate_id="c", study_count=-1)
     with pytest.raises(ValidationError):
         EvidenceClaim(
-            claim_id="c",
+            evidence_id="c",
             claim_type=ClaimType.OTHER,
             statement="Claim",
             source_ids=["s"],
+            source_location=EvidenceLocation(section="Synthetic results"),
             extraction_method=ExtractionMethod.MANUAL,
             extracted_at=datetime(2024, 1, 1),
         )
@@ -109,13 +112,14 @@ def test_reference_validation_detects_missing_source_and_claim() -> None:
         candidate_id="candidate-1",
         proposed_id="trait",
         proposed_name="Trait",
-        claim_ids=["missing-claim"],
+        evidence_ids=["missing-claim"],
     )
     claim = EvidenceClaim(
-        claim_id="claim-1",
+        evidence_id="claim-1",
         claim_type=ClaimType.VARIANT_EFFECT,
         statement="A claim",
         source_ids=["missing-source"],
+        source_location=EvidenceLocation(section="Synthetic results"),
         extraction_method=ExtractionMethod.MANUAL,
     )
     findings = validate_candidate_references(candidate, [claim], [])
@@ -171,7 +175,7 @@ def test_source_location_and_extraction_provenance_round_trip() -> None:
         section="Results", page="3", paragraph=2, table="1", figure="2a"
     )
     claim = EvidenceClaim(
-        claim_id="claim-1",
+        evidence_id="claim-1",
         claim_type=ClaimType.VARIANT_EFFECT,
         statement="A source-reported statement awaiting review.",
         rsid="rs671",
@@ -225,6 +229,7 @@ def test_claim_rejects_invalid_fields_independently(field: str, value: object) -
         "claim_type": "other",
         "statement": "Claim",
         "source_ids": ["s"],
+        "source_location": {"section": "Synthetic results"},
         "extraction_method": "manual",
         field: value,
     }
@@ -247,6 +252,7 @@ def test_claim_rejects_invalid_fields_independently(field: str, value: object) -
                 "claim_type": "other",
                 "statement": "Claim",
                 "source_ids": ["s"],
+                "source_location": {"section": "Synthetic results"},
                 "extraction_method": "manual",
             },
             "extracted_at",
@@ -298,17 +304,18 @@ def test_all_record_timestamps_require_timezone(
 def test_reference_validation_covers_all_reference_kinds_and_mixed_results() -> None:
     source = EvidenceSource(source_id="s", source_type=SourceType.OTHER, name="Source")
     claim = EvidenceClaim(
-        claim_id="claim",
+        evidence_id="claim",
         claim_type=ClaimType.OTHER,
         statement="Claim",
         source_ids=["s"],
+        source_location=EvidenceLocation(section="Synthetic results"),
         extraction_method=ExtractionMethod.MANUAL,
     )
     candidate = TraitCandidate(
         candidate_id="candidate",
         proposed_id="trait",
         proposed_name="Trait",
-        claim_ids=["claim"],
+        evidence_ids=["claim"],
         source_ids=["s"],
     )
     findings = validate_candidate_references(candidate, [claim], [source])

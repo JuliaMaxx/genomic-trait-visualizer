@@ -58,6 +58,7 @@ These are proposed requirements, not yet implemented or scientifically approved 
 ## 4. Research files
 
 - [dossier.json](dossier.json) — Draft scientific evidence, variant information, references and unresolved questions.
+- [stage2-draft.json](stage2-draft.json) — A score-free, unapproved schema example using the mapping and functional subset; see [Stage 2 contracts](../stage2-contracts.md).
 - [acquisition.json](acquisition.json) — Information about the saved research files, including their original locations and checksums.
 - [expected-cases.md](expected-cases.md) — Separate draft cases, distinguishing source-based allele counts from proposed software handling policies.
 - [sources/](sources/) — All six current source documents listed above, including the ClinVar and Crabb excerpts.
