@@ -5,8 +5,22 @@ from backend.models.curation import (
     EvidenceSource,
     FindingSeverity,
     TraitCandidate,
+    TraitDossier,
     ValidationFinding,
 )
+from backend.models.published_catalog import publication_structure_errors
+
+
+def validate_dossier(data: object) -> TraitDossier:
+    """Validate drafts, including references and possibly mutated model objects."""
+    if isinstance(data, TraitDossier):
+        data = data.model_dump(mode="json")
+    return TraitDossier.model_validate(data)
+
+
+def validate_review_readiness(dossier: TraitDossier) -> list[str]:
+    """Reuse publication structure checks without treating labels as decisions."""
+    return publication_structure_errors(validate_dossier(dossier))
 
 
 def validate_candidate_references(

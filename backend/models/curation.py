@@ -1,9 +1,9 @@
 """Internal authoring contracts; validation does not establish scientific truth.
 
-Legacy status labels (including ``validated`` and ``approved``), assessments and
-review actions are descriptive data only. No runtime or approval workflow consumes
-them. AssessedClaim records a separate assessment of source-reported findings.
-Exact-revision review and publication are deferred to later stages.
+Legacy status labels (including ``validated`` and ``approved``) and assessments
+are descriptive data only. Stage 3 derives approval from scoped review decisions
+in services/trait_curation/workflow.py. AssessedClaim records a separate assessment
+of source-reported findings. Publication remains a later stage.
 """
 
 import re
@@ -307,6 +307,9 @@ class ExplanationContent(CurationModel):
     claim_ids: list[Text] = Field(min_length=1)
     result_key: Text | None = None
     reviewed: bool = False
+    # Opt in when otherwise general text discusses the interpretation's behavior.
+    # Result content and inherently model-related kinds always depend on it.
+    model_dependent: bool = False
 
     @model_validator(mode="after")
     def result_content_has_a_target(self) -> "ExplanationContent":

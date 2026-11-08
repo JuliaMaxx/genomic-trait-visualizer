@@ -139,6 +139,7 @@
       "title": "Draft allele annotation",
       "body": "The proposed table describes zero, one or two A copies at rs671. Its connection to reduced ALDH2 function awaits review. It cannot predict personal flushing, and missing or incompatible data must not be treated as zero copies.",
       "claim_ids": ["rs671-function-draft"],
+      "model_dependent": true,
       "reviewed": false
     }
   ]
