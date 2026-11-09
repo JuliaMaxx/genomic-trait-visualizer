@@ -1,0 +1,26 @@
+{
+  "case_set_id": "fictional-education-v1",
+  "trait_id": "synthetic_education",
+  "kind": "synthetic",
+  "basis": "Fictional expectations prepared independently: education does not depend on a genotype.",
+  "cases": [
+    {
+      "case_id": "no-input",
+      "rationale": "Education needs no personal input.",
+      "observation": null,
+      "expected": {
+        "status": "educational"
+      }
+    },
+    {
+      "case_id": "ignored-input",
+      "rationale": "A supplied genotype must not produce a personal result.",
+      "observation": {
+        "genotype": "AA"
+      },
+      "expected": {
+        "status": "educational"
+      }
+    }
+  ]
+}

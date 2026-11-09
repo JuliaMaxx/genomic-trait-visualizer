@@ -6,6 +6,13 @@ from pathlib import Path
 from typing import Any
 
 from backend.models.curation import ReviewAction
+from backend.services.trait_curation.compiler import (
+    approve_release,
+    build_candidate,
+    preview_candidate,
+    publish_candidate,
+    verify_release,
+)
 from backend.services.trait_curation.validation import validate_review_readiness
 from backend.services.trait_curation.workflow import (
     ReviewScope,
@@ -50,7 +57,9 @@ def _print_status(status: dict[str, Any]) -> None:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Offline scientific dossier review")
+    parser = argparse.ArgumentParser(
+        description="Offline scientific review and catalog publication"
+    )
     commands = parser.add_subparsers(dest="command", required=True)
     init = commands.add_parser("init", help="Create a new workspace from a dossier")
     init.add_argument("dossier", type=Path)
@@ -105,6 +114,37 @@ def build_parser() -> argparse.ArgumentParser:
         "history", help="List preserved revisions and decisions"
     )
     history.add_argument("workspace", type=Path)
+
+    build = commands.add_parser("build", help="Freeze a reviewed publication candidate")
+    build.add_argument("workspace", type=Path)
+    build.add_argument("candidate", type=Path)
+    build.add_argument("--release-id", required=True)
+    build.add_argument("--cases", required=True, type=Path)
+    build.add_argument("--acquisition", type=Path, help="Source acquisition inventory")
+
+    preview = commands.add_parser(
+        "preview", help="Check and display the compiled preview"
+    )
+    preview.add_argument("candidate", type=Path)
+
+    approve = commands.add_parser("approve-release", help="Approve the exact manifest")
+    approve.add_argument("candidate", type=Path)
+    approve.add_argument("workspace", type=Path)
+    approve.add_argument("--reviewer", required=True)
+    approve.add_argument("--rationale", required=True)
+    approve.add_argument(
+        "--fingerprint", required=True, help="Manifest SHA-256 from preview"
+    )
+
+    publish = commands.add_parser(
+        "publish", help="Copy approved files without rebuilding"
+    )
+    publish.add_argument("candidate", type=Path)
+    publish.add_argument("workspace", type=Path)
+    publish.add_argument("--releases", type=Path, default=Path("data/releases"))
+
+    verify = commands.add_parser("verify-release", help="Verify all published files")
+    verify.add_argument("release", type=Path)
     return parser
 
 
@@ -183,6 +223,36 @@ def main(argv: list[str] | None = None) -> int:
                 _print_status(status)
         elif args.command == "history":
             _print_json(workspace_history(args.workspace))
+        elif args.command == "build":
+            manifest = build_candidate(
+                args.workspace,
+                args.candidate,
+                args.release_id,
+                args.cases,
+                args.acquisition,
+            )
+            print(f"Built candidate {manifest.release_id}: {args.candidate}")
+        elif args.command == "preview":
+            preview, fingerprint = preview_candidate(args.candidate)
+            print(preview)
+            print(f"Manifest SHA-256: {fingerprint}")
+        elif args.command == "approve-release":
+            approval = approve_release(
+                args.candidate,
+                args.workspace,
+                args.reviewer,
+                args.rationale,
+                args.fingerprint,
+            )
+            _print_json(approval.model_dump(mode="json"))
+        elif args.command == "publish":
+            destination = publish_candidate(
+                args.candidate, args.workspace, args.releases
+            )
+            print(f"Published and verified: {destination}")
+        elif args.command == "verify-release":
+            manifest = verify_release(args.release)
+            print(f"Verified release {manifest.release_id}: all file hashes match")
     except (OSError, ValueError) as exc:
         parser.exit(2, f"error: {exc}\n")
     return 0

@@ -1,26 +1,30 @@
-"""Successor TraitCatalog contract, staged separately from the active v2 catalog.
+"""Compact offline publication schema 3.1; active application v2 is unchanged.
 
-This validates catalog structure, not a release or its approval history. The
-application continues importing backend.models.catalog until runtime migration.
-Full dossiers are reused only for Stage 2 validation. Stage 4 must define the
-smaller published payload before any runtime release is built.
+Models validate structure. Only the Stage 4 compiler checks Stage 3 decisions;
+validating a hand-written catalog never establishes publication approval.
 """
 
-from typing import Literal
+from itertools import combinations_with_replacement
+from typing import Annotated, Literal
 
 from pydantic import Field, model_validator
 
+from .common import TraitCategory
 from .curation import (
-    CandidateStatus,
-    ClaimStatus,
+    ClaimType,
     CurationModel,
+    EvidenceLocation,
+    EvidenceSource,
+    ExplanationText,
+    Text,
     TraitDossier,
+    require_references,
     require_unique_ids,
 )
-from .interpretation import EducationalInterpretation
+from .interpretation import AlleleCountInterpretation, EducationalInterpretation
 
 
-def publication_structure_errors(trait: TraitDossier) -> list[str]:
+def publication_structure_errors(trait: "TraitDossier | PublishedTrait") -> list[str]:
     """Shared completeness/content checks, independent of approval labels."""
     errors: list[str] = []
     if not trait.sources or not trait.evidence or not trait.claims:
@@ -54,31 +58,87 @@ def publication_structure_errors(trait: TraitDossier) -> list[str]:
     return errors
 
 
-class TraitCatalog(CurationModel):
-    schema_version: Literal["3.0"]
-    traits: list[TraitDossier] = Field(min_length=1)
+class PublishedEvidence(CurationModel):
+    evidence_id: Text
+    claim_type: ClaimType
+    statement: Text
+    source_ids: list[Text] = Field(min_length=1, max_length=1)
+    source_location: EvidenceLocation
+    rsid: str | None = Field(default=None, pattern=r"^rs\d+$")
+    gene: Text | None = None
+    phenotype: Text | None = None
+    effect_allele: Text | None = None
+    effect_direction: Text | None = None
+
+
+class PublishedClaim(CurationModel):
+    claim_id: Text
+    claim_type: ClaimType
+    statement: Text
+    evidence_ids: list[Text] = Field(min_length=1)
+    scope: Text
+    limitations: list[Text] = Field(min_length=1)
+
+
+class PublishedTrait(CurationModel):
+    id: str = Field(pattern=r"^[a-z0-9_]+$")
+    name: Text
+    category: TraitCategory
+    description: Text
+    sources: list[EvidenceSource] = Field(min_length=1)
+    evidence: list[PublishedEvidence] = Field(min_length=1)
+    claims: list[PublishedClaim] = Field(min_length=1)
+    interpretation: Annotated[
+        AlleleCountInterpretation | EducationalInterpretation,
+        Field(discriminator="strategy"),
+    ]
+    explanations: list[ExplanationText] = Field(min_length=1)
 
     @model_validator(mode="after")
-    def published_entries_are_complete_and_reviewed(self) -> "TraitCatalog":
-        require_unique_ids(
-            [trait.candidate.proposed_id for trait in self.traits], "trait IDs"
-        )
-        for trait in self.traits:
-            if trait.candidate.status != CandidateStatus.APPROVED:
-                raise ValueError("published candidates must be approved")
-            errors = publication_structure_errors(trait)
-            if errors:
-                raise ValueError(errors[0])
-            if any(claim.status != "approved" for claim in trait.claims):
-                raise ValueError("published catalog claims must be approved")
-            # A finding's legacy pending label may remain; scientific statements
-            # need their own assessed-claim approval. Explicit concerns still block.
-            if any(
-                finding.status in {ClaimStatus.REJECTED, ClaimStatus.NEEDS_REVIEW}
-                for finding in trait.evidence
-            ):
-                raise ValueError("published evidence cannot be rejected or need review")
-            if any(not content.reviewed for content in trait.explanations):
-                raise ValueError("published explanations must be reviewed")
-
+    def complete_and_traceable(self) -> "PublishedTrait":
+        for records, field in (
+            (self.sources, "source_id"),
+            (self.evidence, "evidence_id"),
+            (self.claims, "claim_id"),
+            (self.explanations, "content_id"),
+        ):
+            require_unique_ids([getattr(item, field) for item in records], field)
+        sources = {source.source_id for source in self.sources}
+        evidence = {finding.evidence_id for finding in self.evidence}
+        claims = {claim.claim_id for claim in self.claims}
+        for finding in self.evidence:
+            require_references(finding.source_ids, sources, "evidence sources")
+        for claim in self.claims:
+            require_references(claim.evidence_ids, evidence, "claim evidence")
+        require_references(self.interpretation.claim_ids, claims, "model claims")
+        for content in self.explanations:
+            require_references(content.claim_ids, claims, "content claims")
+        errors = publication_structure_errors(self)
+        if errors:
+            raise ValueError(errors[0])
+        if not any(text.result_key is None for text in self.explanations):
+            raise ValueError("publication requires a general explanation")
+        if isinstance(self.interpretation, AlleleCountInterpretation):
+            expected = {
+                "".join(pair)
+                for pair in combinations_with_replacement(
+                    sorted(self.interpretation.requirements.alleles), 2
+                )
+            }
+            if {rule.genotype for rule in self.interpretation.rules} != expected:
+                raise ValueError("publication requires a complete genotype table")
+            summaries = {
+                text.result_key
+                for text in self.explanations
+                if text.kind == "outcome_summary"
+            }
+            if summaries != {"0", "1", "2", "unavailable"}:
+                raise ValueError(
+                    "publication requires outcome_summary for 0, 1, 2 and unavailable"
+                )
         return self
+
+
+class TraitCatalog(CurationModel):
+    schema_version: Literal["3.1"]
+    traits: list[PublishedTrait] = Field(min_length=1, max_length=1)

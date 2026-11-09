@@ -3,7 +3,7 @@
 Legacy status labels (including ``validated`` and ``approved``) and assessments
 are descriptive data only. Stage 3 derives approval from scoped review decisions
 in services/trait_curation/workflow.py. AssessedClaim records a separate assessment
-of source-reported findings. Publication remains a later stage.
+of source-reported findings. Stage 4 compiles a separate published representation.
 """
 
 import re
@@ -284,7 +284,9 @@ class AssessedClaim(CurationModel):
         return self
 
 
-class ExplanationContent(CurationModel):
+class ExplanationText(CurationModel):
+    """Shared explanation value fields, without authoring or review metadata."""
+
     content_id: Text
     kind: Literal[
         "description",
@@ -306,13 +308,9 @@ class ExplanationContent(CurationModel):
     body: Text
     claim_ids: list[Text] = Field(min_length=1)
     result_key: Text | None = None
-    reviewed: bool = False
-    # Opt in when otherwise general text discusses the interpretation's behavior.
-    # Result content and inherently model-related kinds always depend on it.
-    model_dependent: bool = False
 
     @model_validator(mode="after")
-    def result_content_has_a_target(self) -> "ExplanationContent":
+    def result_content_has_a_target(self) -> "ExplanationText":
         result_specific = self.kind in {
             "card_tooltip",
             "headline",
@@ -322,6 +320,12 @@ class ExplanationContent(CurationModel):
         if result_specific != (self.result_key is not None):
             raise ValueError("result_key is required only for result-specific content")
         return self
+
+
+class ExplanationContent(ExplanationText):
+    reviewed: bool = False
+    # Result content and inherently model-related kinds always depend on the model.
+    model_dependent: bool = False
 
 
 def require_unique_ids(ids: list[str], label: str) -> None:
@@ -336,7 +340,7 @@ def require_references(refs: list[str], available: set[str], label: str) -> None
 
 
 class TraitDossier(CurationModel):
-    """One self-contained trait, shared by authoring and the staged catalog."""
+    """One self-contained authoring trait; compiled catalogs use a smaller type."""
 
     candidate: TraitCandidate
     sources: list[EvidenceSource] = Field(default_factory=list)

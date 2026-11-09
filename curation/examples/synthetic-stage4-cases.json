@@ -1,0 +1,269 @@
+{
+  "case_set_id": "fictional-allele-v1",
+  "trait_id": "synthetic_allele",
+  "kind": "synthetic",
+  "basis": "Fictional cases manually specified for software testing; not scientific approval.",
+  "cases": [
+    {
+      "case_id": "S1-GRCh38",
+      "rationale": "Fictional arithmetic test, not scientific evidence.",
+      "observation": {
+        "rsid": "rs12345678",
+        "genome_build": "GRCh38",
+        "chromosome": "1",
+        "position": 101,
+        "sequence_accession": "NC_000001.11",
+        "orientation": "forward_genomic",
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": "GG"
+      },
+      "expected": {
+        "status": "evaluated",
+        "copies": 0
+      }
+    },
+    {
+      "case_id": "S2-GRCh38",
+      "rationale": "Fictional arithmetic test, not scientific evidence.",
+      "observation": {
+        "rsid": "rs12345678",
+        "genome_build": "GRCh38",
+        "chromosome": "1",
+        "position": 101,
+        "sequence_accession": "NC_000001.11",
+        "orientation": "forward_genomic",
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": "AG"
+      },
+      "expected": {
+        "status": "evaluated",
+        "copies": 1
+      }
+    },
+    {
+      "case_id": "S3-GRCh38",
+      "rationale": "Fictional arithmetic test, not scientific evidence.",
+      "observation": {
+        "rsid": "rs12345678",
+        "genome_build": "GRCh38",
+        "chromosome": "1",
+        "position": 101,
+        "sequence_accession": "NC_000001.11",
+        "orientation": "forward_genomic",
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": "GA"
+      },
+      "expected": {
+        "status": "evaluated",
+        "copies": 1
+      }
+    },
+    {
+      "case_id": "S4-GRCh38",
+      "rationale": "Fictional arithmetic test, not scientific evidence.",
+      "observation": {
+        "rsid": "rs12345678",
+        "genome_build": "GRCh38",
+        "chromosome": "1",
+        "position": 101,
+        "sequence_accession": "NC_000001.11",
+        "orientation": "forward_genomic",
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": "AA"
+      },
+      "expected": {
+        "status": "evaluated",
+        "copies": 2
+      }
+    },
+    {
+      "case_id": "P1-absent",
+      "rationale": "Fictional software test. No biological inference or provider handling is asserted.",
+      "observation": null,
+      "expected": {
+        "status": "unavailable",
+        "reason": "missing_genotype"
+      }
+    },
+    {
+      "case_id": "P1-no-call",
+      "rationale": "Fictional software test. No biological inference or provider handling is asserted.",
+      "observation": {
+        "rsid": "rs12345678",
+        "genome_build": "GRCh38",
+        "chromosome": "1",
+        "position": 101,
+        "sequence_accession": "NC_000001.11",
+        "orientation": "forward_genomic",
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": null
+      },
+      "expected": {
+        "status": "unavailable",
+        "reason": "missing_genotype"
+      }
+    },
+    {
+      "case_id": "P2-partial",
+      "rationale": "Fictional software test. No biological inference or provider handling is asserted.",
+      "observation": {
+        "rsid": "rs12345678",
+        "genome_build": "GRCh38",
+        "chromosome": "1",
+        "position": 101,
+        "sequence_accession": "NC_000001.11",
+        "orientation": "forward_genomic",
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": "G/."
+      },
+      "expected": {
+        "status": "unavailable",
+        "reason": "invalid_genotype"
+      }
+    },
+    {
+      "case_id": "P3-malformed",
+      "rationale": "Fictional software test. No biological inference or provider handling is asserted.",
+      "observation": {
+        "rsid": "rs12345678",
+        "genome_build": "GRCh38",
+        "chromosome": "1",
+        "position": 101,
+        "sequence_accession": "NC_000001.11",
+        "orientation": "forward_genomic",
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": "AA?"
+      },
+      "expected": {
+        "status": "unavailable",
+        "reason": "invalid_genotype"
+      }
+    },
+    {
+      "case_id": "P4-unsupported",
+      "rationale": "Fictional software test. No biological inference or provider handling is asserted.",
+      "observation": {
+        "rsid": "rs12345678",
+        "genome_build": "GRCh38",
+        "chromosome": "1",
+        "position": 101,
+        "sequence_accession": "NC_000001.11",
+        "orientation": "forward_genomic",
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": "GC"
+      },
+      "expected": {
+        "status": "unavailable",
+        "reason": "unsupported_allele"
+      }
+    },
+    {
+      "case_id": "P5-wrong-position",
+      "rationale": "Fictional software test. No biological inference or provider handling is asserted.",
+      "observation": {
+        "rsid": "rs12345678",
+        "genome_build": "GRCh38",
+        "chromosome": "1",
+        "position": 102,
+        "sequence_accession": "NC_000001.11",
+        "orientation": "forward_genomic",
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": "AG"
+      },
+      "expected": {
+        "status": "unavailable",
+        "reason": "incompatible_representation"
+      }
+    },
+    {
+      "case_id": "P6-missing-build",
+      "rationale": "Fictional software test. No biological inference or provider handling is asserted.",
+      "observation": {
+        "rsid": "rs12345678",
+        "genome_build": null,
+        "chromosome": "1",
+        "position": 101,
+        "sequence_accession": "NC_000001.11",
+        "orientation": "forward_genomic",
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": "AG"
+      },
+      "expected": {
+        "status": "unavailable",
+        "reason": "missing_representation"
+      }
+    },
+    {
+      "case_id": "P6-missing-orientation",
+      "rationale": "Fictional software test. No biological inference or provider handling is asserted.",
+      "observation": {
+        "rsid": "rs12345678",
+        "genome_build": "GRCh38",
+        "chromosome": "1",
+        "position": 101,
+        "sequence_accession": "NC_000001.11",
+        "orientation": null,
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": "AG"
+      },
+      "expected": {
+        "status": "unavailable",
+        "reason": "missing_representation"
+      }
+    },
+    {
+      "case_id": "P6-unsupported-build",
+      "rationale": "Fictional software test. No biological inference or provider handling is asserted.",
+      "observation": {
+        "rsid": "rs12345678",
+        "genome_build": "unverified",
+        "chromosome": "1",
+        "position": 101,
+        "sequence_accession": "NC_000001.11",
+        "orientation": "forward_genomic",
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": "AG"
+      },
+      "expected": {
+        "status": "unavailable",
+        "reason": "unsupported_build"
+      }
+    },
+    {
+      "case_id": "P7-reverse-orientation",
+      "rationale": "Fictional software test. No biological inference or provider handling is asserted.",
+      "observation": {
+        "rsid": "rs12345678",
+        "genome_build": "GRCh38",
+        "chromosome": "1",
+        "position": 101,
+        "sequence_accession": "NC_000001.11",
+        "orientation": "reverse_genomic",
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": "AG"
+      },
+      "expected": {
+        "status": "unavailable",
+        "reason": "unsupported_orientation"
+      }
+    },
+    {
+      "case_id": "P8-duplicate-conflicts",
+      "disposition": "deferred",
+      "rationale": "Stage 1 leaves duplicate-observation handling unresolved. This offline function accepts one explicit observation; parser aggregation belongs to Stage 6."
+    }
+  ]
+}

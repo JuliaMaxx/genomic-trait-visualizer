@@ -1,0 +1,345 @@
+{
+  "case_set_id": "rs671-stage1-offline-v1",
+  "trait_id": "alcohol_flush",
+  "kind": "reference",
+  "basis": "Transcribed from curation/alcohol_flush/expected-cases.md, S1-S4 at both retained NCBI placements. P1-P7 are conservative offline policies; P8 and provider transformations remain deferred. No personal symptom predictions.",
+  "cases": [
+    {
+      "case_id": "S1-GRCh38",
+      "rationale": "Stage 1 expected-cases.md, scientific case S1; explicit compatible placement, A-copy arithmetic only. Human scientific review is still required.",
+      "observation": {
+        "rsid": "rs671",
+        "genome_build": "GRCh38",
+        "chromosome": "12",
+        "position": 111803962,
+        "sequence_accession": "NC_000012.12",
+        "orientation": "forward_genomic",
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": "GG"
+      },
+      "expected": {
+        "status": "evaluated",
+        "copies": 0
+      }
+    },
+    {
+      "case_id": "S2-GRCh38",
+      "rationale": "Stage 1 expected-cases.md, scientific case S2; explicit compatible placement, A-copy arithmetic only. Human scientific review is still required.",
+      "observation": {
+        "rsid": "rs671",
+        "genome_build": "GRCh38",
+        "chromosome": "12",
+        "position": 111803962,
+        "sequence_accession": "NC_000012.12",
+        "orientation": "forward_genomic",
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": "AG"
+      },
+      "expected": {
+        "status": "evaluated",
+        "copies": 1
+      }
+    },
+    {
+      "case_id": "S3-GRCh38",
+      "rationale": "Stage 1 expected-cases.md, scientific case S3; explicit compatible placement, A-copy arithmetic only. Human scientific review is still required.",
+      "observation": {
+        "rsid": "rs671",
+        "genome_build": "GRCh38",
+        "chromosome": "12",
+        "position": 111803962,
+        "sequence_accession": "NC_000012.12",
+        "orientation": "forward_genomic",
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": "GA"
+      },
+      "expected": {
+        "status": "evaluated",
+        "copies": 1
+      }
+    },
+    {
+      "case_id": "S4-GRCh38",
+      "rationale": "Stage 1 expected-cases.md, scientific case S4; explicit compatible placement, A-copy arithmetic only. Human scientific review is still required.",
+      "observation": {
+        "rsid": "rs671",
+        "genome_build": "GRCh38",
+        "chromosome": "12",
+        "position": 111803962,
+        "sequence_accession": "NC_000012.12",
+        "orientation": "forward_genomic",
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": "AA"
+      },
+      "expected": {
+        "status": "evaluated",
+        "copies": 2
+      }
+    },
+    {
+      "case_id": "S1-GRCh37",
+      "rationale": "Stage 1 expected-cases.md, scientific case S1; explicit compatible placement, A-copy arithmetic only. Human scientific review is still required.",
+      "observation": {
+        "rsid": "rs671",
+        "genome_build": "GRCh37",
+        "chromosome": "12",
+        "position": 112241766,
+        "sequence_accession": "NC_000012.11",
+        "orientation": "forward_genomic",
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": "GG"
+      },
+      "expected": {
+        "status": "evaluated",
+        "copies": 0
+      }
+    },
+    {
+      "case_id": "S2-GRCh37",
+      "rationale": "Stage 1 expected-cases.md, scientific case S2; explicit compatible placement, A-copy arithmetic only. Human scientific review is still required.",
+      "observation": {
+        "rsid": "rs671",
+        "genome_build": "GRCh37",
+        "chromosome": "12",
+        "position": 112241766,
+        "sequence_accession": "NC_000012.11",
+        "orientation": "forward_genomic",
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": "AG"
+      },
+      "expected": {
+        "status": "evaluated",
+        "copies": 1
+      }
+    },
+    {
+      "case_id": "S3-GRCh37",
+      "rationale": "Stage 1 expected-cases.md, scientific case S3; explicit compatible placement, A-copy arithmetic only. Human scientific review is still required.",
+      "observation": {
+        "rsid": "rs671",
+        "genome_build": "GRCh37",
+        "chromosome": "12",
+        "position": 112241766,
+        "sequence_accession": "NC_000012.11",
+        "orientation": "forward_genomic",
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": "GA"
+      },
+      "expected": {
+        "status": "evaluated",
+        "copies": 1
+      }
+    },
+    {
+      "case_id": "S4-GRCh37",
+      "rationale": "Stage 1 expected-cases.md, scientific case S4; explicit compatible placement, A-copy arithmetic only. Human scientific review is still required.",
+      "observation": {
+        "rsid": "rs671",
+        "genome_build": "GRCh37",
+        "chromosome": "12",
+        "position": 112241766,
+        "sequence_accession": "NC_000012.11",
+        "orientation": "forward_genomic",
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": "AA"
+      },
+      "expected": {
+        "status": "evaluated",
+        "copies": 2
+      }
+    },
+    {
+      "case_id": "P1-absent",
+      "rationale": "Stage 1 conservative proposal, finalized only for explicit offline inputs by Stage 2 withhold policy. No biological inference or provider handling is asserted.",
+      "observation": null,
+      "expected": {
+        "status": "unavailable",
+        "reason": "missing_genotype"
+      }
+    },
+    {
+      "case_id": "P1-no-call",
+      "rationale": "Stage 1 conservative proposal, finalized only for explicit offline inputs by Stage 2 withhold policy. No biological inference or provider handling is asserted.",
+      "observation": {
+        "rsid": "rs671",
+        "genome_build": "GRCh38",
+        "chromosome": "12",
+        "position": 111803962,
+        "sequence_accession": "NC_000012.12",
+        "orientation": "forward_genomic",
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": null
+      },
+      "expected": {
+        "status": "unavailable",
+        "reason": "missing_genotype"
+      }
+    },
+    {
+      "case_id": "P2-partial",
+      "rationale": "Stage 1 conservative proposal, finalized only for explicit offline inputs by Stage 2 withhold policy. No biological inference or provider handling is asserted.",
+      "observation": {
+        "rsid": "rs671",
+        "genome_build": "GRCh38",
+        "chromosome": "12",
+        "position": 111803962,
+        "sequence_accession": "NC_000012.12",
+        "orientation": "forward_genomic",
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": "G/."
+      },
+      "expected": {
+        "status": "unavailable",
+        "reason": "invalid_genotype"
+      }
+    },
+    {
+      "case_id": "P3-malformed",
+      "rationale": "Stage 1 conservative proposal, finalized only for explicit offline inputs by Stage 2 withhold policy. No biological inference or provider handling is asserted.",
+      "observation": {
+        "rsid": "rs671",
+        "genome_build": "GRCh38",
+        "chromosome": "12",
+        "position": 111803962,
+        "sequence_accession": "NC_000012.12",
+        "orientation": "forward_genomic",
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": "AA?"
+      },
+      "expected": {
+        "status": "unavailable",
+        "reason": "invalid_genotype"
+      }
+    },
+    {
+      "case_id": "P4-unsupported",
+      "rationale": "Stage 1 conservative proposal, finalized only for explicit offline inputs by Stage 2 withhold policy. No biological inference or provider handling is asserted.",
+      "observation": {
+        "rsid": "rs671",
+        "genome_build": "GRCh38",
+        "chromosome": "12",
+        "position": 111803962,
+        "sequence_accession": "NC_000012.12",
+        "orientation": "forward_genomic",
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": "GC"
+      },
+      "expected": {
+        "status": "unavailable",
+        "reason": "unsupported_allele"
+      }
+    },
+    {
+      "case_id": "P5-wrong-position",
+      "rationale": "Stage 1 conservative proposal, finalized only for explicit offline inputs by Stage 2 withhold policy. No biological inference or provider handling is asserted.",
+      "observation": {
+        "rsid": "rs671",
+        "genome_build": "GRCh38",
+        "chromosome": "12",
+        "position": 102,
+        "sequence_accession": "NC_000012.12",
+        "orientation": "forward_genomic",
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": "AG"
+      },
+      "expected": {
+        "status": "unavailable",
+        "reason": "incompatible_representation"
+      }
+    },
+    {
+      "case_id": "P6-missing-build",
+      "rationale": "Stage 1 conservative proposal, finalized only for explicit offline inputs by Stage 2 withhold policy. No biological inference or provider handling is asserted.",
+      "observation": {
+        "rsid": "rs671",
+        "genome_build": null,
+        "chromosome": "12",
+        "position": 111803962,
+        "sequence_accession": "NC_000012.12",
+        "orientation": "forward_genomic",
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": "AG"
+      },
+      "expected": {
+        "status": "unavailable",
+        "reason": "missing_representation"
+      }
+    },
+    {
+      "case_id": "P6-missing-orientation",
+      "rationale": "Stage 1 conservative proposal, finalized only for explicit offline inputs by Stage 2 withhold policy. No biological inference or provider handling is asserted.",
+      "observation": {
+        "rsid": "rs671",
+        "genome_build": "GRCh38",
+        "chromosome": "12",
+        "position": 111803962,
+        "sequence_accession": "NC_000012.12",
+        "orientation": null,
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": "AG"
+      },
+      "expected": {
+        "status": "unavailable",
+        "reason": "missing_representation"
+      }
+    },
+    {
+      "case_id": "P6-unsupported-build",
+      "rationale": "Stage 1 conservative proposal, finalized only for explicit offline inputs by Stage 2 withhold policy. No biological inference or provider handling is asserted.",
+      "observation": {
+        "rsid": "rs671",
+        "genome_build": "unverified",
+        "chromosome": "12",
+        "position": 111803962,
+        "sequence_accession": "NC_000012.12",
+        "orientation": "forward_genomic",
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": "AG"
+      },
+      "expected": {
+        "status": "unavailable",
+        "reason": "unsupported_build"
+      }
+    },
+    {
+      "case_id": "P7-reverse-orientation",
+      "rationale": "Stage 1 conservative proposal, finalized only for explicit offline inputs by Stage 2 withhold policy. No biological inference or provider handling is asserted.",
+      "observation": {
+        "rsid": "rs671",
+        "genome_build": "GRCh38",
+        "chromosome": "12",
+        "position": 111803962,
+        "sequence_accession": "NC_000012.12",
+        "orientation": "reverse_genomic",
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "genotype": "AG"
+      },
+      "expected": {
+        "status": "unavailable",
+        "reason": "unsupported_orientation"
+      }
+    },
+    {
+      "case_id": "P8-duplicate-conflicts",
+      "disposition": "deferred",
+      "rationale": "Stage 1 leaves duplicate-observation handling unresolved. This offline function accepts one explicit observation; parser aggregation belongs to Stage 6."
+    }
+  ]
+}

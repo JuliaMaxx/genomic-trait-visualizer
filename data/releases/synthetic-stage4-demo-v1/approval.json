@@ -1,0 +1,8 @@
+{
+  "action": "approve",
+  "created_at": "2026-11-09T06:13:47.055108Z",
+  "manifest_sha256": "3a7ef6b6c5549d803a77829c9f1494886a2b0b8d033a9bd098bdcca71578de6c",
+  "rationale": "Inspected the exact fictional preview: 14 required cases passed and duplicate handling remains deferred. Software demonstration only; no scientific approval.",
+  "release_id": "synthetic-stage4-demo-v1",
+  "reviewer_id": "synthetic-demo"
+}

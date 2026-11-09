@@ -215,12 +215,13 @@ def test_decisions_require_review_metadata() -> None:
 
 
 def test_legacy_labels_do_not_supply_approval(tmp_path: Path) -> None:
-    catalog = TraitCatalog.model_validate_json(
+    data = json.loads(
         (ROOT / "curation/examples/synthetic-reviewed-catalog.json").read_text(
             encoding="utf-8"
         )
     )
-    initialize_workspace(tmp_path / "review", catalog.traits[0], "Synthetic labels.")
+    labeled = TraitDossier.model_validate(data["traits"][0])
+    initialize_workspace(tmp_path / "review", labeled, "Synthetic labels.")
     status = workspace_status(tmp_path / "review")
     assert not status["ready_for_stage4"]
     assert all(item["state"] == "pending" for item in status["items"])
@@ -239,8 +240,10 @@ def test_real_decisions_make_draft_ready_without_changing_labels(
     assert saved.candidate.status == "draft"
     assert saved.claims[0].status == "pending"
     assert all(not content.reviewed for content in saved.explanations)
-    with pytest.raises(ValidationError, match="candidates must be approved"):
-        TraitCatalog(schema_version="3.0", traits=[saved])
+    with pytest.raises(ValidationError):
+        TraitCatalog.model_validate(
+            {"schema_version": "3.1", "traits": [saved.model_dump()]}
+        )
 
 
 def test_latest_decisions_and_dependency_approval_are_separate(
@@ -686,3 +689,5 @@ def test_cli_module_entrypoint() -> None:
         check=True,
     )
     assert "init,validate,inspect,decide,revise,status,history" in result.stdout
+    for command in ("build", "preview", "approve-release", "publish", "verify-release"):
+        assert command in result.stdout

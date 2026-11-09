@@ -23,7 +23,7 @@ from backend.models.interpretation import (
     VariantPlacement,
     VariantRequirements,
 )
-from backend.models.published_catalog import TraitCatalog
+from backend.models.published_catalog import TraitCatalog, publication_structure_errors
 
 ROOT = Path(__file__).resolve().parents[3]
 
@@ -92,8 +92,7 @@ def result_catalog(
 
 
 def test_educational_catalog_traceability(reviewed_catalog: dict[str, Any]) -> None:
-    catalog = TraitCatalog.model_validate(reviewed_catalog)
-    trait = catalog.traits[0]
+    trait = TraitDossier.model_validate(reviewed_catalog["traits"][0])
     assert trait.candidate.status == trait.claims[0].status == "approved"
     assert trait.evidence[0].status == "pending"
     assert trait.claims[0].evidence_ids == [trait.evidence[0].evidence_id]
@@ -102,7 +101,7 @@ def test_educational_catalog_traceability(reviewed_catalog: dict[str, Any]) -> N
     assert trait.explanations[0].reviewed is True
     assert isinstance(trait.interpretation, EducationalInterpretation)
     assert set(trait.interpretation.model_dump()) == {"strategy", "claim_ids"}
-    assert TraitCatalog.model_validate_json(catalog.model_dump_json()) == catalog
+    assert TraitDossier.model_validate_json(trait.model_dump_json()) == trait
 
 
 def test_rs671_remains_score_free_and_unapproved() -> None:
@@ -129,7 +128,7 @@ def test_rs671_remains_score_free_and_unapproved() -> None:
     assert all(not text.reviewed for text in dossier.explanations)
     assert '"score"' not in dossier.model_dump_json()
     assert TraitDossier.model_validate_json(dossier.model_dump_json()) == dossier
-    with pytest.raises(ValidationError, match="candidates must be approved"):
+    with pytest.raises(ValidationError):
         TraitCatalog.model_validate({"schema_version": "3.0", "traits": [dossier]})
 
 
@@ -152,20 +151,6 @@ def test_draft_can_grow_without_finished_content(
     assert draft.claims[0].status == "pending"
     assert draft.interpretation is None and not draft.explanations
     assert TraitDossier.model_validate_json(draft.model_dump_json()) == draft
-
-
-@pytest.mark.parametrize("section", ["catalog", "candidate"])
-def test_catalog_rejects_unknown_fields(
-    reviewed_catalog: dict[str, Any], section: str
-) -> None:
-    target = (
-        reviewed_catalog
-        if section == "catalog"
-        else reviewed_catalog["traits"][0]["candidate"]
-    )
-    target["unexpected"] = "must not be discarded"
-    with pytest.raises(ValidationError, match="Extra inputs are not permitted"):
-        TraitCatalog.model_validate(reviewed_catalog)
 
 
 @pytest.mark.parametrize(
@@ -222,24 +207,6 @@ def test_records_belong_to_their_dossier(
         data["claims"][0]["assessment"]["candidate_id"] = "another_candidate"
     with pytest.raises(ValidationError, match="must match the dossier"):
         TraitDossier.model_validate(data)
-
-
-def test_catalog_trait_ids_are_unique(reviewed_catalog: dict[str, Any]) -> None:
-    reviewed_catalog["traits"].append(deepcopy(reviewed_catalog["traits"][0]))
-    with pytest.raises(ValidationError, match="trait IDs must be unique"):
-        TraitCatalog.model_validate(reviewed_catalog)
-
-
-@pytest.mark.parametrize("version", ["2.0", "3.1", None])
-def test_catalog_requires_its_schema_version(
-    reviewed_catalog: dict[str, Any], version: str | None
-) -> None:
-    if version is None:
-        del reviewed_catalog["schema_version"]
-    else:
-        reviewed_catalog["schema_version"] = version
-    with pytest.raises(ValidationError, match="schema_version"):
-        TraitCatalog.model_validate(reviewed_catalog)
 
 
 @pytest.mark.parametrize(
@@ -496,96 +463,24 @@ def test_explanations_reject_invalid_content(
         ExplanationContent.model_validate({**content, **change})
 
 
-@pytest.mark.parametrize("field", ["claims", "interpretation", "explanations"])
-def test_publication_requires_complete_dossiers(
-    reviewed_catalog: dict[str, Any], field: str
-) -> None:
-    data = reviewed_catalog["traits"][0]
-    del data[field]
-    if field == "claims":
-        del data["interpretation"], data["explanations"]
-    TraitDossier.model_validate(data)
-    with pytest.raises(ValidationError, match="published entries require"):
-        TraitCatalog.model_validate(reviewed_catalog)
-
-
-@pytest.mark.parametrize(
-    "status", [None, "draft", "retrieved", "validating", "needs_review", "rejected"]
-)
-def test_publication_requires_candidate_approval(
-    reviewed_catalog: dict[str, Any], status: str | None
-) -> None:
-    data = reviewed_catalog["traits"][0]
-    if status is None:
-        del data["candidate"]["status"]
-    else:
-        data["candidate"]["status"] = status
-    assert TraitDossier.model_validate(data).candidate.status == (status or "draft")
-    with pytest.raises(ValidationError, match="candidates must be approved"):
-        TraitCatalog.model_validate(reviewed_catalog)
-
-
-@pytest.mark.parametrize(
-    ("section", "field", "value"),
-    [
-        ("claims", "status", "pending"),
-        ("claims", "status", "rejected"),
-        ("explanations", "reviewed", False),
-    ],
-)
-def test_candidate_approval_does_not_replace_other_reviews(
-    reviewed_catalog: dict[str, Any], section: str, field: str, value: object
-) -> None:
-    data = reviewed_catalog["traits"][0]
-    data["evidence"][0]["status"] = "validated"
-    data[section][0][field] = value
-    TraitDossier.model_validate(data)
-    with pytest.raises(ValidationError, match="must be approved|must be reviewed"):
-        TraitCatalog.model_validate(reviewed_catalog)
-
-
-@pytest.mark.parametrize("status", ["rejected", "needs_review"])
-def test_flagged_evidence_blocks_publication(
-    reviewed_catalog: dict[str, Any], status: str
-) -> None:
-    data = reviewed_catalog["traits"][0]
-    data["evidence"][0]["status"] = status
-    TraitDossier.model_validate(data)
-    with pytest.raises(
-        ValidationError, match="evidence cannot be rejected or need review"
-    ):
-        TraitCatalog.model_validate(reviewed_catalog)
-
-
-def test_unused_rejected_evidence_also_blocks_publication(
-    reviewed_catalog: dict[str, Any],
-) -> None:
-    data = reviewed_catalog["traits"][0]
-    data["evidence"].append(
-        {**data["evidence"][0], "evidence_id": "unused", "status": "rejected"}
-    )
-    with pytest.raises(ValidationError, match="evidence cannot be rejected"):
-        TraitCatalog.model_validate(reviewed_catalog)
-
-
 def test_education_cannot_publish_result_text(reviewed_catalog: dict[str, Any]) -> None:
     reviewed_catalog["traits"][0]["explanations"][0].update(
         kind="outcome_summary", result_key="1"
     )
-    with pytest.raises(ValidationError, match="educational entries cannot have result"):
-        TraitCatalog.model_validate(reviewed_catalog)
+    with pytest.raises(ValueError, match="educational entries cannot have result"):
+        _check_structure(reviewed_catalog)
 
 
 def test_valid_allele_count_catalog(result_catalog: dict[str, Any]) -> None:
-    catalog = TraitCatalog.model_validate(result_catalog)
-    assert {content.result_key for content in catalog.traits[0].explanations} == {
+    trait = _check_structure(result_catalog)
+    assert {content.result_key for content in trait.explanations} == {
         None,
         "0",
         "1",
         "2",
         "unavailable",
     }
-    assert TraitCatalog.model_validate_json(catalog.model_dump_json()) == catalog
+    assert TraitDossier.model_validate_json(trait.model_dump_json()) == trait
 
 
 @pytest.mark.parametrize("key", ["likely", "3", "01"])
@@ -593,16 +488,16 @@ def test_result_keys_match_supported_outputs(
     result_catalog: dict[str, Any], key: str
 ) -> None:
     result_catalog["traits"][0]["explanations"][1]["result_key"] = key
-    with pytest.raises(ValidationError, match="result_key must match"):
-        TraitCatalog.model_validate(result_catalog)
+    with pytest.raises(ValueError, match="result_key must match"):
+        _check_structure(result_catalog)
 
 
 def test_result_keys_follow_actual_table_outputs(
     result_catalog: dict[str, Any],
 ) -> None:
     result_catalog["traits"][0]["interpretation"]["rules"].pop()
-    with pytest.raises(ValidationError, match="result_key must match"):
-        TraitCatalog.model_validate(result_catalog)
+    with pytest.raises(ValueError, match="result_key must match"):
+        _check_structure(result_catalog)
 
 
 def test_result_slots_allow_different_kinds_but_not_duplicates(
@@ -610,10 +505,10 @@ def test_result_slots_allow_different_kinds_but_not_duplicates(
 ) -> None:
     content = result_catalog["traits"][0]["explanations"]
     content.append({**content[1], "content_id": "another-summary"})
-    with pytest.raises(ValidationError, match="kind and result_key must be unique"):
-        TraitCatalog.model_validate(result_catalog)
+    with pytest.raises(ValueError, match="kind and result_key must be unique"):
+        _check_structure(result_catalog)
     content[-1]["kind"] = "headline"
-    TraitCatalog.model_validate(result_catalog)
+    _check_structure(result_catalog)
 
 
 def test_result_text_cites_interpretation_claims(
@@ -627,10 +522,10 @@ def test_result_text_cites_interpretation_claims(
     data["explanations"][0]["claim_ids"] = ["context-claim"]
     result_text = data["explanations"][1]
     result_text["claim_ids"] = ["context-claim"]
-    with pytest.raises(ValidationError, match="reference an interpretation claim"):
-        TraitCatalog.model_validate(result_catalog)
+    with pytest.raises(ValueError, match="reference an interpretation claim"):
+        _check_structure(result_catalog)
     result_text["claim_ids"].append("synthetic-reviewed-claim")
-    TraitCatalog.model_validate(result_catalog)
+    _check_structure(result_catalog)
 
 
 def test_v2_and_stage2_catalogs_are_separate(reviewed_catalog: dict[str, Any]) -> None:
@@ -640,3 +535,12 @@ def test_v2_and_stage2_catalogs_are_separate(reviewed_catalog: dict[str, Any]) -
         TraitCatalog.model_validate(legacy)
     with pytest.raises(ValidationError):
         LegacyTraitCatalog.model_validate(reviewed_catalog)
+
+
+def _check_structure(data: dict[str, Any]) -> TraitDossier:
+    """Stage 2 checks draft completeness; Stage 4 tests actual publication."""
+    trait = TraitDossier.model_validate(data["traits"][0])
+    errors = publication_structure_errors(trait)
+    if errors:
+        raise ValueError(errors[0])
+    return trait

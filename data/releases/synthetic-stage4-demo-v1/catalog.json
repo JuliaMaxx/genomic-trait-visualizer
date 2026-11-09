@@ -1,0 +1,155 @@
+{
+  "schema_version": "3.1",
+  "traits": [
+    {
+      "category": "nutrition",
+      "claims": [
+        {
+          "claim_id": "synthetic-reviewed-claim",
+          "claim_type": "study_limitation",
+          "evidence_ids": [
+            "synthetic-finding"
+          ],
+          "limitations": [
+            "Fictional data cannot support a personal prediction."
+          ],
+          "scope": "Fictional software tests only; no claim about a real variant or person.",
+          "statement": "This fictional marker can illustrate counting a specified allele."
+        }
+      ],
+      "description": "Fictional software example only; this marker and its claims are not scientific evidence.",
+      "evidence": [
+        {
+          "claim_type": "study_limitation",
+          "effect_allele": null,
+          "effect_direction": null,
+          "evidence_id": "synthetic-finding",
+          "gene": null,
+          "phenotype": null,
+          "rsid": null,
+          "source_ids": [
+            "synthetic-study"
+          ],
+          "source_location": {
+            "figure": null,
+            "locator": null,
+            "page": null,
+            "paragraph": null,
+            "section": "Fictional results",
+            "table": null
+          },
+          "statement": "A fictional teaching source describes the A/G marker used in these software tests."
+        }
+      ],
+      "explanations": [
+        {
+          "body": "This fictional example counts A copies only when every required representation field is known and compatible. Counts are not symptom probabilities.",
+          "claim_ids": [
+            "synthetic-reviewed-claim"
+          ],
+          "content_id": "synthetic-explanation",
+          "kind": "simple_explanation",
+          "result_key": null,
+          "title": "Understanding context (fictional example)"
+        },
+        {
+          "body": "Zero A copies at this fictional marker.",
+          "claim_ids": [
+            "synthetic-reviewed-claim"
+          ],
+          "content_id": "synthetic-result-0",
+          "kind": "outcome_summary",
+          "result_key": "0",
+          "title": null
+        },
+        {
+          "body": "One A copy at this fictional marker.",
+          "claim_ids": [
+            "synthetic-reviewed-claim"
+          ],
+          "content_id": "synthetic-result-1",
+          "kind": "outcome_summary",
+          "result_key": "1",
+          "title": null
+        },
+        {
+          "body": "Two A copies at this fictional marker.",
+          "claim_ids": [
+            "synthetic-reviewed-claim"
+          ],
+          "content_id": "synthetic-result-2",
+          "kind": "outcome_summary",
+          "result_key": "2",
+          "title": null
+        },
+        {
+          "body": "No count is available for missing or incompatible data; this does not mean zero copies.",
+          "claim_ids": [
+            "synthetic-reviewed-claim"
+          ],
+          "content_id": "synthetic-result-unavailable",
+          "kind": "outcome_summary",
+          "result_key": "unavailable",
+          "title": null
+        }
+      ],
+      "id": "synthetic_allele",
+      "interpretation": {
+        "claim_ids": [
+          "synthetic-reviewed-claim"
+        ],
+        "counted_allele": "A",
+        "requirements": {
+          "alleles": [
+            "A",
+            "G"
+          ],
+          "coordinate_system": "1-based",
+          "orientation": "forward_genomic",
+          "placements": [
+            {
+              "chromosome": "1",
+              "genome_build": "GRCh38",
+              "position": 101,
+              "sequence_accession": "NC_000001.11"
+            }
+          ],
+          "ploidy": 2,
+          "rsid": "rs12345678"
+        },
+        "rules": [
+          {
+            "copies": 0,
+            "genotype": "GG"
+          },
+          {
+            "copies": 1,
+            "genotype": "AG"
+          },
+          {
+            "copies": 2,
+            "genotype": "AA"
+          }
+        ],
+        "strategy": "allele_count",
+        "unavailable_policy": "withhold"
+      },
+      "name": "Fictional allele-count demonstration",
+      "sources": [
+        {
+          "doi": null,
+          "name": "Fictional study for testing; not a scientific publication",
+          "pmcid": null,
+          "pmid": null,
+          "publication_year": null,
+          "retrieved_at": null,
+          "source_id": "synthetic-study",
+          "source_type": "other",
+          "source_version": null,
+          "title": null,
+          "url": null
+        }
+      ]
+    }
+  ]
+}

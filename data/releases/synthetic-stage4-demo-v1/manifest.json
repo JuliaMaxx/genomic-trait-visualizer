@@ -1,0 +1,16 @@
+{
+  "candidate_id": "synthetic-stage4-allele",
+  "case_set_id": "fictional-allele-v1",
+  "catalog_schema_version": "3.1",
+  "compiler_version": "stage4-v1",
+  "dossier_sha256": "516526642d018dc4f96f83c0ed175930f7f930bfffc5e5616477893a2c6a6c14",
+  "files": {
+    "catalog.json": "19e99ca4968046075dc0db367628ca621b8a6a286437d13c423d917c7b39cbf0",
+    "inputs.json": "ad95fb51a89eca5f626ca3a404facdea2d3e6804ae8ca1dfdbb24b3dfecc227c",
+    "preview.md": "f898d1c39eff7c8f3c031d1490d799c7e36cb45a651e67ba7a777b903c398ff8",
+    "verification.json": "e5e11dd8e7af2321055d921a2e74473c429b404a9554fe7f153331c897f5000a"
+  },
+  "release_id": "synthetic-stage4-demo-v1",
+  "revision": 1,
+  "trait_id": "synthetic_allele"
+}

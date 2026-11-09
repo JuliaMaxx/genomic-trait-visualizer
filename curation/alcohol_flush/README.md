@@ -61,6 +61,7 @@ These are proposed requirements, not yet implemented or scientifically approved 
 - [stage2-draft.json](stage2-draft.json) — A score-free, unapproved schema example using the mapping and functional subset; see [Stage 2 contracts](../stage2-contracts.md).
 - [acquisition.json](acquisition.json) — Information about the saved research files, including their original locations and checksums.
 - [expected-cases.md](expected-cases.md) — Separate draft cases, distinguishing source-based allele counts from proposed software handling policies.
+- [stage4-expected-cases.json](stage4-expected-cases.json) — Offline transcription of those expectations, with conservative software policies and duplicate handling explicitly deferred. This file grants no scientific approval.
 - [sources/](sources/) — All six current source documents listed above, including the ClinVar and Crabb excerpts.
 - [comparison-protocol-bachelors.md](../comparison-protocol-bachelors.md) — Plan for comparing manual and semi-automatic scientific data extraction.
 

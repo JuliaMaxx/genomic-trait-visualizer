@@ -1,0 +1,595 @@
+{
+  "decisions": [
+    {
+      "action": "approve",
+      "candidate_id": "synthetic-stage4-allele",
+      "candidate_revision": 1,
+      "claim_ids_reviewed": [],
+      "created_at": "2026-11-09T06:12:19.669874Z",
+      "decision_id": "14f5e4ec93944decb3126b0ef4f23bc2",
+      "fingerprint": "72805cc0058675529dcc5681bf4db906bf97c58dad841c7f1a482f94ece50de3",
+      "notes": "Fictional software demonstration only; this is not a scientific approval.",
+      "reviewer_id": "synthetic-demo",
+      "scope": "claim",
+      "target_id": "synthetic-reviewed-claim"
+    },
+    {
+      "action": "approve",
+      "candidate_id": "synthetic-stage4-allele",
+      "candidate_revision": 1,
+      "claim_ids_reviewed": [],
+      "created_at": "2026-11-09T06:12:24.962996Z",
+      "decision_id": "b429eb40675849e4a8b43d2b2ead4c3a",
+      "fingerprint": "5f9c2d87fbcfaa89ff1e265beb2e60ed17d6593dd7adf2a17a14db3714958c4a",
+      "notes": "Fictional software demonstration only; this is not a scientific approval.",
+      "reviewer_id": "synthetic-demo",
+      "scope": "content",
+      "target_id": "synthetic-explanation"
+    },
+    {
+      "action": "approve",
+      "candidate_id": "synthetic-stage4-allele",
+      "candidate_revision": 1,
+      "claim_ids_reviewed": [],
+      "created_at": "2026-11-09T06:12:27.611446Z",
+      "decision_id": "efbb51ebac5a49c18b54282e25ed1b69",
+      "fingerprint": "4fd2cc49845f619b7b905fa383d7ee73f2066edccf1fd9384fd73c8dc11d459f",
+      "notes": "Fictional software demonstration only; this is not a scientific approval.",
+      "reviewer_id": "synthetic-demo",
+      "scope": "content",
+      "target_id": "synthetic-result-0"
+    },
+    {
+      "action": "approve",
+      "candidate_id": "synthetic-stage4-allele",
+      "candidate_revision": 1,
+      "claim_ids_reviewed": [],
+      "created_at": "2026-11-09T06:12:30.163570Z",
+      "decision_id": "8203247799d044948e2e9b4b3c703b16",
+      "fingerprint": "cef63b57e450045611270fbf15b335c602f8cdd40088cffafe6137217c7e91f8",
+      "notes": "Fictional software demonstration only; this is not a scientific approval.",
+      "reviewer_id": "synthetic-demo",
+      "scope": "content",
+      "target_id": "synthetic-result-1"
+    },
+    {
+      "action": "approve",
+      "candidate_id": "synthetic-stage4-allele",
+      "candidate_revision": 1,
+      "claim_ids_reviewed": [],
+      "created_at": "2026-11-09T06:12:32.824947Z",
+      "decision_id": "9078cedfcb2d497b8daea2874f881791",
+      "fingerprint": "ee572354359f38a968bbf25e7cd739017432deb52fa0cbe6f8cca7d79957a85f",
+      "notes": "Fictional software demonstration only; this is not a scientific approval.",
+      "reviewer_id": "synthetic-demo",
+      "scope": "content",
+      "target_id": "synthetic-result-2"
+    },
+    {
+      "action": "approve",
+      "candidate_id": "synthetic-stage4-allele",
+      "candidate_revision": 1,
+      "claim_ids_reviewed": [],
+      "created_at": "2026-11-09T06:12:35.369604Z",
+      "decision_id": "14bf987d98774ba6808640c03ae32f80",
+      "fingerprint": "264a4b7aad28f55b66fc9743453a9c3289a08b2ebd66afed1203365ad1e736b7",
+      "notes": "Fictional software demonstration only; this is not a scientific approval.",
+      "reviewer_id": "synthetic-demo",
+      "scope": "content",
+      "target_id": "synthetic-result-unavailable"
+    },
+    {
+      "action": "approve",
+      "candidate_id": "synthetic-stage4-allele",
+      "candidate_revision": 1,
+      "claim_ids_reviewed": [],
+      "created_at": "2026-11-09T06:12:17.160719Z",
+      "decision_id": "5e7d2d078ad5424c88bbc935b49341f9",
+      "fingerprint": "29213336bbb1798dec550cd35863a8d56a1484fc7de12bea800eed9cf96a2b7d",
+      "notes": "Fictional software demonstration only; this is not a scientific approval.",
+      "reviewer_id": "synthetic-demo",
+      "scope": "evidence",
+      "target_id": "synthetic-finding"
+    },
+    {
+      "action": "approve",
+      "candidate_id": "synthetic-stage4-allele",
+      "candidate_revision": 1,
+      "claim_ids_reviewed": [],
+      "created_at": "2026-11-09T06:12:22.454933Z",
+      "decision_id": "016972baf08e4891bcc4c5a1a34b085b",
+      "fingerprint": "d39127752bbea2867c3a9c25400f0486f60d147b0751e717a916ae606d41863a",
+      "notes": "Fictional software demonstration only; this is not a scientific approval.",
+      "reviewer_id": "synthetic-demo",
+      "scope": "model",
+      "target_id": "synthetic_allele"
+    }
+  ],
+  "expected_cases": {
+    "basis": "Fictional cases manually specified for software testing; not scientific approval.",
+    "case_set_id": "fictional-allele-v1",
+    "cases": [
+      {
+        "case_id": "S1-GRCh38",
+        "disposition": "required",
+        "expected": {
+          "copies": 0,
+          "reason": null,
+          "status": "evaluated"
+        },
+        "observation": {
+          "chromosome": "1",
+          "coordinate_system": "1-based",
+          "genome_build": "GRCh38",
+          "genotype": "GG",
+          "orientation": "forward_genomic",
+          "ploidy": 2,
+          "position": 101,
+          "rsid": "rs12345678",
+          "sequence_accession": "NC_000001.11"
+        },
+        "rationale": "Fictional arithmetic test, not scientific evidence."
+      },
+      {
+        "case_id": "S2-GRCh38",
+        "disposition": "required",
+        "expected": {
+          "copies": 1,
+          "reason": null,
+          "status": "evaluated"
+        },
+        "observation": {
+          "chromosome": "1",
+          "coordinate_system": "1-based",
+          "genome_build": "GRCh38",
+          "genotype": "AG",
+          "orientation": "forward_genomic",
+          "ploidy": 2,
+          "position": 101,
+          "rsid": "rs12345678",
+          "sequence_accession": "NC_000001.11"
+        },
+        "rationale": "Fictional arithmetic test, not scientific evidence."
+      },
+      {
+        "case_id": "S3-GRCh38",
+        "disposition": "required",
+        "expected": {
+          "copies": 1,
+          "reason": null,
+          "status": "evaluated"
+        },
+        "observation": {
+          "chromosome": "1",
+          "coordinate_system": "1-based",
+          "genome_build": "GRCh38",
+          "genotype": "GA",
+          "orientation": "forward_genomic",
+          "ploidy": 2,
+          "position": 101,
+          "rsid": "rs12345678",
+          "sequence_accession": "NC_000001.11"
+        },
+        "rationale": "Fictional arithmetic test, not scientific evidence."
+      },
+      {
+        "case_id": "S4-GRCh38",
+        "disposition": "required",
+        "expected": {
+          "copies": 2,
+          "reason": null,
+          "status": "evaluated"
+        },
+        "observation": {
+          "chromosome": "1",
+          "coordinate_system": "1-based",
+          "genome_build": "GRCh38",
+          "genotype": "AA",
+          "orientation": "forward_genomic",
+          "ploidy": 2,
+          "position": 101,
+          "rsid": "rs12345678",
+          "sequence_accession": "NC_000001.11"
+        },
+        "rationale": "Fictional arithmetic test, not scientific evidence."
+      },
+      {
+        "case_id": "P1-absent",
+        "disposition": "required",
+        "expected": {
+          "copies": null,
+          "reason": "missing_genotype",
+          "status": "unavailable"
+        },
+        "observation": null,
+        "rationale": "Fictional software test. No biological inference or provider handling is asserted."
+      },
+      {
+        "case_id": "P1-no-call",
+        "disposition": "required",
+        "expected": {
+          "copies": null,
+          "reason": "missing_genotype",
+          "status": "unavailable"
+        },
+        "observation": {
+          "chromosome": "1",
+          "coordinate_system": "1-based",
+          "genome_build": "GRCh38",
+          "genotype": null,
+          "orientation": "forward_genomic",
+          "ploidy": 2,
+          "position": 101,
+          "rsid": "rs12345678",
+          "sequence_accession": "NC_000001.11"
+        },
+        "rationale": "Fictional software test. No biological inference or provider handling is asserted."
+      },
+      {
+        "case_id": "P2-partial",
+        "disposition": "required",
+        "expected": {
+          "copies": null,
+          "reason": "invalid_genotype",
+          "status": "unavailable"
+        },
+        "observation": {
+          "chromosome": "1",
+          "coordinate_system": "1-based",
+          "genome_build": "GRCh38",
+          "genotype": "G/.",
+          "orientation": "forward_genomic",
+          "ploidy": 2,
+          "position": 101,
+          "rsid": "rs12345678",
+          "sequence_accession": "NC_000001.11"
+        },
+        "rationale": "Fictional software test. No biological inference or provider handling is asserted."
+      },
+      {
+        "case_id": "P3-malformed",
+        "disposition": "required",
+        "expected": {
+          "copies": null,
+          "reason": "invalid_genotype",
+          "status": "unavailable"
+        },
+        "observation": {
+          "chromosome": "1",
+          "coordinate_system": "1-based",
+          "genome_build": "GRCh38",
+          "genotype": "AA?",
+          "orientation": "forward_genomic",
+          "ploidy": 2,
+          "position": 101,
+          "rsid": "rs12345678",
+          "sequence_accession": "NC_000001.11"
+        },
+        "rationale": "Fictional software test. No biological inference or provider handling is asserted."
+      },
+      {
+        "case_id": "P4-unsupported",
+        "disposition": "required",
+        "expected": {
+          "copies": null,
+          "reason": "unsupported_allele",
+          "status": "unavailable"
+        },
+        "observation": {
+          "chromosome": "1",
+          "coordinate_system": "1-based",
+          "genome_build": "GRCh38",
+          "genotype": "GC",
+          "orientation": "forward_genomic",
+          "ploidy": 2,
+          "position": 101,
+          "rsid": "rs12345678",
+          "sequence_accession": "NC_000001.11"
+        },
+        "rationale": "Fictional software test. No biological inference or provider handling is asserted."
+      },
+      {
+        "case_id": "P5-wrong-position",
+        "disposition": "required",
+        "expected": {
+          "copies": null,
+          "reason": "incompatible_representation",
+          "status": "unavailable"
+        },
+        "observation": {
+          "chromosome": "1",
+          "coordinate_system": "1-based",
+          "genome_build": "GRCh38",
+          "genotype": "AG",
+          "orientation": "forward_genomic",
+          "ploidy": 2,
+          "position": 102,
+          "rsid": "rs12345678",
+          "sequence_accession": "NC_000001.11"
+        },
+        "rationale": "Fictional software test. No biological inference or provider handling is asserted."
+      },
+      {
+        "case_id": "P6-missing-build",
+        "disposition": "required",
+        "expected": {
+          "copies": null,
+          "reason": "missing_representation",
+          "status": "unavailable"
+        },
+        "observation": {
+          "chromosome": "1",
+          "coordinate_system": "1-based",
+          "genome_build": null,
+          "genotype": "AG",
+          "orientation": "forward_genomic",
+          "ploidy": 2,
+          "position": 101,
+          "rsid": "rs12345678",
+          "sequence_accession": "NC_000001.11"
+        },
+        "rationale": "Fictional software test. No biological inference or provider handling is asserted."
+      },
+      {
+        "case_id": "P6-missing-orientation",
+        "disposition": "required",
+        "expected": {
+          "copies": null,
+          "reason": "missing_representation",
+          "status": "unavailable"
+        },
+        "observation": {
+          "chromosome": "1",
+          "coordinate_system": "1-based",
+          "genome_build": "GRCh38",
+          "genotype": "AG",
+          "orientation": null,
+          "ploidy": 2,
+          "position": 101,
+          "rsid": "rs12345678",
+          "sequence_accession": "NC_000001.11"
+        },
+        "rationale": "Fictional software test. No biological inference or provider handling is asserted."
+      },
+      {
+        "case_id": "P6-unsupported-build",
+        "disposition": "required",
+        "expected": {
+          "copies": null,
+          "reason": "unsupported_build",
+          "status": "unavailable"
+        },
+        "observation": {
+          "chromosome": "1",
+          "coordinate_system": "1-based",
+          "genome_build": "unverified",
+          "genotype": "AG",
+          "orientation": "forward_genomic",
+          "ploidy": 2,
+          "position": 101,
+          "rsid": "rs12345678",
+          "sequence_accession": "NC_000001.11"
+        },
+        "rationale": "Fictional software test. No biological inference or provider handling is asserted."
+      },
+      {
+        "case_id": "P7-reverse-orientation",
+        "disposition": "required",
+        "expected": {
+          "copies": null,
+          "reason": "unsupported_orientation",
+          "status": "unavailable"
+        },
+        "observation": {
+          "chromosome": "1",
+          "coordinate_system": "1-based",
+          "genome_build": "GRCh38",
+          "genotype": "AG",
+          "orientation": "reverse_genomic",
+          "ploidy": 2,
+          "position": 101,
+          "rsid": "rs12345678",
+          "sequence_accession": "NC_000001.11"
+        },
+        "rationale": "Fictional software test. No biological inference or provider handling is asserted."
+      },
+      {
+        "case_id": "P8-duplicate-conflicts",
+        "disposition": "deferred",
+        "expected": null,
+        "observation": null,
+        "rationale": "Stage 1 leaves duplicate-observation handling unresolved. This offline function accepts one explicit observation; parser aggregation belongs to Stage 6."
+      }
+    ],
+    "kind": "synthetic",
+    "trait_id": "synthetic_allele"
+  },
+  "snapshots": [
+    {
+      "created_at": "2026-11-09T06:12:12.394776Z",
+      "dossier": {
+        "candidate": {
+          "candidate_id": "synthetic-stage4-allele",
+          "created_at": "2026-11-06T00:00:00Z",
+          "description": "Fictional software example only; this marker and its claims are not scientific evidence.",
+          "evidence_ids": [],
+          "keywords": [],
+          "pipeline_version": "manual",
+          "proposed_category": "nutrition",
+          "proposed_id": "synthetic_allele",
+          "proposed_name": "Fictional allele-count demonstration",
+          "reviewer_notes": [],
+          "revision": 1,
+          "source_ids": [],
+          "status": "draft"
+        },
+        "claims": [
+          {
+            "assessment": null,
+            "claim_id": "synthetic-reviewed-claim",
+            "claim_type": "study_limitation",
+            "evidence_ids": [
+              "synthetic-finding"
+            ],
+            "limitations": [
+              "Fictional data cannot support a personal prediction."
+            ],
+            "scope": "Fictional software tests only; no claim about a real variant or person.",
+            "statement": "This fictional marker can illustrate counting a specified allele.",
+            "status": "pending"
+          }
+        ],
+        "evidence": [
+          {
+            "claim_type": "study_limitation",
+            "effect_allele": null,
+            "effect_direction": null,
+            "evidence_id": "synthetic-finding",
+            "extracted_at": "2026-11-06T00:00:00Z",
+            "extraction_confidence": null,
+            "extraction_method": "manual",
+            "extractor_version": null,
+            "gene": null,
+            "phenotype": null,
+            "rsid": null,
+            "source_ids": [
+              "synthetic-study"
+            ],
+            "source_location": {
+              "figure": null,
+              "locator": null,
+              "page": null,
+              "paragraph": null,
+              "section": "Fictional results",
+              "table": null
+            },
+            "source_passage": null,
+            "statement": "A fictional teaching source describes the A/G marker used in these software tests.",
+            "status": "pending",
+            "trait_id": null,
+            "validation_notes": []
+          }
+        ],
+        "explanations": [
+          {
+            "body": "This fictional example counts A copies only when every required representation field is known and compatible. Counts are not symptom probabilities.",
+            "claim_ids": [
+              "synthetic-reviewed-claim"
+            ],
+            "content_id": "synthetic-explanation",
+            "kind": "simple_explanation",
+            "model_dependent": true,
+            "result_key": null,
+            "reviewed": false,
+            "title": "Understanding context (fictional example)"
+          },
+          {
+            "body": "Zero A copies at this fictional marker.",
+            "claim_ids": [
+              "synthetic-reviewed-claim"
+            ],
+            "content_id": "synthetic-result-0",
+            "kind": "outcome_summary",
+            "model_dependent": false,
+            "result_key": "0",
+            "reviewed": false,
+            "title": null
+          },
+          {
+            "body": "One A copy at this fictional marker.",
+            "claim_ids": [
+              "synthetic-reviewed-claim"
+            ],
+            "content_id": "synthetic-result-1",
+            "kind": "outcome_summary",
+            "model_dependent": false,
+            "result_key": "1",
+            "reviewed": false,
+            "title": null
+          },
+          {
+            "body": "Two A copies at this fictional marker.",
+            "claim_ids": [
+              "synthetic-reviewed-claim"
+            ],
+            "content_id": "synthetic-result-2",
+            "kind": "outcome_summary",
+            "model_dependent": false,
+            "result_key": "2",
+            "reviewed": false,
+            "title": null
+          },
+          {
+            "body": "No count is available for missing or incompatible data; this does not mean zero copies.",
+            "claim_ids": [
+              "synthetic-reviewed-claim"
+            ],
+            "content_id": "synthetic-result-unavailable",
+            "kind": "outcome_summary",
+            "model_dependent": false,
+            "result_key": "unavailable",
+            "reviewed": false,
+            "title": null
+          }
+        ],
+        "interpretation": {
+          "claim_ids": [
+            "synthetic-reviewed-claim"
+          ],
+          "counted_allele": "A",
+          "requirements": {
+            "alleles": [
+              "A",
+              "G"
+            ],
+            "coordinate_system": "1-based",
+            "orientation": "forward_genomic",
+            "placements": [
+              {
+                "chromosome": "1",
+                "genome_build": "GRCh38",
+                "position": 101,
+                "sequence_accession": "NC_000001.11"
+              }
+            ],
+            "ploidy": 2,
+            "rsid": "rs12345678"
+          },
+          "rules": [
+            {
+              "copies": 0,
+              "genotype": "GG"
+            },
+            {
+              "copies": 1,
+              "genotype": "AG"
+            },
+            {
+              "copies": 2,
+              "genotype": "AA"
+            }
+          ],
+          "strategy": "allele_count",
+          "unavailable_policy": "withhold"
+        },
+        "sources": [
+          {
+            "doi": null,
+            "name": "Fictional study for testing; not a scientific publication",
+            "pmcid": null,
+            "pmid": null,
+            "publication_year": null,
+            "retrieved_at": null,
+            "source_id": "synthetic-study",
+            "source_type": "other",
+            "source_version": null,
+            "title": null,
+            "url": null
+          }
+        ]
+      },
+      "reason": "Fictional Stage 4 demonstration only; no scientific approval."
+    }
+  ],
+  "source_documents": []
+}

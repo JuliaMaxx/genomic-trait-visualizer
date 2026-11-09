@@ -1,0 +1,185 @@
+{
+  "reason": "Fictional Stage 4 demonstration only; no scientific approval.",
+  "created_at": "2026-11-09T06:12:12.394776Z",
+  "dossier": {
+    "candidate": {
+      "candidate_id": "synthetic-stage4-allele",
+      "revision": 1,
+      "proposed_id": "synthetic_allele",
+      "proposed_name": "Fictional allele-count demonstration",
+      "proposed_category": "nutrition",
+      "description": "Fictional software example only; this marker and its claims are not scientific evidence.",
+      "keywords": [],
+      "evidence_ids": [],
+      "source_ids": [],
+      "pipeline_version": "manual",
+      "created_at": "2026-11-06T00:00:00Z",
+      "status": "draft",
+      "reviewer_notes": []
+    },
+    "sources": [
+      {
+        "source_id": "synthetic-study",
+        "source_type": "other",
+        "name": "Fictional study for testing; not a scientific publication",
+        "url": null,
+        "title": null,
+        "doi": null,
+        "pmid": null,
+        "pmcid": null,
+        "publication_year": null,
+        "retrieved_at": null,
+        "source_version": null
+      }
+    ],
+    "evidence": [
+      {
+        "evidence_id": "synthetic-finding",
+        "trait_id": null,
+        "claim_type": "study_limitation",
+        "statement": "A fictional teaching source describes the A/G marker used in these software tests.",
+        "rsid": null,
+        "gene": null,
+        "phenotype": null,
+        "effect_allele": null,
+        "effect_direction": null,
+        "source_ids": [
+          "synthetic-study"
+        ],
+        "source_passage": null,
+        "source_location": {
+          "locator": null,
+          "section": "Fictional results",
+          "page": null,
+          "paragraph": null,
+          "table": null,
+          "figure": null
+        },
+        "extraction_method": "manual",
+        "extractor_version": null,
+        "extracted_at": "2026-11-06T00:00:00Z",
+        "extraction_confidence": null,
+        "status": "pending",
+        "validation_notes": []
+      }
+    ],
+    "claims": [
+      {
+        "claim_id": "synthetic-reviewed-claim",
+        "claim_type": "study_limitation",
+        "statement": "This fictional marker can illustrate counting a specified allele.",
+        "evidence_ids": [
+          "synthetic-finding"
+        ],
+        "scope": "Fictional software tests only; no claim about a real variant or person.",
+        "limitations": [
+          "Fictional data cannot support a personal prediction."
+        ],
+        "status": "pending",
+        "assessment": null
+      }
+    ],
+    "interpretation": {
+      "strategy": "allele_count",
+      "claim_ids": [
+        "synthetic-reviewed-claim"
+      ],
+      "requirements": {
+        "rsid": "rs12345678",
+        "placements": [
+          {
+            "genome_build": "GRCh38",
+            "chromosome": "1",
+            "position": 101,
+            "sequence_accession": "NC_000001.11"
+          }
+        ],
+        "orientation": "forward_genomic",
+        "coordinate_system": "1-based",
+        "ploidy": 2,
+        "alleles": [
+          "A",
+          "G"
+        ]
+      },
+      "counted_allele": "A",
+      "rules": [
+        {
+          "genotype": "GG",
+          "copies": 0
+        },
+        {
+          "genotype": "AG",
+          "copies": 1
+        },
+        {
+          "genotype": "AA",
+          "copies": 2
+        }
+      ],
+      "unavailable_policy": "withhold"
+    },
+    "explanations": [
+      {
+        "content_id": "synthetic-explanation",
+        "kind": "simple_explanation",
+        "title": "Understanding context (fictional example)",
+        "body": "This fictional example counts A copies only when every required representation field is known and compatible. Counts are not symptom probabilities.",
+        "claim_ids": [
+          "synthetic-reviewed-claim"
+        ],
+        "result_key": null,
+        "reviewed": false,
+        "model_dependent": true
+      },
+      {
+        "content_id": "synthetic-result-0",
+        "kind": "outcome_summary",
+        "title": null,
+        "body": "Zero A copies at this fictional marker.",
+        "claim_ids": [
+          "synthetic-reviewed-claim"
+        ],
+        "result_key": "0",
+        "reviewed": false,
+        "model_dependent": false
+      },
+      {
+        "content_id": "synthetic-result-1",
+        "kind": "outcome_summary",
+        "title": null,
+        "body": "One A copy at this fictional marker.",
+        "claim_ids": [
+          "synthetic-reviewed-claim"
+        ],
+        "result_key": "1",
+        "reviewed": false,
+        "model_dependent": false
+      },
+      {
+        "content_id": "synthetic-result-2",
+        "kind": "outcome_summary",
+        "title": null,
+        "body": "Two A copies at this fictional marker.",
+        "claim_ids": [
+          "synthetic-reviewed-claim"
+        ],
+        "result_key": "2",
+        "reviewed": false,
+        "model_dependent": false
+      },
+      {
+        "content_id": "synthetic-result-unavailable",
+        "kind": "outcome_summary",
+        "title": null,
+        "body": "No count is available for missing or incompatible data; this does not mean zero copies.",
+        "claim_ids": [
+          "synthetic-reviewed-claim"
+        ],
+        "result_key": "unavailable",
+        "reviewed": false,
+        "model_dependent": false
+      }
+    ]
+  }
+}
