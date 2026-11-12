@@ -1,0 +1,185 @@
+{
+  "bindings": [
+    {
+      "content_id": "description-c-gwas-association-55467061",
+      "evidence_ids": [
+        "e-gwas-association-55467061",
+        "e-gwas-study-GCST009418",
+        "e-europe-pmc-MED-31791255"
+      ],
+      "input_statement": "GWAS Catalog lists rs6563275 in an association record for 'Lactose tolerance test'. Reported p_value: 1e-06.",
+      "source_location": {
+        "locator": "response-003#/_embedded/associations/0; fields: association_id, accession_id, pubmed_id, first_author, reported_trait, efo_traits, snp_allele, snp_effect_allele, mapped_genes, locations, risk_frequency, p_value, pvalue_mantissa, pvalue_exponent, pvalue_description, beta, range, multi_snp_haplotype, snp_interaction"
+      },
+      "template": "stage5-templates-v1/description"
+    },
+    {
+      "content_id": "simple_summary-c-gwas-association-55467061",
+      "evidence_ids": [
+        "e-gwas-association-55467061",
+        "e-gwas-study-GCST009418",
+        "e-europe-pmc-MED-31791255"
+      ],
+      "input_statement": "GWAS Catalog lists rs6563275 in an association record for 'Lactose tolerance test'. Reported p_value: 1e-06.",
+      "source_location": {
+        "locator": "response-003#/_embedded/associations/0; fields: association_id, accession_id, pubmed_id, first_author, reported_trait, efo_traits, snp_allele, snp_effect_allele, mapped_genes, locations, risk_frequency, p_value, pvalue_mantissa, pvalue_exponent, pvalue_description, beta, range, multi_snp_haplotype, snp_interaction"
+      },
+      "template": "stage5-templates-v1/simple_summary"
+    },
+    {
+      "content_id": "technical_summary-c-gwas-association-55467061",
+      "evidence_ids": [
+        "e-gwas-association-55467061",
+        "e-gwas-study-GCST009418",
+        "e-europe-pmc-MED-31791255"
+      ],
+      "input_statement": "GWAS Catalog lists rs6563275 in an association record for 'Lactose tolerance test'. Reported p_value: 1e-06.",
+      "source_location": {
+        "locator": "response-003#/_embedded/associations/0; fields: association_id, accession_id, pubmed_id, first_author, reported_trait, efo_traits, snp_allele, snp_effect_allele, mapped_genes, locations, risk_frequency, p_value, pvalue_mantissa, pvalue_exponent, pvalue_description, beta, range, multi_snp_haplotype, snp_interaction"
+      },
+      "template": "stage5-templates-v1/technical_summary"
+    },
+    {
+      "content_id": "simple_explanation-c-gwas-association-55467061",
+      "evidence_ids": [
+        "e-gwas-association-55467061",
+        "e-gwas-study-GCST009418",
+        "e-europe-pmc-MED-31791255"
+      ],
+      "input_statement": "GWAS Catalog lists rs6563275 in an association record for 'Lactose tolerance test'. Reported p_value: 1e-06.",
+      "source_location": {
+        "locator": "response-003#/_embedded/associations/0; fields: association_id, accession_id, pubmed_id, first_author, reported_trait, efo_traits, snp_allele, snp_effect_allele, mapped_genes, locations, risk_frequency, p_value, pvalue_mantissa, pvalue_exponent, pvalue_description, beta, range, multi_snp_haplotype, snp_interaction"
+      },
+      "template": "stage5-templates-v1/simple_explanation"
+    },
+    {
+      "content_id": "technical_explanation-c-gwas-association-55467061",
+      "evidence_ids": [
+        "e-gwas-association-55467061",
+        "e-gwas-study-GCST009418",
+        "e-europe-pmc-MED-31791255"
+      ],
+      "input_statement": "GWAS Catalog lists rs6563275 in an association record for 'Lactose tolerance test'. Reported p_value: 1e-06.",
+      "source_location": {
+        "locator": "response-003#/_embedded/associations/0; fields: association_id, accession_id, pubmed_id, first_author, reported_trait, efo_traits, snp_allele, snp_effect_allele, mapped_genes, locations, risk_frequency, p_value, pvalue_mantissa, pvalue_exponent, pvalue_description, beta, range, multi_snp_haplotype, snp_interaction"
+      },
+      "template": "stage5-templates-v1/technical_explanation"
+    },
+    {
+      "content_id": "practical_takeaway-c-gwas-association-55467061",
+      "evidence_ids": [
+        "e-gwas-association-55467061",
+        "e-gwas-study-GCST009418",
+        "e-europe-pmc-MED-31791255"
+      ],
+      "input_statement": "GWAS Catalog lists rs6563275 in an association record for 'Lactose tolerance test'. Reported p_value: 1e-06.",
+      "source_location": {
+        "locator": "response-003#/_embedded/associations/0; fields: association_id, accession_id, pubmed_id, first_author, reported_trait, efo_traits, snp_allele, snp_effect_allele, mapped_genes, locations, risk_frequency, p_value, pvalue_mantissa, pvalue_exponent, pvalue_description, beta, range, multi_snp_haplotype, snp_interaction"
+      },
+      "template": "stage5-templates-v1/practical_takeaway"
+    },
+    {
+      "content_id": "description-c-gwas-association-55467053",
+      "evidence_ids": [
+        "e-gwas-association-55467053",
+        "e-gwas-study-GCST009418",
+        "e-europe-pmc-MED-31791255"
+      ],
+      "input_statement": "GWAS Catalog lists an unresolved variant/haplotype in an association record for 'Lactose tolerance test'. Reported p_value: 3e-06.",
+      "source_location": {
+        "locator": "response-003#/_embedded/associations/1; fields: association_id, accession_id, pubmed_id, first_author, reported_trait, efo_traits, snp_allele, snp_effect_allele, mapped_genes, locations, risk_frequency, p_value, pvalue_mantissa, pvalue_exponent, pvalue_description, beta, range, multi_snp_haplotype, snp_interaction"
+      },
+      "template": "stage5-templates-v1/description"
+    },
+    {
+      "content_id": "simple_summary-c-gwas-association-55467053",
+      "evidence_ids": [
+        "e-gwas-association-55467053",
+        "e-gwas-study-GCST009418",
+        "e-europe-pmc-MED-31791255"
+      ],
+      "input_statement": "GWAS Catalog lists an unresolved variant/haplotype in an association record for 'Lactose tolerance test'. Reported p_value: 3e-06.",
+      "source_location": {
+        "locator": "response-003#/_embedded/associations/1; fields: association_id, accession_id, pubmed_id, first_author, reported_trait, efo_traits, snp_allele, snp_effect_allele, mapped_genes, locations, risk_frequency, p_value, pvalue_mantissa, pvalue_exponent, pvalue_description, beta, range, multi_snp_haplotype, snp_interaction"
+      },
+      "template": "stage5-templates-v1/simple_summary"
+    },
+    {
+      "content_id": "technical_summary-c-gwas-association-55467053",
+      "evidence_ids": [
+        "e-gwas-association-55467053",
+        "e-gwas-study-GCST009418",
+        "e-europe-pmc-MED-31791255"
+      ],
+      "input_statement": "GWAS Catalog lists an unresolved variant/haplotype in an association record for 'Lactose tolerance test'. Reported p_value: 3e-06.",
+      "source_location": {
+        "locator": "response-003#/_embedded/associations/1; fields: association_id, accession_id, pubmed_id, first_author, reported_trait, efo_traits, snp_allele, snp_effect_allele, mapped_genes, locations, risk_frequency, p_value, pvalue_mantissa, pvalue_exponent, pvalue_description, beta, range, multi_snp_haplotype, snp_interaction"
+      },
+      "template": "stage5-templates-v1/technical_summary"
+    },
+    {
+      "content_id": "simple_explanation-c-gwas-association-55467053",
+      "evidence_ids": [
+        "e-gwas-association-55467053",
+        "e-gwas-study-GCST009418",
+        "e-europe-pmc-MED-31791255"
+      ],
+      "input_statement": "GWAS Catalog lists an unresolved variant/haplotype in an association record for 'Lactose tolerance test'. Reported p_value: 3e-06.",
+      "source_location": {
+        "locator": "response-003#/_embedded/associations/1; fields: association_id, accession_id, pubmed_id, first_author, reported_trait, efo_traits, snp_allele, snp_effect_allele, mapped_genes, locations, risk_frequency, p_value, pvalue_mantissa, pvalue_exponent, pvalue_description, beta, range, multi_snp_haplotype, snp_interaction"
+      },
+      "template": "stage5-templates-v1/simple_explanation"
+    },
+    {
+      "content_id": "technical_explanation-c-gwas-association-55467053",
+      "evidence_ids": [
+        "e-gwas-association-55467053",
+        "e-gwas-study-GCST009418",
+        "e-europe-pmc-MED-31791255"
+      ],
+      "input_statement": "GWAS Catalog lists an unresolved variant/haplotype in an association record for 'Lactose tolerance test'. Reported p_value: 3e-06.",
+      "source_location": {
+        "locator": "response-003#/_embedded/associations/1; fields: association_id, accession_id, pubmed_id, first_author, reported_trait, efo_traits, snp_allele, snp_effect_allele, mapped_genes, locations, risk_frequency, p_value, pvalue_mantissa, pvalue_exponent, pvalue_description, beta, range, multi_snp_haplotype, snp_interaction"
+      },
+      "template": "stage5-templates-v1/technical_explanation"
+    },
+    {
+      "content_id": "practical_takeaway-c-gwas-association-55467053",
+      "evidence_ids": [
+        "e-gwas-association-55467053",
+        "e-gwas-study-GCST009418",
+        "e-europe-pmc-MED-31791255"
+      ],
+      "input_statement": "GWAS Catalog lists an unresolved variant/haplotype in an association record for 'Lactose tolerance test'. Reported p_value: 3e-06.",
+      "source_location": {
+        "locator": "response-003#/_embedded/associations/1; fields: association_id, accession_id, pubmed_id, first_author, reported_trait, efo_traits, snp_allele, snp_effect_allele, mapped_genes, locations, risk_frequency, p_value, pvalue_mantissa, pvalue_exponent, pvalue_description, beta, range, multi_snp_haplotype, snp_interaction"
+      },
+      "template": "stage5-templates-v1/practical_takeaway"
+    },
+    {
+      "content_id": "research_spotlight-c-gwas-study-GCST009418",
+      "evidence_ids": [
+        "e-gwas-study-GCST009418"
+      ],
+      "input_statement": "GWAS Catalog study GCST009418 studies 'Lactose tolerance test'. Discovery sample as reported: 53 Fulani individuals, 7 Czech or Slovak individuals.",
+      "source_location": {
+        "locator": "response-004#; fields: accession_id, pubmed_id, disease_trait, initial_sample_size, replication_sample_size, discovery_ancestry, replication_ancestry, gxe, gxg, platforms, genotyping_technologies, terms_of_license"
+      },
+      "template": "stage5-templates-v1/research_spotlight"
+    },
+    {
+      "content_id": "research_spotlight-c-europe-pmc-MED-31791255",
+      "evidence_ids": [
+        "e-europe-pmc-MED-31791255"
+      ],
+      "input_statement": "Europe PMC identifies PMID 31791255 as 'Population history and genetic adaptation of the Fulani nomads: inferences from genome-wide data and the lactase persistence trait.' (2019).",
+      "source_location": {
+        "locator": "response-005#/resultList/result/0; fields: id, source, pmid, pmcid, doi, title, authorString, pubYear, firstPublicationDate, isOpenAccess, license"
+      },
+      "template": "stage5-templates-v1/research_spotlight"
+    }
+  ],
+  "method": "templates",
+  "model": null,
+  "version": "stage5-templates-v1"
+}

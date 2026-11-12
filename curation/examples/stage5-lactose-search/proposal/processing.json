@@ -1,0 +1,15 @@
+{
+  "extractor_version": "stage5-v1",
+  "drafting_version": "stage5-templates-v1",
+  "processed_at": "2026-11-10T08:10:26.619527+00:00",
+  "elapsed_seconds": 0.011803,
+  "run_sha256": "a9e83404b350d3894e97939b54c9d330218478800e1b759165b8c09c089d19bc",
+  "initial_output_sha256": {
+    "raw-extraction.json": "e1794f3b4003dc27a198debe5f61742bd05267b8670c9ada7770255f88615d34",
+    "normalized.json": "278211305dde351175fc7cbbbfabc936cc8d601750287c2311b5f7e5631405f2",
+    "dossier.json": "0fd45349573ba59b915312d0fdcc3b1c289ede8c6ce1ac99ff7d6a00da73fda4",
+    "drafting.json": "8ff2304d74ff62ad431c36056d466b700d6351bf0879c591683eadc57f695a20",
+    "acquisition.json": "d3257a2603e9f84e0c4219143f2689e04060af57a87348b3dcb55f1897b29406",
+    "review.md": "6f3d218d308bbc3fc013e5cc674012f329cbeeecebcddb9d52d261e1acd36678"
+  }
+}

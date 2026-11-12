@@ -67,6 +67,8 @@ class FrozenInputs(CurationModel):
     decisions: list[ScopedReviewDecision] = Field(min_length=1)
     expected_cases: ExpectedCases
     source_documents: list[SourceDocument]
+    # Read legacy inputs without emitting their machine-local lookup path again.
+    research_acquisition_path: str | None = Field(default=None, exclude=True)
 
 
 class ReleaseManifest(CurationModel):
@@ -189,11 +191,15 @@ def build_candidate(
     acquisition_path: Path | None = None,
 ) -> ReleaseManifest:
     """Freeze the latest whole dossier. Failed cases leave no eligible candidate."""
+    # Research uses this module's serialization helpers; import after module setup.
+    from backend.services.trait_curation.research import verify_research_acquisition
+
     TypeAdapter(ReleaseId).validate_python(release_id)
     snapshots, history = read_workspace(workspace)
     selected = snapshots[-1]
     dossier = selected.dossier
     decisions = _approved_decisions(dossier, history)
+    verified_documents = verify_research_acquisition(workspace, acquisition_path)
     catalog = compile_catalog(dossier, decisions)
     cases = ExpectedCases.model_validate_json(cases_path.read_bytes())
     verification = verify_cases(catalog.traits[0], cases)
@@ -216,8 +222,13 @@ def build_candidate(
         ],
         decisions=decisions,
         expected_cases=cases,
-        source_documents=source_documents(
-            acquisition_path, {source.source_id for source in catalog.traits[0].sources}
+        source_documents=(
+            verified_documents
+            if verified_documents is not None
+            else source_documents(
+                acquisition_path,
+                {source.source_id for source in catalog.traits[0].sources},
+            )
         ),
     )
     files = {
@@ -236,6 +247,12 @@ def build_candidate(
         files={name: sha256(data) for name, data in files.items()},
     )
     files["manifest.json"] = stable_json(manifest.model_dump(mode="json"))
+    # Operational locator only: neither a manifest payload nor a published file.
+    # Its target is untrusted until checked against reviewed/frozen provenance.
+    if verified_documents is not None and acquisition_path is not None:
+        files["acquisition-link.json"] = stable_json(
+            {"research_acquisition_path": str(acquisition_path.resolve())}
+        )
     candidate.mkdir(parents=True, exist_ok=False)
     for name, data in files.items():
         with (candidate / name).open("xb") as stream:
@@ -337,8 +354,10 @@ def preview_candidate(candidate: Path) -> tuple[str, str]:
 
 
 def _check_current_selection(
-    workspace: Path, inputs: FrozenInputs, manifest: ReleaseManifest
+    candidate: Path, workspace: Path, inputs: FrozenInputs, manifest: ReleaseManifest
 ) -> None:
+    from backend.services.trait_curation.research import verify_research_acquisition
+
     snapshots, decisions = read_workspace(workspace)
     current = snapshots[-1].dossier
     if (
@@ -349,6 +368,28 @@ def _check_current_selection(
         raise ValueError("Review selection changed; build and approve a new candidate")
     if _approved_decisions(current, decisions) != inputs.decisions:
         raise ValueError("Required review decisions changed; build a new candidate")
+    lookup_path = inputs.research_acquisition_path  # Legacy candidates only.
+    link_path = candidate / "acquisition-link.json"
+    if link_path.is_file():
+        link = json.loads(link_path.read_bytes())
+        lookup_path = (
+            link.get("research_acquisition_path") if isinstance(link, dict) else None
+        )
+        if not isinstance(lookup_path, str) or not lookup_path.strip():
+            raise ValueError("Candidate acquisition link must name an inventory path")
+    inventory_path = (
+        (candidate / lookup_path).resolve() if lookup_path is not None else None
+    )
+    verified_documents = verify_research_acquisition(workspace, inventory_path)
+    if verified_documents is None:
+        if inventory_path is not None or any(
+            snapshot.dossier.candidate.pipeline_version.startswith("stage5-")
+            or snapshot.dossier.candidate.research_run_sha256 is not None
+            for snapshot in inputs.snapshots
+        ):
+            raise ValueError("Stage 5 candidate requires its research-origin workspace")
+    elif verified_documents != inputs.source_documents:
+        raise ValueError("Acquisition inventory changed since the displayed preview")
 
 
 def approve_release(
@@ -362,7 +403,7 @@ def approve_release(
     manifest, inputs = _check_candidate_files(files, check_compilation=True)
     if sha256(files["manifest.json"]) != manifest_fingerprint:
         raise ValueError("Manifest fingerprint changed; preview before approving")
-    _check_current_selection(workspace, inputs, manifest)
+    _check_current_selection(candidate, workspace, inputs, manifest)
     approval = ReleaseApproval(
         release_id=manifest.release_id,
         action="approve",
@@ -382,7 +423,7 @@ def publish_candidate(candidate: Path, workspace: Path, releases: Path) -> Path:
     manifest, inputs = _check_candidate_files(
         files, require_approval=True, check_compilation=False
     )
-    _check_current_selection(workspace, inputs, manifest)
+    _check_current_selection(candidate, workspace, inputs, manifest)
     destination = releases / manifest.release_id
     destination.mkdir(parents=True, exist_ok=False)
     for name, data in files.items():

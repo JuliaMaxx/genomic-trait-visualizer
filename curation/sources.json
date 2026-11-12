@@ -1,0 +1,29 @@
+{
+  "version": "stage5-sources-v1",
+  "sources": [
+    {
+      "source_id": "gwas_catalog",
+      "name": "NHGRI-EBI GWAS Catalog",
+      "base_url": "https://www.ebi.ac.uk/gwas/rest/api/v2",
+      "documentation_url": "https://www.ebi.ac.uk/gwas/rest/api/v2/docs",
+      "terms_url": "https://www.ebi.ac.uk/about/terms-of-use/",
+      "capabilities": ["trait ontology search", "reported associations", "study metadata"],
+      "retention": "Small original JSON responses, with attribution. EMBL-EBI terms and underlying data-owner rights apply. No summary-statistics bulk download."
+    },
+    {
+      "source_id": "europe_pmc",
+      "name": "Europe PMC",
+      "base_url": "https://www.ebi.ac.uk/europepmc/webservices/rest",
+      "documentation_url": "https://europepmc.org/RestfulWebService",
+      "terms_url": "https://europepmc.org/Copyright",
+      "capabilities": ["bounded trait-name title/abstract search in PubMed records", "publication lookup by discovered PMID", "bibliography and abstract context"],
+      "retention": "Small core JSON metadata responses; retain supplied license. Abstracts may be copyrighted; no full-text download or abstract republication in generated explanations."
+    }
+  ],
+  "synonyms": {
+    "alcohol flushing": ["flushing"],
+    "alcohol flush": ["flushing"],
+    "lactose digestion ability": ["lactose tolerance test"],
+    "lactose digestion": ["lactose tolerance test"]
+  }
+}

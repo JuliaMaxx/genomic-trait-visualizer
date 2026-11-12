@@ -1,0 +1,38 @@
+[
+  {
+    "document_id": "gwas-association-55467061",
+    "path": "responses/response-003.json",
+    "sha256": "7949a3d82604dcfdedd361bac58ede73baa2179ff0ef0d848b3422d284603f14",
+    "source_id": "gwas-association-55467061",
+    "type": "original",
+    "url": "https://www.ebi.ac.uk/gwas/rest/api/v2/associations?efo_id=EFO_0010557&show_child_trait=false&page=0&size=2",
+    "version": "stage5-v1"
+  },
+  {
+    "document_id": "gwas-association-55467053",
+    "path": "responses/response-003.json",
+    "sha256": "7949a3d82604dcfdedd361bac58ede73baa2179ff0ef0d848b3422d284603f14",
+    "source_id": "gwas-association-55467053",
+    "type": "original",
+    "url": "https://www.ebi.ac.uk/gwas/rest/api/v2/associations?efo_id=EFO_0010557&show_child_trait=false&page=0&size=2",
+    "version": "stage5-v1"
+  },
+  {
+    "document_id": "gwas-study-GCST009418",
+    "path": "responses/response-004.json",
+    "sha256": "14cee1ef42f36c8df37ba4569906e778e8443171fe04c439022cf5b538da68fb",
+    "source_id": "gwas-study-GCST009418",
+    "type": "original",
+    "url": "https://www.ebi.ac.uk/gwas/rest/api/v2/studies/GCST009418",
+    "version": "stage5-v1"
+  },
+  {
+    "document_id": "europe-pmc-MED-31791255",
+    "path": "responses/response-005.json",
+    "sha256": "a519db7394eb822e01591dbeebd4b54110b28269d288416696d789fd50725b2b",
+    "source_id": "europe-pmc-MED-31791255",
+    "type": "original",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A31791255+AND+SRC%3AMED&format=json&resultType=core&pageSize=1",
+    "version": "stage5-v1"
+  }
+]

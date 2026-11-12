@@ -1,0 +1,150 @@
+{
+  "extractor_version": "stage5-v1",
+  "records": [
+    {
+      "document_id": "response-003",
+      "fields": {
+        "accession_id": "GCST009418",
+        "association_id": 55467061,
+        "beta": "-",
+        "efo_traits": [
+          {
+            "efo_id": "EFO_0010557",
+            "efo_trait": "lactose tolerance test"
+          }
+        ],
+        "first_author": "Vicente M",
+        "locations": [
+          "13:82218857"
+        ],
+        "mapped_genes": [
+          "GYG1P2",
+          "PTMAP5"
+        ],
+        "multi_snp_haplotype": false,
+        "p_value": 1e-06,
+        "pubmed_id": "31791255",
+        "pvalue_description": "",
+        "pvalue_exponent": -6,
+        "pvalue_mantissa": 1,
+        "range": "-",
+        "reported_trait": [
+          "Lactose tolerance test"
+        ],
+        "risk_frequency": "NR",
+        "snp_allele": [
+          {
+            "effect_allele": "?",
+            "rs_id": "rs6563275"
+          }
+        ],
+        "snp_effect_allele": [
+          "rs6563275-?"
+        ],
+        "snp_interaction": false
+      },
+      "found_by": [
+        "Potential relevance only: lactose tolerance test -> lactose tolerance test [response-003#/_embedded/associations/0]"
+      ],
+      "kind": "association",
+      "locator": "/_embedded/associations/0",
+      "record_id": "gwas-association-55467061"
+    },
+    {
+      "document_id": "response-003",
+      "fields": {
+        "accession_id": "GCST009418",
+        "association_id": 55467053,
+        "beta": "-",
+        "efo_traits": [
+          {
+            "efo_id": "EFO_0010557",
+            "efo_trait": "lactose tolerance test"
+          }
+        ],
+        "first_author": "Vicente M",
+        "locations": [],
+        "mapped_genes": [],
+        "multi_snp_haplotype": false,
+        "p_value": 3e-06,
+        "pubmed_id": "31791255",
+        "pvalue_description": "",
+        "pvalue_exponent": -6,
+        "pvalue_mantissa": 3,
+        "range": "-",
+        "reported_trait": [
+          "Lactose tolerance test"
+        ],
+        "risk_frequency": "NR",
+        "snp_allele": [
+          {
+            "effect_allele": "?",
+            "rs_id": "T-13910"
+          }
+        ],
+        "snp_effect_allele": [
+          "T-13910-?"
+        ],
+        "snp_interaction": false
+      },
+      "found_by": [
+        "Potential relevance only: lactose tolerance test -> lactose tolerance test [response-003#/_embedded/associations/1]"
+      ],
+      "kind": "association",
+      "locator": "/_embedded/associations/1",
+      "record_id": "gwas-association-55467053"
+    },
+    {
+      "document_id": "response-004",
+      "fields": {
+        "accession_id": "GCST009418",
+        "discovery_ancestry": [
+          "53 Other admixed ancestry (Burkina Faso)",
+          "7 NR (Czech Republic)"
+        ],
+        "disease_trait": "Lactose tolerance test",
+        "genotyping_technologies": [
+          "Genome-wide genotyping array"
+        ],
+        "gxe": false,
+        "gxg": false,
+        "initial_sample_size": "53 Fulani individuals, 7 Czech or Slovak individuals",
+        "platforms": "Illumina [2359821]",
+        "pubmed_id": 31791255,
+        "replication_ancestry": [],
+        "replication_sample_size": "NA",
+        "terms_of_license": "https://www.ebi.ac.uk/about/terms-of-use/"
+      },
+      "found_by": [
+        "Study GCST009418 linked by discovered association(s) [response-004#]"
+      ],
+      "kind": "study",
+      "locator": "",
+      "record_id": "gwas-study-GCST009418"
+    },
+    {
+      "document_id": "response-005",
+      "fields": {
+        "abstractText": "<h4>Background</h4>Human population history in the Holocene was profoundly impacted by changes in lifestyle following the invention and adoption of food-production practices. These changes triggered significant increases in population sizes and expansions over large distances. Here we investigate the population history of the Fulani, a pastoral population extending throughout the African Sahel/Savannah belt.<h4>Results</h4>Based on genome-wide analyses we propose that ancestors of the Fulani population experienced admixture between a West African group and a group carrying both European and North African ancestries. This admixture was likely coupled with newly adopted herding practices, as it resulted in signatures of genetic adaptation in contemporary Fulani genomes, including the control element of the LCT gene enabling carriers to digest lactose throughout their lives. The lactase persistence (LP) trait in the Fulani is conferred by the presence of the allele T-13910, which is also present at high frequencies in Europe. We establish that the T-13910 LP allele in Fulani individuals analysed in this study lies on a European haplotype background thus excluding parallel convergent evolution. We furthermore directly link the T-13910 haplotype with the Lactase Persistence phenotype through a Genome Wide Association study (GWAS) and identify another genomic region in the vicinity of the SPRY2 gene associated with glycaemic measurements after lactose intake.<h4>Conclusions</h4>Our findings suggest that Eurasian admixture and the European LP allele was introduced into the Fulani through contact with a North African population/s. We furthermore confirm the link between the lactose digestion phenotype in the Fulani to the MCM6/LCT locus by reporting the first GWAS of the lactase persistence trait. We also explored other signals of recent adaptation in the Fulani and identified additional candidates for selection to adapt to herding life-styles.",
+        "authorString": "Vicente M, Priehodová E, Diallo I, Podgorná E, Poloni ES, Černý V, Schlebusch CM.",
+        "doi": "10.1186/s12864-019-6296-7",
+        "firstPublicationDate": "2019-12-02",
+        "id": "31791255",
+        "isOpenAccess": "Y",
+        "license": "cc by",
+        "pmcid": "PMC6888939",
+        "pmid": "31791255",
+        "pubYear": "2019",
+        "source": "MED",
+        "title": "Population history and genetic adaptation of the Fulani nomads: inferences from genome-wide data and the lactase persistence trait."
+      },
+      "found_by": [
+        "PMID 31791255 linked by discovered association(s) [response-005#/resultList/result/0]"
+      ],
+      "kind": "publication",
+      "locator": "/resultList/result/0",
+      "record_id": "europe-pmc-MED-31791255"
+    }
+  ],
+  "warnings": []
+}

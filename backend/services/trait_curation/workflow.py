@@ -164,6 +164,8 @@ def _reviewed_data(
             for dep_scope, dep_id in dependencies
         ],
     }
+    if dossier.candidate.research_run_sha256 is not None:
+        reviewed["research_run_sha256"] = dossier.candidate.research_run_sha256
     if scope == ReviewScope.CONTENT:
         # Shared display context belongs to wording review, not scientific review.
         reviewed["candidate_content"] = dossier.candidate.model_dump(

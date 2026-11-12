@@ -7,3 +7,6 @@ uploads/
 *.coverage
 /*cache*/
 docs/
+# Local research and review outputs
+/curation/runs/
+/curation/reviews/

@@ -5,7 +5,8 @@ import json
 from pathlib import Path
 from typing import Any
 
-from backend.models.curation import ReviewAction
+from backend.models.curation import ClaimType, ReviewAction
+from backend.models.research import Extraction, ResearchRequest
 from backend.services.trait_curation.compiler import (
     approve_release,
     build_candidate,
@@ -13,6 +14,8 @@ from backend.services.trait_curation.compiler import (
     publish_candidate,
     verify_release,
 )
+from backend.services.trait_curation.research import acquisition_root, load_run, replay
+from backend.services.trait_curation.research_sources import REGISTRY, acquire
 from backend.services.trait_curation.validation import validate_review_readiness
 from backend.services.trait_curation.workflow import (
     ReviewScope,
@@ -34,7 +37,7 @@ def _print_json(value: object) -> None:
 
 def _print_status(status: dict[str, Any]) -> None:
     ready = "yes" if status["ready_for_stage4"] else "no"
-    print(f"Revision {status['revision']} | Ready for Stage 4: {ready}")
+    print(f"Revision {status['revision']} | Ready to publish: {ready}")
     for item in status["items"]:
         print(f"{item['scope']:8} {item['target_id']}: {item['state']}")
         if item["blocked_by"]:
@@ -58,7 +61,7 @@ def _print_status(status: dict[str, Any]) -> None:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Offline scientific review and catalog publication"
+        description="Source discovery, scientific review and catalog publication"
     )
     commands = parser.add_subparsers(dest="command", required=True)
     init = commands.add_parser("init", help="Create a new workspace from a dossier")
@@ -145,6 +148,38 @@ def build_parser() -> argparse.ArgumentParser:
 
     verify = commands.add_parser("verify-release", help="Verify all published files")
     verify.add_argument("release", type=Path)
+
+    finalize = commands.add_parser(
+        "finalize", help="Build, preview and explicitly confirm a reviewed release"
+    )
+    finalize.add_argument("workspace", type=Path)
+    finalize.add_argument("candidate", type=Path, help="New candidate directory")
+    finalize.add_argument("--release-id", required=True)
+    finalize.add_argument("--cases", required=True, type=Path)
+    finalize.add_argument(
+        "--acquisition", type=Path, help="Source acquisition inventory"
+    )
+    finalize.add_argument("--reviewer", required=True)
+    finalize.add_argument("--rationale", required=True)
+    finalize.add_argument("--releases", type=Path, default=Path("data/releases"))
+
+    research = commands.add_parser(
+        "research",
+        help="Search a trait, preserve responses and draft pending proposals",
+    )
+    research.add_argument("trait")
+    research.add_argument("output", type=Path, help="New research run directory")
+    research.add_argument("--synonym", action="append", default=[])
+    research.add_argument(
+        "--limit", type=int, default=3, help="1-10 association records"
+    )
+    research.add_argument("--sources", type=Path, default=REGISTRY)
+
+    replay_parser = commands.add_parser(
+        "replay", help="Verify saved source hashes and regenerate proposals offline"
+    )
+    replay_parser.add_argument("run", type=Path)
+    replay_parser.add_argument("output", type=Path, help="New proposal directory")
     return parser
 
 
@@ -253,6 +288,110 @@ def main(argv: list[str] | None = None) -> int:
         elif args.command == "verify-release":
             manifest = verify_release(args.release)
             print(f"Verified release {manifest.release_id}: all file hashes match")
+        elif args.command == "finalize":
+            build_candidate(
+                args.workspace,
+                args.candidate,
+                args.release_id,
+                args.cases,
+                args.acquisition,
+            )
+            preview, fingerprint = preview_candidate(args.candidate)
+            print(preview)
+            print(f"Manifest SHA-256: {fingerprint}", flush=True)
+            try:
+                confirmed = (
+                    input(
+                        f"Approve this exact manifest and publish {args.release_id}? "
+                        "Type 'publish' to confirm: "
+                    ).strip()
+                    == "publish"
+                )
+            except (EOFError, KeyboardInterrupt):
+                confirmed = False
+            if not confirmed:
+                print(f"Finalization cancelled; unapproved candidate: {args.candidate}")
+                return 1
+            approve_release(
+                args.candidate,
+                args.workspace,
+                args.reviewer,
+                args.rationale,
+                fingerprint,
+            )
+            # Stage 4 copies frozen bytes and verifies the resulting release.
+            destination = publish_candidate(
+                args.candidate, args.workspace, args.releases
+            )
+            print(f"Published and verified: {destination}")
+        elif args.command in {"research", "replay"}:
+            if args.command == "research":
+                request = ResearchRequest(
+                    trait_name=args.trait, synonyms=args.synonym, limit=args.limit
+                )
+                acquire(request, args.output, args.sources)
+                root, output = args.output, args.output / "proposal"
+            else:
+                root, output = args.run, args.output
+            dossier = replay(root, output)
+            run = load_run(root)
+            extraction = Extraction.model_validate_json(
+                (output / "raw-extraction.json").read_bytes()
+            )
+            print(f"Trait: {dossier.candidate.proposed_name}")
+            print(f"Retrieved sources: {len(dossier.sources)}")
+            print(
+                f"Evidence proposals: {len(dossier.evidence)} | "
+                f"Draft explanations: {len(dossier.explanations)}"
+            )
+            print(
+                "Warning: proposals need human review; relevance and scientific "
+                "interpretation remain unresolved. Search results are bounded."
+            )
+            failures = sum(response.error is not None for response in run.responses)
+            if failures:
+                print(
+                    f"Warning: Retrieval failed for {failures} request(s); see report."
+                )
+            unresolved = sum(
+                item.claim_type == ClaimType.TRAIT_ASSOCIATION
+                and (item.rsid is None or item.effect_allele is None)
+                for item in dossier.evidence
+            )
+            if unresolved:
+                print(
+                    f"Warning: {unresolved} finding(s) have unresolved "
+                    "markers or alleles."
+                )
+            conflicts = sum(
+                any(note.startswith("Conflicting ") for note in item.validation_notes)
+                for item in dossier.evidence
+            )
+            if conflicts:
+                print(
+                    f"Warning: {conflicts} finding(s) have conflicting source values; "
+                    "see report."
+                )
+            if run.warnings or extraction.warnings:
+                warning_count = len(run.warnings) + len(extraction.warnings)
+                print(
+                    f"Warnings recorded: {warning_count} "
+                    "(retrieval, search or extraction); see report."
+                )
+            print(f"Report: {output / 'review.md'}")
+            print(f"Proposal data: {output} (dossier.json and supporting JSON files)")
+            print(f"Saved sources: {acquisition_root(root)} (run.json and responses/)")
+            if not dossier.evidence:
+                print("Warning: no evidence proposals could be produced.")
+                print("Next: review the report warnings and saved responses.")
+                return 2
+            print(
+                "Next: Review proposed information, then initialize a review workspace:"
+            )
+            print(
+                "  python -m backend.services.trait_curation.cli init "
+                f'"{output / "dossier.json"}" <new-review-workspace>'
+            )
     except (OSError, ValueError) as exc:
         parser.exit(2, f"error: {exc}\n")
     return 0

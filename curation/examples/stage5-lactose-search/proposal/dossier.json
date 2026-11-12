@@ -1,0 +1,471 @@
+{
+  "candidate": {
+    "candidate_id": "research-lactose_digestion_ability",
+    "created_at": "2026-11-10T08:02:59.541279Z",
+    "description": "A retrieved GWAS Catalog record concerns 'Lactose tolerance test' and rs6563275. Its relevance to this trait still needs review.",
+    "evidence_ids": [
+      "e-gwas-association-55467061",
+      "e-gwas-association-55467053",
+      "e-gwas-study-GCST009418",
+      "e-europe-pmc-MED-31791255"
+    ],
+    "keywords": [
+      "Lactose Digestion Ability",
+      "lactose tolerance test"
+    ],
+    "pipeline_version": "stage5-v1",
+    "proposed_category": null,
+    "proposed_id": "lactose_digestion_ability",
+    "proposed_name": "Lactose Digestion Ability",
+    "reviewer_notes": [
+      "Automatic proposals only. Review relevance, fields and wording."
+    ],
+    "revision": 1,
+    "source_ids": [
+      "gwas-association-55467061",
+      "gwas-association-55467053",
+      "gwas-study-GCST009418",
+      "europe-pmc-MED-31791255"
+    ],
+    "status": "draft"
+  },
+  "claims": [
+    {
+      "assessment": null,
+      "claim_id": "c-gwas-association-55467061",
+      "claim_type": "trait_association",
+      "evidence_ids": [
+        "e-gwas-association-55467061",
+        "e-gwas-study-GCST009418",
+        "e-europe-pmc-MED-31791255"
+      ],
+      "limitations": [
+        "Relevance to the requested trait and scientific fidelity need review.",
+        "effect_allele: absent, ambiguous or unsupported; left null.",
+        "Genome build, allele orientation, comparison/denominator and personal applicability are unresolved.",
+        "Mapped genes may be nearby annotations; they are not established causal genes.",
+        "Reported statistics are evidence, never application coefficients or personal probabilities.",
+        "No genotype interpretation or independent expected cases have been proposed."
+      ],
+      "scope": "Description of this retrieved database record only; relevance is unassessed.",
+      "statement": "GWAS Catalog lists rs6563275 in an association record for 'Lactose tolerance test'. Reported p_value: 1e-06.",
+      "status": "pending"
+    },
+    {
+      "assessment": null,
+      "claim_id": "c-gwas-association-55467053",
+      "claim_type": "trait_association",
+      "evidence_ids": [
+        "e-gwas-association-55467053",
+        "e-gwas-study-GCST009418",
+        "e-europe-pmc-MED-31791255"
+      ],
+      "limitations": [
+        "Relevance to the requested trait and scientific fidelity need review.",
+        "rsid: absent, ambiguous or unsupported; left null.",
+        "effect_allele: absent, ambiguous or unsupported; left null.",
+        "Genome build, allele orientation, comparison/denominator and personal applicability are unresolved.",
+        "Mapped genes may be nearby annotations; they are not established causal genes.",
+        "Reported statistics are evidence, never application coefficients or personal probabilities.",
+        "No genotype interpretation or independent expected cases have been proposed."
+      ],
+      "scope": "Description of this retrieved database record only; relevance is unassessed.",
+      "statement": "GWAS Catalog lists an unresolved variant/haplotype in an association record for 'Lactose tolerance test'. Reported p_value: 3e-06.",
+      "status": "pending"
+    },
+    {
+      "assessment": null,
+      "claim_id": "c-gwas-study-GCST009418",
+      "claim_type": "other",
+      "evidence_ids": [
+        "e-gwas-study-GCST009418"
+      ],
+      "limitations": [
+        "Relevance to the requested trait and scientific fidelity need review.",
+        "Sample descriptions are study-specific, not evidence of general population applicability."
+      ],
+      "scope": "Description of this retrieved database record only; relevance is unassessed.",
+      "statement": "GWAS Catalog study GCST009418 studies 'Lactose tolerance test'. Discovery sample as reported: 53 Fulani individuals, 7 Czech or Slovak individuals.",
+      "status": "pending"
+    },
+    {
+      "assessment": null,
+      "claim_id": "c-europe-pmc-MED-31791255",
+      "claim_type": "other",
+      "evidence_ids": [
+        "e-europe-pmc-MED-31791255"
+      ],
+      "limitations": [
+        "Relevance to the requested trait and scientific fidelity need review.",
+        "Abstract is retained as reading context; its scientific conclusions are not extracted."
+      ],
+      "scope": "Description of this retrieved database record only; relevance is unassessed.",
+      "statement": "Europe PMC identifies PMID 31791255 as 'Population history and genetic adaptation of the Fulani nomads: inferences from genome-wide data and the lactase persistence trait.' (2019).",
+      "status": "pending"
+    }
+  ],
+  "evidence": [
+    {
+      "claim_type": "trait_association",
+      "effect_allele": null,
+      "effect_direction": null,
+      "evidence_id": "e-gwas-association-55467061",
+      "extracted_at": "2026-11-10T08:03:02.807148Z",
+      "extraction_confidence": null,
+      "extraction_method": "structured_api",
+      "extractor_version": "stage5-v1",
+      "gene": null,
+      "phenotype": "Lactose tolerance test",
+      "rsid": "rs6563275",
+      "source_ids": [
+        "gwas-association-55467061"
+      ],
+      "source_location": {
+        "figure": null,
+        "locator": "response-003#/_embedded/associations/0; fields: association_id, accession_id, pubmed_id, first_author, reported_trait, efo_traits, snp_allele, snp_effect_allele, mapped_genes, locations, risk_frequency, p_value, pvalue_mantissa, pvalue_exponent, pvalue_description, beta, range, multi_snp_haplotype, snp_interaction",
+        "page": null,
+        "paragraph": null,
+        "section": null,
+        "table": null
+      },
+      "source_passage": null,
+      "statement": "GWAS Catalog lists rs6563275 in an association record for 'Lactose tolerance test'. Reported p_value: 1e-06.",
+      "status": "pending",
+      "trait_id": "lactose_digestion_ability",
+      "validation_notes": [
+        "Relevance to the requested trait and scientific fidelity need review.",
+        "effect_allele: absent, ambiguous or unsupported; left null.",
+        "Genome build, allele orientation, comparison/denominator and personal applicability are unresolved.",
+        "Mapped genes may be nearby annotations; they are not established causal genes.",
+        "Reported statistics are evidence, never application coefficients or personal probabilities.",
+        "No genotype interpretation or independent expected cases have been proposed."
+      ]
+    },
+    {
+      "claim_type": "trait_association",
+      "effect_allele": null,
+      "effect_direction": null,
+      "evidence_id": "e-gwas-association-55467053",
+      "extracted_at": "2026-11-10T08:03:02.807148Z",
+      "extraction_confidence": null,
+      "extraction_method": "structured_api",
+      "extractor_version": "stage5-v1",
+      "gene": null,
+      "phenotype": "Lactose tolerance test",
+      "rsid": null,
+      "source_ids": [
+        "gwas-association-55467053"
+      ],
+      "source_location": {
+        "figure": null,
+        "locator": "response-003#/_embedded/associations/1; fields: association_id, accession_id, pubmed_id, first_author, reported_trait, efo_traits, snp_allele, snp_effect_allele, mapped_genes, locations, risk_frequency, p_value, pvalue_mantissa, pvalue_exponent, pvalue_description, beta, range, multi_snp_haplotype, snp_interaction",
+        "page": null,
+        "paragraph": null,
+        "section": null,
+        "table": null
+      },
+      "source_passage": null,
+      "statement": "GWAS Catalog lists an unresolved variant/haplotype in an association record for 'Lactose tolerance test'. Reported p_value: 3e-06.",
+      "status": "pending",
+      "trait_id": "lactose_digestion_ability",
+      "validation_notes": [
+        "Relevance to the requested trait and scientific fidelity need review.",
+        "rsid: absent, ambiguous or unsupported; left null.",
+        "effect_allele: absent, ambiguous or unsupported; left null.",
+        "Genome build, allele orientation, comparison/denominator and personal applicability are unresolved.",
+        "Mapped genes may be nearby annotations; they are not established causal genes.",
+        "Reported statistics are evidence, never application coefficients or personal probabilities.",
+        "No genotype interpretation or independent expected cases have been proposed."
+      ]
+    },
+    {
+      "claim_type": "other",
+      "effect_allele": null,
+      "effect_direction": null,
+      "evidence_id": "e-gwas-study-GCST009418",
+      "extracted_at": "2026-11-10T08:03:02.807148Z",
+      "extraction_confidence": null,
+      "extraction_method": "structured_api",
+      "extractor_version": "stage5-v1",
+      "gene": null,
+      "phenotype": null,
+      "rsid": null,
+      "source_ids": [
+        "gwas-study-GCST009418"
+      ],
+      "source_location": {
+        "figure": null,
+        "locator": "response-004#; fields: accession_id, pubmed_id, disease_trait, initial_sample_size, replication_sample_size, discovery_ancestry, replication_ancestry, gxe, gxg, platforms, genotyping_technologies, terms_of_license",
+        "page": null,
+        "paragraph": null,
+        "section": null,
+        "table": null
+      },
+      "source_passage": null,
+      "statement": "GWAS Catalog study GCST009418 studies 'Lactose tolerance test'. Discovery sample as reported: 53 Fulani individuals, 7 Czech or Slovak individuals.",
+      "status": "pending",
+      "trait_id": "lactose_digestion_ability",
+      "validation_notes": [
+        "Relevance to the requested trait and scientific fidelity need review.",
+        "Sample descriptions are study-specific, not evidence of general population applicability."
+      ]
+    },
+    {
+      "claim_type": "other",
+      "effect_allele": null,
+      "effect_direction": null,
+      "evidence_id": "e-europe-pmc-MED-31791255",
+      "extracted_at": "2026-11-10T08:03:02.807148Z",
+      "extraction_confidence": null,
+      "extraction_method": "structured_api",
+      "extractor_version": "stage5-v1",
+      "gene": null,
+      "phenotype": null,
+      "rsid": null,
+      "source_ids": [
+        "europe-pmc-MED-31791255"
+      ],
+      "source_location": {
+        "figure": null,
+        "locator": "response-005#/resultList/result/0; fields: id, source, pmid, pmcid, doi, title, authorString, pubYear, firstPublicationDate, isOpenAccess, license",
+        "page": null,
+        "paragraph": null,
+        "section": null,
+        "table": null
+      },
+      "source_passage": null,
+      "statement": "Europe PMC identifies PMID 31791255 as 'Population history and genetic adaptation of the Fulani nomads: inferences from genome-wide data and the lactase persistence trait.' (2019).",
+      "status": "pending",
+      "trait_id": "lactose_digestion_ability",
+      "validation_notes": [
+        "Relevance to the requested trait and scientific fidelity need review.",
+        "Abstract is retained as reading context; its scientific conclusions are not extracted."
+      ]
+    }
+  ],
+  "explanations": [
+    {
+      "body": "A retrieved GWAS Catalog record concerns 'Lactose tolerance test' and rs6563275. Its relevance to this trait still needs review.",
+      "claim_ids": [
+        "c-gwas-association-55467061"
+      ],
+      "content_id": "description-c-gwas-association-55467061",
+      "kind": "description",
+      "model_dependent": false,
+      "result_key": null,
+      "reviewed": false,
+      "title": "Research description"
+    },
+    {
+      "body": "Researchers reported a link involving rs6563275 and 'Lactose tolerance test'. This draft does not predict your traits or symptoms.",
+      "claim_ids": [
+        "c-gwas-association-55467061"
+      ],
+      "content_id": "simple_summary-c-gwas-association-55467061",
+      "kind": "simple_summary",
+      "model_dependent": false,
+      "result_key": null,
+      "reviewed": false,
+      "title": "Research summary"
+    },
+    {
+      "body": "GWAS Catalog lists rs6563275 in an association record for 'Lactose tolerance test'. Reported p_value: 1e-06. These reported measurements have not been assessed as an interpretation model.",
+      "claim_ids": [
+        "c-gwas-association-55467061"
+      ],
+      "content_id": "technical_summary-c-gwas-association-55467061",
+      "kind": "technical_summary",
+      "model_dependent": false,
+      "result_key": null,
+      "reviewed": false,
+      "title": "Reported association"
+    },
+    {
+      "body": "Marker in this association record: rs6563275. A reported association alone does not establish a personal prediction.",
+      "claim_ids": [
+        "c-gwas-association-55467061"
+      ],
+      "content_id": "simple_explanation-c-gwas-association-55467061",
+      "kind": "simple_explanation",
+      "model_dependent": false,
+      "result_key": null,
+      "reviewed": false,
+      "title": "Research marker tooltip"
+    },
+    {
+      "body": "The record links rs6563275 to 'Lactose tolerance test'. Genome build, allele orientation and a causal mechanism have not been established by this extraction.",
+      "claim_ids": [
+        "c-gwas-association-55467061"
+      ],
+      "content_id": "technical_explanation-c-gwas-association-55467061",
+      "kind": "technical_explanation",
+      "model_dependent": false,
+      "result_key": null,
+      "reviewed": false,
+      "title": "Genetic context"
+    },
+    {
+      "body": "The match requires scientific review. No individual probability, genotype result or medical advice is supported by this draft.",
+      "claim_ids": [
+        "c-gwas-association-55467061"
+      ],
+      "content_id": "practical_takeaway-c-gwas-association-55467061",
+      "kind": "practical_takeaway",
+      "model_dependent": false,
+      "result_key": null,
+      "reviewed": false,
+      "title": "Limits of this draft"
+    },
+    {
+      "body": "A retrieved GWAS Catalog record concerns 'Lactose tolerance test' and an unresolved marker. Its relevance to this trait still needs review.",
+      "claim_ids": [
+        "c-gwas-association-55467053"
+      ],
+      "content_id": "description-c-gwas-association-55467053",
+      "kind": "description",
+      "model_dependent": false,
+      "result_key": null,
+      "reviewed": false,
+      "title": "Research description"
+    },
+    {
+      "body": "Researchers reported a link involving an unresolved marker and 'Lactose tolerance test'. This draft does not predict your traits or symptoms.",
+      "claim_ids": [
+        "c-gwas-association-55467053"
+      ],
+      "content_id": "simple_summary-c-gwas-association-55467053",
+      "kind": "simple_summary",
+      "model_dependent": false,
+      "result_key": null,
+      "reviewed": false,
+      "title": "Research summary"
+    },
+    {
+      "body": "GWAS Catalog lists an unresolved variant/haplotype in an association record for 'Lactose tolerance test'. Reported p_value: 3e-06. These reported measurements have not been assessed as an interpretation model.",
+      "claim_ids": [
+        "c-gwas-association-55467053"
+      ],
+      "content_id": "technical_summary-c-gwas-association-55467053",
+      "kind": "technical_summary",
+      "model_dependent": false,
+      "result_key": null,
+      "reviewed": false,
+      "title": "Reported association"
+    },
+    {
+      "body": "Marker in this association record: an unresolved marker. A reported association alone does not establish a personal prediction.",
+      "claim_ids": [
+        "c-gwas-association-55467053"
+      ],
+      "content_id": "simple_explanation-c-gwas-association-55467053",
+      "kind": "simple_explanation",
+      "model_dependent": false,
+      "result_key": null,
+      "reviewed": false,
+      "title": "Research marker tooltip"
+    },
+    {
+      "body": "The record links an unresolved marker to 'Lactose tolerance test'. Genome build, allele orientation and a causal mechanism have not been established by this extraction.",
+      "claim_ids": [
+        "c-gwas-association-55467053"
+      ],
+      "content_id": "technical_explanation-c-gwas-association-55467053",
+      "kind": "technical_explanation",
+      "model_dependent": false,
+      "result_key": null,
+      "reviewed": false,
+      "title": "Genetic context"
+    },
+    {
+      "body": "The match requires scientific review. No individual probability, genotype result or medical advice is supported by this draft.",
+      "claim_ids": [
+        "c-gwas-association-55467053"
+      ],
+      "content_id": "practical_takeaway-c-gwas-association-55467053",
+      "kind": "practical_takeaway",
+      "model_dependent": false,
+      "result_key": null,
+      "reviewed": false,
+      "title": "Limits of this draft"
+    },
+    {
+      "body": "GWAS Catalog study GCST009418 studies 'Lactose tolerance test'. Discovery sample as reported: 53 Fulani individuals, 7 Czech or Slovak individuals.",
+      "claim_ids": [
+        "c-gwas-study-GCST009418"
+      ],
+      "content_id": "research_spotlight-c-gwas-study-GCST009418",
+      "kind": "research_spotlight",
+      "model_dependent": false,
+      "result_key": null,
+      "reviewed": false,
+      "title": "Source context"
+    },
+    {
+      "body": "Europe PMC identifies PMID 31791255 as 'Population history and genetic adaptation of the Fulani nomads: inferences from genome-wide data and the lactase persistence trait.' (2019).",
+      "claim_ids": [
+        "c-europe-pmc-MED-31791255"
+      ],
+      "content_id": "research_spotlight-c-europe-pmc-MED-31791255",
+      "kind": "research_spotlight",
+      "model_dependent": false,
+      "result_key": null,
+      "reviewed": false,
+      "title": "Source context"
+    }
+  ],
+  "interpretation": null,
+  "sources": [
+    {
+      "doi": null,
+      "name": "NHGRI-EBI GWAS Catalog",
+      "pmcid": null,
+      "pmid": "31791255",
+      "publication_year": null,
+      "retrieved_at": "2026-11-10T08:03:00.517894Z",
+      "source_id": "gwas-association-55467061",
+      "source_type": "association_database",
+      "source_version": "sha256:7949a3d82604dcfdedd361bac58ede73baa2179ff0ef0d848b3422d284603f14",
+      "title": null,
+      "url": "https://www.ebi.ac.uk/gwas/rest/api/v2/associations?efo_id=EFO_0010557&show_child_trait=false&page=0&size=2"
+    },
+    {
+      "doi": null,
+      "name": "NHGRI-EBI GWAS Catalog",
+      "pmcid": null,
+      "pmid": "31791255",
+      "publication_year": null,
+      "retrieved_at": "2026-11-10T08:03:00.517894Z",
+      "source_id": "gwas-association-55467053",
+      "source_type": "association_database",
+      "source_version": "sha256:7949a3d82604dcfdedd361bac58ede73baa2179ff0ef0d848b3422d284603f14",
+      "title": null,
+      "url": "https://www.ebi.ac.uk/gwas/rest/api/v2/associations?efo_id=EFO_0010557&show_child_trait=false&page=0&size=2"
+    },
+    {
+      "doi": null,
+      "name": "NHGRI-EBI GWAS Catalog",
+      "pmcid": null,
+      "pmid": "31791255",
+      "publication_year": null,
+      "retrieved_at": "2026-11-10T08:03:01.252050Z",
+      "source_id": "gwas-study-GCST009418",
+      "source_type": "association_database",
+      "source_version": "sha256:14cee1ef42f36c8df37ba4569906e778e8443171fe04c439022cf5b538da68fb",
+      "title": null,
+      "url": "https://www.ebi.ac.uk/gwas/rest/api/v2/studies/GCST009418"
+    },
+    {
+      "doi": "10.1186/s12864-019-6296-7",
+      "name": "Europe PMC",
+      "pmcid": "PMC6888939",
+      "pmid": "31791255",
+      "publication_year": 2019,
+      "retrieved_at": "2026-11-10T08:03:02.047661Z",
+      "source_id": "europe-pmc-MED-31791255",
+      "source_type": "scientific_publication",
+      "source_version": "sha256:a519db7394eb822e01591dbeebd4b54110b28269d288416696d789fd50725b2b",
+      "title": "Population history and genetic adaptation of the Fulani nomads: inferences from genome-wide data and the lactase persistence trait.",
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A31791255+AND+SRC%3AMED&format=json&resultType=core&pageSize=1"
+    }
+  ]
+}

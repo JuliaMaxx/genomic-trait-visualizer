@@ -200,6 +200,13 @@ class TraitCandidate(CurationModel):
     )
     source_ids: list[str] = Field(default_factory=list)
     pipeline_version: str = "manual"
+    # Bind acquired inputs to review without adding paths to scientific records.
+    # Omit absent provenance so archived manual dossiers keep their exact shape.
+    research_run_sha256: str | None = Field(
+        default=None,
+        pattern=r"^[a-f0-9]{64}$",
+        exclude_if=lambda value: value is None,
+    )
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     status: CandidateStatus = CandidateStatus.DRAFT
     reviewer_notes: list[str] = Field(default_factory=list)

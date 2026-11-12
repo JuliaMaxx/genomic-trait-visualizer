@@ -1,0 +1,154 @@
+{
+  "version": "stage5-v1",
+  "request": {
+    "trait_name": "Lactose Digestion Ability",
+    "synonyms": [],
+    "limit": 2
+  },
+  "registry": {
+    "version": "stage5-sources-v1",
+    "sources": [
+      {
+        "source_id": "gwas_catalog",
+        "name": "NHGRI-EBI GWAS Catalog",
+        "base_url": "https://www.ebi.ac.uk/gwas/rest/api/v2",
+        "documentation_url": "https://www.ebi.ac.uk/gwas/rest/api/v2/docs",
+        "terms_url": "https://www.ebi.ac.uk/about/terms-of-use/",
+        "capabilities": [
+          "trait ontology search",
+          "reported associations",
+          "study metadata"
+        ],
+        "retention": "Small original JSON responses, with attribution. EMBL-EBI terms and underlying data-owner rights apply. No summary-statistics bulk download."
+      },
+      {
+        "source_id": "europe_pmc",
+        "name": "Europe PMC",
+        "base_url": "https://www.ebi.ac.uk/europepmc/webservices/rest",
+        "documentation_url": "https://europepmc.org/RestfulWebService",
+        "terms_url": "https://europepmc.org/Copyright",
+        "capabilities": [
+          "publication lookup by discovered PMID",
+          "bibliography and abstract context"
+        ],
+        "retention": "Small core JSON metadata responses; retain supplied license. Abstracts may be copyrighted; no full-text download or abstract republication in generated explanations."
+      }
+    ],
+    "synonyms": {
+      "alcohol flushing": [
+        "flushing"
+      ],
+      "alcohol flush": [
+        "flushing"
+      ],
+      "lactose digestion ability": [
+        "lactose tolerance test"
+      ],
+      "lactose digestion": [
+        "lactose tolerance test"
+      ]
+    }
+  },
+  "search_terms": [
+    "Lactose Digestion Ability",
+    "lactose tolerance test"
+  ],
+  "started_at": "2026-11-10T08:02:59.541279Z",
+  "completed_at": "2026-11-10T08:03:02.807148Z",
+  "acquisition_seconds": 3.265648,
+  "responses": [
+    {
+      "document_id": "response-001",
+      "source_id": "gwas_catalog",
+      "kind": "traits",
+      "url": "https://www.ebi.ac.uk/gwas/rest/api/v2/efo-traits?efo_trait=Lactose+Digestion+Ability&page=0&size=3",
+      "parameters": {
+        "efo_trait": "Lactose Digestion Ability",
+        "page": "0",
+        "size": "3"
+      },
+      "query_reason": "Trait search term: Lactose Digestion Ability",
+      "retrieved_at": "2026-11-10T08:02:59.541729Z",
+      "elapsed_seconds": 0.428096,
+      "status_code": 200,
+      "path": "responses/response-001.json",
+      "sha256": "4ad658662a800da7d0c076f13b8c6922a5ea8a2651581c9df9bfeddaf23151be",
+      "error": null
+    },
+    {
+      "document_id": "response-002",
+      "source_id": "gwas_catalog",
+      "kind": "traits",
+      "url": "https://www.ebi.ac.uk/gwas/rest/api/v2/efo-traits?efo_trait=lactose+tolerance+test&page=0&size=3",
+      "parameters": {
+        "efo_trait": "lactose tolerance test",
+        "page": "0",
+        "size": "3"
+      },
+      "query_reason": "Trait search term: lactose tolerance test",
+      "retrieved_at": "2026-11-10T08:02:59.969975Z",
+      "elapsed_seconds": 0.547699,
+      "status_code": 200,
+      "path": "responses/response-002.json",
+      "sha256": "e04d3dad89b5c68276c7e2b30fcd93784d5c2ab5472eadf8a392ed0f8b59c022",
+      "error": null
+    },
+    {
+      "document_id": "response-003",
+      "source_id": "gwas_catalog",
+      "kind": "associations",
+      "url": "https://www.ebi.ac.uk/gwas/rest/api/v2/associations?efo_id=EFO_0010557&show_child_trait=false&page=0&size=2",
+      "parameters": {
+        "efo_id": "EFO_0010557",
+        "show_child_trait": "false",
+        "page": "0",
+        "size": "2"
+      },
+      "query_reason": "Potential relevance only: lactose tolerance test -> lactose tolerance test",
+      "retrieved_at": "2026-11-10T08:03:00.517894Z",
+      "elapsed_seconds": 0.733889,
+      "status_code": 200,
+      "path": "responses/response-003.json",
+      "sha256": "7949a3d82604dcfdedd361bac58ede73baa2179ff0ef0d848b3422d284603f14",
+      "error": null
+    },
+    {
+      "document_id": "response-004",
+      "source_id": "gwas_catalog",
+      "kind": "study",
+      "url": "https://www.ebi.ac.uk/gwas/rest/api/v2/studies/GCST009418",
+      "parameters": {},
+      "query_reason": "Study GCST009418 linked by discovered association(s)",
+      "retrieved_at": "2026-11-10T08:03:01.252050Z",
+      "elapsed_seconds": 0.795389,
+      "status_code": 200,
+      "path": "responses/response-004.json",
+      "sha256": "14cee1ef42f36c8df37ba4569906e778e8443171fe04c439022cf5b538da68fb",
+      "error": null
+    },
+    {
+      "document_id": "response-005",
+      "source_id": "europe_pmc",
+      "kind": "publication",
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A31791255+AND+SRC%3AMED&format=json&resultType=core&pageSize=1",
+      "parameters": {
+        "query": "EXT_ID:31791255 AND SRC:MED",
+        "format": "json",
+        "resultType": "core",
+        "pageSize": "1"
+      },
+      "query_reason": "PMID 31791255 linked by discovered association(s)",
+      "retrieved_at": "2026-11-10T08:03:02.047661Z",
+      "elapsed_seconds": 0.759355,
+      "status_code": 200,
+      "path": "responses/response-005.json",
+      "sha256": "a519db7394eb822e01591dbeebd4b54110b28269d288416696d789fd50725b2b",
+      "error": null
+    }
+  ],
+  "warnings": [
+    "First pages only; this is a bounded discovery sample, not a literature review.",
+    "Search matches and ontology synonyms require human relevance review.",
+    "No ontology matches for 'Lactose Digestion Ability'."
+  ]
+}

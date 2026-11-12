@@ -1,0 +1,663 @@
+[
+  {
+    "fields": [
+      {
+        "field": "association_id",
+        "proposed_value": 55467061,
+        "reported_value": 55467061,
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/0/association_id",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "accession_id",
+        "proposed_value": "GCST009418",
+        "reported_value": "GCST009418",
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/0/accession_id",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "pubmed_id",
+        "proposed_value": "31791255",
+        "reported_value": "31791255",
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/0/pubmed_id",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "first_author",
+        "proposed_value": "Vicente M",
+        "reported_value": "Vicente M",
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/0/first_author",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "reported_trait",
+        "proposed_value": [
+          "Lactose tolerance test"
+        ],
+        "reported_value": [
+          "Lactose tolerance test"
+        ],
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/0/reported_trait",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "efo_traits",
+        "proposed_value": [
+          {
+            "efo_id": "EFO_0010557",
+            "efo_trait": "lactose tolerance test"
+          }
+        ],
+        "reported_value": [
+          {
+            "efo_id": "EFO_0010557",
+            "efo_trait": "lactose tolerance test"
+          }
+        ],
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/0/efo_traits",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "snp_allele",
+        "proposed_value": [
+          {
+            "effect_allele": "?",
+            "rs_id": "rs6563275"
+          }
+        ],
+        "reported_value": [
+          {
+            "effect_allele": "?",
+            "rs_id": "rs6563275"
+          }
+        ],
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/0/snp_allele",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "snp_effect_allele",
+        "proposed_value": [
+          "rs6563275-?"
+        ],
+        "reported_value": [
+          "rs6563275-?"
+        ],
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/0/snp_effect_allele",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "mapped_genes",
+        "proposed_value": [
+          "GYG1P2",
+          "PTMAP5"
+        ],
+        "reported_value": [
+          "GYG1P2",
+          "PTMAP5"
+        ],
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/0/mapped_genes",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "locations",
+        "proposed_value": [
+          "13:82218857"
+        ],
+        "reported_value": [
+          "13:82218857"
+        ],
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/0/locations",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "risk_frequency",
+        "proposed_value": null,
+        "reported_value": "NR",
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/0/risk_frequency",
+        "transformation": "Source missing-value token; proposed as null."
+      },
+      {
+        "field": "p_value",
+        "proposed_value": 1e-06,
+        "reported_value": 1e-06,
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/0/p_value",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "pvalue_mantissa",
+        "proposed_value": 1,
+        "reported_value": 1,
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/0/pvalue_mantissa",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "pvalue_exponent",
+        "proposed_value": -6,
+        "reported_value": -6,
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/0/pvalue_exponent",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "pvalue_description",
+        "proposed_value": null,
+        "reported_value": "",
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/0/pvalue_description",
+        "transformation": "Source missing-value token; proposed as null."
+      },
+      {
+        "field": "beta",
+        "proposed_value": null,
+        "reported_value": "-",
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/0/beta",
+        "transformation": "Source missing-value token; proposed as null."
+      },
+      {
+        "field": "range",
+        "proposed_value": null,
+        "reported_value": "-",
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/0/range",
+        "transformation": "Source missing-value token; proposed as null."
+      },
+      {
+        "field": "multi_snp_haplotype",
+        "proposed_value": false,
+        "reported_value": false,
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/0/multi_snp_haplotype",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "snp_interaction",
+        "proposed_value": false,
+        "reported_value": false,
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/0/snp_interaction",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "rsid",
+        "proposed_value": "rs6563275",
+        "reported_value": "rs6563275",
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/0/snp_allele/0/rs_id",
+        "transformation": "Case/whitespace only for a single reported SNV; no strand conversion."
+      },
+      {
+        "field": "effect_allele",
+        "proposed_value": null,
+        "reported_value": "?",
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/0/snp_allele/0/effect_allele",
+        "transformation": "Case/whitespace only for a single reported SNV; no strand conversion."
+      },
+      {
+        "field": "phenotype",
+        "proposed_value": "Lactose tolerance test",
+        "reported_value": [
+          "Lactose tolerance test"
+        ],
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/0/reported_trait",
+        "transformation": "A single reported phenotype; no phenotype recoding."
+      }
+    ],
+    "record_id": "gwas-association-55467061",
+    "unresolved": [
+      "Relevance to the requested trait and scientific fidelity need review.",
+      "effect_allele: absent, ambiguous or unsupported; left null.",
+      "Genome build, allele orientation, comparison/denominator and personal applicability are unresolved.",
+      "Mapped genes may be nearby annotations; they are not established causal genes.",
+      "Reported statistics are evidence, never application coefficients or personal probabilities.",
+      "No genotype interpretation or independent expected cases have been proposed."
+    ]
+  },
+  {
+    "fields": [
+      {
+        "field": "association_id",
+        "proposed_value": 55467053,
+        "reported_value": 55467053,
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/1/association_id",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "accession_id",
+        "proposed_value": "GCST009418",
+        "reported_value": "GCST009418",
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/1/accession_id",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "pubmed_id",
+        "proposed_value": "31791255",
+        "reported_value": "31791255",
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/1/pubmed_id",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "first_author",
+        "proposed_value": "Vicente M",
+        "reported_value": "Vicente M",
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/1/first_author",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "reported_trait",
+        "proposed_value": [
+          "Lactose tolerance test"
+        ],
+        "reported_value": [
+          "Lactose tolerance test"
+        ],
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/1/reported_trait",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "efo_traits",
+        "proposed_value": [
+          {
+            "efo_id": "EFO_0010557",
+            "efo_trait": "lactose tolerance test"
+          }
+        ],
+        "reported_value": [
+          {
+            "efo_id": "EFO_0010557",
+            "efo_trait": "lactose tolerance test"
+          }
+        ],
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/1/efo_traits",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "snp_allele",
+        "proposed_value": [
+          {
+            "effect_allele": "?",
+            "rs_id": "T-13910"
+          }
+        ],
+        "reported_value": [
+          {
+            "effect_allele": "?",
+            "rs_id": "T-13910"
+          }
+        ],
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/1/snp_allele",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "snp_effect_allele",
+        "proposed_value": [
+          "T-13910-?"
+        ],
+        "reported_value": [
+          "T-13910-?"
+        ],
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/1/snp_effect_allele",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "mapped_genes",
+        "proposed_value": [],
+        "reported_value": [],
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/1/mapped_genes",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "locations",
+        "proposed_value": [],
+        "reported_value": [],
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/1/locations",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "risk_frequency",
+        "proposed_value": null,
+        "reported_value": "NR",
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/1/risk_frequency",
+        "transformation": "Source missing-value token; proposed as null."
+      },
+      {
+        "field": "p_value",
+        "proposed_value": 3e-06,
+        "reported_value": 3e-06,
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/1/p_value",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "pvalue_mantissa",
+        "proposed_value": 3,
+        "reported_value": 3,
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/1/pvalue_mantissa",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "pvalue_exponent",
+        "proposed_value": -6,
+        "reported_value": -6,
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/1/pvalue_exponent",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "pvalue_description",
+        "proposed_value": null,
+        "reported_value": "",
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/1/pvalue_description",
+        "transformation": "Source missing-value token; proposed as null."
+      },
+      {
+        "field": "beta",
+        "proposed_value": null,
+        "reported_value": "-",
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/1/beta",
+        "transformation": "Source missing-value token; proposed as null."
+      },
+      {
+        "field": "range",
+        "proposed_value": null,
+        "reported_value": "-",
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/1/range",
+        "transformation": "Source missing-value token; proposed as null."
+      },
+      {
+        "field": "multi_snp_haplotype",
+        "proposed_value": false,
+        "reported_value": false,
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/1/multi_snp_haplotype",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "snp_interaction",
+        "proposed_value": false,
+        "reported_value": false,
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/1/snp_interaction",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "rsid",
+        "proposed_value": null,
+        "reported_value": "T-13910",
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/1/snp_allele/0/rs_id",
+        "transformation": "Case/whitespace only for a single reported SNV; no strand conversion."
+      },
+      {
+        "field": "effect_allele",
+        "proposed_value": null,
+        "reported_value": "?",
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/1/snp_allele/0/effect_allele",
+        "transformation": "Case/whitespace only for a single reported SNV; no strand conversion."
+      },
+      {
+        "field": "phenotype",
+        "proposed_value": "Lactose tolerance test",
+        "reported_value": [
+          "Lactose tolerance test"
+        ],
+        "review_status": "pending",
+        "source_location": "response-003#/_embedded/associations/1/reported_trait",
+        "transformation": "A single reported phenotype; no phenotype recoding."
+      }
+    ],
+    "record_id": "gwas-association-55467053",
+    "unresolved": [
+      "Relevance to the requested trait and scientific fidelity need review.",
+      "rsid: absent, ambiguous or unsupported; left null.",
+      "effect_allele: absent, ambiguous or unsupported; left null.",
+      "Genome build, allele orientation, comparison/denominator and personal applicability are unresolved.",
+      "Mapped genes may be nearby annotations; they are not established causal genes.",
+      "Reported statistics are evidence, never application coefficients or personal probabilities.",
+      "No genotype interpretation or independent expected cases have been proposed."
+    ]
+  },
+  {
+    "fields": [
+      {
+        "field": "accession_id",
+        "proposed_value": "GCST009418",
+        "reported_value": "GCST009418",
+        "review_status": "pending",
+        "source_location": "response-004#/accession_id",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "pubmed_id",
+        "proposed_value": 31791255,
+        "reported_value": 31791255,
+        "review_status": "pending",
+        "source_location": "response-004#/pubmed_id",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "disease_trait",
+        "proposed_value": "Lactose tolerance test",
+        "reported_value": "Lactose tolerance test",
+        "review_status": "pending",
+        "source_location": "response-004#/disease_trait",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "initial_sample_size",
+        "proposed_value": "53 Fulani individuals, 7 Czech or Slovak individuals",
+        "reported_value": "53 Fulani individuals, 7 Czech or Slovak individuals",
+        "review_status": "pending",
+        "source_location": "response-004#/initial_sample_size",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "replication_sample_size",
+        "proposed_value": null,
+        "reported_value": "NA",
+        "review_status": "pending",
+        "source_location": "response-004#/replication_sample_size",
+        "transformation": "Source missing-value token; proposed as null."
+      },
+      {
+        "field": "discovery_ancestry",
+        "proposed_value": [
+          "53 Other admixed ancestry (Burkina Faso)",
+          "7 NR (Czech Republic)"
+        ],
+        "reported_value": [
+          "53 Other admixed ancestry (Burkina Faso)",
+          "7 NR (Czech Republic)"
+        ],
+        "review_status": "pending",
+        "source_location": "response-004#/discovery_ancestry",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "replication_ancestry",
+        "proposed_value": [],
+        "reported_value": [],
+        "review_status": "pending",
+        "source_location": "response-004#/replication_ancestry",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "gxe",
+        "proposed_value": false,
+        "reported_value": false,
+        "review_status": "pending",
+        "source_location": "response-004#/gxe",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "gxg",
+        "proposed_value": false,
+        "reported_value": false,
+        "review_status": "pending",
+        "source_location": "response-004#/gxg",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "platforms",
+        "proposed_value": "Illumina [2359821]",
+        "reported_value": "Illumina [2359821]",
+        "review_status": "pending",
+        "source_location": "response-004#/platforms",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "genotyping_technologies",
+        "proposed_value": [
+          "Genome-wide genotyping array"
+        ],
+        "reported_value": [
+          "Genome-wide genotyping array"
+        ],
+        "review_status": "pending",
+        "source_location": "response-004#/genotyping_technologies",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "terms_of_license",
+        "proposed_value": "https://www.ebi.ac.uk/about/terms-of-use/",
+        "reported_value": "https://www.ebi.ac.uk/about/terms-of-use/",
+        "review_status": "pending",
+        "source_location": "response-004#/terms_of_license",
+        "transformation": "Copied without scientific reinterpretation."
+      }
+    ],
+    "record_id": "gwas-study-GCST009418",
+    "unresolved": [
+      "Relevance to the requested trait and scientific fidelity need review.",
+      "Sample descriptions are study-specific, not evidence of general population applicability."
+    ]
+  },
+  {
+    "fields": [
+      {
+        "field": "id",
+        "proposed_value": "31791255",
+        "reported_value": "31791255",
+        "review_status": "pending",
+        "source_location": "response-005#/resultList/result/0/id",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "source",
+        "proposed_value": "MED",
+        "reported_value": "MED",
+        "review_status": "pending",
+        "source_location": "response-005#/resultList/result/0/source",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "pmid",
+        "proposed_value": "31791255",
+        "reported_value": "31791255",
+        "review_status": "pending",
+        "source_location": "response-005#/resultList/result/0/pmid",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "pmcid",
+        "proposed_value": "PMC6888939",
+        "reported_value": "PMC6888939",
+        "review_status": "pending",
+        "source_location": "response-005#/resultList/result/0/pmcid",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "doi",
+        "proposed_value": "10.1186/s12864-019-6296-7",
+        "reported_value": "10.1186/s12864-019-6296-7",
+        "review_status": "pending",
+        "source_location": "response-005#/resultList/result/0/doi",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "title",
+        "proposed_value": "Population history and genetic adaptation of the Fulani nomads: inferences from genome-wide data and the lactase persistence trait.",
+        "reported_value": "Population history and genetic adaptation of the Fulani nomads: inferences from genome-wide data and the lactase persistence trait.",
+        "review_status": "pending",
+        "source_location": "response-005#/resultList/result/0/title",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "authorString",
+        "proposed_value": "Vicente M, Priehodová E, Diallo I, Podgorná E, Poloni ES, Černý V, Schlebusch CM.",
+        "reported_value": "Vicente M, Priehodová E, Diallo I, Podgorná E, Poloni ES, Černý V, Schlebusch CM.",
+        "review_status": "pending",
+        "source_location": "response-005#/resultList/result/0/authorString",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "pubYear",
+        "proposed_value": "2019",
+        "reported_value": "2019",
+        "review_status": "pending",
+        "source_location": "response-005#/resultList/result/0/pubYear",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "firstPublicationDate",
+        "proposed_value": "2019-12-02",
+        "reported_value": "2019-12-02",
+        "review_status": "pending",
+        "source_location": "response-005#/resultList/result/0/firstPublicationDate",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "isOpenAccess",
+        "proposed_value": "Y",
+        "reported_value": "Y",
+        "review_status": "pending",
+        "source_location": "response-005#/resultList/result/0/isOpenAccess",
+        "transformation": "Copied without scientific reinterpretation."
+      },
+      {
+        "field": "license",
+        "proposed_value": "cc by",
+        "reported_value": "cc by",
+        "review_status": "pending",
+        "source_location": "response-005#/resultList/result/0/license",
+        "transformation": "Copied without scientific reinterpretation."
+      }
+    ],
+    "record_id": "europe-pmc-MED-31791255",
+    "unresolved": [
+      "Relevance to the requested trait and scientific fidelity need review.",
+      "Abstract is retained as reading context; its scientific conclusions are not extracted."
+    ]
+  }
+]
