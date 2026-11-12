@@ -151,3 +151,24 @@ def test_extra_columns_are_ignored() -> None:
     assert v.chromosome == "1"
     assert v.position == 1000
     assert v.genotype == ["A", "A"]
+
+
+@pytest.mark.parametrize(
+    "raw,normalized",
+    [
+        ("GA", ["G", "A"]),
+        ("ag", ["A", "G"]),
+        ("AA?", ["A", "A"]),
+        ("AAZ", ["A", "A"]),
+        ("A-", ["A"]),
+        ("--", None),
+        ("ZZ", None),
+        ("AA Z", ["A", "A"]),
+    ],
+)
+def test_raw_genotype_is_retained_without_changing_tolerant_parsing(
+    raw: str, normalized: list[str] | None
+) -> None:
+    result = parse_23andme([f"rs123\t1\t1000\t{raw}"])
+    assert result.variants[0].raw_genotype == raw
+    assert result.variants[0].genotype == normalized

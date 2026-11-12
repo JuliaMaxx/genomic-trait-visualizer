@@ -73,6 +73,13 @@ def parse_23andme(lines: list[str]) -> ParseResult:
             errors.append(msg)
 
         genotype = normalize_genotype(genotype=parts[3]) if len(parts) > 3 else None
+        # Keep the complete TSV field even when tolerant splitting loses characters.
+        tab_fields = raw_line.rstrip("\r\n").split("\t")
+        raw_genotype = (
+            tab_fields[3]
+            if len(tab_fields) > 3
+            else parts[3] if len(parts) > 3 else None
+        )
         if genotype is None:
             msg = f"Line {line_number}: invalid genotype"
             logger.warning(msg)
@@ -84,6 +91,7 @@ def parse_23andme(lines: list[str]) -> ParseResult:
                 chromosome=chrom,
                 position=position,
                 genotype=genotype,
+                raw_genotype=raw_genotype,
             )
         )
 

@@ -16,6 +16,7 @@ class Variant(AnalysisModel):
     chromosome: str = Field(min_length=1)
     position: int = Field(ge=1)
     genotype: list[str] | None
+    raw_genotype: str | None = None
 
 
 class ParseResult(AnalysisModel):

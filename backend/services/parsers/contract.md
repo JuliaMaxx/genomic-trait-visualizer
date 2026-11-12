@@ -22,6 +22,15 @@ ParseResult(
 )
 ```
 
+`Variant` also has an optional `raw_genotype` field (default `None`). The 23andMe
+parser fills it before normalization, preserving the complete genotype field in
+tab-separated rows. Existing `genotype` values and parser diagnostics are unchanged.
+Other parsers do not yet populate this field.
+
+Stage 6 uses this raw value for strict matching; the tolerant parser output alone
+is not suitable for reviewed interpretation. See
+[`curation/stage6-dna-ingestion.md`](../../../curation/stage6-dna-ingestion.md).
+
 ### `Variant` schema:
 
 ```python
@@ -29,7 +38,8 @@ Variant(
     rsid: str,
     chromosome: str,
     position: int,
-    genotype: list[str] | None
+    genotype: list[str] | None,
+    raw_genotype: str | None = None
 )
 ```
 
