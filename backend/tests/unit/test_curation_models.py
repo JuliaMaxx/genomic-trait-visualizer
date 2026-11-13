@@ -5,15 +5,7 @@ from fastapi.routing import APIRoute
 from pydantic import BaseModel, ValidationError
 
 from backend.main import app
-from backend.models import (
-    RsidCatalogItem,
-    RsidDetail,
-    SearchResponse,
-    TraitAnalysisDetail,
-    TraitAnalysisSummary,
-    TraitCatalogDetail,
-    TraitCatalogSummary,
-)
+from backend.models import RsidCatalogItem, RsidDetail, SearchResponse
 from backend.models.curation import (
     CandidateStatus,
     ClaimStatus,
@@ -30,6 +22,12 @@ from backend.models.curation import (
     SourceType,
     TraitCandidate,
     ValidationFinding,
+)
+from backend.models.reviewed_api import (
+    TraitAnalysisDetail,
+    TraitAnalysisSummary,
+    TraitCatalogDetail,
+    TraitCatalogSummary,
 )
 from backend.services.trait_curation.catalog import load_trait_catalog
 from backend.services.trait_curation.validation import validate_candidate_references
@@ -165,9 +163,11 @@ def test_existing_api_route_paths_and_response_models_remain_declared() -> None:
         assert routes[path].response_model == response_model
     assert "/traits/{trait_id}/detail" not in routes
     assert (
-        not {"EvidenceSource", "EvidenceClaim", "TraitCandidate", "ReviewDecision"}
+        not {"EvidenceClaim", "TraitCandidate", "ReviewDecision"}
         & app.openapi()["components"]["schemas"].keys()
     )
+    # Published source references are public; draft findings and decisions are not.
+    assert "EvidenceSource" in app.openapi()["components"]["schemas"]
 
 
 def test_source_location_and_extraction_provenance_round_trip() -> None:

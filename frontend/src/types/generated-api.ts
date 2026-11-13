@@ -79,7 +79,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Read Rsids */
+        /**
+         * Read Rsids
+         * @description Marker browsing is withheld until it can present published content.
+         */
         get: operations["read_rsids_rsids__get"];
         put?: never;
         post?: never;
@@ -113,7 +116,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Search */
+        /**
+         * Search
+         * @description Search is withheld until it can present the reviewed catalog correctly.
+         */
         get: operations["search_search__get"];
         put?: never;
         post?: never;
@@ -127,6 +133,36 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AlleleCountInterpretation */
+        AlleleCountInterpretation: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            strategy: "allele_count";
+            /** Claim Ids */
+            claim_ids: string[];
+            requirements: components["schemas"]["VariantRequirements"];
+            /**
+             * Counted Allele
+             * @enum {string}
+             */
+            counted_allele: "A" | "C" | "G" | "T";
+            /** Rules */
+            rules: components["schemas"]["AlleleCountRule"][];
+            /**
+             * Unavailable Policy
+             * @constant
+             */
+            unavailable_policy: "withhold";
+        };
+        /** AlleleCountRule */
+        AlleleCountRule: {
+            /** Genotype */
+            genotype: string;
+            /** Copies */
+            copies: number;
+        };
         /** Body_analyze_dna_analyze__post */
         Body_analyze_dna_analyze__post: {
             /** File */
@@ -137,6 +173,11 @@ export interface components {
             /** File */
             file: string;
         };
+        /**
+         * ClaimType
+         * @enum {string}
+         */
+        ClaimType: "trait_association" | "variant_effect" | "gene_function" | "biological_mechanism" | "population_limitation" | "study_limitation" | "other";
         /** ContentSection */
         ContentSection: {
             /** Title */
@@ -144,34 +185,75 @@ export interface components {
             /** Body */
             body: string;
         };
-        /** CuratedTraitRule */
-        CuratedTraitRule: {
-            /** Rsid */
-            rsid: string;
-            /** Description */
-            description: string;
-            /** Gene */
-            gene: string;
-            /** Odds Ratio */
-            odds_ratio: number | null;
+        /** EducationalInterpretation */
+        EducationalInterpretation: {
             /**
-             * Odds Ratio Status
+             * @description discriminator enum property added by openapi-typescript
              * @enum {string}
              */
-            odds_ratio_status: "reported" | "not_reported" | "not_applicable";
-            /** Weight */
-            weight: number;
-            /** Priority */
-            priority: number;
+            strategy: "educational";
+            /** Claim Ids */
+            claim_ids: string[];
+        };
+        /** EvidenceLocation */
+        EvidenceLocation: {
+            /** Locator */
+            locator?: string | null;
+            /** Section */
+            section?: string | null;
+            /** Page */
+            page?: string | null;
+            /** Paragraph */
+            paragraph?: number | null;
+            /** Table */
+            table?: string | null;
+            /** Figure */
+            figure?: string | null;
+        };
+        /** EvidenceSource */
+        EvidenceSource: {
+            /** Source Id */
+            source_id: string;
+            source_type: components["schemas"]["SourceType"];
+            /** Name */
+            name: string;
+            /** Url */
+            url?: string | null;
+            /** Title */
+            title?: string | null;
+            /** Doi */
+            doi?: string | null;
+            /** Pmid */
+            pmid?: string | null;
+            /** Pmcid */
+            pmcid?: string | null;
+            /** Publication Year */
+            publication_year?: number | null;
+            /** Retrieved At */
+            retrieved_at?: string | null;
+            /** Source Version */
+            source_version?: string | null;
+        };
+        /**
+         * ExplanationText
+         * @description Shared explanation value fields, without authoring or review metadata.
+         */
+        ExplanationText: {
+            /** Content Id */
+            content_id: string;
             /**
-             * Evidence Level
+             * Kind
              * @enum {string}
              */
-            evidence_level: "strong" | "moderate" | "limited";
-            /** Source Refs */
-            source_refs: string[];
-            /** Genotype Meanings */
-            genotype_meanings: components["schemas"]["GenotypeInterpretation"][];
+            kind: "description" | "simple_summary" | "technical_summary" | "mental_model" | "model_limit_summary" | "practical_takeaway" | "simple_explanation" | "technical_explanation" | "research_spotlight" | "calculation_notes" | "card_tooltip" | "headline" | "headline_tooltip" | "outcome_summary";
+            /** Title */
+            title?: string | null;
+            /** Body */
+            body: string;
+            /** Claim Ids */
+            claim_ids: string[];
+            /** Result Key */
+            result_key?: string | null;
         };
         /** GenotypeInterpretation */
         GenotypeInterpretation: {
@@ -188,6 +270,41 @@ export interface components {
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
+        };
+        /** PublishedClaim */
+        PublishedClaim: {
+            /** Claim Id */
+            claim_id: string;
+            claim_type: components["schemas"]["ClaimType"];
+            /** Statement */
+            statement: string;
+            /** Evidence Ids */
+            evidence_ids: string[];
+            /** Scope */
+            scope: string;
+            /** Limitations */
+            limitations: string[];
+        };
+        /** PublishedEvidence */
+        PublishedEvidence: {
+            /** Evidence Id */
+            evidence_id: string;
+            claim_type: components["schemas"]["ClaimType"];
+            /** Statement */
+            statement: string;
+            /** Source Ids */
+            source_ids: string[];
+            source_location: components["schemas"]["EvidenceLocation"];
+            /** Rsid */
+            rsid?: string | null;
+            /** Gene */
+            gene?: string | null;
+            /** Phenotype */
+            phenotype?: string | null;
+            /** Effect Allele */
+            effect_allele?: string | null;
+            /** Effect Direction */
+            effect_direction?: string | null;
         };
         /** RsidCatalogItem */
         RsidCatalogItem: {
@@ -273,6 +390,11 @@ export interface components {
             /** Url */
             url: string;
         };
+        /**
+         * SourceType
+         * @enum {string}
+         */
+        SourceType: "scientific_publication" | "variant_database" | "association_database" | "review_article" | "other";
         /** TraitAnalysisDetail */
         TraitAnalysisDetail: {
             trait: components["schemas"]["TraitCatalogDetail"];
@@ -281,51 +403,66 @@ export interface components {
         /** TraitAnalysisMetrics */
         TraitAnalysisMetrics: {
             /**
-             * Result
+             * Status
              * @enum {string}
              */
-            result: "likely" | "unlikely" | "inconclusive";
-            /** Confidence */
-            confidence: number;
-            /** Coverage */
-            coverage: number;
-            /** Score */
-            score: number | null;
-            result_content: components["schemas"]["TraitResultContent"];
-            /** Rules */
-            rules: components["schemas"]["TraitRuleAnalysis"][];
-            /** Calculation Explanation */
-            calculation_explanation: components["schemas"]["ContentSection"][];
+            status: "evaluated" | "unavailable" | "educational";
+            /** Copies */
+            copies?: number | null;
+            /** Reason */
+            reason?: ("missing_genotype" | "invalid_genotype" | "unsupported_allele" | "missing_representation" | "unsupported_build" | "unsupported_orientation" | "incompatible_representation") | null;
+            /** Explanations */
+            explanations: components["schemas"]["ExplanationText"][];
+            /** Observation Status */
+            observation_status: ("usable" | "absent" | "no_call" | "partial" | "invalid" | "conflicting" | "unresolved" | "incompatible" | "unsupported") | null;
+            /** Observation Diagnostics */
+            observation_diagnostics: string[];
         };
         /** TraitAnalysisSummary */
         TraitAnalysisSummary: {
+            /** Release Id */
+            release_id: string;
+            /** Manifest Sha256 */
+            manifest_sha256: string;
+            /** Release Set Id */
+            release_set_id: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "evaluated" | "unavailable" | "educational";
+            /** Copies */
+            copies?: number | null;
+            /** Reason */
+            reason?: ("missing_genotype" | "invalid_genotype" | "unsupported_allele" | "missing_representation" | "unsupported_build" | "unsupported_orientation" | "incompatible_representation") | null;
+            /** Explanations */
+            explanations: components["schemas"]["ExplanationText"][];
+            /** Observation Status */
+            observation_status: ("usable" | "absent" | "no_call" | "partial" | "invalid" | "conflicting" | "unresolved" | "incompatible" | "unsupported") | null;
+            /** Observation Diagnostics */
+            observation_diagnostics: string[];
             /** Trait Id */
             trait_id: string;
             /** Name */
             name: string;
             /**
-             * Category
+             * Strategy
              * @enum {string}
              */
-            category: "nutrition" | "appearance" | "health" | "behavior";
-            /** Description */
-            description: string;
-            /** Rule Statuses */
-            rule_statuses: components["schemas"]["TraitRuleStatus"][];
-            /** Confidence */
-            confidence: number;
-            /** Coverage */
-            coverage: number;
-            /**
-             * Result
-             * @enum {string}
-             */
-            result: "likely" | "unlikely" | "inconclusive";
-            /** Result Badge Tooltip */
-            result_badge_tooltip: string;
+            strategy: "allele_count" | "educational";
+            /** Sources */
+            sources: components["schemas"]["EvidenceSource"][];
+            /** Claims */
+            claims: components["schemas"]["PublishedClaim"][];
         };
         /** TraitCatalogDetail */
         TraitCatalogDetail: {
+            /** Release Id */
+            release_id: string;
+            /** Manifest Sha256 */
+            manifest_sha256: string;
+            /** Release Set Id */
+            release_set_id: string;
             /** Id */
             id: string;
             /** Name */
@@ -337,39 +474,25 @@ export interface components {
             category: "nutrition" | "appearance" | "health" | "behavior";
             /** Description */
             description: string;
-            /** Simple Summary */
-            simple_summary: string;
-            /** Technical Summary */
-            technical_summary: string;
-            /** Mental Model */
-            mental_model: components["schemas"]["ContentSection"][];
-            /** Model Limit Summary */
-            model_limit_summary: string;
-            /**
-             * Evidence Level
-             * @enum {string}
-             */
-            evidence_level: "strong" | "moderate" | "limited";
-            /** Keywords */
-            keywords: string[];
             /** Sources */
-            sources: components["schemas"]["TraitSource"][];
-            result_content: components["schemas"]["TraitResultByOutcome"];
-            /** Practical Takeaway */
-            practical_takeaway: components["schemas"]["ContentSection"][];
-            /** Simple Explanation */
-            simple_explanation: components["schemas"]["ContentSection"][];
-            /** Technical Explanation */
-            technical_explanation: components["schemas"]["ContentSection"][];
-            /** Research Spotlight */
-            research_spotlight: components["schemas"]["ContentSection"][];
-            /** Calculation Notes */
-            calculation_notes: components["schemas"]["ContentSection"][];
-            /** Rules */
-            rules: components["schemas"]["CuratedTraitRule"][];
+            sources: components["schemas"]["EvidenceSource"][];
+            /** Evidence */
+            evidence: components["schemas"]["PublishedEvidence"][];
+            /** Claims */
+            claims: components["schemas"]["PublishedClaim"][];
+            /** Interpretation */
+            interpretation: components["schemas"]["AlleleCountInterpretation"] | components["schemas"]["EducationalInterpretation"];
+            /** Explanations */
+            explanations: components["schemas"]["ExplanationText"][];
         };
         /** TraitCatalogSummary */
         TraitCatalogSummary: {
+            /** Release Id */
+            release_id: string;
+            /** Manifest Sha256 */
+            manifest_sha256: string;
+            /** Release Set Id */
+            release_set_id: string;
             /** Id */
             id: string;
             /** Name */
@@ -381,70 +504,11 @@ export interface components {
             category: "nutrition" | "appearance" | "health" | "behavior";
             /** Description */
             description: string;
-            /** Simple Summary */
-            simple_summary: string;
-            /** Technical Summary */
-            technical_summary: string;
             /**
-             * Evidence Level
+             * Strategy
              * @enum {string}
              */
-            evidence_level: "strong" | "moderate" | "limited";
-            /** Keywords */
-            keywords: string[];
-            /** Search Terms */
-            search_terms: string[];
-        };
-        /** TraitResultByOutcome */
-        TraitResultByOutcome: {
-            likely: components["schemas"]["TraitResultContent"];
-            unlikely: components["schemas"]["TraitResultContent"];
-            inconclusive: components["schemas"]["TraitResultContent"];
-        };
-        /** TraitResultContent */
-        TraitResultContent: {
-            /** Card Tooltip */
-            card_tooltip: string;
-            /** Headline */
-            headline: string;
-            /** Headline Tooltip */
-            headline_tooltip: string;
-            /** Outcome Summary */
-            outcome_summary: string;
-        };
-        /** TraitRuleAnalysis */
-        TraitRuleAnalysis: {
-            /** Rsid */
-            rsid: string;
-            /** User Genotype */
-            user_genotype: string[] | null;
-            interpretation: components["schemas"]["GenotypeInterpretation"] | null;
-            /**
-             * Status
-             * @enum {string}
-             */
-            status: "missing" | "unmatched" | "matched";
-            /** Status Explanation */
-            status_explanation: string;
-            /**
-             * Contribution
-             * @enum {string}
-             */
-            contribution: "raises" | "lowers" | "neutral" | "unknown";
-            /** Contribution Label */
-            contribution_label: string;
-            /** Contribution Explanation */
-            contribution_explanation: string;
-        };
-        /** TraitRuleStatus */
-        TraitRuleStatus: {
-            /** Rsid */
-            rsid: string;
-            /**
-             * Status
-             * @enum {string}
-             */
-            status: "missing" | "unmatched" | "matched";
+            strategy: "allele_count" | "educational";
         };
         /** TraitSource */
         TraitSource: {
@@ -460,6 +524,11 @@ export interface components {
             /** Notes */
             notes: string;
         };
+        /** UploadError */
+        UploadError: {
+            /** Detail */
+            detail: string;
+        };
         /** ValidationError */
         ValidationError: {
             /** Location */
@@ -472,6 +541,44 @@ export interface components {
             input?: unknown;
             /** Context */
             ctx?: Record<string, never>;
+        };
+        /** VariantPlacement */
+        VariantPlacement: {
+            /**
+             * Genome Build
+             * @enum {string}
+             */
+            genome_build: "GRCh37" | "GRCh38";
+            /** Chromosome */
+            chromosome: string;
+            /** Position */
+            position: number;
+            /** Sequence Accession */
+            sequence_accession: string;
+        };
+        /** VariantRequirements */
+        VariantRequirements: {
+            /** Rsid */
+            rsid: string;
+            /** Placements */
+            placements: components["schemas"]["VariantPlacement"][];
+            /**
+             * Orientation
+             * @constant
+             */
+            orientation: "forward_genomic";
+            /**
+             * Coordinate System
+             * @constant
+             */
+            coordinate_system: "1-based";
+            /**
+             * Ploidy
+             * @constant
+             */
+            ploidy: 2;
+            /** Alleles */
+            alleles: ("A" | "C" | "G" | "T")[];
         };
     };
     responses: never;
@@ -502,6 +609,15 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["TraitAnalysisSummary"][];
+                };
+            };
+            /** @description Unsupported DNA upload */
+            415: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UploadError"];
                 };
             };
             /** @description Validation Error */
@@ -588,6 +704,15 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["TraitAnalysisDetail"];
+                };
+            };
+            /** @description Unsupported DNA upload */
+            415: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UploadError"];
                 };
             };
             /** @description Validation Error */

@@ -37,6 +37,16 @@
               }
             }
           },
+          "415": {
+            "description": "Unsupported DNA upload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadError"
+                }
+              }
+            }
+          },
           "422": {
             "description": "Validation Error",
             "content": {
@@ -156,6 +166,16 @@
               }
             }
           },
+          "415": {
+            "description": "Unsupported DNA upload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadError"
+                }
+              }
+            }
+          },
           "422": {
             "description": "Validation Error",
             "content": {
@@ -175,6 +195,7 @@
           "rsids"
         ],
         "summary": "Read Rsids",
+        "description": "Marker browsing is withheld until it can present published content.",
         "operationId": "read_rsids_rsids__get",
         "responses": {
           "200": {
@@ -242,6 +263,7 @@
           "search"
         ],
         "summary": "Search",
+        "description": "Search is withheld until it can present the reviewed catalog correctly.",
         "operationId": "search_search__get",
         "parameters": [
           {
@@ -338,6 +360,82 @@
   },
   "components": {
     "schemas": {
+      "AlleleCountInterpretation": {
+        "properties": {
+          "strategy": {
+            "type": "string",
+            "const": "allele_count",
+            "title": "Strategy"
+          },
+          "claim_ids": {
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Claim Ids"
+          },
+          "requirements": {
+            "$ref": "#/components/schemas/VariantRequirements"
+          },
+          "counted_allele": {
+            "type": "string",
+            "enum": [
+              "A",
+              "C",
+              "G",
+              "T"
+            ],
+            "title": "Counted Allele"
+          },
+          "rules": {
+            "items": {
+              "$ref": "#/components/schemas/AlleleCountRule"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Rules"
+          },
+          "unavailable_policy": {
+            "type": "string",
+            "const": "withhold",
+            "title": "Unavailable Policy"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "strategy",
+          "claim_ids",
+          "requirements",
+          "counted_allele",
+          "rules",
+          "unavailable_policy"
+        ],
+        "title": "AlleleCountInterpretation"
+      },
+      "AlleleCountRule": {
+        "properties": {
+          "genotype": {
+            "type": "string",
+            "title": "Genotype"
+          },
+          "copies": {
+            "type": "integer",
+            "maximum": 2.0,
+            "minimum": 0.0,
+            "title": "Copies"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "genotype",
+          "copies"
+        ],
+        "title": "AlleleCountRule"
+      },
       "Body_analyze_dna_analyze__post": {
         "properties": {
           "file": {
@@ -366,6 +464,19 @@
         ],
         "title": "Body_evaluate_trait_traits__trait_id__evaluate_post"
       },
+      "ClaimType": {
+        "type": "string",
+        "enum": [
+          "trait_association",
+          "variant_effect",
+          "gene_function",
+          "biological_mechanism",
+          "population_limitation",
+          "study_limitation",
+          "other"
+        ],
+        "title": "ClaimType"
+      },
       "ContentSection": {
         "properties": {
           "title": {
@@ -387,95 +498,314 @@
         ],
         "title": "ContentSection"
       },
-      "CuratedTraitRule": {
+      "EducationalInterpretation": {
         "properties": {
-          "rsid": {
+          "strategy": {
             "type": "string",
-            "pattern": "^rs\\d+$",
-            "title": "Rsid"
+            "const": "educational",
+            "title": "Strategy"
           },
-          "description": {
-            "type": "string",
-            "minLength": 1,
-            "title": "Description"
-          },
-          "gene": {
-            "type": "string",
-            "minLength": 1,
-            "title": "Gene"
-          },
-          "odds_ratio": {
-            "anyOf": [
-              {
-                "type": "number",
-                "exclusiveMinimum": 0.0
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Odds Ratio"
-          },
-          "odds_ratio_status": {
-            "type": "string",
-            "enum": [
-              "reported",
-              "not_reported",
-              "not_applicable"
-            ],
-            "title": "Odds Ratio Status"
-          },
-          "weight": {
-            "type": "number",
-            "exclusiveMinimum": 0.0,
-            "title": "Weight"
-          },
-          "priority": {
-            "type": "integer",
-            "exclusiveMinimum": 0.0,
-            "title": "Priority"
-          },
-          "evidence_level": {
-            "type": "string",
-            "enum": [
-              "strong",
-              "moderate",
-              "limited"
-            ],
-            "title": "Evidence Level"
-          },
-          "source_refs": {
+          "claim_ids": {
             "items": {
-              "type": "string"
+              "type": "string",
+              "minLength": 1
             },
             "type": "array",
             "minItems": 1,
-            "title": "Source Refs"
-          },
-          "genotype_meanings": {
-            "items": {
-              "$ref": "#/components/schemas/GenotypeInterpretation"
-            },
-            "type": "array",
-            "minItems": 1,
-            "title": "Genotype Meanings"
+            "title": "Claim Ids"
           }
         },
         "additionalProperties": false,
         "type": "object",
         "required": [
-          "rsid",
-          "description",
-          "gene",
-          "odds_ratio",
-          "odds_ratio_status",
-          "weight",
-          "priority",
-          "evidence_level",
-          "source_refs",
-          "genotype_meanings"
+          "strategy",
+          "claim_ids"
         ],
-        "title": "CuratedTraitRule"
+        "title": "EducationalInterpretation"
+      },
+      "EvidenceLocation": {
+        "properties": {
+          "locator": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Locator"
+          },
+          "section": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Section"
+          },
+          "page": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Page"
+          },
+          "paragraph": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Paragraph"
+          },
+          "table": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Table"
+          },
+          "figure": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 50,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Figure"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "EvidenceLocation"
+      },
+      "EvidenceSource": {
+        "properties": {
+          "source_id": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Source Id"
+          },
+          "source_type": {
+            "$ref": "#/components/schemas/SourceType"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Name"
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2048
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Url"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 500
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "doi": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 128
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Doi"
+          },
+          "pmid": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 32
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pmid"
+          },
+          "pmcid": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 32
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pmcid"
+          },
+          "publication_year": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 2200.0,
+                "minimum": 1500.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Publication Year"
+          },
+          "retrieved_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Retrieved At"
+          },
+          "source_version": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 128
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Version"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "source_id",
+          "source_type",
+          "name"
+        ],
+        "title": "EvidenceSource"
+      },
+      "ExplanationText": {
+        "properties": {
+          "content_id": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Content Id"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "description",
+              "simple_summary",
+              "technical_summary",
+              "mental_model",
+              "model_limit_summary",
+              "practical_takeaway",
+              "simple_explanation",
+              "technical_explanation",
+              "research_spotlight",
+              "calculation_notes",
+              "card_tooltip",
+              "headline",
+              "headline_tooltip",
+              "outcome_summary"
+            ],
+            "title": "Kind"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "body": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Body"
+          },
+          "claim_ids": {
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Claim Ids"
+          },
+          "result_key": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Result Key"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "content_id",
+          "kind",
+          "body",
+          "claim_ids"
+        ],
+        "title": "ExplanationText",
+        "description": "Shared explanation value fields, without authoring or review metadata."
       },
       "GenotypeInterpretation": {
         "properties": {
@@ -526,6 +856,157 @@
         },
         "type": "object",
         "title": "HTTPValidationError"
+      },
+      "PublishedClaim": {
+        "properties": {
+          "claim_id": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Claim Id"
+          },
+          "claim_type": {
+            "$ref": "#/components/schemas/ClaimType"
+          },
+          "statement": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Statement"
+          },
+          "evidence_ids": {
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Evidence Ids"
+          },
+          "scope": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Scope"
+          },
+          "limitations": {
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Limitations"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "claim_id",
+          "claim_type",
+          "statement",
+          "evidence_ids",
+          "scope",
+          "limitations"
+        ],
+        "title": "PublishedClaim"
+      },
+      "PublishedEvidence": {
+        "properties": {
+          "evidence_id": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Evidence Id"
+          },
+          "claim_type": {
+            "$ref": "#/components/schemas/ClaimType"
+          },
+          "statement": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Statement"
+          },
+          "source_ids": {
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "type": "array",
+            "maxItems": 1,
+            "minItems": 1,
+            "title": "Source Ids"
+          },
+          "source_location": {
+            "$ref": "#/components/schemas/EvidenceLocation"
+          },
+          "rsid": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^rs\\d+$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rsid"
+          },
+          "gene": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gene"
+          },
+          "phenotype": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Phenotype"
+          },
+          "effect_allele": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Effect Allele"
+          },
+          "effect_direction": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Effect Direction"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "evidence_id",
+          "claim_type",
+          "statement",
+          "source_ids",
+          "source_location"
+        ],
+        "title": "PublishedEvidence"
       },
       "RsidCatalogItem": {
         "properties": {
@@ -788,6 +1269,17 @@
         ],
         "title": "SearchResult"
       },
+      "SourceType": {
+        "type": "string",
+        "enum": [
+          "scientific_publication",
+          "variant_database",
+          "association_database",
+          "review_article",
+          "other"
+        ],
+        "title": "SourceType"
+      },
       "TraitAnalysisDetail": {
         "properties": {
           "trait": {
@@ -807,72 +1299,190 @@
       },
       "TraitAnalysisMetrics": {
         "properties": {
-          "result": {
+          "status": {
             "type": "string",
             "enum": [
-              "likely",
-              "unlikely",
-              "inconclusive"
+              "evaluated",
+              "unavailable",
+              "educational"
             ],
-            "title": "Result"
+            "title": "Status"
           },
-          "confidence": {
-            "type": "number",
-            "maximum": 1.0,
-            "minimum": 0.0,
-            "title": "Confidence"
-          },
-          "coverage": {
-            "type": "number",
-            "maximum": 1.0,
-            "minimum": 0.0,
-            "title": "Coverage"
-          },
-          "score": {
+          "copies": {
             "anyOf": [
               {
-                "type": "number"
+                "type": "integer",
+                "maximum": 2.0,
+                "minimum": 0.0
               },
               {
                 "type": "null"
               }
             ],
-            "title": "Score"
+            "title": "Copies"
           },
-          "result_content": {
-            "$ref": "#/components/schemas/TraitResultContent"
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "missing_genotype",
+                  "invalid_genotype",
+                  "unsupported_allele",
+                  "missing_representation",
+                  "unsupported_build",
+                  "unsupported_orientation",
+                  "incompatible_representation"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
           },
-          "rules": {
+          "explanations": {
             "items": {
-              "$ref": "#/components/schemas/TraitRuleAnalysis"
+              "$ref": "#/components/schemas/ExplanationText"
             },
             "type": "array",
-            "minItems": 1,
-            "title": "Rules"
+            "title": "Explanations"
           },
-          "calculation_explanation": {
+          "observation_status": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "usable",
+                  "absent",
+                  "no_call",
+                  "partial",
+                  "invalid",
+                  "conflicting",
+                  "unresolved",
+                  "incompatible",
+                  "unsupported"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observation Status"
+          },
+          "observation_diagnostics": {
             "items": {
-              "$ref": "#/components/schemas/ContentSection"
+              "type": "string"
             },
             "type": "array",
-            "title": "Calculation Explanation"
+            "title": "Observation Diagnostics"
           }
         },
         "additionalProperties": false,
         "type": "object",
         "required": [
-          "result",
-          "confidence",
-          "coverage",
-          "score",
-          "result_content",
-          "rules",
-          "calculation_explanation"
+          "status",
+          "explanations",
+          "observation_status",
+          "observation_diagnostics"
         ],
         "title": "TraitAnalysisMetrics"
       },
       "TraitAnalysisSummary": {
         "properties": {
+          "release_id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9_-]{0,79}$",
+            "title": "Release Id"
+          },
+          "manifest_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Manifest Sha256"
+          },
+          "release_set_id": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Release Set Id"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "evaluated",
+              "unavailable",
+              "educational"
+            ],
+            "title": "Status"
+          },
+          "copies": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 2.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Copies"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "missing_genotype",
+                  "invalid_genotype",
+                  "unsupported_allele",
+                  "missing_representation",
+                  "unsupported_build",
+                  "unsupported_orientation",
+                  "incompatible_representation"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "explanations": {
+            "items": {
+              "$ref": "#/components/schemas/ExplanationText"
+            },
+            "type": "array",
+            "title": "Explanations"
+          },
+          "observation_status": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "usable",
+                  "absent",
+                  "no_call",
+                  "partial",
+                  "invalid",
+                  "conflicting",
+                  "unresolved",
+                  "incompatible",
+                  "unsupported"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observation Status"
+          },
+          "observation_diagnostics": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Observation Diagnostics"
+          },
           "trait_id": {
             "type": "string",
             "title": "Trait Id"
@@ -881,77 +1491,72 @@
             "type": "string",
             "title": "Name"
           },
-          "category": {
+          "strategy": {
             "type": "string",
             "enum": [
-              "nutrition",
-              "appearance",
-              "health",
-              "behavior"
+              "allele_count",
+              "educational"
             ],
-            "title": "Category"
+            "title": "Strategy"
           },
-          "description": {
-            "type": "string",
-            "title": "Description"
-          },
-          "rule_statuses": {
+          "sources": {
             "items": {
-              "$ref": "#/components/schemas/TraitRuleStatus"
+              "$ref": "#/components/schemas/EvidenceSource"
             },
             "type": "array",
-            "minItems": 1,
-            "title": "Rule Statuses"
+            "title": "Sources"
           },
-          "confidence": {
-            "type": "number",
-            "maximum": 1.0,
-            "minimum": 0.0,
-            "title": "Confidence"
-          },
-          "coverage": {
-            "type": "number",
-            "maximum": 1.0,
-            "minimum": 0.0,
-            "title": "Coverage"
-          },
-          "result": {
-            "type": "string",
-            "enum": [
-              "likely",
-              "unlikely",
-              "inconclusive"
-            ],
-            "title": "Result"
-          },
-          "result_badge_tooltip": {
-            "type": "string",
-            "title": "Result Badge Tooltip"
+          "claims": {
+            "items": {
+              "$ref": "#/components/schemas/PublishedClaim"
+            },
+            "type": "array",
+            "title": "Claims"
           }
         },
         "additionalProperties": false,
         "type": "object",
         "required": [
+          "release_id",
+          "manifest_sha256",
+          "release_set_id",
+          "status",
+          "explanations",
+          "observation_status",
+          "observation_diagnostics",
           "trait_id",
           "name",
-          "category",
-          "description",
-          "rule_statuses",
-          "confidence",
-          "coverage",
-          "result",
-          "result_badge_tooltip"
+          "strategy",
+          "sources",
+          "claims"
         ],
         "title": "TraitAnalysisSummary"
       },
       "TraitCatalogDetail": {
         "properties": {
+          "release_id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9_-]{0,79}$",
+            "title": "Release Id"
+          },
+          "manifest_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Manifest Sha256"
+          },
+          "release_set_id": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Release Set Id"
+          },
           "id": {
             "type": "string",
+            "pattern": "^[a-z0-9_]+$",
             "title": "Id"
           },
           "name": {
             "type": "string",
+            "minLength": 1,
             "title": "Name"
           },
           "category": {
@@ -966,123 +1571,95 @@
           },
           "description": {
             "type": "string",
+            "minLength": 1,
             "title": "Description"
-          },
-          "simple_summary": {
-            "type": "string",
-            "title": "Simple Summary"
-          },
-          "technical_summary": {
-            "type": "string",
-            "title": "Technical Summary"
-          },
-          "mental_model": {
-            "items": {
-              "$ref": "#/components/schemas/ContentSection"
-            },
-            "type": "array",
-            "title": "Mental Model"
-          },
-          "model_limit_summary": {
-            "type": "string",
-            "title": "Model Limit Summary"
-          },
-          "evidence_level": {
-            "type": "string",
-            "enum": [
-              "strong",
-              "moderate",
-              "limited"
-            ],
-            "title": "Evidence Level"
-          },
-          "keywords": {
-            "items": {
-              "type": "string"
-            },
-            "type": "array",
-            "title": "Keywords"
           },
           "sources": {
             "items": {
-              "$ref": "#/components/schemas/TraitSource"
-            },
-            "type": "array",
-            "title": "Sources"
-          },
-          "result_content": {
-            "$ref": "#/components/schemas/TraitResultByOutcome"
-          },
-          "practical_takeaway": {
-            "items": {
-              "$ref": "#/components/schemas/ContentSection"
-            },
-            "type": "array",
-            "title": "Practical Takeaway"
-          },
-          "simple_explanation": {
-            "items": {
-              "$ref": "#/components/schemas/ContentSection"
-            },
-            "type": "array",
-            "title": "Simple Explanation"
-          },
-          "technical_explanation": {
-            "items": {
-              "$ref": "#/components/schemas/ContentSection"
-            },
-            "type": "array",
-            "title": "Technical Explanation"
-          },
-          "research_spotlight": {
-            "items": {
-              "$ref": "#/components/schemas/ContentSection"
-            },
-            "type": "array",
-            "title": "Research Spotlight"
-          },
-          "calculation_notes": {
-            "items": {
-              "$ref": "#/components/schemas/ContentSection"
-            },
-            "type": "array",
-            "title": "Calculation Notes"
-          },
-          "rules": {
-            "items": {
-              "$ref": "#/components/schemas/CuratedTraitRule"
+              "$ref": "#/components/schemas/EvidenceSource"
             },
             "type": "array",
             "minItems": 1,
-            "title": "Rules"
+            "title": "Sources"
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/PublishedEvidence"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Evidence"
+          },
+          "claims": {
+            "items": {
+              "$ref": "#/components/schemas/PublishedClaim"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Claims"
+          },
+          "interpretation": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/AlleleCountInterpretation"
+              },
+              {
+                "$ref": "#/components/schemas/EducationalInterpretation"
+              }
+            ],
+            "title": "Interpretation",
+            "discriminator": {
+              "propertyName": "strategy",
+              "mapping": {
+                "allele_count": "#/components/schemas/AlleleCountInterpretation",
+                "educational": "#/components/schemas/EducationalInterpretation"
+              }
+            }
+          },
+          "explanations": {
+            "items": {
+              "$ref": "#/components/schemas/ExplanationText"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Explanations"
           }
         },
         "additionalProperties": false,
         "type": "object",
         "required": [
+          "release_id",
+          "manifest_sha256",
+          "release_set_id",
           "id",
           "name",
           "category",
           "description",
-          "simple_summary",
-          "technical_summary",
-          "mental_model",
-          "model_limit_summary",
-          "evidence_level",
-          "keywords",
           "sources",
-          "result_content",
-          "practical_takeaway",
-          "simple_explanation",
-          "technical_explanation",
-          "research_spotlight",
-          "calculation_notes",
-          "rules"
+          "evidence",
+          "claims",
+          "interpretation",
+          "explanations"
         ],
         "title": "TraitCatalogDetail"
       },
       "TraitCatalogSummary": {
         "properties": {
+          "release_id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9_-]{0,79}$",
+            "title": "Release Id"
+          },
+          "manifest_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Manifest Sha256"
+          },
+          "release_set_id": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Release Set Id"
+          },
           "id": {
             "type": "string",
             "title": "Id"
@@ -1105,207 +1682,28 @@
             "type": "string",
             "title": "Description"
           },
-          "simple_summary": {
-            "type": "string",
-            "title": "Simple Summary"
-          },
-          "technical_summary": {
-            "type": "string",
-            "title": "Technical Summary"
-          },
-          "evidence_level": {
+          "strategy": {
             "type": "string",
             "enum": [
-              "strong",
-              "moderate",
-              "limited"
+              "allele_count",
+              "educational"
             ],
-            "title": "Evidence Level"
-          },
-          "keywords": {
-            "items": {
-              "type": "string"
-            },
-            "type": "array",
-            "title": "Keywords"
-          },
-          "search_terms": {
-            "items": {
-              "type": "string"
-            },
-            "type": "array",
-            "minItems": 1,
-            "title": "Search Terms"
+            "title": "Strategy"
           }
         },
         "additionalProperties": false,
         "type": "object",
         "required": [
+          "release_id",
+          "manifest_sha256",
+          "release_set_id",
           "id",
           "name",
           "category",
           "description",
-          "simple_summary",
-          "technical_summary",
-          "evidence_level",
-          "keywords",
-          "search_terms"
+          "strategy"
         ],
         "title": "TraitCatalogSummary"
-      },
-      "TraitResultByOutcome": {
-        "properties": {
-          "likely": {
-            "$ref": "#/components/schemas/TraitResultContent"
-          },
-          "unlikely": {
-            "$ref": "#/components/schemas/TraitResultContent"
-          },
-          "inconclusive": {
-            "$ref": "#/components/schemas/TraitResultContent"
-          }
-        },
-        "additionalProperties": false,
-        "type": "object",
-        "required": [
-          "likely",
-          "unlikely",
-          "inconclusive"
-        ],
-        "title": "TraitResultByOutcome"
-      },
-      "TraitResultContent": {
-        "properties": {
-          "card_tooltip": {
-            "type": "string",
-            "minLength": 1,
-            "title": "Card Tooltip"
-          },
-          "headline": {
-            "type": "string",
-            "minLength": 1,
-            "title": "Headline"
-          },
-          "headline_tooltip": {
-            "type": "string",
-            "minLength": 1,
-            "title": "Headline Tooltip"
-          },
-          "outcome_summary": {
-            "type": "string",
-            "minLength": 1,
-            "title": "Outcome Summary"
-          }
-        },
-        "additionalProperties": false,
-        "type": "object",
-        "required": [
-          "card_tooltip",
-          "headline",
-          "headline_tooltip",
-          "outcome_summary"
-        ],
-        "title": "TraitResultContent"
-      },
-      "TraitRuleAnalysis": {
-        "properties": {
-          "rsid": {
-            "type": "string",
-            "title": "Rsid"
-          },
-          "user_genotype": {
-            "anyOf": [
-              {
-                "items": {
-                  "type": "string"
-                },
-                "type": "array"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "User Genotype"
-          },
-          "interpretation": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/GenotypeInterpretation"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "status": {
-            "type": "string",
-            "enum": [
-              "missing",
-              "unmatched",
-              "matched"
-            ],
-            "title": "Status"
-          },
-          "status_explanation": {
-            "type": "string",
-            "title": "Status Explanation"
-          },
-          "contribution": {
-            "type": "string",
-            "enum": [
-              "raises",
-              "lowers",
-              "neutral",
-              "unknown"
-            ],
-            "title": "Contribution"
-          },
-          "contribution_label": {
-            "type": "string",
-            "title": "Contribution Label"
-          },
-          "contribution_explanation": {
-            "type": "string",
-            "title": "Contribution Explanation"
-          }
-        },
-        "additionalProperties": false,
-        "type": "object",
-        "required": [
-          "rsid",
-          "user_genotype",
-          "interpretation",
-          "status",
-          "status_explanation",
-          "contribution",
-          "contribution_label",
-          "contribution_explanation"
-        ],
-        "title": "TraitRuleAnalysis"
-      },
-      "TraitRuleStatus": {
-        "properties": {
-          "rsid": {
-            "type": "string",
-            "title": "Rsid"
-          },
-          "status": {
-            "type": "string",
-            "enum": [
-              "missing",
-              "unmatched",
-              "matched"
-            ],
-            "title": "Status"
-          }
-        },
-        "additionalProperties": false,
-        "type": "object",
-        "required": [
-          "rsid",
-          "status"
-        ],
-        "title": "TraitRuleStatus"
       },
       "TraitSource": {
         "properties": {
@@ -1341,6 +1739,20 @@
           "notes"
         ],
         "title": "TraitSource"
+      },
+      "UploadError": {
+        "properties": {
+          "detail": {
+            "type": "string",
+            "title": "Detail"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "detail"
+        ],
+        "title": "UploadError"
       },
       "ValidationError": {
         "properties": {
@@ -1381,6 +1793,100 @@
           "type"
         ],
         "title": "ValidationError"
+      },
+      "VariantPlacement": {
+        "properties": {
+          "genome_build": {
+            "type": "string",
+            "enum": [
+              "GRCh37",
+              "GRCh38"
+            ],
+            "title": "Genome Build"
+          },
+          "chromosome": {
+            "type": "string",
+            "pattern": "^(?:[1-9]|1[0-9]|2[0-2])$",
+            "title": "Chromosome"
+          },
+          "position": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Position"
+          },
+          "sequence_accession": {
+            "type": "string",
+            "pattern": "^NC_\\d+\\.\\d+$",
+            "title": "Sequence Accession"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "genome_build",
+          "chromosome",
+          "position",
+          "sequence_accession"
+        ],
+        "title": "VariantPlacement"
+      },
+      "VariantRequirements": {
+        "properties": {
+          "rsid": {
+            "type": "string",
+            "pattern": "^rs\\d+$",
+            "title": "Rsid"
+          },
+          "placements": {
+            "items": {
+              "$ref": "#/components/schemas/VariantPlacement"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Placements"
+          },
+          "orientation": {
+            "type": "string",
+            "const": "forward_genomic",
+            "title": "Orientation"
+          },
+          "coordinate_system": {
+            "type": "string",
+            "const": "1-based",
+            "title": "Coordinate System"
+          },
+          "ploidy": {
+            "type": "integer",
+            "const": 2,
+            "title": "Ploidy"
+          },
+          "alleles": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "A",
+                "C",
+                "G",
+                "T"
+              ]
+            },
+            "type": "array",
+            "maxItems": 2,
+            "minItems": 2,
+            "title": "Alleles"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "rsid",
+          "placements",
+          "orientation",
+          "coordinate_system",
+          "ploidy",
+          "alleles"
+        ],
+        "title": "VariantRequirements"
       }
     }
   }
